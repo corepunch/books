@@ -1,0 +1,1240 @@
+Here begins a transcript of interaction with
+ZORK I: The Great Underground Empire
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights
+reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 119 / Serial number 880429
+
+>open mailbox
+Opening the small mailbox reveals a leaflet.
+
+>read leaflet
+(Taken)
+"WELCOME TO ZORK!
+
+ZORK is a game of adventure, danger, and low cunning. In it you will explore
+some of the most amazing territory ever seen by mortals. No computer should be
+without one!"
+
+>drop leaflet
+Dropped.
+
+>go south
+South of House
+You are facing the south side of a white house. There is no door here, and all
+the windows are boarded.
+
+>go east
+Behind House
+You are behind the white house. A path leads into the forest to the east. In one
+corner of the house there is a small window which is slightly ajar.
+
+>open window
+With great effort, you open the window far enough to allow entry.
+
+>enter house
+Kitchen
+You are in the kitchen of the white house. A table seems to have been used
+recently for the preparation of food. A passage leads to the west and a dark
+staircase can be seen leading upward. A dark chimney leads down and to the east
+is a small window which is open.
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go west
+Living Room
+You are in the living room. There is a doorway to the east, a wooden door with
+strange gothic lettering to the west, which appears to be nailed shut, a trophy
+case, and a large oriental rug in the center of the room.
+Above the trophy case hangs an elvish sword of great antiquity.
+A battery-powered brass lantern is on the trophy case.
+
+>take lamp
+Taken.
+
+>move rug
+With a great effort, the rug is moved to one side of the room, revealing the
+dusty cover of a closed trap door.
+
+>open trap door
+The door reluctantly opens to reveal a rickety staircase descending into
+darkness.
+
+>turn on lamp
+The brass lantern is now on.
+
+>go down
+The trap door crashes shut, and you hear someone barring it.
+
+Cellar
+You are in a dark and damp cellar with a narrow passageway leading north, and a
+crawlway to the south. On the west is the bottom of a steep metal ramp which is
+unclimbable.
+
+>go south
+East of Chasm
+You are on the east edge of a chasm, the bottom of which cannot be seen. A
+narrow passage goes north, and the path you are on continues to the east.
+
+>go east
+Gallery
+This is an art gallery. Most of the paintings have been stolen by vandals with
+exceptional taste. The vandals left through either the north or west exits.
+Fortunately, there is still one chance for you to be a vandal, for on the far
+wall is a painting of unparalleled beauty.
+
+>take painting
+Taken.
+
+>go north
+Studio
+This appears to have been an artist's studio. The walls and floors are
+splattered with paints of 69 different colors. Strangely enough, nothing of
+value is hanging here. At the south end of the room is an open door (also
+covered with paint). A dark and narrow chimney leads up from a fireplace;
+although you might be able to get up it, it seems unlikely you could get back
+down.
+Loosely attached to a wall is a small piece of paper.
+
+>go up chimney
+Kitchen
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go up
+Attic
+This is the attic. The only exit is a stairway leading down.
+A large coil of rope is lying in the corner.
+On a table is a nasty-looking knife.
+
+>take knife
+Taken.
+
+>take rope
+Taken.
+
+>go down
+Kitchen
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go west
+Living Room
+Above the trophy case hangs an elvish sword of great antiquity.
+
+>open case
+Opened.
+
+>put painting inside case
+Done.
+
+>drop knife
+Dropped.
+
+>take sword
+Taken.
+
+>open trap door
+The door reluctantly opens to reveal a rickety staircase descending into
+darkness.
+
+>go down
+The trap door crashes shut, and you hear someone barring it.
+
+Cellar
+Your sword is glowing with a faint blue glow.
+
+>go north
+The Troll Room
+This is a small room with passages to the east and south and a forbidding hole
+leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the
+walls.
+A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the
+room.
+Your sword has begun to glow very brightly.
+
+>kill troll with sword
+A good stroke, but it's too slow; the troll dodges.
+The flat of the troll's axe skins across your forearm.
+
+>kill troll with sword
+A good slash, but it misses the troll by a mile.
+The troll's axe barely misses your ear.
+
+>kill troll with sword
+A good slash, but it misses the troll by a mile.
+The flat of the troll's axe hits you delicately on the head, knocking you out.
+
+>kill troll with sword
+A good slash, but it misses the troll by a mile.
+You stagger back under a hail of axe strokes.
+
+>kill troll with sword
+You are still recovering from that last blow, so your attack is ineffective.
+The troll's axe barely misses your ear.
+
+>drop sword
+Dropped.
+The axe crashes against the rock, throwing sparks!
+
+>go east
+The troll fends you off with a menacing gesture.
+The troll swings his axe, but it misses.
+
+>go east
+The troll fends you off with a menacing gesture.
+The troll neatly removes your head.
+It appears that that last blow was too much for you. I'm afraid you are dead.
+ 
+    ****  You have died  **** 
+
+Now, let's take a look here... Well, you probably deserve another chance. I
+can't quite fix you up completely, but you can't have everything.
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be
+sunlight.
+
+>go southeast
+You can't go that way.
+
+>go east
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south
+here. One particularly large tree with some low branches stands at the edge of
+the path.
+
+>tie rope to railing
+Those things aren't here!
+
+>go down
+You can't go that way.
+
+>go south
+North of House
+You are facing the north side of a white house. There is no door here, and all
+the windows are boarded up. To the north a narrow path winds through the trees.
+
+>go east
+Behind House
+
+>take coffin
+You can't see any coffin here!
+
+>go west
+Kitchen
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go south
+You can't go that way.
+
+>pray
+If you pray enough, your prayers may be answered.
+
+>turn off lamp
+You don't have that!
+
+>go south
+You can't go that way.
+
+>go north
+You can't go that way.
+
+>go east
+Behind House
+
+>go down
+You can't go that way.
+
+>go down
+You can't go that way.
+
+>go north
+North of House
+
+>drop coffin
+You don't have that!
+
+>open coffin
+You can't see any coffin here!
+
+>take sceptre
+You can't see any sceptre here!
+
+>wave sceptre
+You don't have that!
+
+>take gold
+You can't see any gold here!
+
+>take coffin
+You can't see any coffin here!
+
+>go southwest
+West of House
+A small leaflet is on the ground.
+There is a small mailbox here.
+
+>go up
+You can't go that way.
+
+>go up
+You can't go that way.
+
+>go northwest
+You can't go that way.
+
+>go west
+Forest
+
+>enter house
+You're not at the house.
+
+>open bag
+You can't see any bag here!
+
+>take garlic
+You can't see any garlic here!
+You hear in the distance the chirping of a song bird.
+
+>go west
+You would need a machete to go further west.
+
+>put coffin in case
+You don't have that!
+
+>put gold in case
+You don't have that!
+
+>put sceptre in case
+You don't have that!
+
+>open trap door
+You can't see any trap door here!
+
+>turn on lamp
+You can't see any lamp here!
+
+>go down
+You can't go that way.
+
+>go north
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads
+south.
+On the ground is a pile of leaves.
+
+>go east
+Forest
+This is a dimly lit forest, with large trees all around.
+There is a rope here.
+
+>go north
+The forest becomes impenetrable to the north.
+
+>go northeast
+You can't go that way.
+You hear in the distance the chirping of a song bird.
+
+>go east
+Forest
+The forest thins out, revealing impassable mountains.
+
+>go north
+Forest
+There is a rope here.
+
+>take matches
+You can't see any matches here!
+
+>go north
+The forest becomes impenetrable to the north.
+You hear in the distance the chirping of a song bird.
+
+>take wrench
+You can't see any wrench here!
+
+>take screwdriver
+You can't see any screwdriver here!
+You hear in the distance the chirping of a song bird.
+
+>push yellow button
+You can't see any yellow button here!
+
+>go south
+Clearing
+You are in a small clearing in a well marked forest path that extends to the
+east and west.
+
+>go south
+Forest
+This is a dimly lit forest, with large trees all around.
+
+>turn bolt with wrench
+Those things aren't here!
+
+>drop wrench
+You don't have that!
+
+>go south
+Storm-tossed trees block your way.
+You hear in the distance the chirping of a song bird.
+
+>go down
+You can't go that way.
+
+>go southeast
+You can't go that way.
+
+>go east
+The rank undergrowth prevents eastward movement.
+
+>go down
+You can't go that way.
+
+>take torch
+You can't see any torch here!
+
+>turn off lamp
+You don't have that!
+
+>go south
+Storm-tossed trees block your way.
+
+>take bell
+You can't see any bell here!
+
+>go south
+Storm-tossed trees block your way.
+
+>take candles
+You can't see any candles here!
+
+>take book
+You can't see any book here!
+
+>go down
+You can't go that way.
+
+>go down
+You can't go that way.
+
+>ring bell
+You can't see any bell here!
+
+>take candles
+You can't see any candles here!
+
+>light match
+You don't have that!
+
+>light candles with match
+You don't have that!
+
+>read book
+You can't see any book here!
+
+>drop book
+You don't have that!
+
+>go south
+Storm-tossed trees block your way.
+
+>take skull
+You can't see any skull here!
+
+>go north
+Clearing
+
+>go up
+There is no tree here suitable for climbing.
+
+>go north
+Forest
+There is a rope here.
+
+>rub mirror
+You can't see any mirror here!
+
+>go north
+The forest becomes impenetrable to the north.
+
+>go west
+Forest Path
+
+>go north
+Clearing
+On the ground is a pile of leaves.
+
+>go west
+Forest
+
+>inventory
+You are empty-handed.
+
+>go north
+Clearing
+On the ground is a pile of leaves.
+
+>go east
+Forest
+There is a rope here.
+You hear in the distance the chirping of a song bird.
+
+>put torch in basket
+You don't have that!
+
+>put screwdriver in basket
+You don't have that!
+
+>turn on lamp
+You can't see any lamp here!
+
+>go north
+The forest becomes impenetrable to the north.
+
+>go down
+You can't go that way.
+
+>go east
+Forest
+
+>go northeast
+You can't go that way.
+
+>go southeast
+You can't go that way.
+
+>go southwest
+You can't go that way.
+
+>go down
+You can't go that way.
+
+>go down
+You can't go that way.
+
+>go south
+Forest
+There is a rope here.
+
+>take coal
+You can't see any coal here!
+
+>go north
+The forest becomes impenetrable to the north.
+
+>go up
+There is no tree here suitable for climbing.
+
+>go up
+There is no tree here suitable for climbing.
+
+>go north
+The forest becomes impenetrable to the north.
+
+>go east
+Forest
+
+>go south
+Forest
+There is a rope here.
+
+>go north
+The forest becomes impenetrable to the north.
+
+>go up
+There is no tree here suitable for climbing.
+
+>go south
+Clearing
+
+>put coal in basket
+You don't have that!
+
+>lower basket
+You can't see any basket here!
+
+>go north
+Forest
+There is a rope here.
+
+>go down
+You can't go that way.
+
+>go east
+Forest
+
+>go northeast
+You can't go that way.
+
+>go southeast
+You can't go that way.
+
+>go southwest
+You can't go that way.
+
+>go down
+You can't go that way.
+
+>go down
+You can't go that way.
+
+>go west
+Forest
+There is a rope here.
+
+>drop all
+You don't have the forest.
+
+>go west
+Forest Path
+
+>take coal
+You can't see any coal here!
+
+>take screwdriver
+You can't see any screwdriver here!
+
+>take torch
+You can't see any torch here!
+
+>go south
+North of House
+
+>open lid
+You can't see any lid here!
+
+>put coal in machine
+You don't have that!
+
+>close lid
+You can't see any lid here!
+
+>turn switch with screwdriver
+Those things aren't here!
+
+>drop screwdriver
+You don't have that!
+
+>open lid
+You can't see any lid here!
+
+>take diamond
+You can't see any diamond here!
+
+>go north
+Forest Path
+
+>put torch in basket
+You don't have that!
+
+>put diamond in basket
+You don't have that!
+
+>go east
+Forest
+There is a rope here.
+
+>take skull
+You can't see any skull here!
+
+>take lamp
+You can't see any lamp here!
+You hear in the distance the chirping of a song bird.
+
+>take garlic
+You can't see any garlic here!
+
+>go east
+Forest
+
+>go up
+The mountains are impassable.
+
+>go up
+The mountains are impassable.
+
+>go north
+Forest
+There is a rope here.
+
+>go east
+Forest
+
+>go south
+Forest
+There is a rope here.
+
+>go north
+The forest becomes impenetrable to the north.
+
+>take bracelet
+You can't see any bracelet here!
+
+>go up
+There is no tree here suitable for climbing.
+
+>go south
+Clearing
+
+>raise basket
+You can't see any basket here!
+
+>look in basket
+You can't see any basket here!
+
+>take diamond
+You can't see any diamond here!
+
+>take torch
+You can't see any torch here!
+
+>turn off lamp
+You don't have that!
+
+>go west
+Behind House
+
+>take jade
+You can't see any jade here!
+
+>go south
+South of House
+
+>go east
+Behind House
+
+>go south
+South of House
+
+>go down
+You can't go that way.
+
+>go up
+You can't go that way.
+
+>inventory
+You are empty-handed.
+
+>put jade in case
+You don't have that!
+
+>put diamond in case
+You don't have that!
+
+>turn on lamp
+You can't see any lamp here!
+
+>go down
+You can't go that way.
+
+>go north
+The windows are all boarded.
+
+>go east
+Behind House
+
+>go north
+North of House
+
+>go northeast
+You can't go that way.
+
+>go north
+Forest Path
+
+>take trunk
+You can't see any trunk here!
+
+>go north
+Clearing
+On the ground is a pile of leaves.
+
+>take pump
+You can't see any pump here!
+
+>take pump
+You can't see any pump here!
+
+>go north
+The forest becomes impenetrable to the north.
+
+>take trident
+You can't see any trident here!
+
+>inventory
+You are empty-handed.
+
+>drop torch
+You don't have that!
+
+>take trident
+You can't see any trident here!
+
+>go south
+Forest Path
+
+>go south
+North of House
+
+>go south
+The windows are all boarded.
+
+>go east
+Behind House
+
+>go east
+Clearing
+
+>inflate plastic with pump
+Those things aren't here!
+
+>drop pump
+You don't have that!
+
+>go inside boat
+You can't see any boat here!
+
+>launch
+What do you want to launch?
+
+>wait
+Time passes...
+
+>wait
+Time passes...
+
+>wait
+Time passes...
+
+>take buoy
+You can't see any buoy here!
+
+>go east
+Canyon View
+You are at the top of the Great Canyon on its west wall. From here there is a
+marvelous view of the canyon and parts of the Frigid River upstream. Across the
+canyon, the walls of the White Cliffs join the mighty ramparts of the Flathead
+Mountains to the east. Following the Canyon upstream to the north, Aragain Falls
+may be seen, complete with rainbow. The mighty Frigid River flows out from a
+great dark cavern. To the west and south can be seen an immense forest,
+stretching for miles around. A path leads northwest. It is possible to climb
+down into the canyon from here.
+
+>leave boat
+You can't see any boat here!
+
+>take shovel
+You can't see any shovel here!
+
+>drop garlic
+You don't have that!
+
+>take shovel
+You can't see any shovel here!
+
+>drop buoy
+You don't have that!
+
+>take shovel
+You can't see any shovel here!
+
+>go northeast
+You can't go that way.
+
+>dig
+What do you want to dig in?
+
+>sand
+The ground is too hard for digging here.
+
+>dig sand
+What do you want to dig the sand with?
+
+>dig sand
+You don't have the ground.
+
+>dig sand
+What do you want to dig the sand with?
+
+>take scarab
+You can't see any scarab here!
+
+>drop shovel
+You don't have that!
+
+>go southwest
+You can't go that way.
+
+>open buoy
+You can't see any buoy here!
+
+>take emerald
+You can't see any emerald here!
+
+>take garlic
+You can't see any garlic here!
+
+>go south
+Storm-tossed trees block your way.
+
+>go south
+Storm-tossed trees block your way.
+
+>cross rainbow
+From here?!?
+
+>turn off lamp
+You don't have that!
+
+>go southwest
+You can't go that way.
+
+>go up
+You can't go that way.
+
+>go up
+You can't go that way.
+
+>go northwest
+Clearing
+
+>go west
+Behind House
+
+>enter house
+Kitchen
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go west
+Living Room
+There is a brass lantern (battery-powered) here.
+There is a nasty knife here.
+Your collection of treasures consists of:
+    A painting
+
+>inventory
+You are empty-handed.
+
+>put emerald in case
+You don't have that!
+
+>put scarab in case
+You don't have that!
+
+>put trident in case
+You don't have that!
+
+>put jewels in case
+You don't have that!
+
+>go east
+Kitchen
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go east
+Behind House
+
+>go north
+North of House
+
+>go north
+Forest Path
+
+>climb tree
+Up a Tree
+You are about 10 feet above the ground nestled among some large branches. The
+nearest branch above you is above your reach.
+Beside you on the branch is a small bird's nest.
+In the bird's nest is a large egg encrusted with precious jewels, apparently
+scavenged by a childless songbird. The egg is covered with fine gold inlay, and
+ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is
+hinged and closed with a delicate looking clasp. The egg appears extremely
+fragile.
+
+>take egg
+Taken.
+
+>climb down
+Forest Path
+
+>go south
+North of House
+
+>go east
+Behind House
+
+>enter house
+Kitchen
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go west
+Living Room
+There is a brass lantern (battery-powered) here.
+There is a nasty knife here.
+Your collection of treasures consists of:
+    A painting
+
+>turn on lamp
+It is already on.
+
+>go down
+The trap door is closed.
+
+>go north
+You can't go that way.
+
+>go west
+The door is nailed shut.
+
+>go south
+You can't go that way.
+
+>go east
+Kitchen
+A bottle is sitting on the table.
+The glass bottle contains:
+  A quantity of water
+On the table is an elongated brown sack, smelling of hot peppers.
+
+>go up
+You have moved into a dark place.
+It is pitch black. You are likely to be eaten by a grue.
+
+>take coins
+It's too dark to see!
+
+>take key
+It's too dark to see!
+
+>go southwest
+Oh, no! You have walked into the slavering fangs of a lurking grue!
+ 
+    ****  You have died  **** 
+
+Now, let's take a look here... Well, you probably deserve another chance. I
+can't quite fix you up completely, but you can't have everything.
+
+Forest
+
+>go east
+Forest Path
+
+>go south
+North of House
+
+>go southeast
+Behind House
+
+>Ulysses
+Wasn't he a sailor?
+
+>give egg to thief
+You don't have that!
+
+>go down
+You can't go that way.
+
+>go east
+Clearing
+
+>go east
+Canyon View
+
+>put coins in case
+You don't have that!
+
+>take knife
+You can't see any knife here!
+
+>go west
+Forest
+
+>go west
+Forest
+You hear in the distance the chirping of a song bird.
+
+>go up
+There is no tree here suitable for climbing.
+
+>kill thief with knife
+You don't have that!
+
+>kill thief with knife
+You don't have that!
+
+>kill thief with knife
+You don't have that!
+
+>take all
+There's nothing here you can take.
+
+>drop stiletto
+You don't have that!
+
+>take chalice
+You can't see any chalice here!
+
+>drop torch
+You don't have that!
+
+>take chalice
+You can't see any chalice here!
+
+>go down
+You can't go that way.
+
+>go northwest
+You can't go that way.
+
+>go south
+Forest
+
+>go west
+Forest
+
+>go up
+There is no tree here suitable for climbing.
+
+>go down
+You can't go that way.
+You hear in the distance the chirping of a song bird.
+
+>go northeast
+You can't go that way.
+
+>unlock grate
+What do you want to unlock the grate with?
+
+>open grate
+You can't see any grate here!
+
+>go up
+There is no tree here suitable for climbing.
+
+>go south
+Forest
+
+>climb tree
+There is no tree here suitable for climbing.
+You hear in the distance the chirping of a song bird.
+
+>wind up canary
+You can't see any canary here!
+
+>go down
+You can't go that way.
+
+>take bauble
+You can't see any bauble here!
+
+>drop knife
+You don't have that!
+
+>take bauble
+You can't see any bauble here!
+
+>go south
+Storm-tossed trees block your way.
+
+>go east
+The rank undergrowth prevents eastward movement.
+
+>enter house
+You're not at the house.
+
+>go west
+Forest
+
+>put bauble in case
+You don't have that!
+
+>put chalice in case
+You don't have that!
+
+>take canary from egg
+Those things aren't here!
+
+>put canary in case
+You don't have that!
+
+>put egg in case
+You don't have that!
+
+>put bracelet in case
+You don't have that!
+
+>put skull in case
+You don't have that!
+
+>go down
+You can't go that way.
+
+>go north
+Clearing
+On the ground is a pile of leaves.
+
+>go east
+Forest
+There is a rope here.
+
+>go east
+Forest
+
+>go east
+The mountains are impassable.
+
+>echo
+echo echo ...
+
+>take bar
+You can't see any bar here!
+
+>go west
+Forest
+There is a rope here.
+
+>go west
+Forest Path
+You hear in the distance the chirping of a song bird.
+
+>go west
+Forest
+
+>go south
+Forest
+
+>go up
+There is no tree here suitable for climbing.
+
+>put bar in case
+You don't have that!
+
+>unscript
+Here ends a transcript of interaction with
+ZORK I: The Great Underground Empire
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights
+reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 119 / Serial number 880429

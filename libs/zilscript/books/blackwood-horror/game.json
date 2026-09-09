@@ -1,0 +1,27 @@
+{
+    "id": "books.blackwood-horror",
+    "title": "Sanitarium",
+    "shortDescription": "A psychological horror adventure.",
+    "description": "Something is very wrong. You wake up in a place that shouldn't exist, surrounded by people who seem to know you — but you don't remember them. Navigate through fractured realities, solve deeply unsettling puzzles, and piece together the truth about who you really are.\n\nSanitarium is a slow-burn psychological horror experience where the most terrifying thing isn't what lurks in the shadows — it's what you might discover about yourself.",
+    "author": "Studio Null",
+    "year": 2024,
+    "rating": 4.5,
+    "reviewCount": 183,
+    "startFile": "blackwood-horror.zil",
+    "base": "infocom/zork1",
+    "reviews": [
+        {
+            "author": "horrorFan99",
+            "rating": 5,
+            "title": "Genuinely unsettling",
+            "body": "I had to stop playing at night. The atmosphere is so thick you can feel it. One of the best horror text adventures I've played."
+        },
+        {
+            "author": "interactive_fiction_nerd",
+            "rating": 4,
+            "title": "Slow start, incredible payoff",
+            "body": "Give it an hour before judging. The first chapter is setting up something deeply twisted, and when it all clicks, it's unforgettable."
+        }
+    ],
+    "genre": "Psychological Horror"
+}

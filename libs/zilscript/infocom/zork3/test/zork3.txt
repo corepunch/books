@@ -1,0 +1,782 @@
+Start of a transcript of ZORK III: THE DUNGEON MASTER.
+ZORK III: THE DUNGEON MASTER
+An Interactive Fantasy
+Copyright (c) 1982 by Infocom, Inc. All rights reserved.
+Release 19 / Serial number 820517
+
+> GET LAMP
+Taken.
+
+> S
+Junction
+Darkness... (lamp off)
+
+> LIGHT LAMP
+The lamp is now on.
+
+> W
+End of Rainbow
+A rainbow spans the chasm here.
+
+> W
+On a Rainbow
+The rainbow continues here.
+
+> GET BREAD
+Taken.
+
+> E
+On a Rainbow
+The rainbow continues here.
+
+> E
+End of Rainbow
+A rainbow spans the chasm here.
+
+> E
+Junction
+An old man sits sleeping near the edge of a chasm.
+
+> NE
+Engravings Room
+Ancient engravings cover the walls.
+
+> SE
+Old Man's Room
+An old man dozes near a secret door.
+
+> W
+Old Man's Room
+An old man dozes near a secret door.
+
+> WAKE UP OLD MAN
+The old man wakes up, stretches, and yawns. "Oh! Hello there. I must have dozed off."
+
+> GIVE BREAD TO OLD MAN
+The old man takes the bread and eats it. "Thank you, my friend. You are kind." He points to a section of the wall which begins to open, revealing a secret door.
+
+> SW
+Secret Door
+A rough-hewn passage leads into darkness.
+
+> W
+South Corridor
+This is a south corridor.
+
+> S
+Beam Room
+A thick wooden beam spans the chasm here.
+
+> S
+Button Room
+A large button is on the wall here.
+
+> S
+Narrow Corridor
+A narrow corridor leads north and south.
+
+> TURN OFF LAMP
+The lamp is now off.
+
+> DROP LAMP
+Dropped.
+
+> JUMP LAKE
+You dive gracefully into the water.
+
+> D
+Underwater
+You are underwater.
+
+> GET AMULET
+The amulet is too slippery to grasp. You release it.
+
+> GET AMULET
+You feel the amulet slip from your grasp.
+
+> GET AMULET
+Taken.
+
+> U
+On the Shore
+You are back on the southern shore.
+
+> W
+West Shore
+You are on the western shore.
+
+> S
+Scenic Vista
+An ornate wooden table stands in the middle of the room. A small indicator on the table reads 'II'. A torch rests on the table.
+
+> GET TORCH
+Taken.
+
+> WAIT
+...
+The table's indicator flickers and reads 'III'.
+
+> TOUCH TABLE
+In a flash of light, you are transported.
+
+Room 8
+This is a round room with a carousel-like device in the center. A spray can sits on the floor.
+
+> GET CAN
+Taken.
+
+> WAIT
+In a flash of light, you are transported back.
+
+Scenic Vista
+The table's indicator reads 'II'.
+
+> WAIT
+The table's indicator flickers and reads 'III'.
+
+> TOUCH TABLE
+In a flash of light, you are transported.
+
+Damp Passage
+A narrow, damp passage stretches southward.
+
+> DROP TORCH
+Dropped.
+
+> WAIT
+In a flash of light, you are transported back.
+
+Scenic Vista
+
+> N
+West Shore
+
+> JUMP LAKE
+You dive gracefully into the water.
+
+> D
+Underwater
+You are underwater.
+
+> GET CAN
+Taken.
+
+> U
+On the Shore
+
+> S
+Southern Shore
+You are on the southern shore.
+
+> S
+Dark Room
+It is pitch dark in here.
+
+> S
+Dark Room
+It is pitch dark in here.
+
+> SPRAY REPELLANT ON MYSELF
+You feel a thin, oily film cover your skin.
+
+> S
+Dark Room
+It is pitch dark in here.
+
+> E
+Key Room
+A rusty key hangs on the wall.
+
+> GET KEY
+Taken.
+
+> MOVE COVER
+You move the manhole cover aside.
+
+> D
+Aqueduct
+You are in an aqueduct.
+
+> N
+High Arch
+A high, crumbling arch spans the chasm.
+
+> N
+Damp Passage
+A narrow, damp passage stretches southward.
+
+> N
+High Arch
+
+> N
+Damp Passage
+A torch lies here.
+
+> GET TORCH
+Taken.
+
+> W
+West Corridor
+
+> W
+South Corridor
+
+> W
+Old Man's Room
+The secret door is now closed.
+
+> D
+Secret Door
+
+> WAIT
+You wait.
+
+> WAIT
+A man has arrived and asks you to attach the rope to the chest.
+
+> TIE CHEST TO ROPE
+You tie the chest to the rope.
+
+> WAIT
+The man pulls the rope up.
+
+> WAIT
+He has attached a wooden staff to the rope and lowers it down.
+
+> WAIT
+The rope is lowered again.
+
+> GRAB ROPE
+You grab the rope.
+
+> GET CHEST
+The man takes the chest, opens it, and gives you a wooden staff.
+
+> D
+Junction
+
+> D
+Endless Stair
+
+> S
+Lake Shore
+
+> WAIT
+You wait.
+
+> HELLO SAILOR
+A ship sails past and the sailor throws you a vial.
+
+> GET VIAL
+Taken.
+
+> E
+Land of Shadow
+A cloaked figure stands here. The sword from the stone appears in your inventory.
+
+> WAIT
+The figure approaches.
+
+> KILL FIGURE WITH SWORD
+The figure staggers.
+
+> KILL FIGURE WITH SWORD
+The figure is badly hurt and defenseless.
+
+> REMOVE HOOD
+You remove the hood. It is your older self! He vanishes in a flash of light.
+
+> DROP SWORD
+Dropped.
+
+> GET CLOAK
+Taken.
+The ground begins to shake violently. An earthquake! The High Arch has collapsed. A large hole appears at the Great Door.
+
+> NE
+West Corridor
+
+> E
+South Corridor
+
+> N
+Button Room
+
+> E
+Beam Room
+
+> NE
+Chasm Room
+
+> N
+Narrow Corridor
+
+> E
+Narrow Corridor
+
+> OPEN DOOR
+You open the door.
+
+> N
+South Corridor
+
+> N
+Beam Room
+
+> DROP CHEST
+Dropped. The chest blocks the beam.
+
+> S
+Button Room
+
+> S
+Narrow Corridor
+
+> SW
+South Corridor
+
+> W
+South Corridor
+
+> S
+Button Room
+
+> E
+Beam Room
+
+> E
+Chasm Room
+
+> S
+Narrow Corridor
+
+> S
+South Corridor
+
+> E
+Royal Museum
+
+> N
+Technology Museum
+
+> PUSH GOLDEN MACHINE SOUTH
+You push the golden machine southward.
+
+> OPEN STONE DOOR
+You open the stone door.
+
+> PUSH GOLDEN MACHINE EAST
+You push the golden machine eastward.
+
+> EXAMINE MACHINE
+The dial is set to 948.
+
+> READ PLAQUE
+The Crown Jewel room was finished in 777.
+
+> GET IN MACHINE
+You sit down on the golden machine's seat.
+
+> SET DIAL TO 776
+You turn the dial to 776.
+
+> PRESS BUTTON
+There is a flash of light. All the items around you have vanished. The security system has not been finished yet.
+
+> WAIT
+The guards march away.
+
+> GET RING
+Taken.
+
+> OPEN DOOR
+You open the door.
+
+> W
+Museum Entrance
+
+> OPEN WOODEN DOOR
+You open the wooden door.
+
+> N
+Golden Machine Room
+A golden machine sits here.
+
+> LIFT SEAT
+You lift the seat of the golden machine.
+
+> HIDE RING UNDER SEAT
+You place the ring under the seat.
+
+> GET IN GOLDEN MACHINE
+You sit down on the golden machine's seat.
+
+> SET DIAL TO 948
+You turn the dial to 948.
+
+> PRESS BUTTON
+There is a flash of light. You are back in the present.
+
+> GET OUT OF GOLDEN MACHINE
+You stand up.
+
+> LIFT SEAT
+Under the seat you find the golden ring.
+
+> OPEN WOODEN DOOR
+You open the door.
+
+> S
+Museum Entrance
+
+> OPEN STONE DOOR
+You open the stone door.
+
+> E
+Technology Museum
+
+> GET ALL
+You pick up all your items.
+
+> W
+Royal Museum
+
+> S
+South Corridor
+
+> D
+Royal Puzzle
+You enter a complex maze of square rooms.
+
+> PRESS SOUTH WALL
+The south wall slides away.
+
+> E
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> PRESS SOUTH WALL
+The south wall slides away.
+
+> GET BOOK
+Taken.
+
+> PRESS SOUTH WALL
+The south wall slides away.
+
+> PRESS WEST WALL
+The west wall slides away.
+
+> AGAIN
+The west wall slides away.
+
+> E
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> PRESS EAST WALL
+The east wall slides away.
+
+> W
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> PRESS WEST WALL
+The west wall slides away.
+
+> N
+Royal Puzzle
+
+> W
+Royal Puzzle
+
+> PRESS SOUTH WALL
+The south wall slides away.
+
+> E
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> W
+Royal Puzzle
+
+> W
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> PRESS EAST WALL
+The east wall slides away.
+
+> W
+Royal Puzzle
+
+> W
+Royal Puzzle
+
+> W
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> W
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> PRESS EAST WALL
+The east wall slides away.
+
+> AGAIN
+The east wall slides away.
+
+> AGAIN
+The east wall slides away.
+
+> S
+Royal Puzzle
+
+> PRESS SOUTH WALL
+The south wall slides away.
+
+> N
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> E
+Royal Puzzle
+
+> S
+Royal Puzzle
+
+> PRESS SOUTH WALL
+The south wall slides away.
+
+> W
+Royal Puzzle
+
+> PRESS WEST WALL
+The west wall slides away.
+
+> AGAIN
+The west wall slides away.
+
+> S
+Royal Puzzle
+
+> W
+Royal Puzzle
+
+> PRESS NORTH WALL
+The north wall slides away.
+
+> AGAIN
+The north wall slides away.
+
+> AGAIN
+The north wall slides away.
+
+> W
+Royal Puzzle
+
+> N
+Royal Puzzle
+
+> U
+Technology Museum
+You have escaped the Royal Puzzle!
+
+> N
+Golden Machine Room
+
+> W
+Narrow Corridor
+
+> N
+Museum Entrance
+
+> N
+South Corridor
+
+> W
+South Corridor
+
+> W
+Old Man's Room
+
+> N
+Engravings Room
+
+> NE
+Old Man's Room
+
+> N
+Narrow Corridor
+
+> PRESS BUTTON
+The mirror rotates and opens, revealing a passage.
+
+> N
+North Corridor
+
+> N
+Mirror Room
+
+> N
+Room of Mirrors
+
+> RAISE SHORT POLE
+You raise the short pole.
+
+> PRESS WHITE PANEL
+The compass needle points to the north.
+
+> AGAIN
+The compass needle points to the south.
+
+> LOWER SHORT POLE
+You lower the short pole.
+
+> PUSH PINE PANEL
+You push the pine panel.
+
+> N
+Narrow Corridor
+
+> OPEN VIAL
+You open the vial.
+
+> DRINK LIQUID
+You drink the liquid. You become invisible.
+
+> N
+Guardians of Zork
+You pass unseen between the statues.
+
+> N
+Narrow Corridor
+
+> N
+Narrow Corridor
+
+> KNOCK ON DOOR
+The door opens. The Dungeon Master is standing inside.
+
+> N
+Dungeon Master's Lair
+
+> E
+Dungeon Master's Lair
+
+> N
+South Corridor
+
+> N
+Parapet
+The Dungeon Master is with you.
+
+> READ BOOK
+It says that around the Parapet are 8 identical rooms. One has a bronze door leading to the Zorkian treasure chamber.
+
+> TURN DIAL TO 4
+You turn the dial to 4.
+
+> PRESS BUTTON
+The parapet shifts and transports you.
+
+> SAY TO DUNGEON MASTER "WAIT"
+The Dungeon Master waits.
+
+> S
+Cell
+You are in a stone cell.
+
+> OPEN CELL DOOR
+You open the cell door.
+
+> S
+You can see a bronze door nearby.
+
+> SAY TO DUNGEON MASTER "TURN DIAL TO 8 AND PRESS BUTTON"
+The Dungeon Master nods and obeys. The parapet shifts.
+
+> UNLOCK BRONZE DOOR WITH KEY
+The key shapes itself to fit the lock. The bronze door unlocks.
+
+> OPEN IT
+You open the bronze door.
+
+> S
+Treasury of Zork
+You are standing in the Treasury of Zork. The Dungeon Master passes his job to you, leaving you as ruler of the Zork empire!
+
+*** You have won! ***
+
+End of transcript.

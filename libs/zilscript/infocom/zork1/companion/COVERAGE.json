@@ -1,0 +1,1889 @@
+{
+  "adventure": "Zork I: The Great Underground Empire",
+  "gameModule": "infocom.zork1",
+  "declaredRoomCount": 110,
+  "classifiedRoomCount": 110,
+  "rooms": [
+    {
+      "id": "WEST-OF-HOUSE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "west-house.initial",
+          "setup": { "newGame": true, "commands": [] },
+          "requiredChoices": {
+            "child": ["west-house.open-mailbox", "west-house.try-front-door", "west-house.go-north"],
+            "story": ["west-house.open-mailbox", "west-house.try-front-door", "west-house.go-north"]
+          },
+          "forbiddenChoices": [],
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-WEST-OF-HOUSE"
+        }
+      ]
+    },
+    {
+      "id": "NORTH-OF-HOUSE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "north-house.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["north-house.go-behind", "north-house.examine-window", "north-house.return-front"],
+            "story": ["north-house.go-behind", "north-house.examine-window", "north-house.return-front"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-NORTH-OF-HOUSE"
+        }
+      ]
+    },
+    {
+      "id": "SOUTH-OF-HOUSE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "south-house.initial",
+          "setup": { "commands": ["south"] },
+          "requiredChoices": {
+            "child": ["south-house.go-behind", "south-house.examine-window", "south-house.return-front"],
+            "story": ["south-house.go-behind", "south-house.examine-window", "south-house.return-front"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SOUTH-OF-HOUSE"
+        }
+      ]
+    },
+    {
+      "id": "EAST-OF-HOUSE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "east-house.window-closed",
+          "setup": { "commands": ["south", "east"] },
+          "requiredChoices": {
+            "child": ["east-house.open-window", "east-house.examine-window", "east-house.go-north"],
+            "story": ["east-house.open-window", "east-house.examine-window", "east-house.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-EAST-OF-HOUSE"
+        },
+        {
+          "id": "east-house.window-open",
+          "setup": { "commands": ["south", "east", "open kitchen window"] },
+          "requiredChoices": {
+            "child": ["east-house.enter-window", "east-house.examine-window", "east-house.go-north"],
+            "story": ["east-house.enter-window", "east-house.examine-window", "east-house.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-EAST-OF-HOUSE"
+        }
+      ]
+    },
+    {
+      "id": "FOREST-1",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "forest-1.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["forest.go-north", "forest.go-east", "forest.go-south"],
+            "story": ["forest.go-north", "forest.go-east", "forest.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-FOREST"
+        }
+      ]
+    },
+    {
+      "id": "FOREST-2",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "forest-2.initial",
+          "setup": { "commands": ["west", "north"] },
+          "requiredChoices": {
+            "child": ["forest.go-south", "forest.go-west", "forest.go-east"],
+            "story": ["forest.go-south", "forest.go-west", "forest.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-FOREST"
+        }
+      ]
+    },
+    {
+      "id": "FOREST-3",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "forest-3.initial",
+          "setup": { "commands": ["south", "west"] },
+          "requiredChoices": {
+            "child": ["forest.go-north", "forest.go-west", "forest.go-east"],
+            "story": ["forest.go-north", "forest.go-west", "forest.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-FOREST"
+        }
+      ]
+    },
+    {
+      "id": "MOUNTAINS",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mountains.initial",
+          "setup": { "commands": ["west", "north", "east"] },
+          "requiredChoices": {
+            "child": ["mountains.go-north", "mountains.go-south"],
+            "story": ["mountains.go-north", "mountains.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MOUNTAINS"
+        }
+      ]
+    },
+    {
+      "id": "PATH",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "path.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["path.climb-tree", "path.go-north", "path.go-south"],
+            "story": ["path.climb-tree", "path.go-north", "path.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-PATH"
+        }
+      ]
+    },
+    {
+      "id": "UP-A-TREE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "tree.initial",
+          "setup": { "commands": ["north", "up"] },
+          "requiredChoices": {
+            "child": ["tree.go-down", "tree.look-around"],
+            "story": ["tree.go-down", "tree.look-around"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-UP-A-TREE"
+        }
+      ]
+    },
+    {
+      "id": "GRATING-CLEARING",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "grating-clearing.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["clearing.open-grate", "clearing.go-west", "clearing.go-east"],
+            "story": ["clearing.open-grate", "clearing.go-west", "clearing.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-GRATING-CLEARING"
+        }
+      ]
+    },
+    {
+      "id": "CLEARING",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "clearing.initial",
+          "setup": { "commands": ["east", "south"] },
+          "requiredChoices": {
+            "child": ["clearing.go-east", "clearing.go-north", "clearing.go-west"],
+            "story": ["clearing.go-east", "clearing.go-north", "clearing.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-CLEARING"
+        }
+      ]
+    },
+    {
+      "id": "KITCHEN",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "kitchen.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window"] },
+          "requiredChoices": {
+            "child": ["kitchen.enter-living-room", "kitchen.climb-stairs", "kitchen.take-sack"],
+            "story": ["kitchen.enter-living-room", "kitchen.climb-stairs", "kitchen.take-sack"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-KITCHEN"
+        }
+      ]
+    },
+    {
+      "id": "LIVING-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "living-room.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "west"] },
+          "requiredChoices": {
+            "child": ["living-room.take-lamp", "living-room.take-sword", "living-room.examine-case"],
+            "story": ["living-room.take-lamp", "living-room.take-sword", "living-room.examine-case"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-LIVING-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "ATTIC",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "attic.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "up"] },
+          "requiredChoices": {
+            "child": ["attic.take-rope", "attic.examine-table", "attic.return-kitchen"],
+            "story": ["attic.take-rope", "attic.examine-table", "attic.return-kitchen"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-ATTIC"
+        }
+      ]
+    },
+    {
+      "id": "CELLAR",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "cellar.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "west", "move rug", "open trap door", "down"] },
+          "requiredChoices": {
+            "child": ["cellar.go-troll-room", "cellar.go-east-chasm", "cellar.go-upstairs"],
+            "story": ["cellar.go-troll-room", "cellar.go-east-chasm", "cellar.go-upstairs"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-CELLAR"
+        }
+      ]
+    },
+    {
+      "id": "TROLL-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "troll-room.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "west", "move rug", "open trap door", "down", "north"] },
+          "requiredChoices": {
+            "child": ["troll-room.fight-troll", "troll-room.go-cellars", "troll-room.go-west"],
+            "story": ["troll-room.fight-troll", "troll-room.go-cellars", "troll-room.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-TROLL-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "EAST-OF-CHASM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "east-chasm.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "west", "move rug", "open trap door", "down", "south"] },
+          "requiredChoices": {
+            "child": ["east-chasm.go-gallery", "east-chasm.go-cellar"],
+            "story": ["east-chasm.go-gallery", "east-chasm.go-cellar"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-EAST-OF-CHASM"
+        }
+      ]
+    },
+    {
+      "id": "STRANGE-PASSAGE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "strange-passage.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["strange-passage.go-west", "strange-passage.go-east"],
+            "story": ["strange-passage.go-west", "strange-passage.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-STRANGE-PASSAGE"
+        }
+      ]
+    },
+    {
+      "id": "GALLERY",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "gallery.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "west", "move rug", "open trap door", "down", "south", "east"] },
+          "requiredChoices": {
+            "child": ["gallery.take-painting", "gallery.go-studio", "gallery.return-chasm"],
+            "story": ["gallery.take-painting", "gallery.go-studio", "gallery.return-chasm"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-GALLERY"
+        }
+      ]
+    },
+    {
+      "id": "STUDIO",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "studio.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "west", "move rug", "open trap door", "down", "south", "east", "north"] },
+          "requiredChoices": {
+            "child": ["studio.read-manual", "studio.return-gallery"],
+            "story": ["studio.read-manual", "studio.return-gallery"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-STUDIO"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-1",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-1.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-north", "maze.go-south"],
+            "story": ["maze.explore", "maze.go-north", "maze.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-2",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-2.initial",
+          "setup": { "commands": ["west", "south"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-south", "maze.go-down"],
+            "story": ["maze.explore", "maze.go-south", "maze.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-3",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-3.initial",
+          "setup": { "commands": ["west", "south", "east"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-west", "maze.go-north"],
+            "story": ["maze.explore", "maze.go-west", "maze.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-4",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-4.initial",
+          "setup": { "commands": ["west", "south", "east", "west"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-west", "maze.go-north"],
+            "story": ["maze.explore", "maze.go-west", "maze.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-5",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-5.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up"] },
+          "requiredChoices": {
+            "child": ["maze5.take-bag", "maze5.take-keys", "maze5.examine-bones"],
+            "story": ["maze5.take-bag", "maze5.take-keys", "maze5.examine-bones"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE-5"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-6",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-6.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-down", "maze.go-east"],
+            "story": ["maze.explore", "maze.go-down", "maze.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-7",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-7.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "east"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-up", "maze.go-west"],
+            "story": ["maze.explore", "maze.go-up", "maze.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-8",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-8.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "east", "east"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-ne", "maze.go-west"],
+            "story": ["maze.explore", "maze.go-ne", "maze.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-9",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-9.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "up"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-north", "maze.go-down"],
+            "story": ["maze.explore", "maze.go-north", "maze.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-10",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-10.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "up", "east"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-east", "maze.go-west"],
+            "story": ["maze.explore", "maze.go-east", "maze.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-11",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-11.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "up", "east", "up"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-ne", "maze.go-down"],
+            "story": ["maze.explore", "maze.go-ne", "maze.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-12",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-12.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "up", "west"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-down", "maze.go-sw"],
+            "story": ["maze.explore", "maze.go-down", "maze.go-sw"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-13",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-13.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "south"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-east", "maze.go-down"],
+            "story": ["maze.explore", "maze.go-east", "maze.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-14",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-14.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "up", "up"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-west", "maze.go-ne"],
+            "story": ["maze.explore", "maze.go-west", "maze.go-ne"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "MAZE-15",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maze-15.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "up", "up", "west"] },
+          "requiredChoices": {
+            "child": ["maze.explore", "maze.go-west", "maze.go-south"],
+            "story": ["maze.explore", "maze.go-west", "maze.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAZE"
+        }
+      ]
+    },
+    {
+      "id": "DEAD-END-1",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dead-end-1.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "east"] },
+          "requiredChoices": {
+            "child": ["dead-end.go-back"],
+            "story": ["dead-end.go-back"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DEAD-END"
+        }
+      ]
+    },
+    {
+      "id": "DEAD-END-2",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dead-end-2.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "east"] },
+          "requiredChoices": {
+            "child": ["dead-end.go-back"],
+            "story": ["dead-end.go-back"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DEAD-END"
+        }
+      ]
+    },
+    {
+      "id": "DEAD-END-3",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dead-end-3.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "east", "east", "se"] },
+          "requiredChoices": {
+            "child": ["dead-end.go-back"],
+            "story": ["dead-end.go-back"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DEAD-END"
+        }
+      ]
+    },
+    {
+      "id": "DEAD-END-4",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dead-end-4.initial",
+          "setup": { "commands": ["west", "south", "east", "west", "up", "sw", "up", "west", "north"] },
+          "requiredChoices": {
+            "child": ["dead-end.go-back"],
+            "story": ["dead-end.go-back"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DEAD-END"
+        }
+      ]
+    },
+    {
+      "id": "DEAD-END-5",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dead-end-5.initial",
+          "setup": { "commands": ["south", "east", "open kitchen window", "enter window", "west", "move rug", "open trap door", "down", "north", "west", "south", "west", "down", "south"] },
+          "requiredChoices": {
+            "child": ["dead-end.go-back"],
+            "story": ["dead-end.go-back"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DEAD-END"
+        }
+      ]
+    },
+    {
+      "id": "GRATING-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "grating-room.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["grating-room.open-grate", "grating-room.explore-maze"],
+            "story": ["grating-room.open-grate", "grating-room.explore-maze"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-GRATING-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "CYCLOPS-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "cyclops-room.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["cyclops-room.confront-cyclops", "cyclops-room.go-strange-passage", "cyclops-room.return-maze"],
+            "story": ["cyclops-room.confront-cyclops", "cyclops-room.go-strange-passage", "cyclops-room.return-maze"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-CYCLOPS-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "TREASURE-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "treasure-room.initial",
+          "setup": { "commands": ["up"] },
+          "requiredChoices": {
+            "child": ["treasure-room.take-chalice", "treasure-room.return-cyclops"],
+            "story": ["treasure-room.take-chalice", "treasure-room.return-cyclops"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-TREASURE-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "MIRROR-ROOM-1",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mirror-room-1.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["mirror-room.go-north", "mirror-room.go-west", "mirror-room.go-east"],
+            "story": ["mirror-room.go-north", "mirror-room.go-west", "mirror-room.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MIRROR-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "MIRROR-ROOM-2",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mirror-room-2.initial",
+          "setup": { "commands": ["west", "east", "north"] },
+          "requiredChoices": {
+            "child": ["mirror-room.go-north", "mirror-room.go-west", "mirror-room.go-east"],
+            "story": ["mirror-room.go-north", "mirror-room.go-west", "mirror-room.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MIRROR-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "SMALL-CAVE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "small-cave.initial",
+          "setup": { "commands": ["west", "east"] },
+          "requiredChoices": {
+            "child": ["small-cave.go-north", "small-cave.go-down"],
+            "story": ["small-cave.go-north", "small-cave.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SMALL-CAVE"
+        }
+      ]
+    },
+    {
+      "id": "TINY-CAVE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "tiny-cave.initial",
+          "setup": { "commands": ["west", "east", "north"] },
+          "requiredChoices": {
+            "child": ["tiny-cave.go-north", "tiny-cave.go-west", "tiny-cave.go-down"],
+            "story": ["tiny-cave.go-north", "tiny-cave.go-west", "tiny-cave.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-TINY-CAVE"
+        }
+      ]
+    },
+    {
+      "id": "COLD-PASSAGE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "cold-passage.initial",
+          "setup": { "commands": ["west", "east", "north"] },
+          "requiredChoices": {
+            "child": ["cold-passage.go-west", "cold-passage.go-south"],
+            "story": ["cold-passage.go-west", "cold-passage.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-COLD-PASSAGE"
+        }
+      ]
+    },
+    {
+      "id": "NARROW-PASSAGE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "narrow-passage.initial",
+          "setup": { "commands": ["south"] },
+          "requiredChoices": {
+            "child": ["narrow-passage.go-north", "narrow-passage.go-south"],
+            "story": ["narrow-passage.go-north", "narrow-passage.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-NARROW-PASSAGE"
+        }
+      ]
+    },
+    {
+      "id": "WINDING-PASSAGE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "winding-passage.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["winding-passage.go-north", "winding-passage.go-east"],
+            "story": ["winding-passage.go-north", "winding-passage.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-WINDING-PASSAGE"
+        }
+      ]
+    },
+    {
+      "id": "TWISTING-PASSAGE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "twisting-passage.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["twisting-passage.go-north", "twisting-passage.go-east"],
+            "story": ["twisting-passage.go-north", "twisting-passage.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-TWISTING-PASSAGE"
+        }
+      ]
+    },
+    {
+      "id": "ATLANTIS-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "atlantis-room.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["atlantis.take-trident", "atlantis.go-mirror"],
+            "story": ["atlantis.take-trident", "atlantis.go-mirror"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-ATLANTIS-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "EW-PASSAGE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "ew-passage.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["ew-passage.go-east", "ew-passage.go-west", "ew-passage.go-north"],
+            "story": ["ew-passage.go-east", "ew-passage.go-west", "ew-passage.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-EW-PASSAGE"
+        }
+      ]
+    },
+    {
+      "id": "ROUND-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "round-room.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["round-room.go-ew-passage", "round-room.go-damp-cave", "round-room.go-loud-room"],
+            "story": ["round-room.go-ew-passage", "round-room.go-damp-cave", "round-room.go-loud-room"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-ROUND-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "DEEP-CANYON",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "deep-canyon.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["deep-canyon.go-east", "deep-canyon.go-down", "deep-canyon.go-northwest"],
+            "story": ["deep-canyon.go-east", "deep-canyon.go-down", "deep-canyon.go-northwest"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DEEP-CANYON"
+        }
+      ]
+    },
+    {
+      "id": "DAMP-CAVE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "damp-cave.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["damp-cave.go-west", "damp-cave.go-east"],
+            "story": ["damp-cave.go-west", "damp-cave.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DAMP-CAVE"
+        }
+      ]
+    },
+    {
+      "id": "LOUD-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "loud-room.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["loud-room.take-bar", "loud-room.return-round"],
+            "story": ["loud-room.take-bar", "loud-room.return-round"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-LOUD-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "NS-PASSAGE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "ns-passage.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["ns-passage.go-north", "ns-passage.go-northeast", "ns-passage.go-south"],
+            "story": ["ns-passage.go-north", "ns-passage.go-northeast", "ns-passage.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-NS-PASSAGE"
+        }
+      ]
+    },
+    {
+      "id": "CHASM-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "chasm-room.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["chasm-room.go-northeast", "chasm-room.go-southwest", "chasm-room.go-south"],
+            "story": ["chasm-room.go-northeast", "chasm-room.go-southwest", "chasm-room.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-CHASM-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "ENGRAVINGS-CAVE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "engravings-cave.initial",
+          "setup": { "commands": ["se"] },
+          "requiredChoices": {
+            "child": ["engravings.go-northwest", "engravings.go-east"],
+            "story": ["engravings.go-northwest", "engravings.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-ENGRAVINGS-CAVE"
+        }
+      ]
+    },
+    {
+      "id": "DOME-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dome-room.initial",
+          "setup": { "commands": ["se"] },
+          "requiredChoices": {
+            "child": ["dome.tie-rope", "dome.go-west"],
+            "story": ["dome.tie-rope", "dome.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DOME-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "TORCH-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "torch-room.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["torch-room.take-torch", "torch-room.go-dome"],
+            "story": ["torch-room.take-torch", "torch-room.go-dome"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-TORCH-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "NORTH-TEMPLE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "north-temple.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["temple.take-bell", "temple.read-prayer", "temple.go-altar"],
+            "story": ["temple.take-bell", "temple.read-prayer", "temple.go-altar"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-NORTH-TEMPLE"
+        }
+      ]
+    },
+    {
+      "id": "SOUTH-TEMPLE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "south-temple.initial",
+          "setup": { "commands": ["south"] },
+          "requiredChoices": {
+            "child": ["altar.take-candles", "altar.take-book", "altar.return-temple"],
+            "story": ["altar.take-candles", "altar.take-book", "altar.return-temple"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SOUTH-TEMPLE"
+        }
+      ]
+    },
+    {
+      "id": "EGYPT-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "egypt-room.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["egypt.open-coffin", "egypt.go-temple"],
+            "story": ["egypt.open-coffin", "egypt.go-temple"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-EGYPT-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "ENTRANCE-TO-HADES",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "hades-entrance.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["hades.take-skull", "hades.go-temple"],
+            "story": ["hades.take-skull", "hades.go-temple"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-HADES"
+        }
+      ]
+    },
+    {
+      "id": "LAND-OF-LIVING-DEAD",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "land-of-dead.initial",
+          "setup": { "commands": ["south"] },
+          "requiredChoices": {
+            "child": ["hades.take-skull", "hades.go-temple"],
+            "story": ["hades.take-skull", "hades.go-temple"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-HADES"
+        }
+      ]
+    },
+    {
+      "id": "BAT-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "bat-room.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["bat-room.get-jade", "bat-room.go-mine"],
+            "story": ["bat-room.get-jade", "bat-room.go-mine"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-BAT-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "RESERVOIR-SOUTH",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "reservoir-south.initial",
+          "setup": { "commands": ["ne"] },
+          "requiredChoices": {
+            "child": ["reservoir-south.go-east", "reservoir-south.go-southeast"],
+            "story": ["reservoir-south.go-east", "reservoir-south.go-southeast"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RESERVOIR-SOUTH"
+        }
+      ]
+    },
+    {
+      "id": "RESERVOIR",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "reservoir.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["reservoir.open-trunk", "reservoir.take-treasures", "reservoir.take-pump"],
+            "story": ["reservoir.open-trunk", "reservoir.take-treasures", "reservoir.take-pump"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RESERVOIR"
+        }
+      ]
+    },
+    {
+      "id": "RESERVOIR-NORTH",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "reservoir-north.initial",
+          "setup": { "commands": ["north", "north"] },
+          "requiredChoices": {
+            "child": ["reservoir.take-pump", "reservoir.go-stream-view"],
+            "story": ["reservoir.take-pump", "reservoir.go-stream-view"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RESERVOIR"
+        }
+      ]
+    },
+    {
+      "id": "STREAM-VIEW",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "stream-view.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["stream-view.go-east"],
+            "story": ["stream-view.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-STREAM-VIEW"
+        }
+      ]
+    },
+    {
+      "id": "IN-STREAM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "in-stream.initial",
+          "setup": { "commands": ["up"] },
+          "requiredChoices": {
+            "child": ["in-stream.land", "in-stream.go-down"],
+            "story": ["in-stream.land", "in-stream.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-IN-STREAM"
+        }
+      ]
+    },
+    {
+      "id": "DAM-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dam-room.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["dam-room.go-north", "dam-room.go-down", "dam-room.go-west"],
+            "story": ["dam-room.go-north", "dam-room.go-down", "dam-room.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DAM-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "DAM-LOBBY",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dam-lobby.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["dam-lobby.take-matches", "dam-lobby.take-guide", "dam-lobby.go-dam"],
+            "story": ["dam-lobby.take-matches", "dam-lobby.take-guide", "dam-lobby.go-dam"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DAM-LOBBY"
+        }
+      ]
+    },
+    {
+      "id": "MAINTENANCE-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "maintenance-room.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["maint.take-screwdriver", "maint.take-wrench", "maint.take-putty"],
+            "story": ["maint.take-screwdriver", "maint.take-wrench", "maint.take-putty"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MAINTENANCE-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "MACHINE-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "machine-room.initial",
+          "setup": { "commands": ["south"] },
+          "requiredChoices": {
+            "child": ["machine.turn-on", "machine.return-mine"],
+            "story": ["machine.turn-on", "machine.return-mine"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MACHINE-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "DAM-BASE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "dam-base.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["dam-base.go-north"],
+            "story": ["dam-base.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-DAM-BASE"
+        }
+      ]
+    },
+    {
+      "id": "RIVER-1",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "river-1.initial",
+          "setup": { "commands": ["down", "east"] },
+          "requiredChoices": {
+            "child": ["river.go-down", "river.land"],
+            "story": ["river.go-down", "river.land"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RIVER"
+        }
+      ]
+    },
+    {
+      "id": "RIVER-2",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "river-2.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["river.go-down", "river.land"],
+            "story": ["river.go-down", "river.land"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RIVER"
+        }
+      ]
+    },
+    {
+      "id": "RIVER-3",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "river-3.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["river.go-down", "river.land"],
+            "story": ["river.go-down", "river.land"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RIVER"
+        }
+      ]
+    },
+    {
+      "id": "RIVER-4",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "river-4.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["river.go-down", "river.land"],
+            "story": ["river.go-down", "river.land"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RIVER"
+        }
+      ]
+    },
+    {
+      "id": "RIVER-5",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "river-5.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["river.go-down", "river.land"],
+            "story": ["river.go-down", "river.land"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-RIVER"
+        }
+      ]
+    },
+    {
+      "id": "WHITE-CLIFFS-NORTH",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "white-cliffs-north.initial",
+          "setup": { "commands": ["land"] },
+          "requiredChoices": {
+            "child": ["cliffs.go-south", "cliffs.go-west"],
+            "story": ["cliffs.go-south", "cliffs.go-west"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-WHITE-CLIFFS"
+        }
+      ]
+    },
+    {
+      "id": "WHITE-CLIFFS-SOUTH",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "white-cliffs-south.initial",
+          "setup": { "commands": ["land", "west"] },
+          "requiredChoices": {
+            "child": ["cliffs.go-north"],
+            "story": ["cliffs.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-WHITE-CLIFFS"
+        }
+      ]
+    },
+    {
+      "id": "SHORE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "shore.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["shore.go-north", "shore.go-south"],
+            "story": ["shore.go-north", "shore.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SHORE"
+        }
+      ]
+    },
+    {
+      "id": "SANDY-BEACH",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "sandy-beach.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["sandy-beach.go-northeast", "sandy-beach.go-south"],
+            "story": ["sandy-beach.go-northeast", "sandy-beach.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SANDY-BEACH"
+        }
+      ]
+    },
+    {
+      "id": "SANDY-CAVE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "sandy-cave.initial",
+          "setup": { "commands": ["ne"] },
+          "requiredChoices": {
+            "child": ["sandy-cave.go-southwest"],
+            "story": ["sandy-cave.go-southwest"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SANDY-CAVE"
+        }
+      ]
+    },
+    {
+      "id": "ARAGAIN-FALLS",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "aragain-falls.initial",
+          "setup": { "commands": ["south"] },
+          "requiredChoices": {
+            "child": ["falls.go-beach", "falls.go-canyon"],
+            "story": ["falls.go-beach", "falls.go-canyon"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-ARAGAIN-FALLS"
+        }
+      ]
+    },
+    {
+      "id": "ON-RAINBOW",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "on-rainbow.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["rainbow.go-west", "rainbow.go-east"],
+            "story": ["rainbow.go-west", "rainbow.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-ON-RAINBOW"
+        }
+      ]
+    },
+    {
+      "id": "END-OF-RAINBOW",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "end-of-rainbow.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["end-rainbow.take-gold", "end-rainbow.go-northeast", "end-rainbow.go-southwest"],
+            "story": ["end-rainbow.take-gold", "end-rainbow.go-northeast", "end-rainbow.go-southwest"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-END-OF-RAINBOW"
+        }
+      ]
+    },
+    {
+      "id": "CANYON-BOTTOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "canyon-bottom.initial",
+          "setup": { "commands": ["sw"] },
+          "requiredChoices": {
+            "child": ["canyon-bottom.climb-up", "canyon-bottom.go-north"],
+            "story": ["canyon-bottom.climb-up", "canyon-bottom.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-CANYON-BOTTOM"
+        }
+      ]
+    },
+    {
+      "id": "CLIFF-MIDDLE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "cliff-middle.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["cliff-middle.climb-up", "cliff-middle.climb-down"],
+            "story": ["cliff-middle.climb-up", "cliff-middle.climb-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-CLIFF-MIDDLE"
+        }
+      ]
+    },
+    {
+      "id": "CANYON-VIEW",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "canyon-view.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["canyon-view.climb-down", "canyon-view.go-east", "canyon-view.go-northwest"],
+            "story": ["canyon-view.climb-down", "canyon-view.go-east", "canyon-view.go-northwest"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-CANYON-VIEW"
+        }
+      ]
+    },
+    {
+      "id": "STONE-BARROW",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "stone-barrow.initial",
+          "setup": { "commands": ["sw"] },
+          "requiredChoices": {
+            "child": ["barrow.enter", "barrow.go-northeast"],
+            "story": ["barrow.enter", "barrow.go-northeast"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-STONE-BARROW"
+        }
+      ]
+    },
+    {
+      "id": "MINE-ENTRANCE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mine-entrance.initial",
+          "setup": { "commands": ["east", "cold passage west"] },
+          "requiredChoices": {
+            "child": ["mine-entrance.go-west", "mine-entrance.go-south"],
+            "story": ["mine-entrance.go-west", "mine-entrance.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MINE-ENTRANCE"
+        }
+      ]
+    },
+    {
+      "id": "SQUEEKY-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "squeeky-room.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["squeeky.go-north", "squeeky.go-east"],
+            "story": ["squeeky.go-north", "squeeky.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SQUEEKY-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "SHAFT-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "shaft-room.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["shaft.go-west", "shaft.go-north"],
+            "story": ["shaft.go-west", "shaft.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SHAFT-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "SMELLY-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "smelly-room.initial",
+          "setup": { "commands": ["north"] },
+          "requiredChoices": {
+            "child": ["smelly.go-down", "smelly.go-south"],
+            "story": ["smelly.go-down", "smelly.go-south"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SMELLY-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "GAS-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "gas-room.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["gas.go-up", "gas.go-east"],
+            "story": ["gas.go-up", "gas.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-GAS-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "LADDER-TOP",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "ladder-top.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["ladder-top.go-down", "ladder-top.go-up"],
+            "story": ["ladder-top.go-down", "ladder-top.go-up"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-LADDER-TOP"
+        }
+      ]
+    },
+    {
+      "id": "LADDER-BOTTOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "ladder-bottom.initial",
+          "setup": { "commands": ["down"] },
+          "requiredChoices": {
+            "child": ["ladder-bottom.go-west", "ladder-bottom.go-south", "ladder-bottom.go-up"],
+            "story": ["ladder-bottom.go-west", "ladder-bottom.go-south", "ladder-bottom.go-up"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-LADDER-BOTTOM"
+        }
+      ]
+    },
+    {
+      "id": "TIMBER-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "timber-room.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["timber.go-west", "timber.go-east"],
+            "story": ["timber.go-west", "timber.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-TIMBER-ROOM"
+        }
+      ]
+    },
+    {
+      "id": "LOWER-SHAFT",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "lower-shaft.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["lower-shaft.go-south", "lower-shaft.go-east"],
+            "story": ["lower-shaft.go-south", "lower-shaft.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-LOWER-SHAFT"
+        }
+      ]
+    },
+    {
+      "id": "MINE-1",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mine-1.initial",
+          "setup": { "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["mine.go-north", "mine.go-east", "mine.go-northeast"],
+            "story": ["mine.go-north", "mine.go-east", "mine.go-northeast"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MINE"
+        }
+      ]
+    },
+    {
+      "id": "MINE-2",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mine-2.initial",
+          "setup": { "commands": ["ne"] },
+          "requiredChoices": {
+            "child": ["mine.go-north", "mine.go-south", "mine.go-southeast"],
+            "story": ["mine.go-north", "mine.go-south", "mine.go-southeast"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MINE"
+        }
+      ]
+    },
+    {
+      "id": "MINE-3",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mine-3.initial",
+          "setup": { "commands": ["se"] },
+          "requiredChoices": {
+            "child": ["mine.go-south", "mine.go-southwest", "mine.go-east"],
+            "story": ["mine.go-south", "mine.go-southwest", "mine.go-east"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MINE"
+        }
+      ]
+    },
+    {
+      "id": "MINE-4",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mine-4.initial",
+          "setup": { "commands": ["sw"] },
+          "requiredChoices": {
+            "child": ["mine.go-north", "mine.go-west", "mine.go-down"],
+            "story": ["mine.go-north", "mine.go-west", "mine.go-down"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-MINE"
+        }
+      ]
+    },
+    {
+      "id": "SLIDE-ROOM",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "slide-room.initial",
+          "setup": { "commands": ["west"] },
+          "requiredChoices": {
+            "child": ["slide.go-down", "slide.go-east", "slide.go-north"],
+            "story": ["slide.go-down", "slide.go-east", "slide.go-north"]
+          },
+          "status": "AUTHORED",
+          "evidence": "companion.zil SUGGEST-SLIDE-ROOM"
+        }
+      ]
+    }
+  ]
+}

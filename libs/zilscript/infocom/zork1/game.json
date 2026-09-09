@@ -1,0 +1,32 @@
+{
+    "id": "infocom.zork1",
+    "title": "Zork I: The Great Underground Empire",
+    "shortDescription": "Explore the Great Underground Empire.",
+    "description": "You are standing in an open field west of a white house, with a boarded front door. You are about to begin a legendary adventure that started it all — a journey into the Great Underground Empire. Navigate treacherous mazes, collect treasures, and outwit the fearsome Grues that lurk in the dark.\n\nOriginally created at MIT in the late 1970s, Zork pioneered the text adventure genre and established many of the conventions still used in interactive fiction today.",
+    "author": "Infocom",
+    "year": 1980,
+    "rating": 4.8,
+    "reviewCount": 2341,
+    "startFile": "zork1.zil",
+    "reviews": [
+        {
+            "author": "dungeon_crawler",
+            "rating": 5,
+            "title": "A timeless classic",
+            "body": "Still holds up decades later. The writing is sharp, the puzzles are fair, and exploring the dungeon never gets old. This is where it all began."
+        },
+        {
+            "author": "text_adventurer",
+            "rating": 5,
+            "title": "The gold standard",
+            "body": "If you've never played a text adventure, start here. Zork set the bar so high that most games since have been playing catch-up."
+        },
+        {
+            "author": "pixel_nostalgia",
+            "rating": 4,
+            "title": "Great but brutal",
+            "body": "Zork rewards patience and lateral thinking. A few puzzles are obtuse by modern standards, but the atmosphere and writing more than make up for it."
+        }
+    ],
+    "genre": "Classic Adventure"
+}

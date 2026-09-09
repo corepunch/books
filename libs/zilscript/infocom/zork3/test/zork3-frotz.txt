@@ -1,0 +1,837 @@
+Here begins a transcript of interaction with
+ZORK III: The Dungeon Master
+Infocom interactive fiction - a fantasy story
+Copyright 1982, 1983, 1984, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 25 / Serial number 860811
+
+>GET LAMP
+Taken.
+
+>S
+You have moved into a dark place.
+It is pitch black. You are likely to be eaten by a grue.
+
+>LIGHT LAMP
+The lamp is now on.
+
+Junction
+You are at the junction of a north-south passage and an east-west passage. To
+the north, you can make out the bottom of a stairway. The ways to the east and
+south are relatively cramped, but a wider trail leads to the west.
+Standing before you is a great rock. Imbedded within it is an Elvish sword.
+
+>W
+Barren Area
+You are west of the junction, where the rock-bound passage widens out into a
+large, flat area. Although the land here is barren, you can see vegetation to
+the west. South of here is a mighty wall of stone, ancient and crumbling. To the
+southwest the wall has decayed enough to form an opening, through which seeps a
+thin mist. A trail dips sharply into rocky terrain to the northwest.
+
+>W
+Cliff
+This is a remarkable spot in the dungeon. Perhaps two hundred feet above you is
+a gaping hole in the earth's surface through which pours bright sunshine! A few
+seedlings from the world above, nurtured by the sunlight and occasional rains,
+have grown into giant trees, making this a virtual oasis in the desert of the
+Underground Empire. To the west is a sheer precipice, dropping nearly fifty feet
+to jagged rocks below. The way south is barred by a forbidding stone wall,
+crumbling from age. There is a jagged opening in the wall to the southwest,
+through which leaks a fine mist. The land to the east looks lifeless and barren.
+A rope is tied to one of the large trees here and is dangling over the side of
+the cliff, reaching down to the shelf below.
+It seems as if somebody has been here recently, as there is some fresh bread
+lying beneath one of the other trees.
+
+>GET BREAD
+Taken.
+You seem to hear, from the southwest, the sounds of the sea.
+
+>E
+Barren Area
+
+>E
+Junction
+Standing before you is a great rock. Imbedded within it is an Elvish sword.
+
+>E
+Damp Passage
+This is a particularly damp spot even by dungeon standards. You can see the
+junction to the west, and two similar passages to the east and northeast. A wide
+stone channel steeply descends into the room from the south. It is covered with
+slippery moss and lichen. The channel crosses the room, but the opening where it
+once continued north is now blocked by rubble.
+
+>NE
+Engravings Room
+You are in a room with passages heading southwest and southeast. The north wall
+is ornately carved, filled with strange runes and writing in an unfamiliar
+language.
+
+>SE
+Dead End
+You have come to the end of two adjoining passages to the west and the
+northwest.
+
+>W
+Damp Passage
+
+>WAKE UP OLD MAN
+You can't see any old man here!
+
+>GIVE BREAD TO OLD MAN
+You can't see any old man here!
+
+>SW
+You can't go that way.
+
+>W
+Junction
+Standing before you is a great rock. Imbedded within it is an Elvish sword.
+
+>S
+Creepy Crawl
+You are in a dark and quite creepy crawlway with passages leaving to the north,
+east, south, and southwest.
+
+>S
+Foggy Room
+You are in a dank passage filled with a wispy fog. A spooky passageway leads
+north and a wider path heads off to the south. To the west, the path leaves the
+rock and enters an eerie, shadowy land.
+
+>S
+Lake Shore
+You are in a wide cavern on the north shore of a small lake. Some polished stone
+steps lead to the southeast and a sheer rock face prevents any movement around
+the lake to the southwest. The cavern is dimly lit from above.
+
+>TURN OFF LAMP
+The lamp is now off.
+
+>DROP LAMP
+Dropped.
+
+>JUMP LAKE
+That sentence isn't one I recognize.
+
+>D
+Aqueduct View
+This is a small balcony carved into a near-vertical cliff. To the east,
+stretching from north to south, stands a monumental aqueduct supported by mighty
+stone pillars, some of which are starting to crumble from age. You feel a sense
+of loss and sadness as you ponder this once-proud structure and the failure of
+the Empire which created this and other engineering marvels. Some stone steps
+lead up to the northwest.
+
+>GET AMULET
+You can't see any amulet here!
+
+>GET AMULET
+You can't see any amulet here!
+
+>GET AMULET
+You can't see any amulet here!
+
+>U
+Lake Shore
+There is a lamp here.
+
+>W
+You can't go that way.
+
+>S
+If you really want to enter the lake, you should say so.
+
+>GET TORCH
+You can't see any torch here!
+
+>WAIT
+Time passes...
+
+>TOUCH TABLE
+You can't see any table here!
+
+>GET CAN
+You can't see any can here!
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>TOUCH TABLE
+You can't see any table here!
+
+>DROP TORCH
+You don't have that!
+
+>WAIT
+Time passes...
+
+>N
+You have moved into a dark place.
+It is pitch black. You are likely to be eaten by a grue.
+
+>JUMP LAKE
+That sentence isn't one I recognize.
+
+>D
+You can't go that way.
+
+>GET CAN
+It's too dark to see!
+
+>U
+You can't go that way.
+
+>S
+Lake Shore
+There is a lamp here.
+
+>S
+If you really want to enter the lake, you should say so.
+
+>S
+If you really want to enter the lake, you should say so.
+
+>SPRAY REPELLANT ON MYSELF
+You can't see any repellant here!
+
+>S
+If you really want to enter the lake, you should say so.
+
+>E
+You can't go that way.
+
+>GET KEY
+You can't see any key here!
+
+>MOVE COVER
+You can't see any cover here!
+
+>D
+Aqueduct View
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>GET TORCH
+You can't see any torch here!
+
+>W
+You can't go that way.
+
+>W
+You can't go that way.
+
+>W
+You can't go that way.
+
+>D
+The drop would be fatal.
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>TIE CHEST TO ROPE
+Those things aren't here!
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+There is a great tremor from within the earth. The entire dungeon shakes
+violently and loose debris falls from above you.
+One of the giant pillars supporting the aqueduct collapses in a pile of smoke
+and rubble!
+
+>WAIT
+Time passes...
+
+>GRAB ROPE
+You can't see any rope here!
+
+>GET CHEST
+You can't see any chest here!
+
+>D
+The drop would be fatal.
+
+>D
+The drop would be fatal.
+
+>S
+You can't go that way.
+
+>WAIT
+Time passes...
+
+>HELLO SAILOR
+Nothing happens here.
+
+>GET VIAL
+You can't see any vial here!
+
+>E
+You can't go that way.
+
+>WAIT
+Time passes...
+
+>KILL FIGURE WITH SWORD
+You don't have that!
+
+>KILL FIGURE WITH SWORD
+You don't have that!
+
+>REMOVE HOOD
+You can't see any hood here!
+
+>DROP SWORD
+You don't have that!
+
+>GET CLOAK
+You can't see any cloak here!
+
+>NE
+You can't go that way.
+
+>E
+You can't go that way.
+
+>N
+You can't go that way.
+
+>E
+You can't go that way.
+
+>NE
+You can't go that way.
+
+>N
+You can't go that way.
+
+>E
+You can't go that way.
+
+>OPEN DOOR
+You can't see any door here!
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>DROP CHEST
+You don't have that!
+
+>S
+You can't go that way.
+
+>S
+You can't go that way.
+
+>SW
+You can't go that way.
+
+>W
+You can't go that way.
+
+>S
+You can't go that way.
+
+>E
+You can't go that way.
+
+>E
+You can't go that way.
+
+>S
+You can't go that way.
+
+>S
+You can't go that way.
+
+>E
+You can't go that way.
+
+>N
+You can't go that way.
+
+>PUSH GOLDEN MACHINE SOUTH
+You can't see any golden machine here!
+
+>OPEN STONE DOOR
+You can't see any stone door here!
+
+>PUSH GOLDEN MACHINE EAST
+You can't see any golden machine here!
+
+>EXAMINE MACHINE
+You can't see any machine here!
+
+>READ PLAQUE
+You can't see any plaque here!
+
+>GET IN MACHINE
+You can't see any machine here!
+
+>SET DIAL TO 776
+You can't see any dial here!
+
+>PRESS BUTTON
+You can't see any button here!
+
+>WAIT
+Time passes...
+
+>GET RING
+You can't see any ring here!
+
+>OPEN DOOR
+You can't see any door here!
+
+>W
+You can't go that way.
+
+>OPEN WOODEN DOOR
+You can't see any wooden door here!
+
+>N
+You can't go that way.
+
+>LIFT SEAT
+You can't see any seat here!
+
+>HIDE RING UNDER SEAT
+You don't have that!
+
+>GET IN GOLDEN MACHINE
+You can't see any golden machine here!
+
+>SET DIAL TO 948
+You can't see any dial here!
+
+>PRESS BUTTON
+You can't see any button here!
+
+>GET OUT OF GOLDEN MACHINE
+You can't see any of golden machine here!
+
+>LIFT SEAT
+You can't see any seat here!
+
+>OPEN WOODEN DOOR
+You can't see any wooden door here!
+
+>S
+You can't go that way.
+
+>OPEN STONE DOOR
+You can't see any stone door here!
+
+>E
+You can't go that way.
+
+>GET ALL
+There's nothing here you can take.
+
+>W
+You can't go that way.
+
+>S
+You can't go that way.
+
+>D
+The drop would be fatal.
+
+>PRESS SOUTH WALL
+You can't budge it; at least from here.
+
+>E
+You can't go that way.
+
+>S
+You can't go that way.
+
+>E
+You can't go that way.
+
+>E
+You can't go that way.
+
+>PRESS SOUTH WALL
+You can't budge it; at least from here.
+
+>GET BOOK
+You can't see any book here!
+
+>PRESS SOUTH WALL
+You can't budge it; at least from here.
+
+>PRESS WEST WALL
+You can't budge it; at least from here.
+
+>AGAIN
+You can't budge it; at least from here.
+
+>E
+You can't go that way.
+
+>E
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>PRESS EAST WALL
+You can't budge it; at least from here.
+
+>W
+You can't go that way.
+
+>S
+You can't go that way.
+
+>S
+You can't go that way.
+
+>S
+You can't go that way.
+
+>S
+You can't go that way.
+
+>E
+You can't go that way.
+
+>E
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>PRESS WEST WALL
+You can't budge it; at least from here.
+
+>N
+You can't go that way.
+
+>W
+You can't go that way.
+
+>PRESS SOUTH WALL
+You can't budge it; at least from here.
+
+>E
+You can't go that way.
+
+>E
+You can't go that way.
+
+>S
+You can't go that way.
+
+>S
+You can't go that way.
+
+>S
+You can't go that way.
+
+>W
+You can't go that way.
+
+>W
+You can't go that way.
+
+>N
+You can't go that way.
+
+>PRESS EAST WALL
+You can't budge it; at least from here.
+
+>W
+You can't go that way.
+
+>W
+You can't go that way.
+
+>W
+You can't go that way.
+
+>N
+You can't go that way.
+
+>N
+You can't go that way.
+
+>W
+You can't go that way.
+
+>N
+You can't go that way.
+
+>PRESS EAST WALL
+You can't budge it; at least from here.
+
+>AGAIN
+You can't budge it; at least from here.
+
+>AGAIN
+You can't budge it; at least from here.
+
+>S
+You can't go that way.
+
+>PRESS SOUTH WALL
+You can't budge it; at least from here.
+
+>N
+You can't go that way.
+
+>E
+You can't go that way.
+
+>E
+You can't go that way.
+
+>S
+You can't go that way.
+
+>PRESS SOUTH WALL
+You can't budge it; at least from here.
+
+>W
+You can't go that way.
+
+>PRESS WEST WALL
+You can't budge it; at least from here.
+
+>AGAIN
+You can't budge it; at least from here.
+
+>S
+You can't go that way.
+
+>W
+You can't go that way.
+
+>PRESS NORTH WALL
+You can't budge it; at least from here.
+
+>AGAIN
+You can't budge it; at least from here.
+
+>AGAIN
+You can't budge it; at least from here.
+
+>W
+You can't go that way.
+
+>N
+You can't go that way.
+
+>U
+Lake Shore
+There is a lamp here.
+
+>N
+You have moved into a dark place.
+It is pitch black. You are likely to be eaten by a grue.
+
+>W
+Oh, no! A lurking grue slithered into the room and devoured you!
+
+    ****  You have died  ****
+
+You find yourself deep within the earth in a barren prison cell. Outside the
+iron-barred window, you can see a great, fiery pit. Flames leap up and very
+nearly sear your flesh. After a while, footfalls can be heard in the distance,
+then closer and closer.... The door swings open, and in walks an old man.
+
+He is dressed simply in a hood and cloak, wearing an amulet and ring, carrying
+an old book under one arm, and leaning on a wooden staff. A single key, as if to
+a massive prison cell, hangs from his belt.
+
+He raises the staff toward you and you hear him speak, as if in a dream: "I
+await you, though your journey be long and full of peril. Go then, and let me
+not wait long!" You feel some great power well up inside you and you fall to the
+floor. The next moment, you are awakening, as if from a deep slumber.
+
+Endless Stair
+There is a lamp here.
+
+>N
+The stairs are endless.
+
+>N
+The stairs are endless.
+
+>W
+You can't go that way.
+
+>W
+You can't go that way.
+
+>N
+The stairs are endless.
+
+>NE
+You can't go that way.
+
+>N
+The stairs are endless.
+
+>PRESS BUTTON
+You can't see any button here!
+
+>N
+The stairs are endless.
+
+>N
+The stairs are endless.
+
+>N
+The stairs are endless.
+
+>RAISE SHORT POLE
+You can't see any short pole here!
+
+>PRESS WHITE PANEL
+You can't see any white panel here!
+
+>AGAIN
+You can't see any white panel here!
+
+>LOWER SHORT POLE
+You can't see any short pole here!
+
+>PUSH PINE PANEL
+You can't see any pine panel here!
+
+>N
+The stairs are endless.
+
+>OPEN VIAL
+You can't see any vial here!
+
+>DRINK LIQUID
+You can't see any liquid here!
+
+>N
+The stairs are endless.
+
+>N
+The stairs are endless.
+
+>N
+The stairs are endless.
+
+>KNOCK ON DOOR
+You can't see any door here!
+
+>N
+The stairs are endless.
+
+>E
+You can't go that way.
+
+>N
+The stairs are endless.
+
+>N
+The stairs are endless.
+
+>READ BOOK
+You can't see any book here!
+
+>TURN DIAL TO 4
+You can't see any dial here!
+
+>PRESS BUTTON
+You can't see any button here!
+
+>SAY TO DUNGEON MASTER "WAIT"
+That sentence isn't one I recognize.
+
+>S
+You have moved into a dark place.
+It is pitch black. You are likely to be eaten by a grue.
+
+>OPEN CELL DOOR
+It's too dark to see!
+
+>S
+Oh, no! A lurking grue slithered into the room and devoured you!
+
+    ****  You have died  ****
+
+You find yourself deep within the earth in a barren prison cell. Outside the
+iron-barred window, you can see a great, fiery pit. Flames leap up and very
+nearly sear your flesh. After a while, footfalls can be heard in the distance,
+then closer and closer.... The door swings open, and in walks an old man.
+
+He is dressed simply in a hood and cloak, wearing an amulet and ring, carrying
+an old book under one arm, and leaning on a wooden staff. A single key, as if to
+a massive prison cell, hangs from his belt.
+
+He raises the staff toward you and you hear him speak, as if in a dream: "I
+await you, though your journey be long and full of peril. Go then, and let me
+not wait long!" You feel some great power well up inside you and you fall to the
+floor. The next moment, you are awakening, as if from a deep slumber.
+
+Endless Stair
+There is a lamp here.
+
+>SAY TO DUNGEON MASTER "TURN DIAL TO 8 AND PRESS BUTTON"
+That sentence isn't one I recognize.
+
+>UNLOCK BRONZE DOOR WITH KEY
+Those things aren't here!
+
+>OPEN IT
+I don't see what you are referring to.
+
+>S
+You have moved into a dark place.
+It is pitch black. You are likely to be eaten by a grue.
+
+>unscript
+Here ends a transcript of interaction with
+ZORK III: The Dungeon Master
+Infocom interactive fiction - a fantasy story
+Copyright 1982, 1983, 1984, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 25 / Serial number 860811

@@ -1,0 +1,33 @@
+{
+    "id": "books.limehouse-killings",
+    "title": "The Limehouse Killings",
+    "shortDescription": "Solve a Victorian murder in fog-shrouded London.",
+    "description": "The year is 1888. Lord Ashworth, a wealthy industrialist, has been found dead in his locked study at Ashworth Manor in the Limehouse district. Scotland Yard is baffled. Lady Ashworth has hired you to investigate before the press gets wind of the scandal.\n\nAs a private detective in Victorian London, you must explore the manor, gather evidence, and interrogate three suspects: the nervous butler Mr. Hudson, the cold Lady Ashworth, and the arrogant Dr. Moriarty. Five key pieces of evidence point to the killer, but can you connect the clues before they escape?",
+    "author": "Studio Null",
+    "year": 2024,
+    "rating": 4.6,
+    "reviewCount": 342,
+    "startFile": "limehouse-killings.zil",
+    "base": "infocom/zork1",
+    "reviews": [
+        {
+            "author": "IF_Weekly",
+            "rating": 5,
+            "title": "A masterclass in interactive mystery",
+            "body": "The Limehouse Killings is a triumph of interactive fiction. The atmospheric writing transports you to Victorian London, the puzzles are challenging but fair, and the story keeps you guessing until the very end."
+        },
+        {
+            "author": "TextAdventureFan",
+            "rating": 5,
+            "title": "Victorian London has never felt so real",
+            "body": "The writing in this game is exceptional. You can smell the coal smoke and river damp, feel the fog on your face. The manor house is full of character, and the NPCs feel like real people."
+        },
+        {
+            "author": "PuzzleMaster",
+            "rating": 4,
+            "title": "Challenging but fair",
+            "body": "I got stuck on the cipher puzzle for an hour, but when I figured it out, I felt like a genius. The game gives you all the clues you need — you just have to find them."
+        }
+    ],
+    "genre": "Victorian Mystery"
+}

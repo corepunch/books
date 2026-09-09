@@ -1,0 +1,1584 @@
+Start of a transcript of THE LURKING HORROR.
+THE LURKING HORROR
+An Interactive Horror
+Copyright (c) 1987 by Infocom, Inc. All rights reserved.
+THE LURKING HORROR is a trademark of Infocom, Inc.
+Release 221 / Serial number 870918
+
+>talk to hacker
+Hmmm ... the hacker waits for you to say something.
+
+>hacker, hi
+"Greetingage." He turns back to his hacking.
+
+>ask hacker about hacking
+I don't know the word "hacking."
+
+>examine pc
+This is a beyond-state-of-the-art personal computer. It has a 1024 by 1024 pixel
+color monitor, a mouse, an attached hard disk, and a local area network
+connection. Fortunately, one of its features is a prominent HELP key. It is
+currently turned off.
+
+>turn on pc
+The computer powers up, goes through a remarkably fast self-check, and greets
+you, requesting "LOGIN PLEASE:". The only sound you hear is a very low hum.
+
+>login
+What do you want to login?
+
+>log in to computer
+I don't know the word "log."
+
+>type username
+The computer responds "PASSWORD PLEASE:"
+
+>type password
+What do you want to type passwo?
+
+>ask hacker about password
+There seems to be a noun missing in that sentence.
+
+>type 872325412
+The computer responds "INVALID LOGIN" and then "LOGIN PLEASE:".
+
+>type 872325412
+The computer responds "PASSWORD PLEASE:"
+
+>type uhlersoth
+The computer responds "Good evening. You're here awfully late." It displays a
+list of pending tasks, one of which is in blinking red letters, with large
+arrows pointing to it. The task reads "Classics Paper," some particularly
+ominous words next to it say "DUE TOMORROW!" and more reassuringly, a menu box
+next to that reads "Edit Classics Paper."
+
+>edit classics paper
+The menu box is replaced by the YAK text editor and menu boxes listing the
+titles of your files. The one for your paper is highlighted in a rather urgent-
+looking shade of red.
+
+>press help key
+You push the friendly-looking HELP key. A spritely little box appears on the
+screen, which reads: "Please click the box representing the file you wish to
+edit or view. I notice that one file is marked as urgent, so you should probably
+click its box."
+
+>click urgent box
+You click the box for your paper, and the box grows reassuringly until it fills
+most of the screen. Unfortunately, the text that fills it bears no resemblance
+to your paper. The title is the same, but after that, there is something
+different, very different.
+
+>read paper
+The paper appears to be a facsimile overlaid with occasional typescript. The
+text is mostly in a sort of "Olde English" you've never seen before. What you
+read is a combination of incomprehensible gibberish, latinate pseudowords,
+debased Hebrew and Arabic scripts, and an occasional disquieting phrase in
+English.
+
+As you look at it more closely, you find it hard to focus on the screen, but
+impossible to look away. Your finger strays toward the "MORE" box...
+
+>save
+Okay.
+
+>summon visitor
+I don't know the word "summon."
+
+>press more
+You touch the MORE box, and a new page appears.
+
+The second page is much like the first, but around the edges, not when you look
+at it straight, it's almost readable. There is something about a "summoning," or
+a "visitor."
+
+>press more
+You touch the MORE box, and a new page appears.
+
+The third page is in the same script as the first, but laid out like a poem.
+There are woodcut illustrations which are queasily disturbing.
+
+There is a translation, or notes for one, typed between the lines of the poem:
+
+"He returns, he is called back (?)
+The loyal ones (acolytes?) make a sacrifice
+Those who survive will meet him (be absorbed? eaten?)
+They will live, yet die
+Forever will be (is?) nothing to them (to him?)
+
+"His place (lair? burrow?) must be prepared
+His food (offerings?) must be prepared
+Call him forth (invite him?) with great power
+Only an acceptable (tasteful?) sacrifice will call him forth
+He will be grateful (satiated?)"
+
+The rest is even more fragmentary.
+
+>examine photograph
+I don't know the word "photograph."
+
+>x photo
+I don't know the word "photo."
+
+>x page
+Instead, you find your finger moving towards the MORE box, and you touch it. The
+screen feels oddly cold.
+
+The fourth page is a photograph. You try to recoil from the screen, but cannot.
+Fascinated and repelled at the same time, you wonder: is that a mouth, and what
+is in it?
+
+>d
+Instead, you find your finger moving towards the MORE box, and you touch it. The
+screen feels oddly cold.
+
+You faint, and when you awaken...
+
+
+[Use $SOUND to toggle sound usage on and off.]
+
+Warning: @play_sound called but sound resources are missing (PC = a971) (will
+ignore further occurrences)
+Place
+This is a place. Things move about on a broken, rocky surface. Harsh sounds
+split the air. Something sticky grabs at your feet. There is no color,
+everything is drained of brightness, dull and lifeless. A path descends into a
+shallow bowl of black basalt.
+
+>forward
+I don't know the word "forward."
+
+>x shapes
+I don't know the word "shapes."
+
+>x platform
+You can't see any platform here.
+
+>x stone
+You can't see any stone here.
+
+From below, a low noise begins, and slowly builds. You feel yourself drawn
+downward by the noise.
+
+Basalt Bowl
+You are at the bottom of a deeply cut, smooth basalt bowl. Dimly seen shapes
+crowd you on all sides. Ahead, in the focus of the movement, is a rock platform.
+
+>x symbol
+You can't see any symbol here.
+
+>take stone
+You can't see any stone here.
+
+The crowd around you begins to sway and groan. They are expecting something. You
+are drawn forward by the noise.
+
+At Platform
+You stand before a low rock platform, more like an afterthought of piled rocks
+or a glacial moraine than a work of artifice. You are pushed against the pile by
+the crowd around you.
+
+One small stone stands out in the pile, smooth, shiny, and glowing with a
+blazing light.
+
+>eat stone
+The food here is terrible, but this is ridiculous!
+
+>show stone to creature
+You can't see any creature here.
+
+>i
+You are carrying an assignment.
+
+>x terminal
+You can't see any terminal here.
+
+>read assignment
+Laser printed on creamy bond paper, the assignment is due tomorrow. It's from
+your freshman course in "The Classics in the Modern Idiom," better known as
+"21.014." It reads, in part: "Twenty pages on modern analogues of Xenophon's
+'Anabasis.'" You're not sure whether this refers to the movie "The Warriors" or
+"Alien," but this is the last assignment you need to complete in this course
+this term. You wonder, yet again, why a technical school requires you to endure
+this sort of stuff.
+
+>cry
+I don't know the word "cry."
+
+>x hacker
+You can't see any hacker here.
+
+>show stone to hacker
+You can't see any hacker here.
+
+>take keys
+You can't see any keys here.
+
+>ask hacker about keys
+Those things aren't here!
+
+>ask hacker for master key
+You can't see any hacker here.
+
+>save
+Okay.
+
+>ask hacker about department of alchemy
+Those things aren't here!
+
+>feed hacker
+What do you want to feed the hacker to?
+
+>feed assignment to hacker
+You can't see any hacker here.
+
+>l
+At Platform
+You stand before a low rock platform, more like an afterthought of piled rocks
+or a glacial moraine than a work of artifice. You are pushed against the pile by
+the crowd around you.
+
+One small stone stands out in the pile, smooth, shiny, and glowing with a
+blazing light.
+
+>x pizza boxes
+I don't know the word "pizza."
+
+>read banners
+You can't see any banners here.
+
+>s
+The crowding is such that you can barely move, much less walk.
+
+>w
+The crowding is such that you can barely move, much less walk.
+
+>x funny bones
+You can't see any funny bones here.
+
+>take funny bones
+You can't see any funny bones here.
+
+>open fridge
+You can't see any fridge here.
+
+>take all
+smooth stone: Taken.
+
+Suddenly, the dimness becomes darkness, and the crowd around you explodes with
+excitement. You are jostled and shoved from all sides. A low keening begins,
+building into a deafening, almost mechanical chant. The darkness before you
+compacts and deepens.
+
+>x carton
+You can't see any carton here.
+
+The darkness before you, now visible, is a creature. It towers over the now-
+silent crowd. The thing jerks this way and that, spraying a foul ichor. Its
+palps twitch expectantly, then pound impatiently against the rock. You can feel
+the smooth stone vibrating in your hand.
+
+>x symbol
+The symbol, on close examination, appears to have been carved into the smooth
+stone, perhaps with a claw. The symbol is like nothing you've ever seen, and yet
+somehow you know it has meaning.
+
+The thing now turns, sensing the presence of the stone. It quests almost blindly
+for it, then those surrounding you thrust you forward. The thing stoops, its
+mandibles grasping you. You are lifted towards its gaping maw. The stench and
+the sounds issuing from it are overwhelming, and you fall unconscious.
+
+You are awakened by the thump of your head hitting the terminal in front of you.
+Falling asleep over term papers! It must have been a nightmare. Embarrassed, you
+glance around. Yes, the hacker is looking in your direction. He must have heard
+the thump.
+
+Terminal Room, on the chair
+
+A really whiz-bang pc is right inside the door.
+
+Sitting at a terminal is a hacker whom you recognize.
+
+>open it
+How do you do that with a pc?
+
+The hacker wanders over, trying to look nonchalant as he takes over your chair.
+"Losing, huh?" he asks wittily. He glances at your terminal, which displays a
+pattern of snow and unusual characters. He appears somewhat excited.
+
+>put carton in microwave
+You can't see that here!
+
+>open microwave
+You can't see any microwave here.
+
+The hacker, mumbling under his breath, begins a flurry of activity. First the
+screen returns to something nearly normal, then windows begin popping up like
+toadstools after a rain. The screen looks a lot like the top of his terminal
+table (or the bottom of a trash can).
+
+>put carton in microwave
+You can't see that here!
+
+>close fridge
+You can't see any fridge here.
+
+The hacker types furiously, and the screen displays what to you looks like an
+explosion in a teletype factory. After a while he says. "Chomping file system.
+Your directory has gone seriously west. I fixed it." He checks the screen. "It
+was mixed up on the file server with some files from the Department of Alchemy."
+He grunts. "People's names for their nodes are getting weird. This one is called
+'Lovecraft.'" He pauses. "Your paper is gone, though. Sorry. Maybe they could
+help you down there."
+
+>close microwave
+You can't see any microwave here.
+
+The hacker wanders back to his terminal and returns to his hacking.
+
+>x microwave
+You can't see any microwave here.
+
+>x led readout
+You can't see any led readout here.
+
+>x controls
+You can't see any controls here.
+
+>save
+Okay.
+
+>press start
+You can't see any start here.
+
+>press 1
+There's no number to push here.
+
+>press 0
+There's no number to push here.
+
+>press 0
+There's no number to push here.
+
+>press start
+You can't see any start here.
+
+>open microwave
+You can't see any microwave here.
+
+>x carton
+You can't see any carton here.
+
+>touch carton
+You can't see any carton here.
+
+>open carton
+You can't see any carton here.
+
+>x chinese food
+You can't see any chinese food here.
+
+>close microwave
+You can't see any microwave here.
+
+>press hi
+You can't see any hi here.
+
+>press 3
+There's no number to push here.
+
+>press 0
+There's no number to push here.
+
+>press 0
+There's no number to push here.
+
+>press start
+You can't see any start here.
+
+>wait
+Time passes...
+
+>wait
+Time passes...
+
+>open microwave
+You can't see any microwave here.
+
+>x food
+You can't see any food here.
+
+>x chinese food
+You can't see any chinese food here.
+
+>take carton
+You can't see any carton here.
+
+>l
+Terminal Room
+This is a large room crammed with computer terminals, small computers, and
+printers. An exit leads south. Banners, posters, and signs festoon the walls.
+Most of the tables are covered with waste paper, old pizza boxes, and empty Coke
+cans. There are usually a lot of people here, but tonight it's almost deserted.
+
+Nearby is one of those ugly molded plastic chairs.
+
+A really whiz-bang pc is right inside the door.
+
+Sitting at a terminal is a hacker whom you recognize.
+
+>e
+You can't go that way.
+
+>n
+You can't go that way.
+
+>give chinese food to hacker
+You can't see that here!
+
+>x chinese food
+You can't see any chinese food here.
+
+>s
+Second Floor
+This is the second floor of the Computer Center. An elevator and call buttons
+are on the south side of the hallway. A large, noisy room is to the north.
+Stairs also lead up and down, for the energetic. To the west a corridor leads
+into a smaller room.
+
+>e
+You can't go that way.
+
+>w
+Kitchen
+This is a filthy kitchen. The exit is to the east. On the wall near a counter
+are a refrigerator and a microwave.
+
+Sitting on the kitchen counter is a package of Funny Bones.
+
+>open microwave
+The microwave oven is now open.
+
+>put carton in microwave
+You can't see that here!
+
+>close microwave
+Okay, the microwave oven is now closed.
+
+>press hi
+The bottom of the display now reads "high."
+
+>press 5
+The timer display now reads 0:05.
+
+>press 0
+The timer display now reads 0:50.
+
+>press 0
+The timer display now reads 5:00.
+
+>press start
+The microwave starts up. The timer begins counting down.
+
+The timer display now reads 4:00.
+
+>wait
+Time passes...
+
+The timer display now reads 3:00.
+
+>wait
+Time passes...
+
+The timer display now reads 2:00.
+
+>wait
+Time passes...
+
+The timer display now reads 1:00.
+
+>wait
+Time passes...
+
+The microwave stops. The timer display now reads 0:00.
+
+>open microwave
+The microwave oven is now open.
+
+>take container
+You can't see any container here.
+
+>take carton
+You can't see any carton here.
+
+>close carton
+You can't see any carton here.
+
+>e
+Second Floor
+
+>n
+Terminal Room
+
+Nearby is one of those ugly molded plastic chairs.
+
+A really whiz-bang pc is right inside the door.
+
+Sitting at a terminal is a hacker whom you recognize.
+
+>give carton to hacker
+You can't see that here!
+
+>reload
+I don't know the word "reload."
+
+>restore
+Failed.
+
+>close oven
+You can't see any oven here.
+
+>open oven
+You can't see any oven here.
+
+>close carton
+You can't see any carton here.
+
+>close oven
+You can't see any oven here.
+
+>press hi
+You can't see any hi here.
+
+>press 4:00
+There's no number to push here.
+
+>set timer to 4:20
+You can't see any timer here.
+
+>press start
+You can't see any start here.
+
+>wait
+Time passes...
+
+>w
+You can't go that way.
+
+>wait
+Time passes...
+
+>wait
+Time passes...
+
+>open microwave
+You can't see any microwave here.
+
+>take container
+You can't see any container here.
+
+>take carton
+You can't see any carton here.
+
+>e
+You can't go that way.
+
+>n
+You can't go that way.
+
+>give carton to hacker
+You can't see that here!
+
+>ask hacker for master key
+"Who said anything about any master keys?" he asks suspiciously.
+
+>i
+You are carrying a smooth stone and an assignment.
+
+The hacker turns to you and says, "I don't know where I can get something to
+eat, what with all the snow."
+
+>take all
+chair: Taken.
+pc: Your load is too heavy.
+
+>drop chair
+Dropped.
+
+The hacker turns to you and says, "I'd hate to leave, with the machines so
+empty. On the other hand, I'm seriously starving."
+
+>take pc
+You take it, turning it off and unplugging it first.
+
+>drop pc
+Dropped.
+
+The hacker turns to you and says, "Why don't you see if you can cons up some
+food? Then I might be able to do something for you."
+
+>take chair
+Taken.
+
+>l
+Terminal Room
+This is a large room crammed with computer terminals, small computers, and
+printers. An exit leads south. Banners, posters, and signs festoon the walls.
+Most of the tables are covered with waste paper, old pizza boxes, and empty Coke
+cans. There are usually a lot of people here, but tonight it's almost deserted.
+
+Sitting at a terminal is a hacker whom you recognize.
+
+There is a pc here.
+
+>verbose
+Verbose descriptions.
+
+Terminal Room
+This is a large room crammed with computer terminals, small computers, and
+printers. An exit leads south. Banners, posters, and signs festoon the walls.
+Most of the tables are covered with waste paper, old pizza boxes, and empty Coke
+cans. There are usually a lot of people here, but tonight it's almost deserted.
+
+Sitting at a terminal is a hacker whom you recognize.
+
+There is a pc here.
+
+>i
+You are carrying a chair, a smooth stone and an assignment.
+
+>s
+The hacker prevents you. "You can't walk off with that! It's Tech property!"
+
+>drop chair
+Dropped.
+
+>s
+Second Floor
+This is the second floor of the Computer Center. An elevator and call buttons
+are on the south side of the hallway. A large, noisy room is to the north.
+Stairs also lead up and down, for the energetic. To the west a corridor leads
+into a smaller room.
+
+>hello
+Cheery, aren't you?
+
+>push call button
+Which call button do you mean, the up-arrow or the down-arrow?
+
+>push up
+The up-arrow begins to glow.
+
+You hear the elevator begin moving.
+
+>cool
+I don't know the word "cool."
+
+>;cool
+I don't know the word ";cool."
+
+>say "cool"
+Talking to yourself is a sign of impending mental collapse.
+
+The up-arrow blinks off.
+
+>wait
+Time passes...
+
+The elevator doors slide open.
+
+>s
+Elevator
+This is a battered, rather dirty elevator. The fake wood walls are scratched and
+marred with graffiti. The elevator doors are open. To the right of the doors is
+an area with floor buttons (B and 1 through 3), an open button, a close button,
+a stop switch, and an alarm button. Below these is an access panel which is
+closed.
+
+>open panel
+Opening the access panel reveals a flashlight.
+
+The elevator doors slide closed.
+
+>take flashlight
+Taken.
+
+>push 3
+The button for the third floor begins to glow.
+
+>wait
+Time passes...
+
+The elevator begins to move upward.
+
+>x me
+You are wide awake, and are in good health.
+
+The elevator slows and comes to a stop. The button for the third floor blinks
+off.
+
+>wait
+Time passes...
+
+The elevator doors slide open.
+
+>n
+Third Floor
+This is the third floor of the Computer Center. An elevator and call button are
+on the south side of the hallway. Stairs also lead down, for the energetic. To
+the north is a glass wall beyond which you can see a computer room crammed with
+computer equipment. A stairway leads up.
+
+The elevator doors are open.
+
+>n
+There is a glass wall in the way.
+
+The elevator doors slide closed.
+
+>look through glass
+You see nothing special about it.
+
+>x equipment
+You see nothing special about it.
+
+>u
+You push through the door to the roof. You enter the freezing, biting cold of
+the blizzard.
+
+Roof
+This is the roof of the Computer Center. A door leads to the stairway. The roof
+is covered with tarred pea gravel and drifted snow. The wind howls around your
+ears. To the south and southeast you can dimly see the looming shapes of the
+Great Dome and the Brown Building.
+
+>x brown building
+I don't know the word "brown."
+
+>take snow
+That would never work!
+
+Bitter, bone-cracking cold assaults you continuously. The temperature and the
+blizzard conditions are both horrible.
+
+>d
+You push your way into the welcoming warmth inside.
+
+Third Floor
+This is the third floor of the Computer Center. An elevator and call button are
+on the south side of the hallway. Stairs also lead down, for the energetic. To
+the north is a glass wall beyond which you can see a computer room crammed with
+computer equipment. A stairway leads up.
+
+>d
+Second Floor
+This is the second floor of the Computer Center. An elevator and call buttons
+are on the south side of the hallway. A large, noisy room is to the north.
+Stairs also lead up and down, for the energetic. To the west a corridor leads
+into a smaller room.
+
+>d
+Computer Center
+This is the lobby of the Computer Center. An elevator and call buttons are to
+the south. Stairs also lead up and down, for the energetic. To the north is
+Smith Street.
+
+>d
+Basement
+Bare concrete walls line a wide corridor leading east and west. An elevator and
+call button are to the south. Stairs also lead up, for the energetic. From floor
+to ceiling run wire channels and steam pipes.
+
+>x pipes
+You see nothing special about the steam pipes.
+
+>x channels
+From floor to ceiling run wire channels and steam pipes.
+
+>w
+Aero Basement
+This basement level room is made of smooth, damp-seeming concrete. Fluorescent
+lights cast harsh shadows. To the west is a stairway, and to the east the
+basement area continues.
+
+There is a forklift here.
+
+>show stone to urchin
+You see no missing urchins.
+
+>ask urchin about stone
+There is no reply.
+
+>x urchin
+You see no missing urchins.
+
+>save
+Okay.
+
+>scare him
+I don't think you scared him very much.
+
+>boo urchin
+I don't know the word "boo."
+
+>say "BOO"
+Talking to yourself is a sign of impending mental collapse.
+
+>urchin, boo
+I don't know the word "boo."
+
+>x forklift
+This is a rusty old forklift. It looks like you could control it fairly easily,
+though.
+
+>get on forklift
+You are now in the forklift.
+
+>operate forklift
+I don't know the word "operate."
+
+>turn on forklift
+The forklift sputters to life.
+
+>use forklift on urchin
+I don't know the word "use."
+
+>life urchin
+There was no verb in that sentence!
+
+>lift urchin
+You can't reach the missing urchins from within the forklift.
+
+>w
+The forklift won't fit into the stairwell.
+
+>e
+Basement, on the forklift
+Bare concrete walls line a wide corridor leading east and west. An elevator and
+call button are to the south. Stairs also lead up, for the energetic. From floor
+to ceiling run wire channels and steam pipes.
+
+>e
+Temporary Basement, on the forklift
+During the Second World War, some temporary buildings were built to house war-
+related research. Naturally, these buildings, though flimsy and ugly, are still
+around. This is the basement of one of them. The basement extends west, a
+stairway leads up, and a large passage is to the east.
+
+There is a pair of electrician's gloves and a crowbar here.
+
+>take all
+pair of electrician's gloves: You can't reach the pair of electrician's gloves
+from within the forklift.
+crowbar: You can't reach the crowbar from within the forklift.
+
+>exit forklift
+You are now on your feet.
+
+>take all
+pair of electrician's gloves: Taken.
+crowbar: Taken.
+
+>x gloves
+This is a pair of electrician's rubber gloves. They look well used but
+serviceable.
+
+>x crowbar
+You see nothing special about the crowbar.
+
+>put on gloves
+You put on the gloves. They're a little big, but not really such a bad fit at
+all.
+
+>turn off forklift
+You'll have to get in it first.
+
+>get on forklift
+You are now in the forklift.
+
+>turn off forklift
+The forklift coughs once, and dies.
+
+>get of forklift
+You used the word "of" in a way that I don't understand.
+
+>get off forklift
+You are now on your feet.
+
+>e
+It is pitch black.
+
+>turn on flashlight
+The flashlight clicks on.
+
+Dead Storage
+This is a storage room. It contains an incredible assemblage of discarded junk.
+Some of it is so old and mouldering that you can't be sure where one bit of junk
+stops and the next begins. It's piled to the ceiling on ancient, rotting
+pallets; you can't even see the east wall.
+
+>x pallets
+Looking more closely only emphasizes how completely entropy has taken over this
+room.
+
+>search junk
+You find many worthless items of hardware, old discarded memos and papers, but
+nothing of any use or value.
+
+>w
+Temporary Basement
+During the Second World War, some temporary buildings were built to house war-
+related research. Naturally, these buildings, though flimsy and ugly, are still
+around. This is the basement of one of them. The basement extends west, a
+stairway leads up, and a large passage is to the east.
+
+There is a forklift here.
+
+>get on forklift
+You are now in the forklift.
+
+>turn on forklift
+The forklift sputters to life.
+
+>e
+Dead Storage, on the forklift
+This is a storage room. It contains an incredible assemblage of discarded junk.
+Some of it is so old and mouldering that you can't be sure where one bit of junk
+stops and the next begins. It's piled to the ceiling on ancient, rotting
+pallets; you can't even see the east wall.
+
+>move pallets
+You have a little trouble using the forklift, but it's not really all that hard.
+You start clearing junk, moving it around and trying to create a passage.
+
+>g
+You continue moving junk, becoming more proficient with the forklift.
+
+>g
+You continue moving junk, becoming more proficient with the forklift.
+
+>g
+You've built a fairly narrow (about one forklift wide) path through the junk.
+You can see an opening into a further storage room beyond this one.
+
+>e
+Ancient Storage, on the forklift
+What's deader than dead storage? That's what's in this room. Most of the
+contents have collapsed or rusted back to the primordial ooze. There is mold
+growing on some of the unidentifiable piles. Stagnant puddles of water pollute
+the floor. You can now believe how old some of these foundations are said to be.
+
+There is a closed, disused-looking manhole here.
+
+>turn off forklift
+The forklift coughs once, and dies.
+
+>get off forklift
+You are now on your feet.
+
+>x manhole
+It's a steel ring set in the floor. It's probably a manhole.
+
+>open manhole
+The only way would seem to be to remove the manhole cover.
+
+>remove cover with crowbar
+You lever the manhole cover aside, and crusted dirt falls into a dark, partly
+obstructed hole below.
+
+>save
+Okay.
+
+>d
+You push your way through cobwebs, damp fungus, and other obstructions.
+
+Brick Tunnel
+This is an ancient tunnel constructed of roughly mortared bricks and stones. A
+slippery and almost invisible set of handholds leads up. The tunnel continues a
+long way north and south from here.
+
+You are beginning to tire.
+
+>s
+You make your way along the long tunnel.
+
+Cinderblock Tunnel
+This is a tunnel whose walls are cinderblock, with a concrete floor and ceiling.
+A metal ladder leads up to a closed metal plate in the ceiling, and the tunnel
+continues north, where the cinderblock walls become brick.
+
+>u
+The trapdoor isn't open.
+
+>open trapdoor
+It lifts a few inches, but then hits something and goes no further.
+
+>look through trapdoor
+Pushing the plate up as far as you can, you can see part of a workroom or lab of
+some kind.
+
+>open trapdoor with crowbar
+It lifts a few inches, but then hits something and goes no further.
+
+>i
+You are carrying a crowbar, a flashlight (providing light), a smooth stone and
+an assignment. You are wearing a pair of electrician's gloves.
+
+>n
+You make your way along the long tunnel.
+
+Brick Tunnel
+This is an ancient tunnel constructed of roughly mortared bricks and stones. A
+slippery and almost invisible set of handholds leads up. The tunnel continues a
+long way north and south from here.
+
+>n
+You make your way along the long tunnel.
+
+Renovated Cave
+You are in a huge, cave-like construction. A path leads down to a floor partly
+covered with rough concrete. The walls and ceiling are high and reinforced with
+beams of wood, iron, and steel. In the center of the floor you can see a large,
+flat slab of granite. The only exit is behind you to the south.
+
+>x slab
+The slab is roughly circular, made of indifferently dressed New England granite,
+and about three feet high.
+
+>open slab
+How do you do that with a slab of granite?
+
+>lay on slab
+You aren't holding the slab of granite.
+
+>stand on slab
+That would be a waste of time.
+
+>d
+Before the Altar
+You are at the bottom of the cave. The huge slab of granite in the center is a
+sort of altar. It is carved with strange and disturbing symbols, the largest of
+which looks very familiar. Some of the symbols are obscured by rusty red stains.
+Nearby is an iron plate set in the concrete of the floor.
+
+Lying to one side of the altar stone is a sharp, thin-bladed knife.
+
+>x knife
+This small knife is clean, sharp, and has a long, thin blade and a wooden
+handle. Only the tip of the blade appears at all dull or used.
+
+>take knife
+Taken.
+
+>x tip
+I don't know the word "tip."
+
+>x symbols
+Which symbols do you mean, the incised symbol or the carved symbol?
+
+>incised
+The symbol appears to be the oldest thing carved on the altar. It is beautifully
+incised in the rocks. Its age is apparent from its wear and the overlay of newer
+carvings and scratchings over it. The symbol looks oddly familiar.
+
+>put stone on altar
+Done.
+
+>x carved symbol
+The symbol, on close examination, appears to have been carved into the smooth
+stone, perhaps with a claw. The symbol seems just as odd as before.
+
+>x grate
+I don't know the word "grate."
+
+>x plate
+The plate is iron, about two feet square, and looks like it could be slid open.
+A curious feature of the plate is that it has upward projecting dents in it
+which appear to have been punched from below.
+
+>save
+Okay.
+
+>open plate
+You slide open the panel, revealing a dark pit below. Immediately, there is a
+response from below.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>x hole
+The plate is iron, about two feet square, and open. A curious feature of the
+plate is that it has upward projecting dents in it which appear to have been
+punched from below.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>look down hole
+You see nothing special about the iron plate.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>d
+You can't go that way.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>enter hole
+You hit your head against the iron plate as you attempt this feat.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>drop funny bones in hole
+You can't see that here!
+
+>i
+You are carrying a knife, a crowbar, a flashlight (providing light) and an
+assignment. You are wearing a pair of electrician's gloves.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>undo
+I don't know the word "undo."
+
+>restore
+Failed.
+
+>take stone
+Taken.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+You are feeling tired.
+
+>trace symbol
+I don't know the word "trace."
+
+>compare symbols
+You can only compare two things.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>compare carved and incised
+Allowing for the different media in which the symbols are executed, they are
+identical.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>l
+Before the Altar
+You are at the bottom of the cave. The huge slab of granite in the center is a
+sort of altar. It is carved with strange and disturbing symbols, the largest of
+which looks very familiar. Some of the symbols are obscured by rusty red stains.
+Nearby is an iron plate set in the concrete of the floor.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>x stains
+I don't know the word "stains."
+
+>exit
+Please use compass directions instead.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>s
+You can't go that way.
+
+A low, guttural, groaning and snarling issues from the opening.
+
+>up
+Renovated Cave
+You are in a huge, cave-like construction. A path leads down to a floor partly
+covered with rough concrete. The walls and ceiling are high and reinforced with
+beams of wood, iron, and steel. In the center of the floor you can see a large,
+flat slab of granite. The only exit is behind you to the south.
+
+You can still hear faint groans and snarls from the larger cave.
+
+>s
+Brick Tunnel
+This is an ancient tunnel constructed of roughly mortared bricks and stones. A
+slippery and almost invisible set of handholds leads up. The tunnel continues a
+long way north and south from here.
+
+>u
+Ancient Storage
+What's deader than dead storage? That's what's in this room. Most of the
+contents have collapsed or rusted back to the primordial ooze. There is mold
+growing on some of the unidentifiable piles. Stagnant puddles of water pollute
+the floor. You can now believe how old some of these foundations are said to be.
+
+In one corner of the room a manhole cover is partly buried in the dirt and crud.
+
+There is an open manhole here.
+
+There is a forklift here.
+
+>verbose
+Verbose descriptions.
+
+Ancient Storage
+What's deader than dead storage? That's what's in this room. Most of the
+contents have collapsed or rusted back to the primordial ooze. There is mold
+growing on some of the unidentifiable piles. Stagnant puddles of water pollute
+the floor. You can now believe how old some of these foundations are said to be.
+
+In one corner of the room a manhole cover is partly buried in the dirt and crud.
+
+There is an open manhole here.
+
+There is a forklift here.
+
+>w
+Dead Storage
+This is a storage room. It contains an incredible assemblage of discarded junk.
+Some of it is so old and mouldering that you can't be sure where one bit of junk
+stops and the next begins. It's piled to the ceiling on ancient, rotting
+pallets. A narrow path winds eastward through the junk.
+
+>w
+Temporary Basement
+During the Second World War, some temporary buildings were built to house war-
+related research. Naturally, these buildings, though flimsy and ugly, are still
+around. This is the basement of one of them. The basement extends west, a
+stairway leads up, and a large passage is to the east.
+
+>show funny bones to urchin
+You can't see any funny bones here.
+
+>show coke to urchin
+You can't see any coke here.
+
+>ask urchin about parka
+There is no reply.
+
+>save
+Okay.
+
+>ask urchin about parka
+There is no reply.
+
+>show knife to urchin
+You see no missing urchins.
+
+>give coke to urchin
+You can't see that here!
+
+>x urchin
+You see no missing urchins.
+
+>x parka
+You can't see any parka here.
+
+>x bulges
+I don't know the word "bulges."
+
+>u
+Temporary Lab
+This is a laboratory of some sort. It takes up most of the building on this
+level, all the interior walls having been knocked down. (One reason these
+temporary buildings are still here is their flexibility: no one cares if they
+get more or less destroyed.) A stairway leads down, and a door leads north.
+
+There is a metal flask here.
+
+>x flask
+This is a large metal flask, about the size of a water cooler bottle. The metal
+flask is closed.
+
+>open flask
+You open the flask, and a cold, white mist boils out.
+
+>close flask
+You screw the flask closed.
+
+>take flask
+Taken.
+
+The mist dissipates.
+
+>n
+You enter the freezing, biting cold of the blizzard.
+
+Smith Street
+Smith Street runs west towards the computer center here. To the south is a
+dilapidated grey wooden building. The street is an impassable sea of blowing and
+drifting snow.
+
+>w
+Smith Street
+Smith Street runs east and west along the north side of the main campus area. At
+the moment, it is an arctic wasteland of howling wind and drifting snow. On the
+other side of the street, barely visible, are the lidless eyes of streetlights.
+The street hasn't been plowed, or if it has been, it did no good.
+
+Bitter, bone-cracking cold assaults you continuously. The temperature and the
+blizzard conditions are both horrible.
+
+>w
+Impenetrable snow drifts block the street.
+
+You are getting more and more tired.
+
+>s
+You push your way into the welcoming warmth inside.
+
+Computer Center
+This is the lobby of the Computer Center. An elevator and call buttons are to
+the south. Stairs also lead up and down, for the energetic. To the north is
+Smith Street.
+
+>d
+Basement
+Bare concrete walls line a wide corridor leading east and west. An elevator and
+call button are to the south. Stairs also lead up, for the energetic. From floor
+to ceiling run wire channels and steam pipes.
+
+>turn off flashlight
+The flashlight clicks off.
+
+>drink coke
+You can't see any coke here.
+
+>i
+You are carrying a metal flask, a smooth stone, a knife, a crowbar, a flashlight
+and an assignment. You are wearing a pair of electrician's gloves.
+
+>d
+You can't go that way.
+
+>w
+Aero Basement
+This basement level room is made of smooth, damp-seeming concrete. Fluorescent
+lights cast harsh shadows. To the west is a stairway, and to the east the
+basement area continues.
+
+>w
+Stairway
+A dimly lit stairway leads up and down from here. A corridor continues east.
+
+>d
+Subbasement
+This is the subbasement of the Aeronautical Engineering Building. A stairway
+leads up. A narrow crack in the northwest corner of the room opens into a larger
+space.
+
+>x crack
+You used the word "crack" in a way that I don't understand.
+
+>nw
+It's too tight a fit carrying the metal flask.
+
+>drop flask
+Dropped.
+
+>nw
+Tomb
+This is a tiny, narrow, ill-fitting room. It appears to have been a left over
+space from the joining of two preexisting buildings. It is roughly coffin
+shaped. The walls are covered by decades of overlaid graffiti, but there is one
+which is painted in huge fluorescent letters that were apparently impossible for
+later artists to completely deface. On the floor is a rusty access hatch locked
+with a huge padlock.
+
+>read letters
+It reads "The Tomb of the Unknown Tool."
+
+>unlock padlock with key
+You aren't holding the master key.
+
+>open hatch
+The padlock locks the hatch in place.
+
+>turn on flashlight
+The flashlight clicks on.
+
+>d
+The hatch is closed.
+
+>save
+Okay.
+
+>yes
+That was a rhetorical question.
+
+>am I good or what?
+I don't know the word "good."
+
+>e
+You can't go that way.
+
+>x valve
+You can't see any valve here.
+
+>open valve
+You can't see any valve here.
+
+>open valve with crowbar
+You can't see any valve here.
+
+>again
+You can't see any valve here.
+
+>take dead rat
+You can't see any dead rat here.
+
+>close valve with crowbar
+You can't see any valve here.
+
+>x rat
+There are no rats here.
+
+You are worn out.
+
+>x symbol
+The symbol, on close examination, appears to have been carved into the smooth
+stone, perhaps with a claw. The symbol seems just as odd as before.
+
+>compare scarred symbol to carved symbol
+I don't know the word "scarred."
+
+>compare rat to stone
+There are no rats here.
+
+>compare symbol to symbol
+Allowing for the different media in which the symbols are executed, they are
+identical.
+
+>l
+Tomb
+This is a tiny, narrow, ill-fitting room. It appears to have been a left over
+space from the joining of two preexisting buildings. It is roughly coffin
+shaped. The walls are covered by decades of overlaid graffiti, but there is one
+which is painted in huge fluorescent letters that were apparently impossible for
+later artists to completely deface. On the floor is a rusty access hatch locked
+with a huge padlock.
+
+>x cable
+You can't see any cable here.
+
+>e
+You can't go that way.
+
+>x mud
+I don't know the word "mud."
+
+>e
+You can't go that way.
+
+>x south wall
+It looks like a wall.
+
+>break wall with crowbar
+You can't pull down a wall that easily.
+
+>g
+You can't pull down a wall that easily.
+
+>pry brick with crowbar
+You can't see any brick here.
+
+>x brick
+You can't see any brick here.
+
+>new
+There was no verb in that sentence!
+
+>x broken brick
+You can't see any broken brick here.
+
+>get all
+I don't see what you're referring to.
+
+>press new brick
+You can't see any new brick here.
+
+>pry new brick with crowbar
+You can't see any new brick here.
+
+>x rod
+You can't see any rod here.
+
+>look through hole
+You can't see any hole here.
+
+>s
+You can't go that way.
+
+>reach into hole
+You can't see any hole here.
+
+>pull rod
+You can't see any rod here.
+
+>pry rod with crowbar
+You can't see any rod here.
+
+>i
+You are carrying a smooth stone, a knife, a crowbar, a flashlight (providing
+light) and an assignment. You are wearing a pair of electrician's gloves.
+
+>get new brick
+You can't see any new brick here.
+
+>u
+You can't go that way.
+
+You are dead tired.
+
+>shine flashlight in hole
+I don't know the word "shine."
+
+>get cables
+I don't know the word "cables."
+
+>x cables
+I don't know the word "cables."
+
+>x cable
+You can't see any cable here.
+
+>get cable
+You can't see any cable here.
+
+>climb
+What do you want to climb?
+
+>cable
+You can't see any cable here.
+
+>climb pipe
+You can't see any pipe here.
+
+>pour coke on rod
+Those things aren't here!
+
+>i
+You are carrying a smooth stone, a knife, a crowbar, a flashlight (providing
+light) and an assignment. You are wearing a pair of electrician's gloves.
+
+>w
+You can't go that way.
+
+>w
+You can't go that way.
+
+>w
+You can't go that way.
+
+>w
+You can't go that way.
+
+>w
+You can't go that way.
+
+>w
+You can't go that way.
+
+>d
+The hatch is closed.
+
+>x slots
+You can't see any slots here.
+
+>unscript
+End of transcript.

@@ -1,0 +1,26 @@
+{
+    "id": "infocom.spellbreaker",
+    "title": "Spellbreaker",
+    "shortDescription": "Magic itself is failing — save it.",
+    "description": "Ten years after the events of Enchanter, the very foundations of magic itself seem to be failing. As leader of the Circle of Enchanters, you must uncover the cause of this paralyzing chaos. Journey through the black foundation of magic itself in a perilous quest to save your world. Spellbreaker is the riveting conclusion to the Enchanter trilogy, and Infocom's most challenging game.",
+    "author": "Infocom",
+    "year": 1985,
+    "rating": 4.4,
+    "reviewCount": 891,
+    "startFile": "z6.zil",
+    "reviews": [
+        {
+            "author": "mage_master",
+            "rating": 5,
+            "title": "Brutally difficult, deeply rewarding",
+            "body": "This is Infocom at its hardest. Every puzzle requires careful thought and creative spellcasting. Not for the faint of heart."
+        },
+        {
+            "author": "enchanter_trilogy",
+            "rating": 4,
+            "title": "A satisfying finale",
+            "body": "The Enchanter trilogy ends on a high note. The spell system is ingenious and the puzzles are well-crafted, if extremely tough."
+        }
+    ],
+    "genre": "Fantasy Adventure"
+}

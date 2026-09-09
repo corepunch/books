@@ -1,0 +1,175 @@
+{
+  "game_name": "Emberfall",
+  "game_slug": "emberfall",
+  "identifiers": {
+    "GRUE-FUNCTION": {
+      "to": "SHADE-FUNCTION",
+      "where": "globals.zil:189,191 - action routine attached to the darkness monster"
+    },
+    "GRUE": {
+      "to": "SHADE",
+      "where": "globals.zil:184,186 - darkness monster object and parser synonym"
+    },
+    "ZORKMID-FUNCTION": {
+      "to": "EMBER-FUNCTION",
+      "where": "globals.zil:295,297 - action routine attached to the currency object"
+    },
+    "ZORKMID": {
+      "to": "EMBER",
+      "where": "globals.zil:291,293 - currency object and parser synonym"
+    },
+    "V-FROBOZZ": {
+      "to": "V-ASHWORKS",
+      "where": "syntax.zil:227 and verbs.zil:704 - special command action"
+    },
+    "FROBOZZ": {
+      "to": "ASHWORKS",
+      "where": "syntax.zil:227 and verbs.zil:706 - special command word and response"
+    },
+    "V-ZORK": {
+      "to": "V-EMBERFALL",
+      "where": "syntax.zil:562 and verbs.zil:1618 - game-name command action"
+    },
+    "ZORK": {
+      "to": "EMBERFALL",
+      "where": "syntax.zil:562 and player-facing uppercase brand text; token matching preserves ZORK-NUMBER"
+    }
+  },
+  "text": [
+    {
+      "from": "ZORK I: The Great Underground Empire",
+      "to": "EMBERFALL: The City Beneath the Cinders",
+      "where": "verbs.zil:100 - VERSION command banner"
+    },
+    {
+      "from": "Zork I: The Great Underground Empire",
+      "to": "Emberfall: The City Beneath the Cinders",
+      "where": "zork1.zil:2 - source entry-point header"
+    },
+    {
+      "from": "The ZORK Trilogy",
+      "to": "The EMBERFALL Chronicles",
+      "where": "main.zil:2, parser.zil:2, syntax.zil:2, verbs.zil:2, globals.zil:2 - framework headers"
+    },
+    {
+      "from": "The Zork Trilogy",
+      "to": "The Emberfall Chronicles",
+      "where": "clock.zil:2 and macros.zil:2 - framework headers"
+    },
+    {
+      "from": "Infocom interactive fiction - a fantasy story",
+      "to": "Cinderworks interactive fiction - a dark fantasy story",
+      "where": "verbs.zil:101,105,109 - VERSION banners for trilogy compatibility branches"
+    },
+    {
+      "from": " Infocom, Inc. All rights reserved.",
+      "to": " Cinderworks. All rights reserved.",
+      "where": "verbs.zil:111 - VERSION publisher/rights line"
+    },
+    {
+      "from": "ZORK is a registered trademark of Infocom, Inc.",
+      "to": "EMBERFALL is a creation of Cinderworks.",
+      "where": "verbs.zil:112 - VERSION trademark line"
+    },
+    {
+      "from": "The FROBOZZ Corporation created, owns, and operates this dungeon.",
+      "to": "The ASHWORKS Guild built and abandoned these tunnels.",
+      "where": "verbs.zil:706 - response to the FROBOZZ command"
+    },
+    {
+      "from": "The zorkmid is the unit of currency of the Great Underground Empire.",
+      "to": "The ember is the unit of currency in the Cinder Kingdom.",
+      "where": "globals.zil:300 - currency EXAMINE response"
+    },
+    {
+      "from": "The best way to find zorkmids is to go out and look for them.",
+      "to": "The best way to find embers is to search forgotten hearths.",
+      "where": "globals.zil:303 - currency FIND response"
+    },
+    {
+      "from": " You are likely to be eaten by a grue.",
+      "to": " A hungry shade is drawing near.",
+      "where": "verbs.zil:1640 - famous pitch-dark room warning"
+    },
+    {
+      "from": "Oh, no! You have walked into the slavering fangs of a lurking grue!",
+      "to": "Oh, no! You have walked into the grasp of a hungry shade!",
+      "where": "verbs.zil:1578 - death when moving through darkness"
+    },
+    {
+      "from": "The grue is a sinister, lurking presence in the dark places of the\nearth. Its favorite diet is adventurers, but its insatiable\nappetite is tempered by its fear of light. No grue has ever been\nseen by the light of day, and few have survived its fearsome jaws\nto tell the tale.",
+      "to": "The shade gathers wherever the last ember has gone cold. It hunts\nby sound, but recoils from living flame. Few travelers who hear\nits whisper in the dark survive to describe it.",
+      "where": "globals.zil:194-198 - darkness monster EXAMINE response"
+    },
+    {
+      "from": "There is no grue here, but I'm sure there is at least one lurking\nin the darkness nearby. I wouldn't let my light go out if I were\nyou!",
+      "to": "There is no shade here, but something is listening from the dark.\nI would keep that flame alive if I were you!",
+      "where": "globals.zil:201-204 - darkness monster FIND response"
+    },
+    {
+      "from": "ZORK1 for",
+      "to": "EMBERFALL for",
+      "where": "zork1.zil:1 - source entry-point header"
+    },
+    {
+      "from": "Copyright 1983 Infocom, Inc.  All Rights Reserved.",
+      "to": "Copyright 2026 Cinderworks. All Rights Reserved.",
+      "where": "zork1.zil:3 - source entry-point copyright header"
+    },
+    {
+      "from": "Copyright 1983 Infocom, Inc.  All Rights Reserved",
+      "to": "Copyright 2026 Cinderworks. All Rights Reserved",
+      "where": "clock.zil:3 and macros.zil:3 - framework copyright headers"
+    },
+    {
+      "from": "Objects shared by all three Zorks go here",
+      "to": "Objects shared by the game framework go here",
+      "where": "globals.zil:90 - source section comment"
+    },
+    {
+      "from": "Great Underground Empire",
+      "to": "Cinder Kingdom",
+      "where": "verbs.zil:1454 and any shorter lore occurrences not replaced above"
+    },
+    {
+      "from": "zorkmids",
+      "to": "embers",
+      "where": "globals.zil:303 and fallback for plural currency prose"
+    },
+    {
+      "from": "zorkmid",
+      "to": "ember",
+      "where": "globals.zil:294 and fallback for singular currency prose"
+    },
+    {
+      "from": "grues",
+      "to": "shades",
+      "where": "verbs.zil:1572,2104-2105 - plural darkness-monster deaths"
+    },
+    {
+      "from": "grue",
+      "to": "shade",
+      "where": "globals.zil:188,206 and verbs.zil:2111 - short descriptions and remaining death prose"
+    },
+    {
+      "from": "Frobozz",
+      "to": "Ashworks",
+      "where": "verbs.zil:104 - mixed-case Zork II compatibility title"
+    },
+    {
+      "from": "Zorks",
+      "to": "Emberfall games",
+      "where": "fallback for plural mixed-case source comments"
+    },
+    {
+      "from": "Zork",
+      "to": "Emberfall",
+      "where": "verbs.zil:367,1794,1812,1814 and mixed-case source comments"
+    },
+    {
+      "from": "Infocom",
+      "to": "Cinderworks",
+      "where": "fallback for remaining publisher references in framework headers/prose"
+    }
+  ]
+}

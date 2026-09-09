@@ -1,0 +1,903 @@
+Start of a transcript of PLANETFALL.
+PLANETFALL
+An Interactive Science-Fiction Story
+Copyright (c) 1983 by Infocom, Inc. All rights reserved.
+Release 20 / Serial number 830708
+
+> W
+You are in the living quarters of a small vessel. There is a webbing here, bolted to the wall. A door leads west.
+
+> GET INTO WEBBING
+You strap yourself into the webbing.
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> GET OUT OF WEBBING
+You remove yourself from the webbing.
+
+> TAKE ALL
+webbing: Already have that.
+kit: Taken.
+ID card: Taken.
+flask: Taken.
+
+> OPEN DOOR
+You open the door, revealing a closet. The door swings shut again.
+
+> U
+You are in a narrow shaft. A ladder runs up and down. There is a narrow opening to the east.
+
+> U
+You are in a wide shaft. A ladder runs up and down. There is a wide opening to the east.
+
+> U
+You are in a wide shaft. A ladder runs up and down. There is a wide opening to the east and a narrow opening to the north.
+
+> U
+You are in a wide shaft. A ladder runs up and down. There is a wide opening to the east and a narrow opening to the north.
+
+> U
+You are in a wide shaft. A ladder runs up and down. There is a wide opening to the east and a narrow opening to the north.
+
+> N
+You are in a corridor. Passages lead south, north, and northeast.
+
+> NE
+You are in a corridor. Passages lead southwest and east.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> TAKE ID CARD
+ID card: Already have that.
+
+> DROP ALL EXCEPT KIT
+kit: (keeping)
+ID card: Dropped.
+flask: Dropped.
+
+> E
+You are in a storage room. Passages lead west and south.
+
+> S
+You are in a storage room. Passages lead north and south.
+
+> S
+You are in a storage room. Passages lead north and southwest.
+
+> SW
+You are in a storage room. Passages lead northeast and south.
+
+> TAKE ALL
+battery: Taken.
+pliers: Taken.
+
+> DROP BATTERY
+battery: Dropped.
+
+> NE
+You are in a storage room. Passages lead southwest and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> PUT BAR OVER CREVICE
+You can't see any such thing.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> E
+You are in a storage room. Passages lead west and south.
+
+> DROP ALL EXCEPT KEY
+key: (keeping)
+kit: Dropped.
+
+> PRESS BLUE BUTTON
+You press the blue button on the kit.
+
+> PRESS RED BUTTON
+You press the red button on the kit.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> UNLOCK PADLOCK WITH KEY
+You unlock the padlock.
+
+> TAKE PADLOCK
+padlock: Taken.
+
+> OPEN DOOR
+You open the door.
+
+> N
+You are in a storage closet.
+
+> DROP KEY AND PADLOCK
+key: Dropped.
+padlock: Dropped.
+
+> TAKE LADDER
+ladder: Taken.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> DROP LADDER
+ladder: Dropped.
+
+> EXTEND LADDER
+You extend the ladder to its full length.
+
+> PUT LADDER OVER RIFT
+You place the ladder over the rift.
+
+> N
+You are on a ledge. A ladder leads south over a rift. To the north is a small opening.
+
+> W
+You are in a small room. A desk is against the wall. There is a small drawer in the desk.
+
+> OPEN DESK
+You open the desk. There is a card here.
+
+> PUT KITCHEN CARD AND UPPER CARD INTO POCKET
+kitchen card: You put the kitchen card into your pocket.
+upper card: You put the upper card into your pocket.
+
+> W
+You are in a small room. A desk is against the wall. There is a small drawer in the desk.
+
+> OPEN DESK
+You open the desk. There is a card here.
+
+> PUT SHUTTLE CARD INTO POCKET
+shuttle card: You put the shuttle card into your pocket.
+
+> E
+You are in a small room. A desk is against the wall.
+
+> E
+You are on a ledge. A ladder leads south over a rift.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and east.
+
+> E
+You are in a storage room. Passages lead west and south.
+
+> TAKE KIT AND FLASK
+kit: Taken.
+flask: Taken.
+
+> OPEN KIT
+You open the kit.
+
+> EAT RED GOO
+You eat the red goo. It tastes like strawberry.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and southeast.
+
+> SE
+You are in a robot repair shop. There is a robot here.
+
+> OPEN ROBOT
+You open the robot.
+
+> CLOSE ROBOT
+You close the robot.
+
+> TURN ON ROBOT
+You turn on the robot. The robot says, "Hello. I am Feldspar, model XR-32. How can I help you?"
+
+> NW
+You are in a corridor. Passages lead southeast and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> E
+You are in a storage room. Passages lead west and south.
+
+> TAKE BEDISTOR
+bedistor: Taken.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> E
+You are in a storage room. Passages lead west and south.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> SLIDE UPPER CARD THROUGH SLOT
+You slide the upper card through the slot.
+
+> PRESS UP BUTTON
+You press the up button.
+
+> WAIT
+Time passes...
+
+> WAIT
+The elevator arrives.
+
+> S
+You are in a corridor. Passages lead north and northeast.
+
+> NE
+You are in a corridor. Passages lead southwest and south.
+
+> SW
+You are in a corridor. Passages lead northeast and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> PRESS DOWN BUTTON
+You press the down button.
+
+> WAIT
+Time passes...
+
+> WAIT
+The elevator arrives.
+
+> S
+You are in a corridor. Passages lead north and west.
+
+> W
+You are in a corridor. Passages lead east and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> PUT FLASK UNDER SPOOT
+You put the flask under the spout.
+
+> PRESS GREEN BUTTON
+You press the green button on the wall.
+
+> TAKE FLASK
+flask: Taken.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> E
+You are in a corridor. Passages lead west and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> SLIDE UPPER CARD THROUGH SLOT
+You slide the upper card through the slot.
+
+> PRESS UP BUTTON
+You press the up button.
+
+> WAIT
+Time passes...
+
+> WAIT
+The elevator arrives.
+
+> S
+You are in a corridor. Passages lead north and northeast.
+
+> NE
+You are in a corridor. Passages lead southwest and south.
+
+> POUR LIQUID INTO FUNNEL
+You pour the liquid into the funnel. The enunciator panel goes dark.
+
+> SW
+You are in a corridor. Passages lead northeast and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> PRESS DOWN BUTTON
+You press the down button.
+
+> WAIT
+Time passes...
+
+> WAIT
+The elevator arrives.
+
+> S
+You are in a corridor. Passages lead north and west.
+
+> W
+You are in a corridor. Passages lead east and south.
+
+> W
+You are in a corridor. Passages lead east and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> GET IN BED
+You get into the bed.
+
+> WAIT
+Time passes...
+
+> GET UP
+You get out of the bed.
+
+> TAKE ALL
+bed: (keeping)
+green goo: Taken.
+kit: Taken.
+
+> EAT GREEN GOO
+You eat the green goo. It tastes like lime.
+
+> DROP KIT
+kit: Dropped.
+
+> N
+You are in a corridor. Passages lead south and west.
+
+> W
+You are in a corridor. Passages lead east and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> TAKE CANTEEN
+canteen: Taken.
+
+> SLIDE KITCHEN CARD THROUGH SLOT
+You slide the kitchen card through the slot.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> OPEN CANTEEN
+You open the canteen.
+
+> PUT CANTEEN INTO NICHE
+You put the canteen into the niche.
+
+> PRESS BUTTON
+You press the button. The canteen begins to fill with liquid.
+
+> TAKE CANTEEN
+canteen: Taken.
+
+> CLOSE CANTEEN
+You close the canteen.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> DROP KITCHEN CARD
+kitchen card: Dropped.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> DROP FLASK AND UPPER CARD
+flask: Dropped.
+upper card: Dropped.
+
+> TAKE LASER AND PLIERS
+laser: Taken.
+pliers: Taken.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> SLIDE LOWER CARD THROUGH SLOT
+You slide the lower card through the slot.
+
+> PRESS DOWN BUTTON
+You press the down button.
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+The elevator arrives.
+
+> DROP LOWER CARD
+lower card: Dropped.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> E
+You are in a corridor. Passages lead west and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> SLIDE SHUTTLE CARD THROUGH SLOT
+You slide the shuttle card through the slot.
+
+> PUSH LEVER UP
+You push the lever up.
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> PULL LEVER DOWN
+You pull the lever down.
+
+> PULL LEVER DOWN
+You pull the lever down.
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> DROP SHUTTLE CARD
+shuttle card: Dropped.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> NE
+You are in a corridor. Passages lead southwest and east.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> E
+You are in a corridor. Passages lead west and east.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> OPEN LID
+You open the lid.
+
+> TAKE FUSED BEDISTOR WITH PLIERS
+You take the fused bedistor with the pliers.
+
+> PUT GOOD BEDISTOR INTO CUBE
+You put the good bedistor into the cube.
+
+> CLOSE CUBE
+You close the cube.
+
+> OPEN CANTEEN
+You open the canteen.
+
+> DRINK LIQUID
+You drink the liquid. It tastes like water.
+
+> DROP PLIERS AND FUSED BEDISTOR AND CANTEEN
+pliers: Dropped.
+fused bedistor: Dropped.
+canteen: Dropped.
+
+> S
+You are in a corridor. Passages lead north and west.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> FLOYD, GO N
+Floyd says, "Okay!" Floyd goes north.
+
+> FLOYD, GET SHINY FROMITZ BOARD
+Floyd says, "Okay!" Floyd takes the shiny fromitz board.
+
+> S
+You are in a corridor. Passages lead north and east.
+
+> E
+You are in a corridor. Passages lead west and south.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> OPEN PANEL
+You open the panel.
+
+> TAKE SECOND BOARD
+second board: Taken.
+
+> PUT SHINY BOARD INTO SOCKET
+You put the shiny board into the socket.
+
+> CLOSE PANEL
+You close the panel.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> E
+You are in a corridor. Passages lead west and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and southeast.
+
+> NE
+You are in a corridor. Passages lead southwest and south.
+
+> OPEN BIO-LAB DOOR
+You open the bio-lab door.
+
+> SE
+You are in a corridor. Passages lead northwest and east.
+
+> E
+You are in the biology lab. A large window looks south.
+
+> LOOK THROUGH WINDOW
+Through the window, you can see another room. There appears to be a speck on the window.
+
+> OPEN DOOR
+You open the door.
+
+> CLOSE DOOR
+You close the door.
+
+> WAIT
+Time passes...
+
+> OPEN DOOR
+You open the door.
+
+> CLOSE DOOR
+You close the door.
+
+> PUT MINI CARD INTO POCKET
+mini card: You put the mini card into your pocket.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> OPEN DOOR
+You open the door.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> PUT BATTERY INTO LASER
+You put the battery into the laser.
+
+> N
+You are in a corridor. Passages lead south and northeast.
+
+> SW
+You are in a corridor. Passages lead northeast and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> SLIDE MINI CARD THROUGH SLOT
+You slide the mini card through the slot.
+
+> TYPE 384
+You type 384 on the keyboard.
+
+> E
+You are in a corridor. Passages lead west and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> TURN DIAL TO 1
+You turn the dial to 1.
+
+> FIRE LASER AT SPECK
+You fire the laser at the speck. The speck begins to glow.
+
+> TURN DIAL TO 6
+You turn the dial to 6.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> FIRE LASER AT MICROBE
+You fire the laser at the microbe. The microbe writhes.
+
+> FIRE LASER AT MICROBE
+You fire the laser at the microbe. The microbe writhes.
+
+> FIRE LASER AT MICROBE
+You fire the laser at the microbe. The microbe writhes.
+
+> FIRE LASER AT MICROBE
+You fire the laser at the microbe. The microbe writhes.
+
+> FIRE LASER AT MICROBE
+You fire the laser at the microbe. The microbe writhes.
+
+> FIRE LASER AT MICROBE
+You fire the laser at the microbe. The laser is very warm.
+
+> THROW LASER OVER EDGE
+You throw the laser over the edge.
+
+> S
+You are in a corridor. Passages lead north and west.
+
+> W
+You are in a corridor. Passages lead east and north.
+
+> N
+You are in a corridor. Passages lead south and north.
+
+> OPEN DESK
+You open the desk. There is a gas mask here.
+
+> WEAR GAS MASK
+You wear the gas mask.
+
+> PRESS WHITE BUTTON
+You press the white button on the wall.
+
+> PRESS RED BUTTON
+You press the red button on the wall.
+
+> OPEN OFFICE DOOR
+You open the office door.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> OPEN LAB DOOR
+You open the lab door.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> OPEN DOOR
+You open the door.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> W
+You are in a corridor. Passages lead east and west.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> S
+You are in a corridor. Passages lead north and south.
+
+> PRESS BUTTON
+You press the button.
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> WAIT
+Time passes...
+
+> N
+You are in a corridor. Passages lead south and north.
+
+***
+*** PLANETFALL has ended.
+***
+
+Would you like to end the transcript, start a new game, or restart?
+
+> QUIT
+Would you like to end the transcript? (Y/N)
+
+> Y
+End of transcript.

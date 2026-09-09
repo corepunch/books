@@ -1,0 +1,886 @@
+Here begins a transcript of interaction with
+ZORK II: The Wizard of Frobozz
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 63 / Serial number 860811
+
+>TAKE SWORD
+Taken.
+
+>TAKE LAMP
+Taken.
+
+>SOUTH
+Narrow Tunnel
+You are standing at the southern end of a narrow tunnel where it opens into a
+wide cavern. The cavern is dimly illuminated by phosphorescent mosses clinging
+to its high ceiling. A deep ravine winds through the cavern, with a small stream
+at the bottom. The walls of the ravine are steep and crumbly. A foot bridge
+crosses the ravine to the south.
+
+>SOUTH
+Foot Bridge
+You are standing on a crude but sturdy wooden foot bridge crossing a deep
+ravine. The path runs north and south from here.
+
+>SOUTH
+Great Cavern
+This is the center of the great cavern, carved out of the limestone. Stalactites
+and stalagmites of many sizes are everywhere. The room glows with dim light
+provided by phosphorescent moss, and weird shadows move all around you. A narrow
+path winds southwest among the stalagmites, and another leads northeast.
+
+>SOUTHWEST
+Shallow Ford
+You are at the southern edge of a great cavern. To the south across a shallow
+ford is a dark tunnel which looks like it was once enlarged and smoothed. To the
+north a narrow path winds among stalagmites. Dim light illuminates the cavern.
+
+>TURN ON LAMP
+The lamp is now on.
+
+>SOUTH
+Dark Tunnel
+This is a dark tunnel with dim light to the northeast. The tunnel is smooth but
+dusty and filled with twigs and leaves, debris which becomes deeper as the
+tunnel branches into a wide corridor leading southwest and a narrower one
+leading southeast.
+
+>SOUTHEAST
+North End of Garden
+This is the northern end of a formal garden. Hedges hide the cavern walls, and
+if you don't look up, the illusion is of a cloudy day outside. The light comes
+from a large growth of glowing mosses on the roof of the cave. A break in the
+hedge is almost overgrown to the north. A carefully manicured path leads south.
+In the center of a rosebed is a small open structure, painted white. It appears
+to be a gazebo.
+
+>ENTER
+Gazebo
+This is a gazebo in the midst of a formal garden. It is cool and restful here. A
+tea table adorns the center of the gazebo.
+Sitting on the table is: 
+  A china teapot
+  A place mat
+  A newspaper
+  A letter opener
+  A matchbook
+
+>TAKE ALL
+china teapot: Taken.
+place mat: Taken.
+newspaper: Taken.
+letter opener: Taken.
+matchbook: Taken.
+A unicorn is peacefully cropping grass at the north end of the garden. There is
+something hanging around its neck.
+Your sword is glowing with a faint blue glow.
+
+>LEAVE
+North End of Garden
+There is a beautiful unicorn here cropping grass.
+Your sword has begun to glow very brightly.
+
+>NORTH
+Dark Tunnel
+Your sword is no longer glowing.
+
+>NORTHEAST
+Shallow Ford
+
+>FILL TEAPOT
+The teapot is now full of water.
+
+>SOUTH
+Dark Tunnel
+
+>SOUTHWEST
+Path Near Stream
+The path follows the south edge of a deep ravine and heads northeast. A tunnel
+heads southwest, narrowing to a rather tight crawl. A faint whirring sound can
+be heard in that direction. On the east is a ruined archway choked with
+vegetation.
+
+>SOUTHWEST
+Carousel Room
+You are in a large circular room whose high ceiling is lost in gloom. Eight
+identical passages leave the room.
+A loud whirring sound comes from all around, and you feel sort of disoriented in
+here.
+
+>DROP LETTER OPENER
+Dropped.
+
+>DROP NEWSPAPER
+Dropped.
+
+>DROP PLACE MAT
+Dropped.
+
+>DROP MATCHBOOK
+Dropped.
+
+>DROP SWORD
+Dropped.
+
+>NORTH
+You're not sure which direction is which. This room is very disorienting.
+
+Topiary
+This is the southern end of a formal garden. Hedges hide the cavern walls and
+mosses provide dim illumination. Fantastically shaped hedges and bushes are
+arrayed with geometric precision. They have not recently been clipped, but you
+can discern creatures in the shapes of the bushes: There is a dragon, a unicorn,
+a great serpent, a huge misshapen dog, and several human figures. On the west
+side of the garden the path leads through a rose arbor into a tunnel.
+
+>NORTH
+Formal Garden
+This is the middle part of a formal garden. Hedges hide the cavern walls and a
+dim illumination comes from mosses far above. The path is of small crushed white
+stones. It winds among bushes and flower beds from south to north. To the north
+a small structure can be seen. To the south are peculiarly shaped bushes. There
+is a small gap in the hedges to the west.
+A unicorn is peacefully cropping grass at the north end of the garden. There is
+something hanging around its neck.
+
+>EAST
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>SAY "A WELL"
+Talking to yourself is a sign of impending mental collapse.
+
+>EAST
+You can't go that way.
+
+>EAST
+You can't go that way.
+The unicorn bounds lightly away.
+
+>GET IN BUCKET
+You can't see any bucket here!
+
+>POUR WATER
+The water spills to the floor and evaporates.
+
+>GET OUT
+You're not in that!
+
+>EAST
+You can't go that way.
+
+>TAKE ALL EXCEPT ORANGE
+There's nothing here you can take.
+A unicorn is peacefully cropping grass at the north end of the garden. There is
+something hanging around its neck.
+
+>EAT GREEN CAKE
+You can't see any green cake here!
+The unicorn bounds lightly away.
+
+>EAST
+You can't go that way.
+
+>THROW RED CAKE IN POOL
+You don't have that!
+
+>TAKE CANDIES
+You can't see any candies here!
+
+>WEST
+Path Near Stream
+
+>EAT BLUE CAKE
+You can't see any blue cake here!
+
+>NORTHWEST
+You can't go that way.
+
+>TELL ROBOT TO GO EAST
+You can't see any robot here!
+
+>EAST
+Formal Garden
+
+>TELL ROBOT TO PUSH TRIANGULAR BUTTON
+You can't see any robot here!
+
+>TELL ROBOT TO GO SOUTH
+You can't see any robot here!
+
+>SOUTH
+Topiary
+
+>TAKE SPHERE
+You can't see any sphere here!
+
+>TELL ROBOT TO LIFT CAGE
+You can't see any robot here!
+
+>TAKE SPHERE
+You can't see any sphere here!
+
+>NORTH
+Formal Garden
+A unicorn is peacefully cropping grass at the north end of the garden. There is
+something hanging around its neck.
+
+>WEST
+Path Near Stream
+
+>WEST
+You can't go that way.
+
+>GET IN BUCKET
+You can't see any bucket here!
+
+>GET WATER
+You can't see any water here!
+
+>DROP TEAPOT
+Dropped.
+
+>GET OUT
+You're not in that!
+
+>WEST
+You can't go that way.
+
+>TAKE NECKLACE
+You can't see any necklace here!
+
+>WEST
+You can't go that way.
+
+>NORTHWEST
+You can't go that way.
+
+>DROP SPHERE
+You don't have that!
+
+>DROP NECKLACE
+You don't have that!
+
+>DROP CANDY
+You don't have that!
+
+>TAKE SWORD
+You can't see any sword here!
+
+>TAKE PLACE MAT
+You can't see any place mat here!
+
+>TAKE LETTER OPENER
+You can't see any letter opener here!
+
+>NORTH
+You can't go that way.
+
+>TAKE BRICK
+You can't see any brick here!
+
+>NORTH
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>UP
+You can't go that way.
+
+>SLIDE MAT UNDER DOOR
+Those things aren't here!
+
+>MOVE LID
+You can't see any lid here!
+
+>INSERT OPENER IN KEYHOLE
+You don't have that!
+
+>REMOVE OPENER
+You can't see any opener here!
+
+>PULL MAT
+You can't see any mat here!
+
+>TAKE KEY
+You can't see any key here!
+
+>UNLOCK DOOR
+What do you want to unlock the door with?
+
+>OPEN DOOR
+You can't see any door here!
+
+>NORTH
+You can't go that way.
+
+>DROP KEY
+You don't have that!
+
+>DROP LETTER OPENER
+You don't have that!
+
+>TAKE BLUE SPHERE
+You can't see any blue sphere here!
+
+>SOUTH
+You can't go that way.
+
+>DOWN
+The ravine is extremely deep. You would never make it.
+
+>WEST
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>ATTACK DRAGON WITH SWORD
+You don't have that!
+
+>SOUTH
+You can't go that way.
+
+>ATTACK DRAGON WITH SWORD
+You don't have that!
+
+>SOUTH
+You can't go that way.
+
+>ATTACK DRAGON WITH SWORD
+You don't have that!
+
+>DROP SWORD
+You don't have that!
+
+>EAST
+Formal Garden
+
+>SOUTHEAST
+You can't go that way.
+A unicorn is peacefully cropping grass at the north end of the garden. There is
+something hanging around its neck.
+
+>SOUTHWEST
+You can't go that way.
+The unicorn bounds lightly away.
+
+>TAKE STRING
+You can't see any string here!
+
+>NORTHEAST
+You can't go that way.
+
+>TAKE NEWSPAPER
+You can't see any newspaper here!
+A unicorn is peacefully cropping grass at the north end of the garden. There is
+something hanging around its neck.
+
+>TAKE MATCHES
+You can't see any matches here!
+The unicorn bounds lightly away.
+
+>NORTHWEST
+You can't go that way.
+
+>WEST
+Path Near Stream
+There is a china teapot here.
+
+>WEST
+You can't go that way.
+
+>SOUTH
+You can't go that way.
+
+>GET IN BASKET
+You can't see any basket here!
+
+>OPEN RECEPTACLE
+You can't see any receptacle here!
+
+>PUT NEWSPAPER IN RECEPTACLE
+You don't have that!
+
+>LIGHT MATCH
+You don't have that!
+
+>LIGHT NEWSPAPER WITH MATCH
+You don't have that!
+
+>WAIT
+Time passes...
+
+>LAND
+You can't go that way.
+
+>TIE WIRE TO HOOK
+Those things aren't here!
+
+>GET OUT
+You're not in that!
+
+>TAKE ZORKMID
+A valiant attempt.
+
+>SOUTH
+You can't go that way.
+
+>OPEN PURPLE BOOK
+You can't see any purple book here!
+
+>TAKE STAMP
+You can't see any stamp here!
+
+>NORTH
+You can't go that way.
+
+>GET IN BASKET
+You can't see any basket here!
+
+>UNTIE WIRE
+You can't see any wire here!
+
+>WAIT
+Time passes...
+
+>LAND
+You can't go that way.
+
+>TIE WIRE TO HOOK
+Those things aren't here!
+
+>GET OUT
+You're not in that!
+
+>SOUTH
+You can't go that way.
+
+>PUT STRING IN BRICK
+You don't have that!
+
+>PUT BRICK IN HOLE
+You don't have that!
+
+>LIGHT MATCH
+You don't have that!
+
+>LIGHT STRING WITH MATCH
+You don't have that!
+
+>NORTH
+You can't go that way.
+
+>SOUTH
+You can't go that way.
+
+>TAKE CROWN
+You can't see any crown here!
+
+>NORTH
+You can't go that way.
+
+>GET IN BASKET
+You can't see any basket here!
+
+>UNTIE WIRE
+You can't see any wire here!
+
+>CLOSE RECEPTACLE
+You can't see any receptacle here!
+
+>WAIT
+Time passes...
+
+>GET OUT
+You're not in that!
+
+>NORTH
+You can't go that way.
+
+>TAKE RUBY
+You can't see any ruby here!
+
+>EAST
+Formal Garden
+
+>EAST
+You can't go that way.
+
+>SOUTHEAST
+You can't go that way.
+
+>DROP ALL EXCEPT LAMP
+It's not clear what you're referring to.
+
+>NORTHWEST
+You can't go that way.
+
+>NORTH
+North End of Garden
+
+>NORTH
+Dark Tunnel
+
+>WEST
+You can't go that way.
+
+>WEST
+You can't go that way.
+
+>WEST
+You can't go that way.
+
+>NORTHEAST
+Shallow Ford
+
+>EAST
+You can't go that way.
+
+>SOUTH
+Dark Tunnel
+
+>ENTER SOUTH WALL
+You hit your head against the south wall as you attempt this feat.
+
+>ENTER LIGHT
+That would involve quite a contortion!
+
+>TAKE BILLS
+You can't see any bills here!
+
+>ENTER NORTH WALL
+You hit your head against the north wall as you attempt this feat.
+
+>DROP BILLS
+You don't have that!
+
+>DROP PORTRAIT
+You don't have that!
+
+>EAST
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>TAKE BILLS
+You can't see any bills here!
+
+>TAKE PORTRAIT
+You can't see any portrait here!
+
+>ENTER LIGHT
+That would involve quite a contortion!
+
+>SOUTH
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>TALK TO PRINCESS
+There is no princess here.
+
+>WAIT
+Time passes...
+
+>FOLLOW PRINCESS
+I seem to have lost track of her.
+
+>DROP ROSE
+You don't have that!
+
+>LEAVE GAZEBO
+You can't see any gazebo here!
+
+>SOUTH
+You can't go that way.
+
+>WEST
+You can't go that way.
+
+>SOUTHWEST
+Path Near Stream
+There is a china teapot here.
+
+>DROP PORTRAIT
+You don't have that!
+
+>DROP BILLS
+You don't have that!
+
+>NORTHWEST
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>OPEN CHEST
+You can't see any chest here!
+
+>OPEN CHEST
+You can't see any chest here!
+
+>TAKE STATUETTE
+You can't see any statuette here!
+
+>SOUTH
+You can't go that way.
+
+>SOUTH
+You can't go that way.
+
+>SOUTH
+You can't go that way.
+
+>SOUTHEAST
+You can't go that way.
+
+>SOUTH
+You can't go that way.
+
+>SOUTH
+You can't go that way.
+
+>DOWN
+The ravine is extremely deep. You would never make it.
+
+>TAKE CLUB
+You can't see any club here!
+
+>SOUTHEAST
+You can't go that way.
+
+>NORTHEAST
+Dark Tunnel
+
+>NORTHWEST
+You can't go that way.
+
+>SOUTHWEST
+Path Near Stream
+There is a china teapot here.
+
+>NORTH
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>TAKE BLUE SPHERE
+You can't see any blue sphere here!
+
+>TAKE RED SPHERE
+You can't see any red sphere here!
+
+>TAKE CANDY
+You can't see any candy here!
+
+>SOUTHWEST
+Carousel Room
+An Elvish sword of great antiquity is here.
+There is a matchbook saying "Visit ZORK I" here.
+There is a place mat here.
+There is a newspaper here.
+There is a letter opener here.
+
+>SOUTHWEST
+You're not sure which direction is which. This room is very disorienting.
+
+Topiary
+
+>GIVE CANDY TO LIZARD
+You don't have that!
+
+>UNLOCK DOOR WITH GOLD KEY
+Those things aren't here!
+
+>OPEN DOOR
+You can't see any door here!
+
+>SOUTH
+You can't go that way.
+
+>WEST
+Carousel Room
+An Elvish sword of great antiquity is here.
+There is a matchbook saying "Visit ZORK I" here.
+There is a place mat here.
+There is a newspaper here.
+There is a letter opener here.
+
+>WEST
+You're not sure which direction is which. This room is very disorienting.
+
+Marble Hall
+This is an arched hall of fine marble. The hall stops abruptly to the north at a
+ford across a stream, where the marble is cracked and broken. Perhaps a flood or
+collapse of the cave was responsible. To the south the hall opens into a large
+room. There is rather annoying whirring sound coming from that room.
+There is a square brick here which feels like clay.
+
+>THROW CLUB AT AQUARIUM
+You don't have that!
+
+>TAKE CLEAR SPHERE
+You can't see any clear sphere here!
+
+>EAST
+That's a wall there.
+
+>PUT BLUE SPHERE ON BLUE STAND
+You don't have that!
+
+>PUT RED SPHERE ON RED STAND
+You don't have that!
+
+>PUT CLEAR SPHERE ON CLEAR STAND
+You don't have that!
+
+>TAKE BLACK SPHERE
+You can't see any black sphere here!
+
+>SOUTH
+Carousel Room
+An Elvish sword of great antiquity is here.
+There is a matchbook saying "Visit ZORK I" here.
+There is a place mat here.
+There is a newspaper here.
+There is a letter opener here.
+
+>PUT SPHERE ON CIRCLE
+You don't have that!
+
+>GIVE ALL TO DEMON
+lamp: You can't see any demon here!
+
+>TELL DEMON TO GIVE ME THE WAND
+You can't see any demon here!
+
+>TAKE WAND
+You can't see any wand here!
+
+>NORTH
+You're not sure which direction is which. This room is very disorienting.
+
+Marble Hall
+There is a square brick here which feels like clay.
+
+>EAST
+That's a wall there.
+
+>NORTH
+Deep Ford
+You are fording the stream at a deep but not impossible spot. The water is very
+cold. The walls of the ravine rise to east and west. There is a small ledge
+along the north wall of the ravine. To the south is the entrance to a well-
+constructed but somewhat ruined hall.
+
+>NORTH
+Ledge in Ravine
+You are on a narrow ledge near the bottom of a deep ravine. The ledge continues
+to the west. A precarious climb up to another tiny ledge is possible. A short
+scramble down the rock face leads to a stream.
+
+>NORTHEAST
+You can't go that way.
+A strange little man in a long cloak appears suddenly in the room. He is wearing
+a high pointed hat embroidered with astrological signs. He has a long, stringy,
+and unkempt beard.
+The Wizard draws forth his wand and waves it in your direction. It begins to
+glow with a faint blue glow.
+The Wizard seems about to say something, but thinks better of it, and peers at
+you from under his bushy eyebrows.
+
+>SOUTH
+Deep Ford
+
+>WAVE WAND AT MENHIR
+You don't have that!
+
+>SAY "FLOAT"
+Talking to yourself is a sign of impending mental collapse.
+
+>SOUTHWEST
+You can't go that way.
+
+>TAKE COLLAR
+You can't see any collar here!
+
+>NORTHEAST
+You can't go that way.
+
+>SOUTH
+Marble Hall
+There is a square brick here which feels like clay.
+The lamp appears a bit dimmer.
+
+>DOWN
+You can't go that way.
+
+>DOWN
+You can't go that way.
+
+>PUT COLLAR ON CERBERUS
+You don't have that!
+
+>EAST
+That's a wall there.
+
+>OPEN CRYPT DOOR
+You can't see any crypt door here!
+
+>SOUTH
+Carousel Room
+An Elvish sword of great antiquity is here.
+There is a matchbook saying "Visit ZORK I" here.
+There is a place mat here.
+There is a newspaper here.
+There is a letter opener here.
+
+>TURN OFF LAMP
+The lamp is now off.
+It is now pitch black.
+
+>OPEN DOOR
+It's too dark to see!
+
+>SOUTH
+You're not sure which direction is which. This room is very disorienting.
+
+Oh, no! A lurking grue slithered into the room and devoured you!
+ 
+    ****  You have died  **** 
+
+Now, let's take a look here... Well, you probably deserve another chance. I
+can't quite fix you up completely, but you can't have everything.
+
+Room of Red Mist
+You are inside a huge crystalline sphere filled with thin red mist. The mist
+becomes blue to the west.
+You strain to look out through the mist... 
+You see a small room with a sign on the wall, but it is too blurry to read.
+
+>QUIT
+Your score would be -10 (total of 400 points), in 213 moves.
+This score gives you the rank of Beginner.
+Do you wish to leave the game? (Y is affirmative): >YES
+

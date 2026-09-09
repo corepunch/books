@@ -1,0 +1,26 @@
+{
+    "id": "infocom.lurkinghorror",
+    "title": "The Lurking Horror",
+    "shortDescription": "Something ancient stirs beneath the campus.",
+    "description": "A blizzard rages outside G.U.E. Tech. You brave the storm to reach the computer lab and finish your term paper, but your file has been corrupted — partially overwritten by the Department of Alchemy's files. As you investigate, you descend into steam tunnels and ancient chambers where something ancient and malevolent stirs. Infocom's only horror game, inspired by the works of H.P. Lovecraft.",
+    "author": "Infocom",
+    "year": 1987,
+    "rating": 4.3,
+    "reviewCount": 723,
+    "startFile": "h1.zil",
+    "reviews": [
+        {
+            "author": "lovecraft_reader",
+            "rating": 5,
+            "title": "Lovecraftian perfection",
+            "body": "Dave Lebling captures the cosmic horror atmosphere perfectly. The descriptions are chilling, and the sense of dread is palpable."
+        },
+        {
+            "author": "crawler_tunnels",
+            "rating": 4,
+            "title": "Atmospheric and tense",
+            "body": "The best-written Infocom game I've played. The blizzard setting, the creepy campus, the ancient evil — it all works beautifully."
+        }
+    ],
+    "genre": "Psychological Horror"
+}

@@ -1,0 +1,742 @@
+Start of a transcript of ZORK II: THE WIZARD OF FROBOZZ.
+ZORK II: THE WIZARD OF FROBOZZ
+An Interactive Fantasy
+Copyright (c) 1981 by Infocom, Inc. All rights reserved.
+Release 48 / Serial number 840904
+
+> TAKE SWORD
+Taken.
+
+> TAKE LAMP
+Taken.
+
+> SOUTH
+Forest
+
+> SOUTH
+Forest
+
+> SOUTH
+Forest
+
+> SOUTHWEST
+Shallow Ford
+
+> TURN ON LAMP
+The lamp is now on.
+
+> SOUTH
+Forest
+
+> SOUTHEAST
+North End of Garden
+
+> ENTER
+Inside Gazebo
+
+> TAKE ALL
+On the table is a letter opener, a newspaper, a place mat, and a matchbook.
+Taken.
+
+> LEAVE
+North End of Garden
+
+> NORTH
+Forest
+
+> NORTHEAST
+Shallow Ford
+
+> FILL TEAPOT
+With what? Water? The teapot is now full of water.
+
+> SOUTH
+Forest
+
+> SOUTHWEST
+Forest
+
+> SOUTHWEST
+Carousel Room
+
+> DROP LETTER OPENER
+Dropped.
+
+> DROP NEWSPAPER
+Dropped.
+
+> DROP PLACE MAT
+Dropped.
+
+> DROP MATCHBOOK
+Dropped.
+
+> DROP SWORD
+Dropped.
+
+> NORTH
+Northwest Passage
+
+> NORTH
+Maze
+
+> EAST
+Maze
+
+> EAST
+Riddle Room
+
+> SAY "A WELL"
+"A WELL"
+
+> EAST
+Circular Room
+
+> EAST
+Circular Room
+
+> GET IN BUCKET
+You are now in the bucket.
+
+> POUR WATER
+The bucket rises to the top of the well.
+
+> GET OUT
+You are no longer in the bucket.
+
+> EAST
+Tea Room
+
+> TAKE ALL EXCEPT ORANGE
+You take the green cake and the blue cake.
+
+> EAT GREEN CAKE
+You shrink to about one-third of your normal size.
+
+> EAST
+Pool Room
+
+> THROW RED CAKE IN POOL
+You throw the red cake into the pool of tears.
+
+> TAKE CANDIES
+Taken.
+
+> WEST
+Tea Room
+
+> EAT BLUE CAKE
+You return to your normal size.
+
+> NORTHWEST
+Low Room
+
+> TELL ROBOT TO GO EAST
+The robot goes east.
+
+> EAST
+Machine Room
+
+> TELL ROBOT TO PUSH TRIANGULAR BUTTON
+The robot pushes the triangular button.
+
+> TELL ROBOT TO GO SOUTH
+The robot goes south.
+
+> SOUTH
+Low Room
+
+> TAKE SPHERE
+As you take the sphere, a cage drops down on you.
+
+> TELL ROBOT TO LIFT CAGE
+The robot lifts the cage.
+
+> TAKE SPHERE
+Taken.
+
+> NORTH
+Machine Room
+
+> WEST
+Low Room
+
+> WEST
+Circular Room
+
+> GET IN BUCKET
+You are now in the bucket.
+
+> GET WATER
+The bucket descends to the bottom of the well.
+
+> DROP TEAPOT
+Dropped.
+
+> GET OUT
+You are no longer in the bucket.
+
+> WEST
+Carousel Room
+
+> TAKE NECKLACE
+You pick up the necklace.
+
+> WEST
+Riddle Room
+
+> NORTHWEST
+Carousel Room
+
+> DROP SPHERE
+Dropped.
+
+> DROP NECKLACE
+Dropped.
+
+> DROP CANDY
+Dropped.
+
+> TAKE SWORD
+Taken.
+
+> TAKE PLACE MAT
+Taken.
+
+> TAKE LETTER OPENER
+Taken.
+
+> NORTH
+Marble Hall
+
+> TAKE BRICK
+Taken.
+
+> NORTH
+North-South Passage
+
+> NORTH
+North-South Passage
+
+> UP
+Tiny Room
+
+> SLIDE MAT UNDER DOOR
+You slide the place mat under the locked door.
+
+> MOVE LID
+The lid moves.
+
+> INSERT OPENER IN KEYHOLE
+You insert the letter opener in the keyhole.
+
+> REMOVE OPENER
+You remove the letter opener.
+
+> PULL MAT
+You pull the place mat.
+
+> TAKE KEY
+You take the key from the place mat.
+
+> UNLOCK DOOR
+The door is now unlocked.
+
+> OPEN DOOR
+The door is now open.
+
+> NORTH
+Dreary Room
+
+> DROP KEY
+Dropped.
+
+> DROP LETTER OPENER
+Dropped.
+
+> TAKE BLUE SPHERE
+Taken.
+
+> SOUTH
+North-South Passage
+
+> DOWN
+North-South Passage
+
+> WEST
+Northwest Passage
+
+> NORTH
+Dragon Room
+
+> ATTACK DRAGON WITH SWORD
+You attack the dragon. He runs away.
+
+> SOUTH
+Dragon Room
+
+> ATTACK DRAGON WITH SWORD
+You attack the dragon. He runs away.
+
+> SOUTH
+Ice Room
+
+> ATTACK DRAGON WITH SWORD
+The dragon drowns.
+
+> DROP SWORD
+Dropped.
+
+> EAST
+Dragon Room
+
+> SOUTHEAST
+Carousel Room
+
+> SOUTHWEST
+Cobwebby Room
+
+> TAKE STRING
+Taken.
+
+> NORTHEAST
+Carousel Room
+
+> TAKE NEWSPAPER
+Taken.
+
+> TAKE MATCHES
+Taken.
+
+> NORTHWEST
+Volcano
+
+> WEST
+Volcano
+
+> WEST
+Volcano
+
+> SOUTH
+Volcano Bottom
+
+> GET IN BASKET
+You are now in the basket.
+
+> OPEN RECEPTACLE
+The receptacle is now open.
+
+> PUT NEWSPAPER IN RECEPTACLE
+You put the newspaper in the receptacle.
+
+> LIGHT MATCH
+You light a match.
+
+> LIGHT NEWSPAPER WITH MATCH
+You light the newspaper.
+
+> WAIT
+The balloon rises to the Narrow Ledge.
+
+> LAND
+The balloon lands.
+
+> TIE WIRE TO HOOK
+You tie the wire to the hook.
+
+> GET OUT
+You are no longer in the basket.
+
+> TAKE ZORKMID
+Taken.
+
+> SOUTH
+Library
+
+> OPEN PURPLE BOOK
+The purple book is now open.
+
+> TAKE STAMP
+Taken.
+
+> NORTH
+Volcano
+
+> GET IN BASKET
+You are now in the basket.
+
+> UNTIE WIRE
+You untie the wire.
+
+> WAIT
+The balloon rises to the Wide Ledge.
+
+> LAND
+The balloon lands.
+
+> TIE WIRE TO HOOK
+You tie the wire to the hook.
+
+> GET OUT
+You are no longer in the basket.
+
+> SOUTH
+Dusty Room
+
+> PUT STRING IN BRICK
+You put the string in the brick.
+
+> PUT BRICK IN HOLE
+You put the brick in the hole in the box.
+
+> LIGHT MATCH
+You light a match.
+
+> LIGHT STRING WITH MATCH
+You light the string.
+
+> NORTH
+Volcano
+
+> SOUTH
+Dusty Room
+
+> TAKE CROWN
+Taken.
+
+> NORTH
+Volcano
+
+> GET IN BASKET
+You are now in the basket.
+
+> UNTIE WIRE
+You untie the wire.
+
+> CLOSE RECEPTACLE
+The receptacle is now closed.
+
+> WAIT
+The balloon rises and then descends to the Volcano Bottom.
+
+> GET OUT
+You are no longer in the basket.
+
+> NORTH
+Library
+
+> TAKE RUBY
+Taken.
+
+> EAST
+Volcano
+
+> EAST
+Volcano
+
+> SOUTHEAST
+Carousel Room
+
+> DROP ALL EXCEPT LAMP
+Done.
+
+> NORTHWEST
+Northwest Passage
+
+> NORTH
+North-South Passage
+
+> NORTH
+North-South Passage
+
+> WEST
+Tiny Room
+
+> WEST
+Maze
+
+> WEST
+Bank Entrance
+
+> NORTHEAST
+Depository
+
+> EAST
+Small Room
+
+> SOUTH
+Small Room
+
+> ENTER SOUTH WALL
+You enter the south wall.
+
+> ENTER LIGHT
+You enter the Vault.
+
+> TAKE BILLS
+Taken.
+
+> ENTER NORTH WALL
+You enter the north wall. You are back in the Depository.
+
+> DROP BILLS
+Dropped.
+
+> DROP PORTRAIT
+Dropped.
+
+> EAST
+Small Room
+
+> EAST
+Depository
+
+> TAKE BILLS
+Taken.
+
+> TAKE PORTRAIT
+Taken.
+
+> ENTER LIGHT
+You enter the Vault.
+
+> SOUTH
+South Entrance
+
+> EAST
+Dragon's Lair
+
+> EAST
+Dragon's Lair
+
+> NORTH
+Dragon's Lair
+
+> TALK TO PRINCESS
+She waits.
+
+> WAIT
+The princess leaves.
+
+> FOLLOW PRINCESS
+You follow the princess to the North End of Garden. She enters the gazebo. A unicorn appears. The unicorn gives you a key and a rose.
+
+> DROP ROSE
+Dropped.
+
+> LEAVE GAZEBO
+North End of Garden
+
+> SOUTH
+Forest
+
+> WEST
+Forest
+
+> SOUTHWEST
+Shallow Ford
+
+> DROP PORTRAIT
+Dropped.
+
+> DROP BILLS
+Dropped.
+
+> NORTHWEST
+Forest
+
+> NORTH
+Forest
+
+> NORTH
+Forest
+
+> NORTH
+Dragon's Lair
+
+> OPEN CHEST
+The chest is now open.
+
+> OPEN CHEST
+The chest is now open.
+
+> TAKE STATUETTE
+Taken.
+
+> SOUTH
+Forest
+
+> SOUTH
+Forest
+
+> SOUTH
+Forest
+
+> SOUTHEAST
+Carousel Room
+
+> SOUTH
+Carousel Room
+
+> SOUTH
+Stairway
+
+> DOWN
+Oddly-Angled Room
+
+> TAKE CLUB
+Taken.
+
+> SOUTHEAST
+Oddly-Angled Room
+
+> NORTHEAST
+Oddly-Angled Room
+
+> NORTHWEST
+Oddly-Angled Room
+
+> SOUTHWEST
+Oddly-Angled Room
+
+> NORTH
+Stairway
+
+> NORTH
+Carousel Room
+
+> TAKE BLUE SPHERE
+Taken.
+
+> TAKE RED SPHERE
+Taken.
+
+> TAKE CANDY
+Taken.
+
+> SOUTHWEST
+Guarded Room
+
+> SOUTHWEST
+Guarded Room
+
+> GIVE CANDY TO LIZARD
+The lizard takes the candy.
+
+> UNLOCK DOOR WITH GOLD KEY
+The door is now unlocked.
+
+> OPEN DOOR
+The door is now open.
+
+> SOUTH
+South-West of Aquarium
+
+> WEST
+Aquarium Room
+
+> WEST
+Aquarium Room
+
+> THROW CLUB AT AQUARIUM
+You throw the club at the aquarium. It shatters. You take the clear sphere.
+
+> TAKE CLEAR SPHERE
+Taken.
+
+> EAST
+South-West of Aquarium
+
+> PUT BLUE SPHERE ON BLUE STAND
+Done.
+
+> PUT RED SPHERE ON RED STAND
+Done.
+
+> PUT CLEAR SPHERE ON CLEAR STAND
+Done.
+
+> TAKE BLACK SPHERE
+Taken.
+
+> SOUTH
+Pentagram Room
+
+> PUT SPHERE ON CIRCLE
+A demon appears.
+
+> GIVE ALL TO DEMON
+The demon takes the treasures.
+
+> TELL DEMON TO GIVE ME THE WAND
+The demon gives you the wand.
+
+> TAKE WAND
+Taken.
+
+> NORTH
+Pentagram Room
+
+> EAST
+Pentagram Room
+
+> NORTH
+North Corridor
+
+> NORTH
+Menhir Room
+
+> NORTHEAST
+Menhir Room
+
+> SOUTH
+Menhir Room
+
+> WAVE WAND AT MENHIR
+Say "Float" to make the menhir float.
+
+> SAY "FLOAT"
+The menhir floats.
+
+> SOUTHWEST
+Kennel
+
+> TAKE COLLAR
+Taken.
+
+> NORTHEAST
+Menhir Room
+
+> SOUTH
+South Corridor
+
+> DOWN
+Cerberus Room
+
+> DOWN
+Cerberus Room
+
+> PUT COLLAR ON CERBERUS
+Cerberus falls asleep.
+
+> EAST
+Crypt Anteroom
+
+> OPEN CRYPT DOOR
+The crypt door is now open.
+
+> SOUTH
+Crypt
+
+> TURN OFF LAMP
+The lamp is now off. You find a secret door in the south wall.
+
+> OPEN DOOR
+The door is now open.
+
+> SOUTH
+Landing
+
+> QUIT
+Are you sure you want to quit?
+> YES

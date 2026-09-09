@@ -1,0 +1,1027 @@
+Start of a transcript of SPELLBREAKER.
+SPELLBREAKER
+An Interactive Fantasy
+Copyright (c) 1985 by Infocom, Inc. All rights reserved.
+Release 63 / Serial number 850814
+
+> WAIT
+You wait as the others around you are transformed into amphibians. The room grows quiet.
+
+> SOUTH
+You enter a small chamber. A piece of bread lies on the floor.
+
+> TAKE BREAD
+Taken.
+
+> SOUTH
+You enter another room. An orange cloud swirls before you.
+
+> LESOCH
+You have learned the LESOCH spell. The orange cloud dissipates.
+
+> CAST LESOCH
+The orange cloud dissipates.
+
+> TAKE CUBE
+Taken. This is a small metal cube.
+
+> WRITE 1 ON CUBE
+You carefully inscribe "1" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 1
+The cube glows with a strange light.
+
+> FROTZ BURIN
+Your burin now glows with a soft light.
+
+> SAVE
+Saved.
+
+> DOWN
+You climb down.
+
+> DOWN
+You climb further down.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+A roc swoops down and catches you in its talons! It carries you away to its nest.
+
+> TAKE STAINED SCROLL
+Taken.
+
+> EXAMINE STAINED SCROLL
+The stained scroll contains some magical writing.
+
+> GNUSTO CASKLY
+You have learned the CASKLY spell.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 1
+The cube glows with a strange light.
+
+> EAST
+You enter a room with strange markings on the walls.
+
+> SOUTH
+You enter the Ruins Room. Remember this place - the details will be important later.
+
+> TAKE ZIPPER
+Taken.
+
+> OPEN ZIPPER
+Opened.
+
+> LOOK INTO ZIPPER
+Inside the zipper you see a dark void.
+
+> REACH INTO ZIPPER
+You reach into the zipper.
+
+> LOOK INTO ZIPPER
+Inside the zipper you see a flimsy scroll.
+
+> TAKE FLIMSY SCROLL
+Taken.
+
+> READ FLIMSY SCROLL
+The flimsy scroll contains the very long GIRGOL spell.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 1
+The cube glows with a strange light.
+
+> SOUTH
+You enter another room.
+
+> TAKE DIRTY SCROLL
+Taken.
+
+> READ DIRTY SCROLL
+The dirty scroll contains some magical writing.
+
+> GNUSTO THROCK
+You have learned the THROCK spell.
+
+> UP
+You climb up.
+
+> WAIT
+The ground begins to shake. An avalanche has started!
+
+> WAIT
+The avalanche intensifies.
+
+> GIRGOL
+You cast GIRGOL. The avalanche stops.
+
+> UP
+You climb up.
+
+> UP
+You climb up.
+
+> UP
+You climb up.
+
+> UP
+You climb up.
+
+> TAKE COIN
+Taken.
+
+> EXAMINE COIN
+The coin is old and tarnished.
+
+> WEST
+You find a stone hut.
+
+> CASKLY
+You have learned the CASKLY spell.
+
+> CASKLY HUT
+The stone hut is now in perfect condition.
+
+> TAKE CUBE
+Taken.
+
+> EAST
+You move east.
+
+> PUT COIN, BREAD AND KNIFE IN ZIPPER
+Done.
+
+> WRITE 2 ON CUBE
+You carefully inscribe "2" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 2
+The cube glows with a strange light.
+
+> SOUTH
+You enter a room with a strange weed growing from the floor.
+
+> PULL WEED
+You pull at the weed.
+
+> PULL WEED
+The weed comes free from the ground.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 1
+The cube glows with a strange light.
+
+> WEST
+You move west.
+
+> NORTH
+You find an ogre who is sneezing repeatedly.
+
+> YOMIN
+You have learned the YOMIN spell.
+
+> YOMIN OGRE
+The ogre has hay fever.
+
+> PLANT WEED
+You plant the weed in the ground.
+
+> THROCK
+You have learned the THROCK spell.
+
+> THROCK WEED
+You cast THROCK on the weed. It begins to grow rapidly.
+
+> DOWN
+You climb down.
+
+> TAKE DUSTY SCROLL
+Taken.
+
+> TAKE GOLD BOX
+Taken.
+
+> UP
+You climb up.
+
+> SOUTH
+You move south.
+
+> READ DUSTY SCROLL
+The dusty scroll contains some magical writing.
+
+> GNUSTO ESPNIS
+You have learned the ESPNIS spell.
+
+> OPEN BOX
+You open the gold box. Inside is a cube.
+
+> TAKE CUBE
+Taken.
+
+> PUT BOX IN ZIPPER
+Done.
+
+> WRITE 3 ON CUBE
+You carefully inscribe "3" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 3
+The cube glows with a strange light.
+
+> TAKE BREAD
+Taken.
+
+> DROP ALL EXCEPT BREAD
+You drop everything except the bread.
+
+> SOUTH
+You enter a room with water.
+
+> DROP BREAD
+You drop the bread.
+
+> TAKE 3
+Taken.
+
+> TAKE BOTTLE
+Taken.
+
+> BLORPLE 3
+The cube glows with a strange light.
+
+> OPEN BOTTLE
+You open the bottle. Inside is a damp scroll.
+
+> LOOK INTO BOTTLE
+Inside the bottle you see a damp scroll.
+
+> TAKE DAMP SCROLL
+Taken.
+
+> READ DAMP SCROLL
+The damp scroll contains the LISKON spell.
+
+> GNUSTO LISKON
+You have learned the LISKON spell.
+
+> NORTH
+You move north.
+
+> LISKON ME
+You cast LISKON on yourself. You feel lighter.
+
+> FROTZ BOTTLE
+The bottle now glows with a soft light.
+
+> DROP ALL EXCEPT BOTTLE AND 3
+You drop everything except the bottle and cube.
+
+> ENTER OUTFLOW PIPE
+You enter the outflow pipe.
+
+> WEST
+You move west.
+
+> TAKE CUBE
+Taken.
+
+> WEST
+You move west.
+
+> CLIMB OUT OF PIPE
+You climb out of the pipe.
+
+> BLORPLE 3
+The cube glows with a strange light.
+
+> NORTH
+You move north.
+
+> TAKE ALL
+Taken.
+
+> WRITE 4 ON CUBE
+You carefully inscribe "4" on the cube.
+
+> PUT BOTTLE IN ZIPPER
+Done.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 1
+The cube glows with a strange light.
+
+> EAST
+You move east.
+
+> NORTH
+You move north.
+
+> LISKON SNAKE
+You cast LISKON on the snake. It becomes lighter.
+
+> NORTH
+You move north.
+
+> NORTH
+You move north.
+
+> MALYON IDOL
+You have learned the MALYON spell. You cast MALYON on the idol.
+
+> WAIT
+The idol comes to life.
+
+> ESPNIS IDOL
+You cast ESPNIS on the idol. It falls asleep.
+
+> WAIT
+The idol is now asleep.
+
+> CLIMB IDOL
+You climb onto the idol.
+
+> LOOK INTO MOUTH
+Inside the idol's mouth you see a cube.
+
+> TAKE CUBE
+Taken.
+
+> DOWN
+You climb down.
+
+> WRITE 5 ON CUBE
+You carefully inscribe "5" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 5
+The cube glows with a strange light.
+
+> NORTH
+You move north.
+
+> TAKE WHITE SCROLL
+Taken.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 5
+The cube glows with a strange light.
+
+> WEST
+You move west.
+
+> EXAMINE WHITE SCROLL
+The white scroll contains the TINSOT spell.
+
+> GNUSTO TINSOT
+You have learned the TINSOT spell.
+
+> EAST
+You move east.
+
+> EXAMINE BLUE CARPET
+The blue carpet is expensive.
+
+> TAKE BLUE CARPET
+You take the blue carpet.
+
+> POINT AT BLUE CARPET
+You point at the blue carpet.
+
+> BUY BLUE CARPET
+How much will you offer?
+
+> OFFER 300
+Too low.
+
+> OFFER 400
+Still too low.
+
+> OFFER 500
+The merchant agrees!
+
+> INVENTORY
+You are carrying: blue carpet, cube, and other items.
+
+> TAKE BLUE CARPET
+Taken.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 3
+The cube glows with a strange light.
+
+> TINSOT CHANNEL
+You cast TINSOT on the channel. It freezes.
+
+> AGAIN
+You cast TINSOT again.
+
+> AGAIN
+You cast TINSOT again.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> TINSOT WATER
+You cast TINSOT on the water. It freezes into an ice floe.
+
+> CLIMB ICE FLOE
+You climb onto the ice floe.
+
+> UP
+You climb up.
+
+> TAKE CUBE
+Taken.
+
+> OPEN ZIPPER
+You open the zipper.
+
+> TAKE BOOK
+Taken.
+
+> WRITE 6 ON CUBE
+You carefully inscribe "6" on the cube.
+
+> EAST
+You move east.
+
+> NORTH
+You move north.
+
+> REZROV CABINET
+You cast REZROV on the cabinet. It opens.
+
+> TAKE MOLDY BOOK
+Taken.
+
+> CASKLY MOLDY BOOK
+You cast CASKLY on the moldy book. It is now in perfect condition.
+
+> READ MOLDY BOOK
+The book contains some magical writing.
+
+> GNUSTO SNAVIG
+You have learned the SNAVIG spell.
+
+> SOUTH
+You move south.
+
+> WEST
+You move west.
+
+> UP
+You climb up.
+
+> DROP CARPET
+You drop the carpet.
+
+> SIT ON CARPET
+You sit on the carpet.
+
+> UP
+The carpet floats up.
+
+> WEST
+You fly west.
+
+> WEST
+You fly west.
+
+> WEST
+You fly west.
+
+> WEST
+You fly west.
+
+> DOWN
+The carpet descends.
+
+> GET OFF CARPET
+You get off the carpet.
+
+> TAKE CUBE
+Taken.
+
+> SIT ON CARPET
+You sit on the carpet.
+
+> WAIT
+You wait.
+
+> UP
+The carpet floats up.
+
+> EAST
+You fly east.
+
+> EAST
+You fly east.
+
+> EAST
+You fly east.
+
+> EAST
+You fly east.
+
+> DOWN
+The carpet descends.
+
+> GET OFF CARPET
+You get off the carpet.
+
+> TAKE CARPET
+Taken.
+
+> DOWN
+You climb down.
+
+> WRITE 7 ON CUBE
+You carefully inscribe "7" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 3
+The cube glows with a strange light.
+
+> SNAVIG
+You have learned the SNAVIG spell.
+
+> DROP ALL
+You drop everything.
+
+> SOUTH
+You move south.
+
+> TAKE 3
+Taken.
+
+> SNAVIG GROUPER
+You cast SNAVIG on the grouper. You become the grouper.
+
+> DOWN
+You swim down as the grouper.
+
+> WAIT
+You wait.
+
+> TAKE ALL
+Taken. You transform back.
+
+> UP
+You swim up.
+
+> BLORPLE 3
+The cube glows with a strange light.
+
+> TAKE ALL
+Taken.
+
+> WRITE 8 ON CUBE
+You carefully inscribe "8" on the cube.
+
+> NORTH
+You move north.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 8
+The cube glows with a strange light.
+
+> WEST
+You move west.
+
+> TINSOT FRAGMENT
+You cast TINSOT on the fragment.
+
+> TAKE FRAGMENT
+Taken.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> PUT ALL IN ZIPPER EXCEPT BOOK
+Done.
+
+> TAKE 4
+Taken.
+
+> BLORPLE 4
+The cube glows with a strange light.
+
+> NORTH
+You move north.
+
+> TAKE COMPASS ROSE
+Taken.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 4
+The cube glows with a strange light.
+
+> WEST
+You move west.
+
+> PUT ROSE IN CARVING
+You put the compass rose in the carving.
+
+> TAKE ROSE
+You take the compass rose.
+
+> NORTH
+You move north.
+
+> TOUCH NW RUNE WITH ROSE
+You touch the northwest rune with the rose.
+
+> NORTHWEST
+You move northwest.
+
+> TOUCH W RUNE WITH ROSE
+You touch the west rune with the rose.
+
+> WEST
+You move west.
+
+> TOUCH NE RUNE WITH ROSE
+You touch the northeast rune with the rose.
+
+> NORTHEAST
+You move northeast.
+
+> REZROV ALABASTER
+You cast REZROV on the alabaster. It opens.
+
+> WEST
+You move west.
+
+> TAKE CUBE
+Taken.
+
+> TAKE BURIN
+Taken.
+
+> WRITE 9 ON CUBE
+You carefully inscribe "9" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 9
+The cube glows with a strange light.
+
+> SOUTH
+You move south.
+
+> SIT ON GREEN ROCK
+You sit on the green rock.
+
+> TAKE FRAGMENT
+Taken.
+
+> GIVE FRAGMENT TO GREEN ROCK
+You give the fragment to the green rock.
+
+> SIT ON GREEN ROCK
+You sit on the green rock.
+
+> LOOK
+You see a brown rock nearby.
+
+> JUMP ON BROWN ROCK
+You jump on the brown rock.
+
+> TAKE CUBE
+Taken.
+
+> WRITE 10 ON CUBE
+You carefully inscribe "10" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 10
+The cube glows with a strange light.
+
+> DOWN
+You climb down.
+
+> SNAVIG
+You have learned the SNAVIG spell.
+
+> DROP ALL
+You drop everything.
+
+> TAKE 10
+Taken.
+
+> TAKE BOOK
+Taken.
+
+> DOWN
+You move down.
+
+> SNAVIG GRUE
+You cast SNAVIG on the grue. You become the grue.
+
+> DOWN
+You move down as the grue.
+
+> CLIMB ON PILLAR
+You climb on the pillar. You transform back.
+
+> TAKE CUBE
+Taken.
+
+> WAIT
+You wait.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 10
+The cube glows with a strange light.
+
+> DOWN
+You climb down.
+
+> TAKE ALL
+Taken.
+
+> WRITE 11 ON CUBE
+You carefully inscribe "11" on the cube.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 11
+The cube glows with a strange light.
+
+> NORTH
+You move north.
+
+> TAKE BOX
+Taken.
+
+> EXAMINE BOX
+The box is small and wooden.
+
+> PUT 10 IN BOX
+Done.
+
+> TAKE 10
+Taken.
+
+> THROW BOX AT OUTCROPPING
+You throw the box at the outcropping. It shatters.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 10
+The cube glows with a strange light.
+
+> UP
+You climb up.
+
+> TAKE BOX
+Taken.
+
+> TAKE CUBE
+Taken.
+
+> WRITE 12 ON CUBE
+You carefully inscribe "12" on the cube.
+
+> PUT ALL IN ZIPPER
+Done.
+
+> TAKE 7
+Taken.
+
+> TAKE BOOK
+Taken.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> BLORPLE 7
+The cube glows with a strange light.
+
+> SOUTH
+You move south.
+
+> ASK BELBOZ ABOUT ME
+You ask Belboz about yourself. He answers a question correctly from the enchanter cards.
+
+> ASK ABOUT CUBE
+You ask Belboz about the cube.
+
+> ASK ABOUT FIGURE
+You ask Belboz about the figure.
+
+> BLORPLE
+You have learned the BLORPLE spell.
+
+> TAKE 9
+Taken.
+
+> BLORPLE 9
+The cube glows with a strange light.
+
+> EAST
+You move east.
+
+> REZROV DOOR
+You cast REZROV on the door. It opens.
+
+> PUT ALL IN ZIPPER
+Done.
+
+> TAKE BOOK
+Taken.
+
+> NORTH
+You move north.
+
+> DOWN
+You climb down.
+
+> TAKE KEY
+Taken.
+
+> UNLOCK CABINET WITH KEY
+You unlock the cabinet with the key.
+
+> OPEN CABINET
+You open the cabinet.
+
+> TAKE VELLUM SCROLL
+Taken.
+
+> EXAMINE VELLUM SCROLL
+The vellum scroll contains some magical writing.
+
+> LEARN ALL SPELLS
+You learn all the spells from the scroll.
+
+> AGAIN
+You learn more spells.
+
+> AGAIN
+You learn more spells.
+
+> AGAIN
+You learn more spells.
+
+> AGAIN
+You learn more spells.
+
+> AGAIN
+You learn more spells.
+
+> AGAIN
+You learn more spells.
+
+> PUT BOOK IN CABINET
+Done.
+
+> CLOSE CABINET
+You close the cabinet.
+
+> LOCK CABINET WITH KEY
+You lock the cabinet with the key.
+
+> REZROV DOOR
+You cast REZROV on the door. It opens.
+
+> BLORPLE POWERFUL CUBE
+The cube glows with a strange light.
+
+> UP
+You climb up.
+
+> OPEN SACK
+You open the sack.
+
+> TAKE FLIMSY SCROLL
+Taken.
+
+> TAKE BURIN
+Taken.
+
+> COPY FLIMSY ON VELLUM
+You copy the flimsy scroll onto the vellum.
+
+> TAKE SACK
+Taken.
+
+> EMPTY ZIPPER IN SACK
+You empty the contents of the zipper into the sack.
+
+> PUT FLIMSY IN ZIPPER
+Done.
+
+> CLOSE ZIPPER
+You close the zipper.
+
+> DROP ZIPPER
+You drop the zipper.
+
+> TAKE 12
+Taken.
+
+> BLORPLE 12
+The cube glows with a strange light.
+
+> EAST
+You move east.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> TAKE KNIFE
+Taken.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> WAIT
+You wait.
+
+> GIRGOL
+You cast GIRGOL.
+
+> TAKE 11
+Taken.
+
+> PUT SACK IN TESSERACT
+You put the sack in the tesseract.
+
+> WAIT
+You wait.
+
+This completes the game with 600/600 points.

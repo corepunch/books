@@ -1,0 +1,1289 @@
+Here begins a transcript of interaction with SPELLBREAKER.
+SPELLBREAKER
+An Interactive Fantasy
+Copyright (c) 1985 by Infocom, Inc. All rights reserved.
+SPELLBREAKER is a trademark of Infocom, Inc.
+Release 87 / Serial number 860904
+
+>WAIT
+Time passes...
+
+Sneffle of the Guild of Bakers is addressing the gathering. "Do you know what
+this is doing to our business? Do you know how difficult it is to make those
+yummy butter pastries by hand? When a simple 'gloth' spell would fold the dough
+83 times it was possible to make a profit, but now 'gloth' hardly works, and
+when it does, it usually folds the dough too often and the butter melts, or it
+doesn't come out the right size, or..." He stops, apparently overwhelmed by the
+prospect of a world where the pastries have to be hand-made. "Can't you do
+anything about this? You're supposed to know all about magic!"
+
+>SOUTH
+Annoyed guildmasters make way grudgingly. You hear muttering about "arrogant
+enchanters" as you try to leave the chamber. Finally, Orkan of Thriff, one of
+your colleagues, says, "Stay. Be quiet. Don't embarrass us."
+
+Hoobly of the Guild of Brewers stands, gesturing at the floury baker. "You don't
+know what trouble is! Lately, what comes out of the vats, like as not, is cherry
+flavored or worse. The last vat, I swear it, tasted as if grues had been bathing
+in it. It takes magic to turn weird vegetables and water into good Borphee beer.
+Well, without magic, there isn't going to be any beer!" This statement has a
+profound effect on portions of the crowd. You can hear rumblings from the back
+concerning Enchanters. The word "traitors" rises out of nowhere. Your fellow
+Enchanters are looking at one another nervously.
+
+>TAKE BREAD
+You can't see any bread here.
+
+>SOUTH
+Annoyed guildmasters make way grudgingly. You hear muttering about "arrogant
+enchanters" as you try to leave the chamber. Finally, Orkan of Thriff, one of
+your colleagues, says, "Stay. Be quiet. Don't embarrass us."
+
+A tall, gruff fellow begins to speak. This is Gzornenplatz of the Guild of
+Huntsmen. "I'm a simple man, and I don't know much about magic. But I do know
+that the wild beasts are kept out of the towns and villages not just by the
+huntsmen, but by spells as well. Just yesterday, one of my men was attacked and
+badly wounded by a troop of rat-ants. They'd slipped the bounds set down by a
+'fripple' spell somehow. Are we going to let the sorcerers loose rat-ants on us,
+and worse?" He sits, glaring significantly at the now-angry clump of mages
+around you.
+
+>LESOCH
+Orkan of Thriff stares at you in wonderment. "Are you trying to get them even
+more mad at us?" He makes a gesture of cancellation before you can finish the
+spell.
+
+As the huntsman's accusations are being absorbed and discussed, Ardis of the
+Guild of Poets takes the floor. He begins to talk about magic rhyming and
+spelling aids, and their lack.
+
+In the midst of his splendid peroration, just as he was sketching out an
+insulting mythological allusion in iambic hexameter, the poet turns even greener
+than usual. His chin elongates and his skin begins to look sort of slimy. In the
+blink of an eye there stands at the podium, not the orator, but rather a large
+orange newt. "Breek! Co-ax! Co-ax!" it protests.
+
+As you look around the room in shock, you discover that Ardis is not alone. Each
+and every guildmaster in the room has been turned into a frog, salamander, or
+other amphibian! All but one, that is: yourself!
+
+No! There is one other survivor. At the rear of the room, a shadowy figure in a
+dark cloak slips quietly out the door.
+
+>CAST LESOCH
+You don't have the lesoch spell memorized!
+
+>TAKE CUBE
+You can't see any cube here.
+
+>WRITE 1 ON CUBE
+You can't see any cube here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 1
+You can't see that here!
+
+>FROTZ BURIN
+There is an almost blinding flash of light as the magic burin begins to glow! It
+slowly fades to a less painful level, but the magic burin is now a serviceable
+light source.
+
+>SAVE
+Okay.
+
+>DOWN
+You can't go that way.
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>TAKE STAINED SCROLL
+You can't see any stained scroll here.
+
+>EXAMINE STAINED SCROLL
+You can't see any stained scroll here.
+
+>GNUSTO CASKLY
+You can't see any caskly here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 1
+You can't see that here!
+
+>EAST
+You can't go that way.
+
+>SOUTH
+Guild Hall
+This is the entrance to the Guild Hall in Borphee. To the north is the Council
+Chamber, and to the south is an exit leading outside. Little is left of the
+sumptuous buffet lunch. Only a loaf of bread and some smoked fish remains.
+
+>TAKE ZIPPER
+You can't see any zipper here.
+
+>OPEN ZIPPER
+You can't see any zipper here.
+
+>LOOK INTO ZIPPER
+You can't see any zipper here.
+
+>REACH INTO ZIPPER
+You can't see any zipper here.
+
+>LOOK INTO ZIPPER
+You can't see any zipper here.
+
+>TAKE FLIMSY SCROLL
+You can't see any flimsy scroll here.
+
+>READ FLIMSY SCROLL
+You can't see any flimsy scroll here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 1
+You can't see that here!
+
+>SOUTH
+Belwit Square
+This is Belwit Square. To the north is the ancient Guild Hall. A wide
+cobblestone street runs east and west. To the south is the storied Manse, home
+of the Mayors of Borphee for generations.
+A white cube is here.
+
+>TAKE DIRTY SCROLL
+You can't see any dirty scroll here.
+
+>READ DIRTY SCROLL
+You can't see any dirty scroll here.
+
+>GNUSTO THROCK
+You can't see any throck here.
+
+>UP
+You can't go that way.
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>GIRGOL
+The girgol spell is not memorized, and you aren't holding a scroll on which it
+is written.
+
+>UP
+You can't go that way.
+
+>UP
+You can't go that way.
+
+>UP
+You can't go that way.
+
+>UP
+You can't go that way.
+
+>TAKE COIN
+You can't see any coin here.
+
+>EXAMINE COIN
+You can't see any coin here.
+
+>WEST
+You wander around for a while and end up back in the square.
+
+>CASKLY
+What do you want to caskly?
+
+>CASKLY HUT
+You can't see any caskly hut here.
+
+>TAKE CUBE
+Taken.
+
+>EAST
+You wander around for a while and end up back in the square.
+
+>PUT COIN, BREAD AND KNIFE IN ZIPPER
+You aren't holding all those things!
+
+>WRITE 2 ON CUBE
+The word "2" is now written on the cube.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 2
+As you must remember from Thaumaturgy 101, you cannot cast a spell upon itself,
+or upon the scroll it is written on.
+
+>SOUTH
+A remarkably surly guard blocks your way.
+
+>PULL WEED
+You can't see any weed here.
+
+>PULL WEED
+You can't see any weed here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 1
+You can't see that here!
+
+>WEST
+You wander around for a while and end up back in the square.
+
+>NORTH
+Guild Hall
+There is a smoked fish here.
+There is a chunk of rye bread here.
+
+>YOMIN
+What do you want to yomin?
+
+>YOMIN OGRE
+You can't see any yomin ogre here.
+
+>PLANT WEED
+You can't see any weed here.
+
+>THROCK
+What do you want to throck?
+
+>THROCK WEED
+You can't see any throck weed here.
+
+>DOWN
+You can't go that way.
+
+>TAKE DUSTY SCROLL
+You can't see any dusty scroll here.
+
+>TAKE GOLD BOX
+You can't see any gold box here.
+
+>UP
+You can't go that way.
+
+>SOUTH
+Belwit Square
+
+>READ DUSTY SCROLL
+You can't see any dusty scroll here.
+
+>GNUSTO ESPNIS
+You can't see any espnis here.
+
+>OPEN BOX
+You can't see any box here.
+
+>TAKE CUBE
+You already have it.
+
+>PUT BOX IN ZIPPER
+You can't see that here!
+
+>WRITE 3 ON CUBE
+You replace the word "2" with the word "3".
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 3
+As you must remember from Thaumaturgy 101, you cannot cast a spell upon itself,
+or upon the scroll it is written on.
+
+>TAKE BREAD
+You can't see any bread here.
+
+>DROP ALL EXCEPT BREAD
+the "3" cube: Dropped.
+magic burin: Dropped.
+knife: Dropped.
+spell book: Dropped.
+
+>SOUTH
+A remarkably surly guard blocks your way.
+
+>DROP BREAD
+You can't see that here!
+
+>TAKE 3
+Taken.
+
+>TAKE BOTTLE
+You can't see any bottle here.
+
+>BLORPLE 3
+You don't have the blorple spell memorized!
+
+>OPEN BOTTLE
+You can't see any bottle here.
+
+>LOOK INTO BOTTLE
+You can't see any bottle here.
+
+>TAKE DAMP SCROLL
+You can't see any damp scroll here.
+
+>READ DAMP SCROLL
+You can't see any damp scroll here.
+
+>GNUSTO LISKON
+You can't see any liskon here.
+
+>NORTH
+Guild Hall
+There is a smoked fish here.
+There is a chunk of rye bread here.
+
+>LISKON ME
+The liskon spell is not memorized, and you aren't holding a scroll on which it
+is written.
+
+>FROTZ BOTTLE
+You can't see any bottle here.
+
+>DROP ALL EXCEPT BOTTLE AND 3
+There isn't anything to drop!
+
+>ENTER OUTFLOW PIPE
+You can't see any outflow pipe here.
+
+>WEST
+You can't go that way.
+
+>TAKE CUBE
+You already have it.
+
+>WEST
+You can't go that way.
+
+>CLIMB OUT OF PIPE
+You can't see any of pipe here.
+
+>BLORPLE 3
+You don't have the blorple spell memorized!
+
+>NORTH
+Council Chamber
+
+>TAKE ALL
+I don't see what you're referring to.
+
+>WRITE 4 ON CUBE
+You don't have anything to write with.
+
+>PUT BOTTLE IN ZIPPER
+You can't see that here!
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 1
+You can't see that here!
+
+>EAST
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>LISKON SNAKE
+You can't see any snake here.
+
+>NORTH
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>MALYON IDOL
+You can't see any idol here.
+
+>WAIT
+Time passes...
+
+>ESPNIS IDOL
+You can't see any idol here.
+
+>WAIT
+Time passes...
+
+>CLIMB IDOL
+You can't see any idol here.
+
+>LOOK INTO MOUTH
+You can't see any mouth here.
+
+>TAKE CUBE
+You already have it.
+
+>DOWN
+You can't go that way.
+You are beginning to tire.
+
+>WRITE 5 ON CUBE
+You don't have anything to write with.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 5
+You can't see that here!
+
+>NORTH
+You can't go that way.
+
+>TAKE WHITE SCROLL
+You can't see any white scroll here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 5
+You can't see that here!
+
+>WEST
+You can't go that way.
+
+>EXAMINE WHITE SCROLL
+You can't see any white scroll here.
+
+>GNUSTO TINSOT
+You can't see any tinsot here.
+
+>EAST
+You can't go that way.
+
+>EXAMINE BLUE CARPET
+You can't see any blue carpet here.
+
+>TAKE BLUE CARPET
+You can't see any blue carpet here.
+
+>POINT AT BLUE CARPET
+You can't see any blue carpet here.
+
+>BUY BLUE CARPET
+What do you want to buy the blue carpet from?
+
+>OFFER 300
+What do you want to offer 300 to?
+
+>OFFER 400
+You aren't holding the number.
+
+>OFFER 500
+What do you want to offer 500 to?
+
+>INVENTORY
+You are carrying:
+  the "3" cube
+
+>TAKE BLUE CARPET
+You can't see any blue carpet here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 3
+You can't see that here!
+
+>TINSOT CHANNEL
+You can't see any channel here.
+
+>AGAIN
+That would just repeat a mistake.
+
+>AGAIN
+That would just repeat a mistake.
+
+>WAIT
+Time passes...
+You are feeling tired.
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>TINSOT WATER
+You can't see any water here.
+
+>CLIMB ICE FLOE
+You can't see any ice floe here.
+
+>UP
+You can't go that way.
+
+>TAKE CUBE
+You already have it.
+You are getting more and more tired.
+
+>OPEN ZIPPER
+You can't see any zipper here.
+
+>TAKE BOOK
+You can't see any book here.
+
+>WRITE 6 ON CUBE
+You don't have anything to write with.
+
+>EAST
+You can't go that way.
+
+>NORTH
+You can't go that way.
+
+>REZROV CABINET
+You can't see any cabinet here.
+
+>TAKE MOLDY BOOK
+You can't see any moldy book here.
+
+>CASKLY MOLDY BOOK
+You can't see any moldy book here.
+
+>READ MOLDY BOOK
+You can't see any moldy book here.
+
+>GNUSTO SNAVIG
+You can't see any snavig here.
+
+>SOUTH
+Guild Hall
+There is a smoked fish here.
+There is a chunk of rye bread here.
+
+>WEST
+You can't go that way.
+
+>UP
+You can't go that way.
+
+>DROP CARPET
+You can't see that here!
+
+>SIT ON CARPET
+You can't see any carpet here.
+
+>UP
+You can't go that way.
+
+>WEST
+You can't go that way.
+You are worn out.
+
+>WEST
+You can't go that way.
+
+>WEST
+You can't go that way.
+
+>WEST
+You can't go that way.
+
+>DOWN
+You can't go that way.
+
+>GET OFF CARPET
+You can't see any carpet here.
+
+>TAKE CUBE
+You already have it.
+
+>SIT ON CARPET
+You can't see any carpet here.
+
+>WAIT
+Time passes...
+You are dead tired.
+
+>UP
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>EAST
+You can't go that way.
+
+>DOWN
+You can't go that way.
+
+>GET OFF CARPET
+You can't see any carpet here.
+
+>TAKE CARPET
+You can't see any carpet here.
+
+>DOWN
+You can't go that way.
+
+>WRITE 7 ON CUBE
+You don't have anything to write with.
+You are so tired you can barely concentrate.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 3
+You can't see that here!
+
+>SNAVIG
+You don't have the snavig spell memorized!
+
+>DROP ALL
+the "3" cube: Dropped.
+
+>SOUTH
+Belwit Square
+There is a spell book here.
+There is a knife here.
+There is a magic burin here (providing light).
+
+>TAKE 3
+You can't see any "3" here.
+
+>SNAVIG GROUPER
+You can't see any grouper here.
+
+>DOWN
+You can't go that way.
+
+>WAIT
+Time passes...
+
+>TAKE ALL
+spell book: Taken.
+knife: Taken.
+magic burin: Taken.
+You are moving on your last reserves of strength.
+
+>UP
+You can't go that way.
+
+>BLORPLE 3
+You can't see that here!
+
+>TAKE ALL
+I don't see what you're referring to.
+
+>WRITE 8 ON CUBE
+You can't see any cube here.
+
+>NORTH
+Guild Hall
+A white cube labelled "3" is here.
+There is a smoked fish here.
+There is a chunk of rye bread here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 8
+You can't see that here!
+
+>WEST
+You can't go that way.
+
+>TINSOT FRAGMENT
+You can't see any fragment here.
+
+>TAKE FRAGMENT
+You can't see any fragment here.
+
+>BLORPLE
+What do you want to blorple?
+
+>PUT ALL IN ZIPPER EXCEPT BOOK
+magic burin: You can't see any zipper except book here.
+
+>TAKE 4
+Not likely!
+
+>BLORPLE 4
+You aren't holding the number.
+
+>NORTH
+Council Chamber
+
+>TAKE COMPASS ROSE
+You can't see any compass rose here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 4
+You can't see that here!
+
+>WEST
+You can't go that way.
+
+>PUT ROSE IN CARVING
+You can't see that here!
+
+>TAKE ROSE
+You can't see any rose here.
+
+>NORTH
+You can't go that way.
+You are practically asleep.
+
+>TOUCH NW RUNE WITH ROSE
+Those things aren't here!
+
+>NORTHWEST
+You can't go that way.
+
+>TOUCH W RUNE WITH ROSE
+Those things aren't here!
+
+>WEST
+You can't go that way.
+
+>TOUCH NE RUNE WITH ROSE
+Those things aren't here!
+
+>NORTHEAST
+You can't go that way.
+
+>REZROV ALABASTER
+You can't see any alabaster here.
+
+>WEST
+You can't go that way.
+
+>TAKE CUBE
+You can't see any cube here.
+
+>TAKE BURIN
+You already have it.
+
+>WRITE 9 ON CUBE
+You can't see any cube here.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 9
+You can't see that here!
+
+>SOUTH
+Guild Hall
+A white cube labelled "3" is here.
+There is a smoked fish here.
+There is a chunk of rye bread here.
+
+>SIT ON GREEN ROCK
+You can't see any green rock here.
+
+>TAKE FRAGMENT
+You can't see any fragment here.
+
+>GIVE FRAGMENT TO GREEN ROCK
+You can't see that here!
+
+>SIT ON GREEN ROCK
+You can't see any green rock here.
+
+>LOOK
+Guild Hall
+This is the entrance to the Guild Hall in Borphee. To the north is the Council
+Chamber, and to the south is an exit leading outside. Little is left of the
+sumptuous buffet lunch. Only a loaf of bread and some smoked fish remains.
+A white cube labelled "3" is here.
+
+>JUMP ON BROWN ROCK
+You can't see any brown rock here.
+
+>TAKE CUBE
+You're holding too many things and can't quite get them all arranged to take it
+as well.
+You are barely able to keep your eyes open.
+
+>WRITE 10 ON CUBE
+You must have the "3" cube to write on it.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 10
+You can't see that here!
+
+>DOWN
+You can't go that way.
+
+>SNAVIG
+You don't have the snavig spell memorized!
+
+>DROP ALL
+magic burin: Dropped.
+knife: Dropped.
+spell book: Dropped.
+
+>TAKE 10
+You must have had a silliness spell cast upon you.
+
+>TAKE BOOK
+Taken.
+
+>DOWN
+You can't go that way.
+
+>SNAVIG GRUE
+You don't have the snavig spell memorized!
+You are so exhausted you can't stay awake any longer.
+
+Ah, sleep! It's been a long day, and rest will do you good. You stretch out on
+the floor and drift off, renewing your powers and refreshing your mind. Time
+passes as you snore blissfully.
+
+You dream of a great hard-eyed monster, its insectile arms dipping and turning
+to the commands of a sorcerer who stands fearless in front of it. You awaken.
+
+>DOWN
+You can't go that way.
+
+>CLIMB ON PILLAR
+You can't see any pillar here.
+
+>TAKE CUBE
+Taken.
+
+>WAIT
+Time passes...
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 10
+You can't see that here!
+
+>DOWN
+You can't go that way.
+
+>TAKE ALL
+knife: Taken.
+magic burin: Taken.
+smoked fish: Taken.
+chunk of rye bread: Taken.
+
+>WRITE 11 ON CUBE
+You replace the word "3" with the word "11".
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 11
+As you must remember from Thaumaturgy 101, you cannot cast a spell upon itself,
+or upon the scroll it is written on.
+
+>NORTH
+Council Chamber
+
+>TAKE BOX
+You can't see any box here.
+
+>EXAMINE BOX
+You can't see any box here.
+
+>PUT 10 IN BOX
+You aren't holding the number.
+
+>TAKE 10
+That would never work!
+
+>THROW BOX AT OUTCROPPING
+You can't see that here!
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 10
+You can't see that here!
+
+>UP
+You can't go that way.
+
+>TAKE BOX
+You can't see any box here.
+
+>TAKE CUBE
+You already have it.
+
+>WRITE 12 ON CUBE
+You replace the word "11" with the word "12".
+
+>PUT ALL IN ZIPPER
+chunk of rye bread: You can't see any zipper here.
+
+>TAKE 7
+You can't be serious.
+
+>TAKE BOOK
+You already have it.
+
+>BLORPLE
+What do you want to blorple?
+
+>BLORPLE 7
+You can't see that here!
+
+>SOUTH
+Guild Hall
+
+>ASK BELBOZ ABOUT ME
+You can't see Belboz here.
+
+>ASK ABOUT CUBE
+You can't talk to the "12" cube.
+
+>ASK ABOUT FIGURE
+What shadow?
+
+>BLORPLE
+What do you want to blorple?
+
+>TAKE 9
+Not likely!
+
+>BLORPLE 9
+You aren't holding the number.
+
+>EAST
+You can't go that way.
+
+>REZROV DOOR
+You can't see any door here.
+
+>PUT ALL IN ZIPPER
+chunk of rye bread: You can't see any zipper here.
+
+>TAKE BOOK
+You already have it.
+
+>NORTH
+Council Chamber
+
+>DOWN
+You can't go that way.
+
+>TAKE KEY
+You can't see any key here.
+
+>UNLOCK CABINET WITH KEY
+You can't see that here!
+
+>OPEN CABINET
+You can't see any cabinet here.
+
+>TAKE VELLUM SCROLL
+You can't see any vellum scroll here.
+
+>EXAMINE VELLUM SCROLL
+You can't see any vellum scroll here.
+
+>LEARN ALL SPELLS
+blorple spell: Using your best study habits, you learn the blorple spell.
+yomin spell: Using your best study habits, you learn the yomin spell.
+rezrov spell: You already know that spell by heart.
+frotz spell: You already know that spell by heart.
+gnusto spell: You already know that spell by heart.
+malyon spell: Using your best study habits, you learn the malyon spell.
+jindak spell: Using your best study habits, you learn the jindak spell.
+lesoch spell: Using your best study habits, you learn the lesoch spell.
+
+>AGAIN
+blorple spell: Using your best study habits, you learn the blorple spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+yomin spell: Using your best study habits, you learn the yomin spell yet another
+time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+rezrov spell: You already know that spell by heart.
+frotz spell: You already know that spell by heart.
+gnusto spell: You already know that spell by heart.
+malyon spell: Using your best study habits, you learn the malyon spell.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+jindak spell: Using your best study habits, you learn the jindak spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+lesoch spell: Using your best study habits, you learn the lesoch spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+
+>AGAIN
+blorple spell: Using your best study habits, you learn the blorple spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+yomin spell: Using your best study habits, you learn the yomin spell.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+rezrov spell: You already know that spell by heart.
+frotz spell: You already know that spell by heart.
+gnusto spell: You already know that spell by heart.
+malyon spell: Using your best study habits, you learn the malyon spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+jindak spell: Using your best study habits, you learn the jindak spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+lesoch spell: Using your best study habits, you learn the lesoch spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+
+>AGAIN
+blorple spell: Using your best study habits, you learn the blorple spell.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+yomin spell: Using your best study habits, you learn the yomin spell yet another
+time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+rezrov spell: You already know that spell by heart.
+frotz spell: You already know that spell by heart.
+gnusto spell: You already know that spell by heart.
+malyon spell: Using your best study habits, you learn the malyon spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+jindak spell: Using your best study habits, you learn the jindak spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+lesoch spell: Using your best study habits, you learn the lesoch spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+
+>AGAIN
+blorple spell: Using your best study habits, you learn the blorple spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+yomin spell: Using your best study habits, you learn the yomin spell yet another
+time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+rezrov spell: You already know that spell by heart.
+frotz spell: You already know that spell by heart.
+gnusto spell: You already know that spell by heart.
+malyon spell: Using your best study habits, you learn the malyon spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+jindak spell: Using your best study habits, you learn the jindak spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+lesoch spell: Using your best study habits, you learn the lesoch spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+
+>AGAIN
+blorple spell: Using your best study habits, you learn the blorple spell.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+yomin spell: Using your best study habits, you learn the yomin spell yet another
+time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+rezrov spell: You already know that spell by heart.
+frotz spell: You already know that spell by heart.
+gnusto spell: You already know that spell by heart.
+malyon spell: Using your best study habits, you learn the malyon spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+jindak spell: Using your best study habits, you learn the jindak spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+lesoch spell: Using your best study habits, you learn the lesoch spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+
+>AGAIN
+blorple spell: Using your best study habits, you learn the blorple spell.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+yomin spell: Using your best study habits, you learn the yomin spell yet another
+time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+rezrov spell: You already know that spell by heart.
+frotz spell: You already know that spell by heart.
+gnusto spell: You already know that spell by heart.
+malyon spell: Using your best study habits, you learn the malyon spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+jindak spell: Using your best study habits, you learn the jindak spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+lesoch spell: Using your best study habits, you learn the lesoch spell yet
+another time.
+You have so much buzzing around in your head, though, that it's likely that
+something may have been forgotten in the shuffle.
+
+>PUT BOOK IN CABINET
+You can't see any cabinet here.
+
+>CLOSE CABINET
+You can't see any cabinet here.
+
+>LOCK CABINET WITH KEY
+You can't see that here!
+
+>REZROV DOOR
+You can't see any door here.
+
+>BLORPLE POWERFUL CUBE
+I don't know the word "powerful."
+
+>UP
+You can't go that way.
+
+>OPEN SACK
+You can't see any sack here.
+
+>TAKE FLIMSY SCROLL
+You can't see any flimsy scroll here.
+
+>TAKE BURIN
+You already have it.
+
+>COPY FLIMSY ON VELLUM
+Those things aren't here!
+
+>TAKE SACK
+You can't see any sack here.
+
+>EMPTY ZIPPER IN SACK
+Those things aren't here!
+
+>PUT FLIMSY IN ZIPPER
+You can't see that here!
+
+>CLOSE ZIPPER
+You can't see any zipper here.
+
+>DROP ZIPPER
+You can't see that here!
+
+>TAKE 12
+You already have it.
+
+>BLORPLE 12
+Abruptly, your surroundings shift.
+
+Packed Earth
+This is a small room crudely constructed of packed earth, mud, and sod. Crudely
+framed openings of wood tied with leather thongs lead off in each of the four
+cardinal directions, and a muddy hole leads down.
+
+>EAST
+As you leave, the "12" cube reappears in your hand.
+
+Hall of Stone
+This is a long hall built of crudely dressed stone. The blocks are as tall as
+you and the ceiling invisible in the gloom above. Dirt trickles from gaps in the
+walls and ceiling. The atmosphere is oppressive, and there is a dry, stale smell
+all around. The corridor extends north and south from here.
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>TAKE KNIFE
+You already have it.
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>WAIT
+Time passes...
+
+>GIRGOL
+The girgol spell is not memorized, and you aren't holding a scroll on which it
+is written.
+
+>TAKE 11
+You can't be serious.
+
+>PUT SACK IN TESSERACT
+You can't see that here!
+
+>WAIT
+Time passes...
+
+>unscript
+Here ends a transcript of interaction with SPELLBREAKER.
+SPELLBREAKER
+An Interactive Fantasy
+Copyright (c) 1985 by Infocom, Inc. All rights reserved.
+SPELLBREAKER is a trademark of Infocom, Inc.
+Release 87 / Serial number 860904

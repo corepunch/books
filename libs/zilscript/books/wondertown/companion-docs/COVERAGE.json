@@ -1,0 +1,458 @@
+{
+  "adventure": "The Last Toymaker's Apprentice",
+  "gameModule": "books.wondertown",
+  "declaredRoomCount": 11,
+  "rooms": [
+    {
+      "id": "WORKSHOP-FLOOR",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "workshop.initial",
+          "setup": { "newGame": true, "commands": [] },
+          "requiredChoices": {
+            "child": ["workshop-floor.examine-workbench", "workshop-floor.examine-hook", "workshop-floor.go-toolbench"],
+            "story": ["workshop-floor.examine-workbench", "workshop-floor.examine-hook", "workshop-floor.go-toolbench"]
+          },
+          "forbiddenChoices": ["workshop-floor.oil-ladder", "workshop-floor.climb-loft", "workshop-floor.wind-clock", "workshop-floor.enter-study"],
+          "candidateExpectations": [
+            { "id": "workshop-floor.examine-workbench", "command": "examine workbench", "outputContains": "workbench", "postcondition": null },
+            { "id": "workshop-floor.examine-hook", "command": "examine hook", "outputContains": "hook", "postcondition": null },
+            { "id": "workshop-floor.go-toolbench", "command": "east", "outputContains": "Tool Bench", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "workshop.have-oil-can",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can"] },
+          "requiredChoices": {
+            "child": ["workshop-floor.oil-ladder", "workshop-floor.go-toolbench"],
+            "story": ["workshop-floor.oil-ladder", "workshop-floor.go-toolbench", "workshop-floor.examine-hook"]
+          },
+          "forbiddenChoices": ["workshop-floor.climb-loft"],
+          "candidateExpectations": [
+            { "id": "workshop-floor.oil-ladder", "command": "oil mechanism with oil can", "outputContains": "satisfying creak", "postcondition": "LADDER-OILED" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "workshop.ladder-oiled",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can"] },
+          "requiredChoices": {
+            "child": ["workshop-floor.climb-loft", "workshop-floor.go-toolbench", "workshop-floor.go-outside"],
+            "story": ["workshop-floor.climb-loft", "workshop-floor.go-toolbench", "workshop-floor.go-outside"]
+          },
+          "forbiddenChoices": ["workshop-floor.oil-ladder"],
+          "candidateExpectations": [
+            { "id": "workshop-floor.climb-loft", "command": "up", "outputContains": "Storage Loft", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "workshop.key-found-no-study",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "east", "take key", "wind nutcracker", "west", "north", "east", "east", "south", "east", "give scarf to fox", "tell fox about tolliver", "take key", "west", "north", "west", "south"] },
+          "requiredChoices": {
+            "child": ["workshop-floor.wind-clock", "workshop-floor.examine-clock"],
+            "story": ["workshop-floor.wind-clock", "workshop-floor.examine-clock", "workshop-floor.go-outside"]
+          },
+          "forbiddenChoices": ["workshop-floor.enter-study"],
+          "candidateExpectations": [
+            { "id": "workshop-floor.wind-clock", "command": "wind clock", "outputContains": "chimes", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "workshop.study-access",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "east", "take key", "wind nutcracker", "west", "north", "east", "east", "south", "east", "give scarf to fox", "tell fox about tolliver", "take key", "west", "north", "west", "south", "up", "wind clock", "wind clock"] },
+          "requiredChoices": {
+            "child": ["workshop-floor.enter-study", "workshop-floor.examine-hook", "workshop-floor.go-outside"],
+            "story": ["workshop-floor.enter-study", "workshop-floor.examine-hook", "workshop-floor.go-outside"]
+          },
+          "forbiddenChoices": ["workshop-floor.wind-clock"],
+          "candidateExpectations": [
+            { "id": "workshop-floor.enter-study", "command": "in", "outputContains": "Study", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "TOOL-BENCH",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "toolbench.initial",
+          "setup": { "newGame": false, "commands": ["east"] },
+          "requiredChoices": {
+            "child": ["tool-bench.take-key", "tool-bench.examine-bertrand", "tool-bench.go-workshop"],
+            "story": ["tool-bench.take-key", "tool-bench.examine-bertrand", "tool-bench.go-workshop"]
+          },
+          "forbiddenChoices": ["tool-bench.wind-bertrand", "tool-bench.climb-countertop"],
+          "candidateExpectations": [
+            { "id": "tool-bench.take-key", "command": "take key", "outputContains": "key", "postcondition": null },
+            { "id": "tool-bench.examine-bertrand", "command": "examine nutcracker", "outputContains": "nutcracker", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "toolbench.have-key",
+          "setup": { "newGame": false, "commands": ["east", "take key"] },
+          "requiredChoices": {
+            "child": ["tool-bench.wind-bertrand", "tool-bench.examine-bertrand"],
+            "story": ["tool-bench.wind-bertrand", "tool-bench.examine-bertrand", "tool-bench.go-workshop"]
+          },
+          "forbiddenChoices": ["tool-bench.take-key"],
+          "candidateExpectations": [
+            { "id": "tool-bench.wind-bertrand", "command": "wind nutcracker", "outputContains": "CLACK", "postcondition": "BERTRAND-WOUND" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "toolbench.wound",
+          "setup": { "newGame": false, "commands": ["east", "take key", "wind nutcracker"] },
+          "requiredChoices": {
+            "child": ["tool-bench.climb-countertop", "tool-bench.ask-bertrand", "tool-bench.go-workshop"],
+            "story": ["tool-bench.climb-countertop", "tool-bench.ask-bertrand", "tool-bench.go-workshop"]
+          },
+          "forbiddenChoices": ["tool-bench.wind-bertrand", "tool-bench.take-key"],
+          "candidateExpectations": [
+            { "id": "tool-bench.climb-countertop", "command": "up", "outputContains": "Countertop", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "COUNTERTOP",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "countertop.case-closed",
+          "setup": { "newGame": false, "commands": ["east", "take key", "wind nutcracker", "up"] },
+          "requiredChoices": {
+            "child": ["countertop.open-case", "countertop.ask-marzipan", "countertop.go-down"],
+            "story": ["countertop.open-case", "countertop.ask-marzipan", "countertop.go-down"]
+          },
+          "forbiddenChoices": ["countertop.take-soldier", "countertop.take-music-box"],
+          "candidateExpectations": [
+            { "id": "countertop.open-case", "command": "open case", "outputContains": "latch", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "countertop.case-open",
+          "setup": { "newGame": false, "commands": ["east", "take key", "wind nutcracker", "up", "open case"] },
+          "requiredChoices": {
+            "child": ["countertop.take-soldier", "countertop.take-music-box", "countertop.take-button"],
+            "story": ["countertop.take-soldier", "countertop.take-music-box", "countertop.take-button", "countertop.give-button"]
+          },
+          "forbiddenChoices": ["countertop.open-case"],
+          "candidateExpectations": [
+            { "id": "countertop.take-soldier", "command": "take soldier", "outputContains": "soldier", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "countertop.items-taken",
+          "setup": { "newGame": false, "commands": ["east", "take key", "wind nutcracker", "up", "open case", "take soldier", "take music box", "take button"] },
+          "requiredChoices": {
+            "child": ["countertop.ask-fox", "countertop.ask-key", "countertop.give-button"],
+            "story": ["countertop.ask-fox", "countertop.ask-key", "countertop.give-button", "countertop.go-down"]
+          },
+          "forbiddenChoices": ["countertop.take-soldier", "countertop.take-music-box", "countertop.take-button"],
+          "candidateExpectations": [
+            { "id": "countertop.give-button", "command": "give button to doll", "outputContains": "eye", "postcondition": "MARZIPAN-BUTTON" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "STORAGE-LOFT",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "loft.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up"] },
+          "requiredChoices": {
+            "child": ["loft.wind-old-tick", "loft.read-journal", "loft.open-box"],
+            "story": ["loft.wind-old-tick", "loft.read-journal", "loft.open-box", "loft.go-down"]
+          },
+          "forbiddenChoices": [],
+          "candidateExpectations": [
+            { "id": "loft.wind-old-tick", "command": "wind clock", "outputContains": "chimes", "postcondition": "OLD-TICK-HEARD" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "loft.tick-heard",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock"] },
+          "requiredChoices": {
+            "child": ["loft.read-journal", "loft.ask-tick-tolliver", "loft.go-down"],
+            "story": ["loft.read-journal", "loft.ask-tick-tolliver", "loft.wind-old-tick", "loft.go-down"]
+          },
+          "forbiddenChoices": [],
+          "candidateExpectations": [
+            { "id": "loft.read-journal", "command": "read journal", "outputContains": "journal", "postcondition": "JOURNAL-READ" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "SNOWY-ALLEY",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "alley.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north"] },
+          "requiredChoices": {
+            "child": ["alley.examine-footprints", "alley.go-clock-square", "alley.go-workshop"],
+            "story": ["alley.examine-footprints", "alley.examine-snow", "alley.go-clock-square", "alley.go-workshop"]
+          },
+          "forbiddenChoices": [],
+          "candidateExpectations": [
+            { "id": "alley.examine-footprints", "command": "examine footprints", "outputContains": "footprints", "postcondition": null },
+            { "id": "alley.go-clock-square", "command": "east", "outputContains": "Clock Square", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "CLOCK-SQUARE",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "square.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east"] },
+          "requiredChoices": {
+            "child": ["square.examine-tower", "square.examine-winding", "square.go-alley"],
+            "story": ["square.examine-tower", "square.examine-winding", "square.go-alley", "square.go-mailbox", "square.go-scrap-yard"]
+          },
+          "forbiddenChoices": ["square.wind-tower"],
+          "candidateExpectations": [
+            { "id": "square.examine-tower", "command": "examine tower", "outputContains": "clock tower", "postcondition": null },
+            { "id": "square.go-mailbox", "command": "east", "outputContains": "Mailbox Corner", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "square.have-soldier",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "east", "take key", "wind nutcracker", "up", "open case", "take soldier", "west", "west", "up", "wind clock", "down", "north", "east", "east"] },
+          "requiredChoices": {
+            "child": ["square.wind-tower", "square.examine-tower"],
+            "story": ["square.wind-tower", "square.examine-tower", "square.go-alley", "square.go-mailbox", "square.go-scrap-yard"]
+          },
+          "forbiddenChoices": [],
+          "candidateExpectations": [
+            { "id": "square.wind-tower", "command": "wind mechanism", "outputContains": "slows", "postcondition": "TOWER-WOUND" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "MAILBOX-CORNER",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "mailbox.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east", "east"] },
+          "requiredChoices": {
+            "child": ["mailbox.take-scarf", "mailbox.ask-fox", "mailbox.read-letter"],
+            "story": ["mailbox.take-scarf", "mailbox.ask-fox", "mailbox.read-letter", "mailbox.examine-mailbox", "mailbox.go-square"]
+          },
+          "forbiddenChoices": [],
+          "candidateExpectations": [
+            { "id": "mailbox.take-scarf", "command": "take scarf", "outputContains": "scarf", "postcondition": null },
+            { "id": "mailbox.ask-fox", "command": "ask mailbox about fox", "outputContains": "fox", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "SCRAP-YARD",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "yard.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east", "east", "south"] },
+          "requiredChoices": {
+            "child": ["yard.examine-cart", "yard.take-head", "yard.go-square"],
+            "story": ["yard.examine-cart", "yard.take-head", "yard.examine-doll", "yard.go-square"]
+          },
+          "forbiddenChoices": ["yard.give-head", "yard.go-fox-den"],
+          "candidateExpectations": [
+            { "id": "yard.examine-cart", "command": "examine cart", "outputContains": "cart", "postcondition": null },
+            { "id": "yard.take-head", "command": "take head", "outputContains": "head", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "yard.have-head",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east", "east", "south", "take head"] },
+          "requiredChoices": {
+            "child": ["yard.give-head", "yard.examine-cart", "yard.go-square"],
+            "story": ["yard.give-head", "yard.examine-cart", "yard.go-square"]
+          },
+          "forbiddenChoices": ["yard.take-head"],
+          "candidateExpectations": [
+            { "id": "yard.give-head", "command": "give head to cart", "outputContains": "gratitude", "postcondition": "CART-MOVED" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "yard.cart-moved",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east", "east", "south", "take head", "give head to cart"] },
+          "requiredChoices": {
+            "child": ["yard.go-fox-den", "yard.examine-cart", "yard.go-square"],
+            "story": ["yard.go-fox-den", "yard.examine-cart", "yard.go-square"]
+          },
+          "forbiddenChoices": ["yard.give-head", "yard.take-head"],
+          "candidateExpectations": [
+            { "id": "yard.go-fox-den", "command": "east", "outputContains": "Fox Den", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "FOX-DEN",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "den.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east", "east", "south", "take head", "give head to cart", "east"] },
+          "requiredChoices": {
+            "child": ["den.examine-nutmeg", "den.give-scarf", "den.tell-tolliver"],
+            "story": ["den.examine-nutmeg", "den.give-scarf", "den.tell-tolliver", "den.go-scrap-yard"]
+          },
+          "forbiddenChoices": ["den.take-key", "den.ask-key"],
+          "candidateExpectations": [
+            { "id": "den.examine-nutmeg", "command": "examine fox", "outputContains": "fox", "postcondition": null },
+            { "id": "den.give-scarf", "command": "give scarf to fox", "outputContains": "warm", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "den.trusting",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east", "east", "south", "take head", "give head to cart", "east", "give scarf to fox", "tell fox about tolliver"] },
+          "requiredChoices": {
+            "child": ["den.take-key", "den.ask-key", "den.tell-tolliver"],
+            "story": ["den.take-key", "den.ask-key", "den.tell-tolliver", "den.go-scrap-yard"]
+          },
+          "forbiddenChoices": ["den.give-scarf", "den.give-string"],
+          "candidateExpectations": [
+            { "id": "den.take-key", "command": "take key", "outputContains": "key", "postcondition": "KEY-FOUND" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "den.hostile",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "up", "wind clock", "down", "north", "east", "east", "south", "take head", "give head to cart", "east", "attack fox"] },
+          "requiredChoices": {
+            "child": ["den.examine-nutmeg", "den.examine-candle", "den.go-scrap-yard"],
+            "story": ["den.examine-nutmeg", "den.examine-candle", "den.go-scrap-yard"]
+          },
+          "forbiddenChoices": ["den.take-key", "den.give-scarf", "den.tell-tolliver"],
+          "candidateExpectations": [
+            { "id": "den.examine-nutmeg", "command": "examine fox", "outputContains": "corner", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "TOLLIVER-STUDY",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "study.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "east", "take key", "wind nutcracker", "west", "north", "east", "east", "south", "east", "give scarf to fox", "tell fox about tolliver", "take key", "west", "north", "west", "south", "up", "wind clock", "wind clock", "down", "in"] },
+          "requiredChoices": {
+            "child": ["study.read-diagram", "study.read-journal", "study.go-heart"],
+            "story": ["study.read-diagram", "study.read-journal", "study.examine-desk", "study.go-heart", "study.go-workshop"]
+          },
+          "forbiddenChoices": [],
+          "candidateExpectations": [
+            { "id": "study.read-diagram", "command": "read diagram", "outputContains": "diagram", "postcondition": "DIAGRAM-READ" },
+            { "id": "study.go-heart", "command": "down", "outputContains": "Heart", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "WORKSHOP-HEART",
+      "source": "dungeon.zil",
+      "reachability": "reachable",
+      "stateFamilies": [
+        {
+          "id": "heart.initial",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "east", "take key", "wind nutcracker", "west", "north", "east", "east", "south", "east", "give scarf to fox", "tell fox about tolliver", "take key", "west", "north", "west", "south", "up", "wind clock", "wind clock", "down", "in", "read diagram", "down"] },
+          "requiredChoices": {
+            "child": ["heart.wind-heart", "heart.examine-heart", "heart.examine-slot"],
+            "story": ["heart.wind-heart", "heart.examine-heart", "heart.examine-slot", "heart.go-study"]
+          },
+          "forbiddenChoices": ["heart.place-soldier", "heart.place-music-box"],
+          "candidateExpectations": [
+            { "id": "heart.wind-heart", "command": "wind heart", "outputContains": "beating", "postcondition": "KEY-WOUND" }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        },
+        {
+          "id": "heart.wound",
+          "setup": { "newGame": false, "commands": ["examine workbench", "take oil-can", "oil mechanism with oil-can", "east", "take key", "wind nutcracker", "up", "open case", "take soldier", "take music box", "west", "west", "up", "wind clock", "down", "north", "east", "east", "south", "east", "give scarf to fox", "tell fox about tolliver", "take key", "west", "north", "west", "south", "up", "wind clock", "wind clock", "down", "in", "read diagram", "down", "wind heart"] },
+          "requiredChoices": {
+            "child": ["heart.place-soldier", "heart.place-music-box", "heart.examine-heart"],
+            "story": ["heart.place-soldier", "heart.place-music-box", "heart.examine-heart", "heart.place-doll-arm", "heart.go-study"]
+          },
+          "forbiddenChoices": ["heart.wind-heart"],
+          "candidateExpectations": [
+            { "id": "heart.place-soldier", "command": "position soldier", "outputContains": "guard", "postcondition": null },
+            { "id": "heart.place-music-box", "command": "position music box", "outputContains": "lullaby", "postcondition": null }
+          ],
+          "status": "AUTHORED",
+          "evidence": null
+        }
+      ]
+    }
+  ]
+}

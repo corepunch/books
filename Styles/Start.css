@@ -1,0 +1,78 @@
+.story-text {
+  direction: vertical;
+  gap: 10;
+  margin-right: 32;
+  margin-bottom: 100;
+}
+
+.scene-description {
+  font-size: 18;
+  font-family: "Literata";
+  color: #f4e6ca;
+  box-shadow: 1 2 0 0 #120b07e6;
+  line-height: 24;
+  width: 400;
+}
+
+.continue-option {
+  font-size: 22;
+  font-family: "Literata";
+  font-weight: bold;
+  color: #f8edcf;
+  box-shadow: 1 2 0 0 #090604f2;
+  padding: 6 0;
+  margin-right: 32;
+  margin-bottom: 26;
+}
+
+.continue-option:hover {
+  color: #fff8e8;
+}
+
+.scene-hotspot {
+  border: 3 solid #ffffff;
+  border-radius: 24;
+  background-color: #ffffff12;
+  box-shadow: 0 2 0 1 #120b0780;
+}
+
+.scene-hotspot:hover {
+  background-color: #ffffff40;
+}
+
+.choice-list {
+  direction: vertical;
+  gap: 8;
+  margin-left: 32;
+  margin-bottom: 28;
+  width: 460;
+}
+
+.choice-option {
+  font-size: 19;
+  font-family: "Literata";
+  color: #f4e6ca;
+  background-color: #1208050073;
+  box-shadow: 1 2 0 0 #120b07e6;
+  padding: 7 14;
+  border-radius: 6;
+}
+
+.choice-option:hover {
+  color: #fff8e8;
+  background-color: #3a2412b0;
+}
+
+.exit-option {
+  font-size: 18;
+  font-family: "Literata";
+  font-style: italic;
+  color: #d8c6a4;
+  padding: 7 14;
+  border-radius: 6;
+}
+
+.exit-option:hover {
+  color: #fff8e8;
+  background-color: #3a2412b0;
+}
