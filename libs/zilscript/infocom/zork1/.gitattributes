@@ -1,9 +1,0 @@
-## DOCUMENTATION
-*.md         text
-
-## SOURCE CODE
-*.zil        text
-
-# Make sure certain files are not archived
-.gitignore      export-ignore
-.gitattributes  export-ignore
