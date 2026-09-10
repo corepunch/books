@@ -48,15 +48,16 @@ The icon is in `assets/AppIcon.xcassets`, with its larger source and edit prompt
 in `assets/`. `IOS_MIN`, `ARCH`, and `BUNDLE_ID` can be overridden on the make
 command line. `BUILD_DIR` keeps generated files separate from the source.
 
-Tap choices and hotspots; drag to scroll. The bottom bar provides Back, Text,
-and a parser command field with Go/Return. The bar follows the software keyboard;
-the page respects safe areas and supports both landscape orientations. iPad
-full-screen presentation is requested to avoid portrait multitasking layouts. A hardware
-keyboard supports Escape, arrow scrolling, Command-L for the command field,
-and Command-T to toggle prose. The engine currently keeps progress in memory;
-terminating the app starts a fresh game on the next launch.
+Tap circles to focus objects and use the bottom-right Back button to return
+to the room. The text action list, including verbs, exits and Continue, is
+temporarily hidden for the visual pass. Drag to scroll long pages. There is no
+bottom bar, text field, or keyboard command entry in either graphical app.
+The page fills the safe area and supports both landscape orientations. iPad
+full-screen presentation is requested to avoid portrait multitasking layouts.
+The engine currently keeps progress in memory; terminating the app starts a
+fresh game on the next launch.
 
-## Desktop development harness
+## Native Mac app for rapid iteration
 
 Requires macOS with Metal, Apple command-line developer tools (C/Objective-C),
 make, pkg-config, Lua **5.4** and libxml2. The native window uses AppKit
@@ -64,13 +65,22 @@ make, pkg-config, Lua **5.4** and libxml2. The native window uses AppKit
 
 ```sh
 git submodule update --init --recursive
-make run
-make run BOOK=wondertown
+make mac                       # native AppKit app, fixed-size window
+make mac BOOK=wondertown
+make run                       # alias for make mac
 make check
 ```
 
-The application is built in `build/` and links the system AppKit, Metal and
-QuartzCore frameworks. No external windowing library is required.
+This is a separate native macOS executable built from `src/macos.m`, using a
+fixed 1100 × 800 point `NSWindow` with resizing, zoom and full-screen disabled.
+Its title is **Book — Native Mac**. `make ipad-mac` instead compiles `src/ipad.m`
+and runs the UIKit iPad app on Apple silicon. Both share the C engine, Metal
+renderer and tap/action controls; neither build uses an Xcode project.
+
+The native executable is built in `build/book` and links the system AppKit,
+Metal and QuartzCore frameworks. It reads assets straight from the checkout,
+so iteration needs no packaging, signing or simulator. F5 reloads artwork and
+projection metadata. Re-run `make mac` after native-code or ZIL edits.
 
 ```sh
 build/book --root /path/to/books --book wondertown
@@ -88,7 +98,7 @@ src/main.c                      command-line options and application lifecycle
 src/book.c                      ZIL coroutine host, page state and choices
 src/ui.c                        fixed page UI, input and navigation
 src/macos.m                     NSWindow, AppKit events and application lifecycle
-src/ipad.m                      UIKit scenes, touch/keyboard input and lifecycle
+src/ipad.m                      UIKit scenes, touch input and lifecycle
 src/transition.c                reveal/fade timing, easing and resize-aware coverage
 src/headless.c                  JSON snapshots, commands and object catalog
 src/renderer.c                  JPEG decoding and page texture cache
@@ -133,16 +143,17 @@ and centered window crop.
 
 ## Controls
 
-Click an object or its projected circle to focus it. The VM's object verbs
-become focus choices; the VM's exits become navigation choices. Parser commands
-execute every action. Continue dismisses a response; Back leaves focus. Type a
-command and press Enter for interactions requiring more words or another object.
-Escape clears input or goes back. Tab toggles prose and choices, scrolling or
-arrow keys scroll long pages, and F5 reloads images and projection metadata.
+Click or tap a projected circle to focus an object; the bottom-right Back
+button leaves focus. The VM still supplies object verbs, exits and Continue,
+but their text action list and hit regions are commented out for the current
+visual pass. Drag or use the scroll wheel for long pages. The
+native Mac app also provides F5 to reload images and projection metadata during
+development. Parser commands remain available through `--headless` for engine
+testing.
 
 Page changes reveal the next JPEG through a growing circle originating
-at the selected hotspot (or the click position for text choices, window center
-for keyboard navigation). Text and circles fade in after the reveal. Navigation
+at the selected hotspot (or the click position for text choices).
+Text and circles fade in after the reveal. Navigation
 is paused during animation; F5 cancels it and reloads. Same-image responses only
 fade the overlays. `src/transition.c` owns timing and easing; the UI coordinates
 navigation and drawing, and the renderer owns masking and opacity. Two cached

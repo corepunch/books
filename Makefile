@@ -22,7 +22,7 @@ endif
 CPPFLAGS += -I$(shell xcrun --show-sdk-path)/usr/include/libxml2
 LDLIBS += -framework AppKit -framework Metal -framework QuartzCore
 
-.PHONY: all run check render layout clean ipad ipad-simulator ipad-mac ipad-run
+.PHONY: all run mac check render layout clean ipad ipad-simulator ipad-mac ipad-run
 # The AppKit executable remains a development/headless harness.
 # The shipping app is compiled directly with the iOS SDK, without an IDE project.
 ipad:
@@ -52,7 +52,7 @@ $(BUILD_ROOT)/test_transition.o: tests/test_transition.c | $(BUILD_ROOT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -Isrc -c "$<" -o "$@"
 $(BUILD_ROOT)/test_transition: $(BUILD_ROOT)/test_transition.o $(BUILD_ROOT)/src/transition.o $(BUILD_ROOT)/src/geometry.o
 	$(CC) $(LDFLAGS) $^ -lm -o "$@"
-run: all
+mac run: all
 	"$(BUILD_ROOT)/book" --root "$(CURDIR)" --book "$(BOOK)"
 check: all $(BUILD_ROOT)/test_geometry $(BUILD_ROOT)/test_transition
 	"$(BUILD_ROOT)/test_geometry"

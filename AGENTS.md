@@ -28,11 +28,16 @@ clipping and hit tests; pass structs instead of separate coordinate components.
   camera/anchor sources. C reads those files solely for hotspot projection.
   Do not introduce a live scene renderer, Lua host scripts, Orca XML exports,
   UI configuration files or hand-maintained image/interaction maps.
-- The UI is hardcoded C over native AppKit/NSWindow and Metal. Reuse its focus, Back,
-  Continue and parser-command flow. Keep anchors aligned under the same
-  centered crop as the JPEG. Missing art must not display another room.
-- `make run BOOK=<name>` selects an adventure. The conventional ZIL entry point
-  is `libs/zilscript/books/<name>/<name>.zil`. No new C code is needed per book.
+- The UI is hardcoded C over Metal with UIKit for iPad and AppKit/NSWindow for
+  the fixed-size native Mac testing app. Graphical play uses circle/action taps
+  only; reuse its focus, Back and Continue flow. Parser commands remain headless.
+  Keep anchors aligned under the same centered crop as the JPEG. Missing art
+  must not display another room.
+- `make mac BOOK=<name>` (also `make run`) launches the native Mac app;
+  `make ipad-mac BOOK=<name>` launches the iPad app on Apple silicon Mac. Build
+  directly with the SDK tools; do not introduce an Xcode project. The conventional
+  ZIL entry point is `libs/zilscript/books/<name>/<name>.zil`. No new C code is
+  needed per book.
 
 ## Artwork
 

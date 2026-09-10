@@ -3,9 +3,8 @@
 #import <AppKit/AppKit.h>
 #import <QuartzCore/CAMetalLayer.h>
 
-@interface BookView : NSView <NSTextInputClient>
+@interface BookView : NSView
 @property BOOL dirty;
-@property NSMutableAttributedString *markedText;
 @end
 
 @implementation BookView
@@ -32,54 +31,9 @@
 {
     NSString *characters = event.charactersIgnoringModifiers;
     if (characters.length && [characters characterAtIndex:0] == NSF5FunctionKey) {
-        [self unmarkText];
-        ui_key(UI_KEY_RELOAD);
-    } else if (!(event.modifierFlags & NSEventModifierFlagCommand)) {
-        [self interpretKeyEvents:@[event]];
+        ui_reload();
+        self.dirty = YES;
     }
-    self.dirty = YES;
-}
-- (void)doCommandBySelector:(SEL)selector
-{
-    if (selector == @selector(insertTab:)) ui_key(UI_KEY_TAB);
-    else if (selector == @selector(cancelOperation:)) ui_key(UI_KEY_ESCAPE);
-    else if (selector == @selector(insertNewline:)) ui_key(UI_KEY_ENTER);
-    else if (selector == @selector(deleteBackward:)) ui_key(UI_KEY_BACKSPACE);
-    else if (selector == @selector(moveDown:)) ui_key(UI_KEY_DOWN);
-    else if (selector == @selector(moveUp:)) ui_key(UI_KEY_UP);
-}
-- (void)insertText:(id)string replacementRange:(NSRange)range
-{
-    (void)range;
-    NSString *text = [string isKindOfClass:[NSAttributedString class]] ? [string string] : string;
-    ui_input(text.UTF8String);
-    [self unmarkText];
-    self.dirty = YES;
-}
-- (void)setMarkedText:(id)string selectedRange:(NSRange)selected replacementRange:(NSRange)replacement
-{
-    (void)selected; (void)replacement;
-    if (ui_animating()) return;
-    self.markedText = [string isKindOfClass:[NSAttributedString class]] ?
-        [string mutableCopy] : [[NSMutableAttributedString alloc] initWithString:string];
-}
-- (void)unmarkText { self.markedText = nil; }
-- (BOOL)hasMarkedText { return self.markedText.length > 0; }
-- (NSRange)markedRange { return self.hasMarkedText ? NSMakeRange(0, self.markedText.length) : NSMakeRange(NSNotFound, 0); }
-- (NSRange)selectedRange { return NSMakeRange(0, 0); }
-- (NSArray<NSAttributedStringKey> *)validAttributesForMarkedText { return @[]; }
-- (NSAttributedString *)attributedSubstringForProposedRange:(NSRange)range actualRange:(NSRangePointer)actual
-{
-    (void)range;
-    if (actual) *actual = NSMakeRange(NSNotFound, 0);
-    return nil;
-}
-- (NSUInteger)characterIndexForPoint:(NSPoint)point { (void)point; return NSNotFound; }
-- (NSRect)firstRectForCharacterRange:(NSRange)range actualRange:(NSRangePointer)actual
-{
-    if (actual) *actual = range;
-    NSRect prompt = NSMakeRect(32, self.bounds.size.height - 40, 1, 32);
-    return [self.window convertRectToScreen:[self convertRect:prompt toView:nil]];
 }
 @end
 
@@ -153,17 +107,19 @@ void ui_run(bool smoke, const char *screenshot, double smoke_transition)
         [menu addItem:windowItem];
         NSMenu *windowMenu = [[NSMenu alloc] initWithTitle:@"Window"];
         [windowMenu addItemWithTitle:@"Minimize" action:@selector(performMiniaturize:) keyEquivalent:@"m"];
-        [windowMenu addItemWithTitle:@"Zoom" action:@selector(performZoom:) keyEquivalent:@""];
         [windowMenu addItemWithTitle:@"Close" action:@selector(performClose:) keyEquivalent:@"w"];
         windowItem.submenu = windowMenu;
         NSApp.mainMenu = menu;
         NSApp.windowsMenu = windowMenu;
         app.window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, UI_WIDTH, UI_HEIGHT)
-            styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable
+            styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable
             backing:NSBackingStoreBuffered defer:NO];
-        app.window.title = @"Book";
+        app.window.title = @"Book — Native Mac";
         app.window.releasedWhenClosed = NO;
-        app.window.contentMinSize = NSMakeSize(480, 360);
+        app.window.contentMinSize = NSMakeSize(UI_WIDTH, UI_HEIGHT);
+        app.window.contentMaxSize = NSMakeSize(UI_WIDTH, UI_HEIGHT);
+        app.window.collectionBehavior = NSWindowCollectionBehaviorFullScreenNone;
+        [app.window standardWindowButton:NSWindowZoomButton].enabled = NO;
         app.window.delegate = app;
         app.view = [[BookView alloc] initWithFrame:NSMakeRect(0, 0, UI_WIDTH, UI_HEIGHT)];
         app.view.wantsLayer = YES;

@@ -7,7 +7,7 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <stb_truetype.h>
 
-#define FONT_PIXELS 48.0f
+#define FONT_PIXELS 72.0f
 
 struct Glyph {
     int codepoint;
@@ -94,7 +94,7 @@ static float text_layout(const char *text, fvec2_t origin, float size, float max
     if (!text || !*text || size <= 0) return origin.y;
     float scale = size / FONT_PIXELS;
     fvec2_t pen = origin;
-    float line = fmaxf(t.line_height * scale, size * 1.3f);
+    float line = fmaxf(t.line_height * scale, size * 1.3f) * TEXT_SPACING_SCALE;
     bool word_start = true;
     while (*text) {
         if (word_start && *text != ' ' && *text != '\n' && *text != '\t') {
@@ -109,7 +109,8 @@ static float text_layout(const char *text, fvec2_t origin, float size, float max
         word_start = cp == ' ' || cp == '\t' || cp == '\n';
         if (cp == '\r') continue;
         if (cp == '\n') {
-            pen = fvec2_add(fvec2_with_x(pen, origin.x), fvec2(0, line));
+            /* Explicit story paragraphs breathe more than wrapped lines. */
+            pen = fvec2_add(fvec2_with_x(pen, origin.x), fvec2(0, line + size * .35f));
             continue;
         }
         float advance = advance_for(cp == '\t' ? ' ' : cp) * scale * (cp == '\t' ? 4 : 1);

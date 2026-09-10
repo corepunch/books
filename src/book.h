@@ -99,8 +99,6 @@ typedef char noun_t[MAX_NOUN];
 typedef char description_t[MAX_DESCRIPTION];
 typedef char choiceLabel_t[MAX_CHOICE_LABEL];
 typedef char command_t[MAX_COMMAND];
-#define MAX_PROMPT (MAX_COMMAND + 2)
-typedef char prompt_t[MAX_PROMPT];
 typedef char assetName_t[MAX_ASSET_NAME];
 typedef char storyText_t[MAX_STORY_TEXT];
 typedef char nounPhrase_t[MAX_NOUN_PHRASE];
@@ -172,6 +170,7 @@ frect_t renderer_bounds(void);
 
 /* Text rendering */
 #define MAX_GLYPHS 512
+#define TEXT_SPACING_SCALE 0.67f
 
 bool text_init(const char *font_path);
 void text_shutdown(void);
@@ -208,13 +207,10 @@ struct TransitionFrame transition_sample(struct Transition *transition, double n
 
 enum { UI_WIDTH = 1100, UI_HEIGHT = 800 };
 void ui_run(bool smoke, const char *screenshot, double smoke_transition);
-/* AppKit/UIKit forward native input to the C page interface. */
-enum UIKey { UI_KEY_TAB, UI_KEY_RELOAD, UI_KEY_ESCAPE, UI_KEY_ENTER,
-             UI_KEY_BACKSPACE, UI_KEY_DOWN, UI_KEY_UP };
+/* AppKit/UIKit forward hotspot/action taps and scrolling to the C page interface. */
 void ui_init(void);
 void ui_draw(void);
-void ui_key(enum UIKey key);
-void ui_input(const char *utf8);
+void ui_reload(void);
 void ui_click(fvec2_t point);
 void ui_scroll(float delta);
 bool ui_animating(void);
