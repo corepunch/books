@@ -3,7 +3,6 @@
 local Book = {}
 local session, scene, scene_spec, projection, book_root
 local actions = {}
-local live_scene, vertices, scene_loader
 
 local function title(name)
     return (name or "Wondertown"):lower():gsub("-", " "):gsub("%f[%a]%l", string.upper)
@@ -28,10 +27,7 @@ function Book.init(root)
     scene_spec = require "Book.Scripts.WorkshopInteractions"
     projection = require "Book.Scripts.SceneProjection"
     local source = scene_spec.scene_path:gsub("^Book/", "")
-    scene_loader = dofile(book_root .. "/Standalone/scene.lua")
-    live_scene = scene_loader.load(book_root .. "/" .. source)
-    scene = live_scene.metadata
-    vertices = live_scene:mesh()
+    scene = assert(projection.load(book_root .. "/" .. source))
     local directory, scene_name = source:match("^(.*)/([^/]+)%.blks$")
     session = require("Book.Scripts.WorkshopSession").new {
         bootstrap_path = library .. "zilscript/bootstrap.lua",
@@ -44,13 +40,12 @@ end
 function Book.view()
     assert(session, "Book.init must be called first")
     local state = session:view()
+    local image = assert(io.open(state.image, "rb"),
+        "Missing Scener render: " .. state.image .. ". Run `make render ROOM=workshop-new` from Book.")
+    image:close()
     local view = {
         kind = state.kind, title = title(session:room()), text = state.text or "",
-        image = state.image, vertices = vertices, lighting = live_scene.lighting,
-        camera = state.camera,
-        matrix = live_scene:matrix(scene.cameras[state.camera] and state.camera
-            or (scene.cameras[session:room():lower()] and session:room():lower() or scene_spec.camera),
-            scene_spec.source_width / scene_spec.source_height),
+        image = state.image, camera = state.camera,
         source_width = scene_spec.source_width, source_height = scene_spec.source_height,
         buttons = {}, hotspots = {},
     }
@@ -89,9 +84,7 @@ end
 
 function Book.reload()
     local source = scene_spec.scene_path:gsub("^Book/", "")
-    live_scene = scene_loader.load(book_root .. "/" .. source)
-    scene = live_scene.metadata
-    vertices = live_scene:mesh()
+    scene = assert(projection.load(book_root .. "/" .. source))
     return Book.view()
 end
 

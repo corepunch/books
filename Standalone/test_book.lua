@@ -5,9 +5,12 @@ local book = dofile(root .. "/Standalone/book.lua")
 local view = book.init(root)
 
 local function check_scene()
-    assert(type(view.vertices) == "string" and #view.vertices > 0 and #view.vertices % 108 == 0)
-    assert(type(view.matrix) == "table" and #view.matrix == 16)
-    for _, n in ipairs(view.matrix) do assert(n == n and math.abs(n) < math.huge) end
+    assert(view.vertices == nil and view.matrix == nil and view.lighting == nil,
+        "Book must only display pre-rendered art")
+    assert(view.image:find(root .. "/Rooms/render/workshop-new/", 1, true) == 1)
+    local file = assert(io.open(view.image, "rb"), "missing pre-rendered image: " .. view.image)
+    assert(file:read(2) == "\255\216", "background must be a JPEG")
+    file:close()
 end
 
 local function select(label)
@@ -29,6 +32,7 @@ end
 assert(view.kind == "room" and view.title == "Workshop Floor")
 assert(#view.hotspots > 0, "workshop subjects should project onto the image")
 check_scene()
+assert(view.image == root .. "/Rooms/render/workshop-new/workshop-floor.jpg")
 for _, hotspot in ipairs(view.hotspots) do
     assert(hotspot.x >= 0 and hotspot.x <= 1 and hotspot.y >= 0 and hotspot.y <= 1)
     assert(view.buttons[hotspot.action].label == hotspot.label)
@@ -36,10 +40,12 @@ end
 
 select("enormous bench")
 assert(view.kind == "focus")
+assert(view.image == root .. "/Rooms/render/workshop-new/workbench.jpg")
 select("climb the workbench")
 assert(view.kind == "beat")
 update("continue")
 assert(view.kind == "room" and view.title == "Workbench Top")
+assert(view.image == root .. "/Rooms/render/workshop-new/workbench-top.jpg")
 select("book")
 assert(view.kind == "focus")
 select("heave the cover")

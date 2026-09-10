@@ -84,44 +84,9 @@ static void draw(void)
     if (iw <= 0 || ih <= 0) { iw = 1920; ih = 1440; }
     float scale = fmaxf(scene_w / iw, scene_h / ih);
     float w = iw * scale, h = ih * scale, x = (scene_w - w) / 2, y = (scene_h - h) / 2;
-    lua_getfield(L, -1, "lighting");
-    float ambient[3], background[3], lights[16 * 8];
-    const char *names[] = {"ambient", "background"};
-    for (int a = 0; a < 2; ++a) {
-        lua_getfield(L, -1, names[a]);
-        for (int i = 0; i < 3; ++i) {
-            lua_rawgeti(L, -1, i + 1);
-            (a ? background : ambient)[i] = (float)lua_tonumber(L, -1);
-            lua_pop(L, 1);
-        }
-        lua_pop(L, 1);
-    }
-    lua_getfield(L, -1, "lights");
-    size_t light_count = MIN(16, lua_rawlen(L, -1));
-    for (size_t a = 0; a < light_count; ++a) {
-        lua_rawgeti(L, -1, a + 1);
-        for (int i = 0; i < 8; ++i) {
-            lua_rawgeti(L, -1, i + 1);
-            lights[a * 8 + i] = (float)lua_tonumber(L, -1);
-            lua_pop(L, 1);
-        }
-        lua_pop(L, 1);
-    }
-    lua_pop(L, 2);
-    renderer_lighting(ambient, background, lights, light_count);
-    lua_getfield(L, -1, "vertices");
-    size_t mesh_bytes = 0;
-    const char *mesh = lua_tolstring(L, -1, &mesh_bytes);
-    lua_getfield(L, -2, "matrix");
-    float matrix[16];
-    for (int i = 0; i < 16; ++i) {
-        lua_rawgeti(L, -1, i + 1);
-        matrix[i] = (float)lua_tonumber(L, -1);
-        lua_pop(L, 1);
-    }
-    if (mesh && mesh_bytes % (9 * sizeof(float)) == 0)
-        renderer_scene((const float *)mesh, mesh_bytes / (9 * sizeof(float)), matrix, x, y, w, h);
-    lua_pop(L, 2);
+    /* Scener owns scene rendering. The image and projected anchors share this crop. */
+    if (!renderer_image(string_field("image"), x, y, w, h))
+        fail("cannot display Scener image; run `make render ROOM=workshop-new` from Book");
     lua_getfield(L, -1, "hotspots");
     for (size_t i = 1; i <= lua_rawlen(L, -1); ++i) {
         lua_rawgeti(L, -1, (lua_Integer)i);

@@ -54,7 +54,7 @@ run: all
 	"$(BUILD_ROOT)/book" "$(BOOK_ROOT)"
 
 check: all
-	cd /tmp && $(LUA) "$(BOOK_ROOT)/Standalone/test_scene.lua" "$(BOOK_ROOT)"
+	cd "$(BOOK_ROOT)" && $(LUA) Tests/test_scene_projection.lua
 	cd /tmp && $(LUA) "$(BOOK_ROOT)/Standalone/test_book.lua" "$(BOOK_ROOT)"
 	cd /tmp && "$(BUILD_ROOT)/book" "$(BOOK_ROOT)" --check
 

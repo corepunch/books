@@ -222,9 +222,12 @@ not loaded or queried by this Book prototype.
 
 ### Camera export and rendered prototype
 
-The active workflow is `make run`: it renders `workshop-new`, exports matching
-native cameras and anchors, then launches Book. The paired PNG experiment
-described below is historical and is not the active runtime image pipeline.
+Generate the workshop JPEGs with `make render ROOM=workshop-new`, then use
+`make run` to launch the standalone Book with those existing images. The app
+reads `.blks` only for camera and anchor projection; Scener owns scene rendering.
+`make run-orca` renders the workshop, exports matching native cameras and anchors,
+and launches the Orca integration. The paired PNG experiment described below is
+historical and is not the active runtime image pipeline.
 
 Use matching Scener renders for the technical experiment. These
 are blocking art, not a replacement for the illustration criteria below.

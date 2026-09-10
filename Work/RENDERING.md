@@ -3,6 +3,9 @@
 Book scene art is rendered directly from the `.blks` files in `Rooms/` with
 Orion UI's installed `scener` CLI. Orion is an external tool, not a Book
 submodule. The Book requests one JPEG for every named camera in a scene.
+Book displays these pre-rendered images; it does not render scene geometry.
+The standalone app reads `.blks` camera and anchor metadata only to align
+interactive spots with the images in `Rooms/render/workshop-new/`.
 
 Do not produce SVG files, including camera-review wrappers or navigation
 overlays. Deliver `.blks`, `.blk` and `.jpg` files. Use raster contact sheets
@@ -244,9 +247,11 @@ lua Tests/test_camera_export.lua
 cd libs/zilscript && lua ../../Tests/test_workshop_prototype.lua
 ```
 
-`make run` renders `workshop-new` by default, regenerates its native camera
-and anchor export at the render dimensions, then builds and launches ORCA. This
-ensures a fresh checkout has the ignored JPEG assets required by the runtime.
+`make run` builds and launches the standalone Book using existing JPEGs.
+On a fresh checkout, first run `make render ROOM=workshop-new` to generate the
+ignored image assets. `make check` verifies projection, image/story navigation
+and standalone initialization. `make run-orca` renders the workshop, regenerates
+native camera/anchor exports at the render dimensions, and launches ORCA.
 The Makefile finds `scener` on `PATH` or at `$HOME/.local/bin/scener`; override
 `SCENER` only for an installation elsewhere.
 

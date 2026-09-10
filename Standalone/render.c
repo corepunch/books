@@ -31,14 +31,6 @@ struct Glyph {
 
 static struct {
     GLuint program, vao, vbo, white, image;
-    GLuint scene_program, scene_vao, scene_vbo;
-    GLint scene_matrix;
-    GLint scene_ambient, scene_light_count, scene_light_positions, scene_light_colors;
-    float ambient[3], background[3], light_positions[16 * 4], light_colors[16 * 4];
-    size_t light_count;
-    bool lighting_set;
-    const float *scene_vertices;
-    size_t scene_vertex_count;
     GLint viewport_uniform, color_uniform, glyph_uniform;
     int width, height, image_width, image_height, glyph_count;
     int framebuffer_width, framebuffer_height;
@@ -346,137 +338,6 @@ bool renderer_image(const char *path, float x, float y, float width, float heigh
     return true;
 }
 
-static bool scene_init(void)
-{
-    const char *vertex = "#version 150\n"
-        "in vec3 position; in vec3 normal; in vec3 color;"
-        "uniform mat4 viewProjection; out vec3 surfaceNormal; out vec3 surfaceColor; out vec3 worldPosition;"
-        "void main(){surfaceNormal=normal;surfaceColor=color;worldPosition=position;"
-        "gl_Position=viewProjection*vec4(position,1.);}";
-    const char *fragment = "#version 150\n"
-        "in vec3 surfaceNormal; in vec3 surfaceColor; in vec3 worldPosition; out vec4 outputColor;"
-        "uniform vec3 ambient; uniform int lightCount;"
-        "uniform vec4 lightPositions[16]; uniform vec4 lightColors[16];"
-        "void main(){vec3 n=normalize(surfaceNormal);vec3 light=ambient;"
-        "for(int i=0;i<lightCount;i++){vec3 delta=lightPositions[i].xyz-worldPosition;"
-        "float distance=length(delta);float radius=max(lightPositions[i].w,.0001);"
-        "float attenuation=max(1.-distance/radius,0.);"
-        "float diffuse=max(dot(n,delta/max(distance,.0001)),0.);"
-        "light+=lightColors[i].rgb*lightColors[i].w*diffuse*attenuation*attenuation;}"
-        "outputColor=vec4(pow(max(surfaceColor*light,vec3(0.)),vec3(1./2.2)),1.);}";
-    GLuint vs = shader_create(GL_VERTEX_SHADER, vertex);
-    GLuint fs = shader_create(GL_FRAGMENT_SHADER, fragment);
-    if (!vs || !fs) { glDeleteShader(vs); glDeleteShader(fs); return false; }
-    r.scene_program = glCreateProgram();
-    glAttachShader(r.scene_program, vs);
-    glAttachShader(r.scene_program, fs);
-    glBindAttribLocation(r.scene_program, 0, "position");
-    glBindAttribLocation(r.scene_program, 1, "normal");
-    glBindAttribLocation(r.scene_program, 2, "color");
-    glLinkProgram(r.scene_program);
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-    GLint ok;
-    glGetProgramiv(r.scene_program, GL_LINK_STATUS, &ok);
-    if (!ok) {
-        char log[2048];
-        glGetProgramInfoLog(r.scene_program, sizeof(log), NULL, log);
-        fprintf(stderr, "Book scene shader: %s\n", log);
-        glDeleteProgram(r.scene_program);
-        r.scene_program = 0;
-        return false;
-    }
-    r.scene_matrix = glGetUniformLocation(r.scene_program, "viewProjection");
-    r.scene_ambient = glGetUniformLocation(r.scene_program, "ambient");
-    r.scene_light_count = glGetUniformLocation(r.scene_program, "lightCount");
-    r.scene_light_positions = glGetUniformLocation(r.scene_program, "lightPositions");
-    r.scene_light_colors = glGetUniformLocation(r.scene_program, "lightColors");
-    glGenVertexArrays(1, &r.scene_vao);
-    glBindVertexArray(r.scene_vao);
-    glGenBuffers(1, &r.scene_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, r.scene_vbo);
-    for (int i = 0; i < 3; ++i) {
-        glEnableVertexAttribArray(i);
-        glVertexAttribPointer(i, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
-                              (void *)(size_t)(i * 3 * sizeof(float)));
-    }
-    return true;
-}
-
-void renderer_lighting(const float ambient[3], const float background[3],
-                       const float *lights, size_t count)
-{
-    const float default_ambient[] = {.6f, .6f, .6f};
-    const float default_background[] = {.17f, .16f, .145f};
-    memcpy(r.ambient, ambient ? ambient : default_ambient, sizeof(r.ambient));
-    memcpy(r.background, background ? background : default_background, sizeof(r.background));
-    r.light_count = lights ? (count < 16 ? count : 16) : 0;
-    for (size_t i = 0; i < r.light_count; ++i) {
-        memcpy(r.light_positions + i * 4, lights + i * 8, 3 * sizeof(float));
-        r.light_positions[i * 4 + 3] = lights[i * 8 + 6];
-        memcpy(r.light_colors + i * 4, lights + i * 8 + 3, 3 * sizeof(float));
-        r.light_colors[i * 4 + 3] = lights[i * 8 + 7];
-    }
-    r.lighting_set = true;
-}
-
-void renderer_scene(const float *vertices, size_t vertex_count, const float *view_projection,
-                    float x, float y, float width, float height)
-{
-    if (!vertices || !vertex_count || !view_projection || width <= 0 || height <= 0) return;
-    GLint old_program, old_vao, old_vbo, old_viewport[4], old_scissor[4], old_depth_func;
-    GLboolean old_depth = glIsEnabled(GL_DEPTH_TEST), old_scissor_test = glIsEnabled(GL_SCISSOR_TEST);
-    GLboolean old_blend = glIsEnabled(GL_BLEND), old_depth_mask;
-    GLfloat old_clear[4];
-    glGetIntegerv(GL_CURRENT_PROGRAM, &old_program);
-    glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &old_vao);
-    glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &old_vbo);
-    glGetIntegerv(GL_VIEWPORT, old_viewport);
-    glGetIntegerv(GL_SCISSOR_BOX, old_scissor);
-    glGetIntegerv(GL_DEPTH_FUNC, &old_depth_func);
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &old_depth_mask);
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, old_clear);
-    if (!r.scene_program && !scene_init()) goto restore;
-    glUseProgram(r.scene_program);
-    glBindVertexArray(r.scene_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, r.scene_vbo);
-    if (vertices != r.scene_vertices || vertex_count != r.scene_vertex_count) {
-        glBufferData(GL_ARRAY_BUFFER, vertex_count * 9 * sizeof(float), vertices, GL_STATIC_DRAW);
-        r.scene_vertices = vertices;
-        r.scene_vertex_count = vertex_count;
-    }
-    int vx = (int)lroundf(x * r.scale), vy = (int)lroundf((r.height - y - height) * r.scale);
-    int vw = (int)lroundf(width * r.scale), vh = (int)lroundf(height * r.scale);
-    glViewport(vx, vy, vw, vh);
-    glEnable(GL_SCISSOR_TEST);
-    glScissor(vx, vy, vw, vh);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glDepthMask(GL_TRUE);
-    glDisable(GL_BLEND);
-    if (!r.lighting_set) renderer_lighting(NULL, NULL, NULL, 0);
-    glClearColor(r.background[0], r.background[1], r.background[2], 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glUniformMatrix4fv(r.scene_matrix, 1, GL_FALSE, view_projection);
-    glUniform3fv(r.scene_ambient, 1, r.ambient);
-    glUniform1i(r.scene_light_count, (GLint)r.light_count);
-    glUniform4fv(r.scene_light_positions, (GLsizei)r.light_count, r.light_positions);
-    glUniform4fv(r.scene_light_colors, (GLsizei)r.light_count, r.light_colors);
-    glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertex_count);
-restore:
-    glUseProgram(old_program);
-    glBindVertexArray(old_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, old_vbo);
-    glViewport(old_viewport[0], old_viewport[1], old_viewport[2], old_viewport[3]);
-    glScissor(old_scissor[0], old_scissor[1], old_scissor[2], old_scissor[3]);
-    if (!old_scissor_test) glDisable(GL_SCISSOR_TEST);
-    if (!old_depth) glDisable(GL_DEPTH_TEST);
-    if (old_blend) glEnable(GL_BLEND);
-    glDepthFunc(old_depth_func);
-    glDepthMask(old_depth_mask);
-    glClearColor(old_clear[0], old_clear[1], old_clear[2], old_clear[3]);
-}
-
 void renderer_shutdown(void)
 {
     for (int i = 0; i < r.glyph_count; ++i) glDeleteTextures(1, &r.glyphs[i].texture);
@@ -484,9 +345,6 @@ void renderer_shutdown(void)
     glDeleteTextures(1, &r.image);
     glDeleteBuffers(1, &r.vbo);
     glDeleteVertexArrays(1, &r.vao);
-    glDeleteBuffers(1, &r.scene_vbo);
-    glDeleteVertexArrays(1, &r.scene_vao);
-    if (r.scene_program) glDeleteProgram(r.scene_program);
     if (r.program) glDeleteProgram(r.program);
     free(r.font_data);
     free(r.image_path);
