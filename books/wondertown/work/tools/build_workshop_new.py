@@ -131,14 +131,14 @@ def lamp(p):
 asset('fixtures/pendant','Pendant: suspension origin Z0; extends to -84; warm point source stays below opaque shade.',lamp)
 
 def window(p):
-    # Local Z-up front -Y. All arch-native geometry receives X90 rotation.
-    node(p,'bool-negative-arch',pos=(0,0,0),rot=(90,0,0),width=156,height=198,depth=42,segments=32)
-    node(p,'arch',pos=(0,-2,0),rot=(90,0,0),width=156,height=198,depth=20,tube=10,segments=32,material='teal-dark')
-    node(p,'arch',pos=(0,9,0),rot=(90,0,0),width=138,height=180,depth=2,segments=32,material='glass',castShadow=0,unlit=1)
-    box(p,(0,-8,-22),(6,13,138),'oak-light')
-    box(p,(0,-8,-28),(141,13,5),'oak-light')
-    box(p,(0,-8,24),(122,13,5),'oak-light')
-    box(p,(0,-10,-101),(177,36,9),'oak-light')
+    node(p,'window',preset='round-arch',style='storybook',rot=(90,0,0),
+         width=156,height=198,frameWidth=10,depth=24,segments=48,
+         frameMaterial='teal-dark',glassMaterial='glass',paneDepth=2,paneOffset=-9,
+         sill=1,sillHeight=9,sillProjection=10)
+    # Decorative muntins meet the procedural inset, including the curved head.
+    box(p,(0,-8,0),(6,13,178),'oak-light')
+    for z in (-28,24):
+        for x in (-36,36):box(p,(x,-8,z),(66,13,5),'oak-light')
     # Muted distant silhouettes and frost belong to the opaque glazing treatment.
     for x,h in ((-45,23),(-24,34),(1,22),(42,27)):
         box(p,(x,7,-83+h/2),(17,1,h),'blue',unlit=1,castShadow=0)
@@ -146,27 +146,17 @@ def window(p):
     node(p,'cone',pos=(25,6,29),rot=(90,0,0),radius=15,radiusTop=0,height=16,sides=4,material='blue',unlit=1,castShadow=0)
     cyl(p,(25,4,4),5,1,'paper',rot=(0,0,0),unlit=1,castShadow=0)
     for x in (-54,-11,48):
-        box(p,(x,4,66),(2,1,13),'cream',unlit=1,castShadow=0)
-        box(p,(x,4,66),(13,1,2),'cream',unlit=1,castShadow=0)
+        box(p,(x,4,40),(2,1,13),'cream',unlit=1,castShadow=0)
+        box(p,(x,4,40),(13,1,2),'cream',unlit=1,castShadow=0)
 asset('architecture/window','Roman window: opening centered at origin, width156 height198; front -Y; local Z up.',window)
 
 def rear_door(p):
-    node(p,'bool-negative-arch',pos=(0,0,135),rot=(90,0,0),width=154,height=270,depth=40,segments=32)
-    node(p,'arch',pos=(0,-2,135),rot=(90,0,0),width=154,height=270,depth=20,tube=10,segments=32,material='oak-dark')
-    # Timber leaf split around real pet passage at floor level.
-    box(p,(0,0,124),(132,8,152),'teal')
-    for x in (-43,43):box(p,(x,0,24),(46,8,48),'teal')
-    for i in range(20):
-        x=-19+i*2
-        top=28+math.sqrt(max(0,400-(abs(x)+1)**2))
-        box(p,(x,0,(top+48)/2),(2,8,48-top),'teal')
-    node(p,'bool-negative-arch',pos=(0,0,24),rot=(90,0,0),width=40,height=48,depth=16,segments=24)
-    node(p,'arch',pos=(0,-6,24),rot=(90,0,0),width=44,height=52,depth=8,tube=4,segments=24,material='brass')
-    # Round fanlight above the rectangular leaf uses arch profile.
-    node(p,'arch',pos=(0,0,233),rot=(90,0,0),width=132,height=66,depth=8,material='teal',segments=32)
-    for x in (-52,-26,26,52):box(p,(x,-5,114),(2,2,165),'teal-dark')
-    for z in (68,171):box(p,(0,-7,z),(125,5,9),'oak-dark')
-    cyl(p,(49,-12,101),5,5,'brass',rot=(0,0,0))
+    node(p,'door',preset='round-arch',style='storybook',pos=(0,0,135),rot=(90,0,0),
+         width=154,height=270,frameWidth=10,depth=20,leafDepth=8,clearance=.2,segments=48,
+         frameMaterial='oak-dark',leafMaterial='teal',hardwareMaterial='brass',
+         hinge='left',openAngle=0,petWidth=40,petHeight=48,petFrameWidth=2,
+         window='round',windowWidth=64,windowCenter=202,windowFrameWidth=5,
+         windowFrameMaterial='brass',windowGlassMaterial='glass')
     # Threshold and exterior continuation make the floor-level opening readable.
     box(p,(0,10,-.5),(140,62,4),'stone')
     box(p,(0,65,-1),(140,88,2),'snow')
@@ -231,30 +221,22 @@ materials={
 'red':((.57,.17,.13),9),'cream':((.78,.72,.57),6),'blue':((.16,.29,.47),12),
 'green':((.19,.32,.18),9),'glass':((.38,.57,.72),55),'rope':((.50,.38,.22),2),
 'ink':((.075,.08,.09),3),'amber':((1,.90,.64),3),'stone':((.40,.43,.43),4),
-'snow':((.60,.70,.82),3)}
+'snow':((.60,.70,.82),3),'floor-wood':((.43,.30,.20),5)}
 for n,(c,sh) in materials.items():node(s,'material',id=n,color=c,shininess=sh)
-for i,c in enumerate(((.39,.27,.17),(.43,.30,.20),(.47,.33,.21),(.40,.28,.19))):node(s,'material',id='floor'+str(i),color=c,shininess=5)
 # Axis-correct structural walls retain real light blocking, including south camera wall.
-node(s,'wall',pos=(0,760,0),rot=(90,0,0),length=860,height=400,thickness=24,material='plaster')
-node(s,'wall',pos=(-430,245,0),rot=(90,0,90),length=1030,height=400,thickness=24,material='plaster')
-node(s,'wall',pos=(430,245,0),rot=(90,0,90),length=1030,height=400,thickness=24,material='plaster')
-node(s,'wall',pos=(0,-270,0),rot=(90,0,0),length=860,height=400,thickness=24,material='plaster')
-box(s,(0,245,-10),(860,1030,16),'oak-dark',sanityFloor='1')
-for i in range(43):
-    x=-420+i*20
-    for j in range(5):
-        y=-167+j*206
-        box(s,(x,y,-1),(19.7,205.5,2),'floor'+str((i*7+j*3)%4))
+wall_finish=dict(height=400,thickness=24,material='plaster',lowerHeight=100,
+                 lowerMaterial='teal-dark',upperMaterial='plaster',trimMaterial='oak',
+                 bottomTrimHeight=12,middleTrimHeight=9,topTrimHeight=14,trimDepth=6)
+for pos,rot,length,side in (
+        ((0,760,0),(90,0,0),860,'front'),
+        ((-430,245,0),(90,0,90),1030,'front'),
+        ((430,245,0),(90,0,90),1030,'back'),
+        ((0,-270,0),(90,0,0),860,'back')):
+    node(s,'wall',pos=pos,rot=rot,length=length,trimSide=side,**wall_finish)
+node(s,'floor',pos=(0,245,0),rot=(90,0,90),width=1030,depth=860,
+     style='boards',thickness=18,tileDepth=2,tileWidth=20,tileLength=206,gap=.3,
+     material='floor-wood',groutMaterial='oak-dark',colorVariation=.12,seed=23,sanityFloor=1)
 box(s,(0,245,407),(884,1054,14),'oak-dark')
-# Lower wall timber panels: restrained divisions beneath warm plaster.
-for x in (-415,415):
-    box(s,(x,245,47),(5,1005,94),'teal-dark')
-    box(s,(x,245,100),(12,1008,9),'oak')
-    for y in range(-238,745,60):box(s,(x-3 if x>0 else x+3,y,49),(5,6,86),'teal')
-# Rear panel sections stop at the actual door opening.
-for x,w in ((-178,454),(316,196)):
-    box(s,(x,744,48),(w,5,96),'teal-dark')
-    box(s,(x,740,100),(w,12,9),'oak')
 for y in (120,400,690):box(s,(0,y,380),(860,19,34),'oak-dark')
 for x in (-404,404):
     box(s,(x,245,351),(20,1030,22),'oak')

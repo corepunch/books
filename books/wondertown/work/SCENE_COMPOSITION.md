@@ -44,8 +44,9 @@ blocking Wondertown. A human-sized passage and a Pip route are different tests.
 Keep scale references consistent through floor, tabletop and loft views.
 
 Workshop architecture uses smooth Roman arches, plaster, timber and exposed
-beams. Use `bool-negative-arch` for its arched openings; check the current
-Scener scene-format guide for supported cutters. Do not substitute a rectangle
+beams. Use procedural `window` and `door` primitives with `preset="round-arch"`
+for their matched frames and openings; reserve `bool-negative-arch` for custom
+passages. Check the current Scener scene-format guide. Do not substitute a rectangle
 because an old process example used one. Other locations follow their own brief.
 
 ## Three passes with different detail budgets
