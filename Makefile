@@ -11,7 +11,7 @@ CFLAGS ?= -O2 -g
 LUA_PKG ?= $(shell for package in lua5.4 lua; do pkg-config --exists $$package 2>/dev/null && { echo $$package; break; }; done)
 BUILD_ROOT := $(abspath $(BUILD_DIR))
 SOURCES := $(wildcard src/*.c)
-NATIVE_SOURCES := $(wildcard src/*.m)
+NATIVE_SOURCES := src/macos.m src/metal.m
 OBJECTS := $(patsubst src/%.c,$(BUILD_ROOT)/src/%.o,$(SOURCES)) $(patsubst src/%.m,$(BUILD_ROOT)/src/%.o,$(NATIVE_SOURCES))
 CPPFLAGS += -Ivendor $(shell pkg-config --cflags $(LUA_PKG) libxml-2.0)
 CFLAGS += -std=c11 -Wall -Wextra -MMD -MP
@@ -22,7 +22,17 @@ endif
 CPPFLAGS += -I$(shell xcrun --show-sdk-path)/usr/include/libxml2
 LDLIBS += -framework AppKit -framework Metal -framework QuartzCore
 
-.PHONY: all run check render layout clean
+.PHONY: all run check render layout clean ipad ipad-simulator ipad-mac ipad-run
+# The AppKit executable remains a development/headless harness.
+# The shipping app is compiled directly with the iOS SDK, without an IDE project.
+ipad:
+	$(MAKE) -f platform/ipad/build.mk BUILD_DIR="$(BUILD_ROOT)/ipad" BOOK="$(BOOK)" SDK=iphoneos app
+ipad-simulator:
+	$(MAKE) -f platform/ipad/build.mk BUILD_DIR="$(BUILD_ROOT)/ipad" BOOK="$(BOOK)" SDK=iphonesimulator app
+ipad-mac:
+	$(MAKE) -f platform/ipad/build.mk BUILD_DIR="$(BUILD_ROOT)/ipad" BOOK="$(BOOK)" SDK=iphoneos mac
+ipad-run:
+	$(MAKE) -f platform/ipad/build.mk BUILD_DIR="$(BUILD_ROOT)/ipad" BOOK="$(BOOK)" SDK=iphonesimulator run
 all: $(BUILD_ROOT)/book
 $(BUILD_ROOT):
 	mkdir -p "$@"
@@ -53,6 +63,7 @@ render:
 layout:
 	cd "books/$(BOOK)/rooms" && "$(SCENER)" --layout "$(SCENE).blks" --scale 2 --format jpg --output-dir .
 clean:
+	rm -rf "$(BUILD_ROOT)/ipad"
 	rm -f $(OBJECTS) $(OBJECTS:.o=.d) "$(BUILD_ROOT)/book"
 	rm -f "$(BUILD_ROOT)/test_geometry" "$(BUILD_ROOT)/test_geometry.o" "$(BUILD_ROOT)/test_geometry.d"
 	rm -f "$(BUILD_ROOT)/test_transition" "$(BUILD_ROOT)/test_transition.o" "$(BUILD_ROOT)/test_transition.d"

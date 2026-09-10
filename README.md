@@ -8,7 +8,55 @@ Book displays pre-rendered JPEGs. Scener renders the artwork offline; `.blks`
 files supply only camera and anchor metadata at runtime. There are no Book Lua
 scripts, Orca dependencies, UI XML files or per-adventure mapping manifests.
 
-## Build and run
+## iPad app
+
+The shipping app is a landscape-only iPad UIKit app (iPadOS 16+), with the same
+C/ZIL engine and Metal renderer as the desktop harness. There is no `.xcodeproj`
+and no `xcodebuild` step. Make invokes `xcrun clang` directly, compiles the icon
+with `actool`, and stages the executable and resources into `Book.app`.
+The installed Xcode SDK/toolchain is required; the Xcode IDE is not used.
+
+```sh
+make ipad-simulator             # compile and ad-hoc sign an iPad simulator app
+make ipad-run                   # build, install and launch on an iPad simulator
+make ipad-run DEVICE="iPad Pro 11-inch (M5)"  # or a simulator UDID
+make ipad                       # compile an unsigned ARM64 iPad app
+make ipad-mac                   # development-sign and launch the iPad app on Mac
+```
+
+Build products are in `build/ipad/iphoneos-arm64/` and
+`build/ipad/iphonesimulator-<arch>/`. `ipad-mac` packages the signed iOS app as
+`build/ipad/Book.app` for Launch Services. It runs the same iPad executable on
+Apple silicon using macOS's iPad app support. Mac Catalyst is not involved.
+
+Simulator builds use ad-hoc signing and require no developer account. For local
+Mac execution, `tools/sign_ipad.py` selects an installed, unexpired development
+profile and a matching certificate/private key for `BUNDLE_ID` (default
+`com.igor.book`). It can reuse a wildcard profile. Set `TEAM=...` to select a
+team or `PROFILE=/path/to/profile.mobileprovision` explicitly. This build never
+creates profiles or contacts the developer portal. Physical iPads also need a
+valid development signature and a profile covering the device; `make ipad`
+only produces an unsigned build. App Store release packaging is separate.
+
+`BOOK=wondertown` selects the bundled adventure. The native objects are cached;
+changing ZIL, Lua, art, or `BOOK` repackages resources without recompiling C.
+Runtime Lua/ZIL files, the font, existing JPEGs, and scene projection sources
+are copied into the app bundle. Art work directories are excluded. Lua 5.4.8
+is compiled from `vendor/lua` for iOS; Homebrew libraries are used only by the
+desktop harness. No network or external asset directory is needed at runtime.
+The icon is in `assets/AppIcon.xcassets`, with its larger source and edit prompt
+in `assets/`. `IOS_MIN`, `ARCH`, and `BUNDLE_ID` can be overridden on the make
+command line. `BUILD_DIR` keeps generated files separate from the source.
+
+Tap choices and hotspots; drag to scroll. The bottom bar provides Back, Text,
+and a parser command field with Go/Return. The bar follows the software keyboard;
+the page respects safe areas and supports both landscape orientations. iPad
+full-screen presentation is requested to avoid portrait multitasking layouts. A hardware
+keyboard supports Escape, arrow scrolling, Command-L for the command field,
+and Command-T to toggle prose. The engine currently keeps progress in memory;
+terminating the app starts a fresh game on the next launch.
+
+## Desktop development harness
 
 Requires macOS with Metal, Apple command-line developer tools (C/Objective-C),
 make, pkg-config, Lua **5.4** and libxml2. The native window uses AppKit
@@ -40,6 +88,7 @@ src/main.c                      command-line options and application lifecycle
 src/book.c                      ZIL coroutine host, page state and choices
 src/ui.c                        fixed page UI, input and navigation
 src/macos.m                     NSWindow, AppKit events and application lifecycle
+src/ipad.m                      UIKit scenes, touch/keyboard input and lifecycle
 src/transition.c                reveal/fade timing, easing and resize-aware coverage
 src/headless.c                  JSON snapshots, commands and object catalog
 src/renderer.c                  JPEG decoding and page texture cache
@@ -51,10 +100,18 @@ src/geometry.c                  vector, size and rectangle operations
 src/book.h                      shared application types and declarations
 fonts/                          shared font assets
 vendor/                         stb image/font headers
+vendor/lua/                     Lua 5.4.8 source for the iPad target
+platform/ipad/build.mk          direct clang, icon, packaging and launch targets
+platform/ipad/Info.plist        iPad lifecycle and landscape-only metadata
+assets/                        app icon master and asset catalog
 libs/zilscript/                 the only Lua dependency, including ZIL adventures
 books/wondertown/rooms/          JPEGs, .blks camera/anchor sources and prefabs/
 books/wondertown/work/           art guides, references and historical studies
 tools/render.py                 offline Scener batch rendering
+tools/bundle_ipad.py            stage runtime resources into the iPad app bundle
+tools/sign_ipad.py              sign with a matching local development profile
+tools/run_ipad_simulator.py     boot, install and launch on an iPad simulator
+tools/wrap_ipad_mac.py          local Designed for iPad launch packaging
 tests/test_book.py               native host integration checks
 tests/test_geometry.c            crops, clipping, hit boundaries and pixel scaling
 ```

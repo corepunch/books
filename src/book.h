@@ -208,7 +208,7 @@ struct TransitionFrame transition_sample(struct Transition *transition, double n
 
 enum { UI_WIDTH = 1100, UI_HEIGHT = 800 };
 void ui_run(bool smoke, const char *screenshot, double smoke_transition);
-/* AppKit forwards native input to the C page interface. */
+/* AppKit/UIKit forward native input to the C page interface. */
 enum UIKey { UI_KEY_TAB, UI_KEY_RELOAD, UI_KEY_ESCAPE, UI_KEY_ENTER,
              UI_KEY_BACKSPACE, UI_KEY_DOWN, UI_KEY_UP };
 void ui_init(void);
