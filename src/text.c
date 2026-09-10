@@ -13,7 +13,7 @@ struct Glyph {
     int codepoint;
     irect_t bounds;
     float advance;
-    GLuint texture;
+    texture_t texture;
 };
 
 static struct {
@@ -52,7 +52,7 @@ static struct Glyph *glyph_get(int codepoint)
         if (t.glyphs[i].codepoint == codepoint) return &t.glyphs[i];
     int index = t.glyph_count < MAX_GLYPHS ? t.glyph_count++ : codepoint % MAX_GLYPHS;
     struct Glyph *g = &t.glyphs[index];
-    glDeleteTextures(1, &g->texture);
+    renderer_texture_destroy(g->texture);
     memset(g, 0, sizeof(*g));
     g->codepoint = codepoint;
     int advance;
@@ -61,7 +61,7 @@ static struct Glyph *glyph_get(int codepoint)
     unsigned char *bitmap = stbtt_GetCodepointBitmap(&t.font, 0, t.font_scale,
         codepoint, &g->bounds.size.width, &g->bounds.size.height, &g->bounds.origin.x, &g->bounds.origin.y);
     if (bitmap && !isize2_is_empty(g->bounds.size))
-        g->texture = renderer_texture_create(g->bounds.size, GL_RED, bitmap);
+        g->texture = renderer_texture_create(g->bounds.size, true, bitmap);
     stbtt_FreeBitmap(bitmap, NULL);
     return g;
 }
@@ -140,7 +140,7 @@ float text_height(const char *text, float size, float max_width)
 
 void text_shutdown(void)
 {
-    for (int i = 0; i < t.glyph_count; ++i) glDeleteTextures(1, &t.glyphs[i].texture);
+    for (int i = 0; i < t.glyph_count; ++i) renderer_texture_destroy(t.glyphs[i].texture);
     free(t.font_data);
     memset(&t, 0, sizeof(t));
 }

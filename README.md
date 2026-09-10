@@ -10,9 +10,9 @@ scripts, Orca dependencies, UI XML files or per-adventure mapping manifests.
 
 ## Build and run
 
-Requires a C compiler, make, pkg-config, Lua **5.4**, libxml2 and
-[libplatform](https://github.com/corepunch/platform). macOS uses system OpenGL;
-Linux needs OpenGL and libplatform's display dependencies.
+Requires macOS with Metal, Apple command-line developer tools (C/Objective-C),
+make, pkg-config, Lua **5.4** and libxml2. The native window uses AppKit
+(`NSWindow`); all drawing uses Metal through a `CAMetalLayer`.
 
 ```sh
 git submodule update --init --recursive
@@ -21,9 +21,8 @@ make run BOOK=wondertown
 make check
 ```
 
-The default platform path is `../orca/libs/platform`; override it with
-`make PLATFORM_DIR=/path/to/platform`. The application and platform library
-are built together in `build/`.
+The application is built in `build/` and links the system AppKit, Metal and
+QuartzCore frameworks. No external windowing library is required.
 
 ```sh
 build/book --root /path/to/books --book wondertown
@@ -39,9 +38,12 @@ needs its ZIL entry point and assets, with no C edits or mapping files.
 ```text
 src/main.c                      command-line options and application lifecycle
 src/book.c                      ZIL coroutine host, page state and choices
-src/ui.c                        fixed page UI, input and graphical event loop
+src/ui.c                        fixed page UI, input and navigation
+src/macos.m                     NSWindow, AppKit events and application lifecycle
+src/transition.c                reveal/fade timing, easing and resize-aware coverage
 src/headless.c                  JSON snapshots, commands and object catalog
-src/renderer.c                  OpenGL drawing, images and screenshots
+src/renderer.c                  JPEG decoding and page texture cache
+src/metal.m                     Metal drawing, textures and screenshot readback
 src/text.c                      font loading, glyphs and text layout/rendering
 src/scene.c                     fixed camera/anchor loading and projection
 src/common.c                    shared error and string helpers
@@ -81,6 +83,16 @@ command and press Enter for interactions requiring more words or another object.
 Escape clears input or goes back. Tab toggles prose and choices, scrolling or
 arrow keys scroll long pages, and F5 reloads images and projection metadata.
 
+Page changes reveal the next JPEG through a growing circle originating
+at the selected hotspot (or the click position for text choices, window center
+for keyboard navigation). Text and circles fade in after the reveal. Navigation
+is paused during animation; F5 cancels it and reloads. Same-image responses only
+fade the overlays. `src/transition.c` owns timing and easing; the UI coordinates
+navigation and drawing, and the renderer owns masking and opacity. Two cached
+JPEG textures allow both pages to draw directly into the window without render
+textures. The Metal fragment shader applies the circular reveal mask in logical
+window coordinates; the drawable and clipping use the screen backing scale.
+
 ## Rendering and checks
 
 ```sh
@@ -88,7 +100,12 @@ make render BOOK=wondertown SCENE=workshop-new WIDTH=1920 HEIGHT=1440
 make layout BOOK=wondertown SCENE=workshop-new
 make check
 build/book --root "$PWD" --book wondertown --smoke --screenshot /tmp/book.ppm
+build/book --root "$PWD" --book wondertown --smoke-transition 275 --screenshot /tmp/reveal.ppm
 ```
+
+`--smoke-transition MS` activates the first projected hotspot and captures a
+deterministic animation time: 275 ms mid-reveal, 550 ms before the overlay fade,
+700 ms mid-fade, and 850 ms complete. It requires a page with a projected hotspot.
 
 `make run` consumes existing art. Scener is required only to generate new art.
 `--headless` prints JSON page snapshots and accepts parser commands on stdin;

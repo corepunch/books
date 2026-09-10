@@ -3,13 +3,42 @@
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <platform.h>
+#include <time.h>
+
+#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MAX(a,b) ((a)>(b)?(a):(b))
 
 struct Hit { frect_t bounds; int action; bool circle; };
 static struct Hit hits[MAX_HITS];
 static int hit_count,scroll,max_scroll,show_text=1;
 static command_t input;
-static const char *screenshot_path;
+static struct Transition transition;
+static filePath_t outgoing_image;
+static double preview_time = -1;
+
+static double now(void)
+{
+    struct timespec time;
+    clock_gettime(CLOCK_MONOTONIC, &time);
+    return time.tv_sec + time.tv_nsec / 1e9;
+}
+
+static fsize2_t window_size(void) { return renderer_bounds().size; }
+
+enum Navigation { NAV_CHOICE, NAV_BACK, NAV_COMMAND };
+
+static void navigate(enum Navigation navigation,int action,fvec2_t origin,float radius)
+{
+    copy(outgoing_image,sizeof(outgoing_image),book.image);
+    if (navigation==NAV_CHOICE) book_action(action);
+    else if (navigation==NAV_BACK) book_back();
+    else { book_command(input,0); input[0]=0; }
+    /* Upload before starting the clock so disk/decode time cannot skip the reveal. */
+    if (*book.image && isize2_is_empty(renderer_image_size(book.image)))
+        fail("cannot decode %s",book.image);
+    transition_start(&transition,now(),origin,window_size(),radius,strcmp(outgoing_image,book.image)!=0);
+    scroll=0; hit_count=0;
+}
 
 static float story_text(const char *text,fvec2_t origin,float size,float width)
 {
@@ -19,24 +48,34 @@ static float story_text(const char *text,fvec2_t origin,float size,float width)
 
 static void add_hit(frect_t bounds,int action,bool circle)
 {
-    if (!fsize2_is_empty(bounds.size) && hit_count<MAX_HITS)
+    if (!transition.active && !fsize2_is_empty(bounds.size) && hit_count<MAX_HITS)
         hits[hit_count++]=(struct Hit){bounds,action,circle};
 }
 
-static void draw(void)
+static isize2_t draw_image(const char *path,frect_t viewport)
 {
-    struct AXsize size; axGetSize(&size);
-    isize2_t pixels=isize2(size.width,size.height);
-    fsize2_t window=isize2_to_float(pixels);
-    frect_t viewport=frect_from_size(window);
-    axBeginPaint(); renderer_resize(pixels,axGetScaling()); renderer_clear();
-    hit_count=0;
-    isize2_t image=isize2(0,0);
-    if (*book.image) {
-        image=renderer_image_size(book.image);
-        if (isize2_is_empty(image)) fail("cannot decode %s",book.image);
-        renderer_image(book.image,frect_cover(isize2_to_float(image),viewport));
+    isize2_t image=renderer_image_size(path);
+    if (*path) {
+        if (isize2_is_empty(image)) fail("cannot decode %s",path);
+        renderer_image(path,frect_cover(isize2_to_float(image),viewport));
     } else renderer_rect(viewport,0x211C18FF);
+    return image;
+}
+
+void ui_draw(void)
+{
+    fsize2_t window=window_size();
+    frect_t viewport=frect_from_size(window);
+    hit_count=0;
+    struct TransitionFrame frame=transition_sample(&transition,
+        preview_time>=0 ? transition.started+preview_time : now(),window);
+    if (frame.revealing) {
+        draw_image(outgoing_image,viewport);
+        renderer_reveal_begin(frame.center,frame.radius);
+    }
+    isize2_t image=draw_image(book.image,viewport);
+    renderer_reveal_end();
+    renderer_opacity(frame.overlay_opacity);
     scene_load(book.rooms,book.camera);
     if (!book.beat && !book.focus) {
         frect_t safe=frect_inset(viewport,fvec2(HOTSPOT_DIAMETER/2,HOTSPOT_DIAMETER/2));
@@ -81,74 +120,81 @@ static void draw(void)
         if (choice_scroll>scroll) story_text("↓",fvec2(window.width-margin-18,limit),18,20);
     }
     if (*input) {
-        char text[sizeof(input)+sizeof("> ")]; snprintf(text,sizeof(text),"> %s",input);
+        prompt_t text; snprintf(text,sizeof(text),"> %s",input);
         frect_t prompt=frect(fvec2(32,window.height-40),fsize2(window.width-64,32));
         renderer_clip(prompt);
         story_text(text,prompt.origin,20,prompt.size.width); renderer_unclip();
     }
-    if (screenshot_path && !renderer_screenshot(screenshot_path)) fail("cannot write screenshot");
-    axEndPaint();
+    renderer_opacity(1);
 }
 
 static void reload(void)
 {
+    transition.active=false;
+    hit_count=0;
     scene_shutdown();
     renderer_invalidate_image();
     book_reload();
     scene_load(book.rooms,book.camera);
 }
 
-static void key(struct AXmessage *event)
+void ui_key(enum UIKey key)
 {
-    if (event->keyCode==AX_KEY_TAB) { show_text=!show_text; hit_count=0; }
-    else if (event->keyCode==AX_KEY_F5) reload();
-    else if (event->keyCode==AX_KEY_ESCAPE) { if (*input) input[0]=0; else book_back(); }
-    else if (event->keyCode==AX_KEY_ENTER) {
-        if (*input) { book_command(input,0); input[0]=0; }
-        else if (book.beat) book_back();
-    } else if (event->keyCode==AX_KEY_BACKSPACE) {
+    if (transition.active && key!=UI_KEY_RELOAD) return;
+    fvec2_t center=frect_center(frect_from_size(window_size()));
+    if (key==UI_KEY_TAB) { show_text=!show_text; hit_count=0; }
+    else if (key==UI_KEY_RELOAD) reload();
+    else if (key==UI_KEY_ESCAPE) { if (*input) input[0]=0; else navigate(NAV_BACK,0,center,0); }
+    else if (key==UI_KEY_ENTER) {
+        if (*input) navigate(NAV_COMMAND,0,center,0);
+        else if (book.beat) navigate(NAV_BACK,0,center,0);
+    } else if (key==UI_KEY_BACKSPACE) {
         size_t n=strlen(input);
         if (n) { do { --n; } while (n && ((unsigned char)input[n]&0xC0)==0x80); input[n]=0; }
-    } else if (event->keyCode==AX_KEY_DOWNARROW) scroll=MIN(max_scroll,scroll+40);
-    else if (event->keyCode==AX_KEY_UPARROW) scroll=MAX(0,scroll-40);
-    else {
-        char utf8[sizeof(event->lParam)+1]; memcpy(utf8,&event->lParam,sizeof(event->lParam)); utf8[sizeof(event->lParam)]=0;
-        if (!(event->wParam&(AX_MOD_CTRL|AX_MOD_CMD|AX_MOD_ALT)) &&
-            (unsigned char)utf8[0]>=32 && (unsigned char)utf8[0]!=127 && strlen(input)+strlen(utf8)<sizeof(input)) strcat(input,utf8);
+    } else if (key==UI_KEY_DOWN) scroll=MIN(max_scroll,scroll+40);
+    else if (key==UI_KEY_UP) scroll=MAX(0,scroll-40);
+}
+
+void ui_input(const char *utf8)
+{
+    if (transition.active) return;
+    if (utf8 && (unsigned char)utf8[0]>=32 && (unsigned char)utf8[0]!=127 &&
+        strlen(input)+strlen(utf8)<sizeof(input)) strcat(input,utf8);
+}
+
+void ui_click(fvec2_t point)
+{
+    if (transition.active) return;
+    for (int i=hit_count-1;i>=0;--i) {
+        struct Hit h=hits[i];
+        if (!frect_contains_point(h.bounds,point)) continue;
+        if (h.circle && !frect_ellipse_contains_point(h.bounds,point)) continue;
+        navigate(NAV_CHOICE,h.action,h.circle ? frect_center(h.bounds) : point,
+                 h.circle ? HOTSPOT_DIAMETER/2 : 0);
+        break;
     }
 }
 
-void ui_run(bool smoke, const char *screenshot)
+void ui_scroll(float delta)
 {
-    screenshot_path = screenshot;
-    axInit();
-    if (!axCreateWindow("Book",UI_WIDTH,UI_HEIGHT,AX_WINDOW_RESIZABLE|AX_WINDOW_DOUBLEBUFFER)) fail("cannot create window");
-    axMakeCurrentContext();
-    filePath_t font; snprintf(font,sizeof(font),"%s/fonts/Literata-VariableFont_opsz,wght.ttf",book.root);
-    if (!(renderer_init() && text_init(font))) fail("cannot initialize graphics or load Literata");
-    bool running=true,dirty=true; int frames=0;
-    while (running) {
-        struct AXmessage event;
-        while (axPeekMessage(&event)) {
-            dirty=true;
-            if (event.message==kEventWindowClosed) running=false;
-            else if (event.message==kEventKeyDown) key(&event);
-            else if (event.message==kEventScrollWheel) scroll=CLAMP(scroll-event.dy*30,0,max_scroll);
-            else if (event.message==kEventLeftButtonDown) {
-                for (int i=hit_count-1;i>=0;--i) {
-                    struct Hit h=hits[i];
-                    fvec2_t point=fvec2(event.x,event.y);
-                    if (frect_contains_point(h.bounds,point)) {
-                        if (h.circle && !frect_ellipse_contains_point(h.bounds,point)) continue;
-                        book_action(h.action); scroll=0; hit_count=0; break;
-                    }
-                }
-            }
-        }
-        if (!running) break;
-        if (dirty || smoke) { draw(); dirty=false; }
-        if (smoke && ++frames>=3) break;
-        axWaitMessage(smoke ? 16 : 250);
+    if (!transition.active) scroll=MIN(max_scroll,MAX(0,(int)roundf(scroll-delta)));
+}
+
+bool ui_animating(void) { return transition.active; }
+
+void ui_preview(double seconds)
+{
+    for (int i=0;i<hit_count;++i) if (hits[i].circle) {
+        struct Hit h=hits[i];
+        navigate(NAV_CHOICE,h.action,frect_center(h.bounds),HOTSPOT_DIAMETER/2);
+        preview_time=seconds;
+        return;
     }
-    text_shutdown(); renderer_shutdown(); axShutdown();
+    fail("transition smoke requires a projected hotspot");
+}
+
+void ui_init(void)
+{
+    filePath_t font; snprintf(font,sizeof(font),"%s/fonts/Literata-VariableFont_opsz,wght.ttf",book.root);
+    if (!text_init(font)) fail("cannot load Literata");
 }

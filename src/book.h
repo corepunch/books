@@ -6,17 +6,6 @@
 #include <stdint.h>
 #include <limits.h>
 
-#ifdef __APPLE__
-#ifndef GL_SILENCE_DEPRECATION
-#define GL_SILENCE_DEPRECATION
-#endif
-#include <OpenGL/gl3.h>
-#else
-#define GL_GLEXT_PROTOTYPES
-#include <GL/gl.h>
-#include <GL/glext.h>
-#endif
-
 /* 2D geometry: positions, extents, and rectangles in logical or pixel units. */
 typedef struct { float x, y; } fvec2_t;
 typedef struct { int x, y; } ivec2_t;
@@ -110,6 +99,8 @@ typedef char noun_t[MAX_NOUN];
 typedef char description_t[MAX_DESCRIPTION];
 typedef char choiceLabel_t[MAX_CHOICE_LABEL];
 typedef char command_t[MAX_COMMAND];
+#define MAX_PROMPT (MAX_COMMAND + 2)
+typedef char prompt_t[MAX_PROMPT];
 typedef char assetName_t[MAX_ASSET_NAME];
 typedef char storyText_t[MAX_STORY_TEXT];
 typedef char nounPhrase_t[MAX_NOUN_PHRASE];
@@ -152,26 +143,31 @@ void book_reload(void);
 int book_object_room(int object);
 
 /* Rendering */
-#define MAX_SHADER_LOG 2048
-typedef char shaderLog_t[MAX_SHADER_LOG];
-
-bool renderer_init(void);
+/* Native layer and texture handles keep Objective-C out of the C modules. */
+typedef void *texture_t;
+bool renderer_init(void *layer);
+void metal_shutdown(void);
 void renderer_shutdown(void);
-void renderer_resize(isize2_t size, float scale);
 void renderer_clip(frect_t bounds);
 void renderer_unclip(void);
 bool renderer_screenshot(const char *path);
-void renderer_clear(void);
+bool renderer_begin(isize2_t size, float scale);
+void renderer_present(void);
 void renderer_rect(frect_t bounds, uint32_t rgba);
 void renderer_ring(frect_t bounds, uint32_t rgba);
+/* Circular masks affect subsequent drawing until explicitly ended. */
+void renderer_reveal_begin(fvec2_t center, float radius);
+void renderer_reveal_end(void);
+void renderer_opacity(float opacity);
 isize2_t renderer_image_size(const char *path);
 bool renderer_image(const char *path, frect_t bounds);
 /* Drop the path cache so the next draw reloads a replaced JPEG. */
 void renderer_invalidate_image(void);
 
 /* Shared only by the renderer and text rasterizer. */
-GLuint renderer_texture_create(isize2_t size, GLenum format, const void *pixels);
-void renderer_quad(frect_t bounds, uint32_t rgba, GLuint texture, int glyph);
+texture_t renderer_texture_create(isize2_t size, bool glyph, const void *pixels);
+void renderer_texture_destroy(texture_t texture);
+void renderer_quad(frect_t bounds, uint32_t rgba, texture_t texture, int glyph);
 frect_t renderer_bounds(void);
 
 /* Text rendering */
@@ -191,10 +187,38 @@ bool scene_project_anchor(const char *key, isize2_t image, fsize2_t viewport, fv
 /* Graphical interface */
 #define HOTSPOT_DIAMETER 48.0f
 
+/* Presentation animation, independent of the VM and graphics backend. Times are seconds. */
+struct Transition {
+    double started;
+    fvec2_t origin;
+    float initial_radius;
+    bool active, reveal;
+};
+struct TransitionFrame {
+    fvec2_t center;
+    float radius, overlay_opacity;
+    bool revealing, active;
+};
+void transition_start(struct Transition *transition, double now, fvec2_t point,
+                      fsize2_t viewport, float initial_radius, bool reveal);
+struct TransitionFrame transition_sample(struct Transition *transition, double now,
+                                         fsize2_t viewport);
+
 #define MAX_HITS (MAX_CHOICES * 2) /* Each choice can have a marker and a text hit. */
 
 enum { UI_WIDTH = 1100, UI_HEIGHT = 800 };
-void ui_run(bool smoke, const char *screenshot);
+void ui_run(bool smoke, const char *screenshot, double smoke_transition);
+/* AppKit forwards native input to the C page interface. */
+enum UIKey { UI_KEY_TAB, UI_KEY_RELOAD, UI_KEY_ESCAPE, UI_KEY_ENTER,
+             UI_KEY_BACKSPACE, UI_KEY_DOWN, UI_KEY_UP };
+void ui_init(void);
+void ui_draw(void);
+void ui_key(enum UIKey key);
+void ui_input(const char *utf8);
+void ui_click(fvec2_t point);
+void ui_scroll(float delta);
+bool ui_animating(void);
+void ui_preview(double seconds);
 
 /* Headless interface */
 void headless_run(bool interactive);

@@ -28,7 +28,7 @@ clipping and hit tests; pass structs instead of separate coordinate components.
   camera/anchor sources. C reads those files solely for hotspot projection.
   Do not introduce a live scene renderer, Lua host scripts, Orca XML exports,
   UI configuration files or hand-maintained image/interaction maps.
-- The UI is hardcoded C over libplatform/OpenGL. Reuse its focus, Back,
+- The UI is hardcoded C over native AppKit/NSWindow and Metal. Reuse its focus, Back,
   Continue and parser-command flow. Keep anchors aligned under the same
   centered crop as the JPEG. Missing art must not display another room.
 - `make run BOOK=<name>` selects an adventure. The conventional ZIL entry point
