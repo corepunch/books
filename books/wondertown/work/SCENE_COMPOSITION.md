@@ -49,6 +49,9 @@ for their matched frames and openings; reserve `bool-negative-arch` for custom
 passages. Check the current Scener scene-format guide. Do not substitute a rectangle
 because an old process example used one. Other locations follow their own brief.
 
+Workshop shelf and loft storage uses plain closed wooden boxes with paper labels,
+without dark bands or corner straps. Open supply crates remain at the working areas.
+
 ## Three passes with different detail budgets
 
 ### 1. Spatial blockout

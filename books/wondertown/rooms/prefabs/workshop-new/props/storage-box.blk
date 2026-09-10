@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- Z-up cm; baseline Z=0. Plain closed storage box, 65 X x 50 Y x 45 Z; paper label faces -Y. -->
+<prefab>
+  <attach name="top_surface" pos="0 0 45" />
+  <box material="oak-light" pos="0 0 22.5" size="65 50 45" />
+  <box material="paper" pos="0 -25.2 22.5" size="29 0.4 13" />
+  <box material="ink" pos="0 -25.5 24.5" size="20 0.2 1.2" />
+  <box material="ink" pos="0 -25.5 20.5" size="15 0.2 1.2" />
+</prefab>

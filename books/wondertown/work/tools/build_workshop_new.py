@@ -90,9 +90,7 @@ def shelves(p):
         cyl(p,(x,0,9+h/2),9,h,'cream')
         cyl(p,(x,0,10+h),9.5,2,'oak-dark')
     for x in (-59,-18,27,65):
-        box(p,(x,3,85),(32,35,34),'oak-light')
-        box(p,(x,-15,85),(14,1,8),'paper')
-        for z in (75,96):box(p,(x,-16,z),(33,2,3),'oak')
+        prefab(p,'props/storage-box',(x,3,68),scale=(32/65,35/50,34/45))
 asset('furniture/stocked-shelves','Stocked shelves: 186 X x 54 Y x 134 Z; front -Y; baseline bottom board.',shelves)
 
 def chair(p):
@@ -172,9 +170,9 @@ def loft(p):
     for x in (-129,-70,-10):box(p,(x,-83,275),(7,7,70),'teal-dark')
     box(p,(-69,-83,308),(127,10,9),'oak-light')
     box(p,(-69,-83,267),(127,7,6),'teal')
-    prefab(p,'props/storage-crate',(-74,16,240))
-    prefab(p,'props/storage-crate',(-64,18,285),scale=(.8,.8,.8))
-    prefab(p,'props/storage-crate',(25,40,240),rot=(0,0,10))
+    prefab(p,'props/storage-box',(-74,16,240))
+    prefab(p,'props/storage-box',(-64,18,285),scale=(.8,.8,.8))
+    prefab(p,'props/storage-box',(25,40,240),rot=(0,0,10))
 asset('furniture/loft','Supported loft: 284 X x 184 Y; floor Z240; front -Y, landing on front-right.',loft)
 
 def ladder(p):

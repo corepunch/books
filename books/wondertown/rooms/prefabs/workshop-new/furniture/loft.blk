@@ -14,7 +14,7 @@
   <box pos="-10 -83 275" size="7 7 70" material="teal-dark" />
   <box pos="-69 -83 308" size="127 10 9" material="oak-light" />
   <box pos="-69 -83 267" size="127 7 6" material="teal" />
-  <prefab source="workshop-new/props/storage-crate" pos="-74 16 240" rot="0 0 0" />
-  <prefab source="workshop-new/props/storage-crate" pos="-64 18 285" rot="0 0 0" scale="0.8 0.8 0.8" />
-  <prefab source="workshop-new/props/storage-crate" pos="25 40 240" rot="0 0 10" />
+  <prefab source="workshop-new/props/storage-box" pos="-74 16 240" rot="0 0 0" />
+  <prefab source="workshop-new/props/storage-box" pos="-64 18 285" rot="0 0 0" scale="0.8 0.8 0.8" />
+  <prefab source="workshop-new/props/storage-box" pos="25 40 240" rot="0 0 10" />
 </prefab>
