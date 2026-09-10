@@ -12,6 +12,8 @@ CFLAGS ?= -O2 -g
 LUA_PKG ?= $(shell for package in lua5.4 lua; do pkg-config --exists $$package 2>/dev/null && { echo $$package; break; }; done)
 PLATFORM_ROOT := $(abspath $(PLATFORM_DIR))
 BUILD_ROOT := $(abspath $(BUILD_DIR))
+SOURCES := $(wildcard src/*.c)
+OBJECTS := $(patsubst src/%.c,$(BUILD_ROOT)/src/%.o,$(SOURCES))
 CPPFLAGS += -Ivendor -I$(PLATFORM_ROOT) $(shell pkg-config --cflags $(LUA_PKG) libxml-2.0)
 CFLAGS += -std=c11 -Wall -Wextra -MMD -MP
 LDLIBS += -L$(BUILD_ROOT) -lplatform $(filter-out -lm,$(shell pkg-config --libs $(LUA_PKG) libxml-2.0)) -lm
@@ -31,21 +33,29 @@ endif
 all: $(BUILD_ROOT)/book
 $(BUILD_ROOT):
 	mkdir -p "$@"
+$(BUILD_ROOT)/src: | $(BUILD_ROOT)
+	mkdir -p "$@"
 platform: | $(BUILD_ROOT)
 	$(MAKE) -C "$(PLATFORM_ROOT)" OUTDIR="$(BUILD_ROOT)"
 $(PLATFORM_LIB): | platform
-$(BUILD_ROOT)/main.o: main.c | $(BUILD_ROOT)
+$(BUILD_ROOT)/src/%.o: src/%.c | $(BUILD_ROOT)/src
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c "$<" -o "$@"
-$(BUILD_ROOT)/book: $(BUILD_ROOT)/main.o $(PLATFORM_LIB)
+$(BUILD_ROOT)/book: $(OBJECTS) $(PLATFORM_LIB)
 	$(CC) $(LDFLAGS) $^ $(filter-out -lplatform,$(LDLIBS)) -o "$@"
+$(BUILD_ROOT)/test_geometry.o: tests/test_geometry.c | $(BUILD_ROOT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -Isrc -c "$<" -o "$@"
+$(BUILD_ROOT)/test_geometry: $(BUILD_ROOT)/test_geometry.o $(BUILD_ROOT)/src/geometry.o
+	$(CC) $(LDFLAGS) $^ -lm -o "$@"
 run: all
 	"$(BUILD_ROOT)/book" --root "$(CURDIR)" --book "$(BOOK)"
-check: all
+check: all $(BUILD_ROOT)/test_geometry
+	"$(BUILD_ROOT)/test_geometry"
 	python3 tests/test_book.py "$(BUILD_ROOT)/book" "$(CURDIR)"
 render:
 	python3 tools/render.py --book "$(BOOK)" --scene "$(SCENE)" --scener "$(SCENER)" --width $(WIDTH) --height $(HEIGHT)
 layout:
 	cd "books/$(BOOK)/rooms" && "$(SCENER)" --layout "$(SCENE).blks" --scale 2 --format jpg --output-dir .
 clean:
-	rm -f "$(BUILD_ROOT)/main.o" "$(BUILD_ROOT)/main.d" "$(BUILD_ROOT)/book"
--include $(BUILD_ROOT)/main.d
+	rm -f $(OBJECTS) $(OBJECTS:.o=.d) "$(BUILD_ROOT)/book"
+	rm -f "$(BUILD_ROOT)/test_geometry" "$(BUILD_ROOT)/test_geometry.o" "$(BUILD_ROOT)/test_geometry.d"
+-include $(OBJECTS:.o=.d) $(BUILD_ROOT)/test_geometry.d

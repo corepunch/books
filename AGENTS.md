@@ -1,8 +1,18 @@
 # Book Engine Guide
 
 Book is a native engine for multiple visual interactive ZIL adventures.
-The complete application currently lives in `main.c`. Keep it in one C file
-until the user asks to split it. `fonts/` contains shared application assets.
+The native application lives in `src/`, split into the entry point, ZIL host,
+UI, headless interface, renderer, text rendering and scene projection. Keep
+module internals private and shared declarations in the single `src/book.h`
+header. Compile stb_image in `renderer.c` and stb_truetype in `text.c`.
+Use descriptive `MAX_*` macros for buffer capacities and collection limits;
+do not hardcode numeric array capacities.
+Define shared string buffer array typedefs in `src/book.h` (for example,
+`typedef char storyText_t[MAX_STORY_TEXT];`) and use them for fields and locals.
+Use `fvec2_t`/`ivec2_t`, `fsize2_t`/`isize2_t` and `frect_t`/`irect_t` for 2D
+geometry. Prefer value-returning geometry helpers for offsets, scaling, crops,
+clipping and hit tests; pass structs instead of separate coordinate components.
+`fonts/` contains shared application assets.
 `libs/zilscript/` is the only Lua dependency; read its `AGENTS.md` and
 `ARCHITECTURE.md` before modifying the VM.
 
@@ -42,7 +52,7 @@ named interactive anchors aligned with exact ZIL IDs.
 
 ## Validation
 
-Run `make check` after host changes. It builds the single C file and tests real
+Run `make check` after host changes. It builds the native application and tests real
 coroutine interactions, inferred asset names and projection without a display.
 For display changes, run a graphical smoke capture and inspect the JPEG with
 its hotspot/UI overlays. Do not rerender unchanged artwork just to test C code.

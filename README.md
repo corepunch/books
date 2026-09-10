@@ -1,6 +1,6 @@
 # Book
 
-A small C engine for visual interactive ZIL books. `main.c` contains the host,
+A small C engine for visual interactive ZIL books. `src/` contains the host,
 2D drawing, fixed page UI and camera projection. C resumes zilscript's Lua
 coroutine directly. ZIL owns objects, exits, actions, prose and game state.
 
@@ -37,7 +37,16 @@ needs its ZIL entry point and assets, with no C edits or mapping files.
 ## Layout
 
 ```text
-main.c                          complete native application
+src/main.c                      command-line options and application lifecycle
+src/book.c                      ZIL coroutine host, page state and choices
+src/ui.c                        fixed page UI, input and graphical event loop
+src/headless.c                  JSON snapshots, commands and object catalog
+src/renderer.c                  OpenGL drawing, images and screenshots
+src/text.c                      font loading, glyphs and text layout/rendering
+src/scene.c                     fixed camera/anchor loading and projection
+src/common.c                    shared error and string helpers
+src/geometry.c                  vector, size and rectangle operations
+src/book.h                      shared application types and declarations
 fonts/                          shared font assets
 vendor/                         stb image/font headers
 libs/zilscript/                 the only Lua dependency, including ZIL adventures
@@ -45,7 +54,11 @@ books/wondertown/rooms/          JPEGs, .blks camera/anchor sources and prefabs/
 books/wondertown/work/           art guides, references and historical studies
 tools/render.py                 offline Scener batch rendering
 tests/test_book.py               native host integration checks
+tests/test_geometry.c            crops, clipping, hit boundaries and pixel scaling
 ```
+
+The stb implementations compile directly in `renderer.c` (stb_image) and
+`text.c` (stb_truetype).
 
 Room art is `{room-id}-look.jpg`; focus art is `{room-id}-examine-{object-id}.jpg`; action art is
 `{room-id}-{verb}-{object-id}.jpg`. IDs come from ZIL declarations, lowercased with
