@@ -12,6 +12,8 @@ void renderer_unclip(void);
 bool renderer_screenshot(const char *path);
 void renderer_clear(void);
 void renderer_rect(float x, float y, float width, float height, uint32_t rgba);
+void renderer_ring(float x, float y, float diameter, uint32_t rgba);
+float renderer_text_height(const char *text, float size, float max_width);
 float renderer_text(const char *text, float x, float y, float size,
                     float max_width, uint32_t rgba);
 bool renderer_image_size(const char *path, int *width, int *height);

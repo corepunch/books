@@ -8,13 +8,13 @@
 #include <math.h>
 #include "render.h"
 
-struct Hit { float x, y, w, h; int action; };
+struct Hit { float x, y, w, h; int action; int circle; };
 static struct Hit hits[256];
 static int hit_count, module_ref, view_ref, scroll;
 static lua_State *L;
 static char input[512];
 static const char *screenshot_path;
-static int max_scroll, show_panel = 1;
+static int max_scroll, show_text = 1;
 static float window_width = 1100, window_height = 800;
 
 static void fail(const char *message)
@@ -55,12 +55,17 @@ static float number_field(const char *key)
     return value;
 }
 
-static void button(float x, float y, float w, float h, const char *label, int action)
+/* Text and markers share the scene; only the letterforms receive a shadow. */
+static float story_text(const char *text, float x, float y, float size, float width)
 {
-    renderer_rect(x, y, w, h, 0xE8DCC8FF);
-    renderer_text(label, x + 10, y + 7, 18, w - 20, 0x302B25FF);
-    if (hit_count < (int)(sizeof(hits) / sizeof(*hits)))
-        hits[hit_count++] = (struct Hit){x, y, w, h, action};
+    renderer_text(text, x + 1, y + 2, size, width, 0x120B07E6);
+    return renderer_text(text, x, y, size, width, 0xF4E6CAFF);
+}
+
+static void add_hit(float x, float y, float w, float h, int action, int circle)
+{
+    if (w > 0 && h > 0 && hit_count < (int)(sizeof(hits) / sizeof(*hits)))
+        hits[hit_count++] = (struct Hit){x, y, w, h, action, circle};
 }
 
 static void draw(void)
@@ -74,8 +79,6 @@ static void draw(void)
     renderer_clear();
     hit_count = 0;
     lua_rawgeti(L, LUA_REGISTRYINDEX, view_ref);
-    float panel = fminf(390, window_width * .42f);
-    float panel_x = window_width - panel - 18;
     float scene_w = window_width, scene_h = window_height;
     float iw = number_field("source_width"), ih = number_field("source_height");
     if (iw <= 0 || ih <= 0) { iw = 1920; ih = 1440; }
@@ -124,55 +127,68 @@ static void draw(void)
         lua_rawgeti(L, -1, (lua_Integer)i);
         float hx = number_field("x"), hy = number_field("y");
         int action = number_field("action");
-        if (hx >= 0 && hx <= 1 && hy >= 0 && hy <= 1) {
-            char label[16];
-            snprintf(label, sizeof(label), "%d", action);
-            float bx = CLAMP(x + hx * w - 16, x, x + w - 32);
-            float by = CLAMP(y + hy * h - 16, y, y + h - 34);
-            for (int j = 0; j < hit_count; ++j) {
-                if (fabsf(bx - hits[j].x) < 36 && fabsf(by - hits[j].y) < 38) {
-                    by = hits[j].y + 40;
-                    if (by + 34 > y + h) { by = y + hy * h - 56; bx += 38; }
-                    j = -1;
-                }
-            }
-            if (!show_panel || bx + 32 < panel_x || by + 34 < 18 || by > window_height - 50)
-                button(bx, by, 32, 34, label, action);
+        float cx = x + hx * w, cy = y + hy * h;
+        /* Never move a marker off its anchor to avoid another UI element. */
+        if (cx >= 24 && cx <= window_width - 24 && cy >= 24 && cy <= window_height - 24) {
+            renderer_ring(cx - 24, cy - 22, 48, 0x120B0780);
+            renderer_ring(cx - 24, cy - 24, 48, 0xFFFFFFFF);
+            add_hit(cx - 24, cy - 24, 48, 48, action, 1);
         }
         lua_pop(L, 1);
     }
     lua_pop(L, 1);
-    renderer_rect(10, window_height - 34, 370, 26, 0x181510B0);
-    renderer_text("Tab story • F5 reload • Esc back • ↑/↓ scroll", 18, window_height - 30, 15, 355, 0xF6F0E5FF);
-    if (show_panel) {
-    renderer_rect(panel_x, 18, panel, window_height - 68, 0xF6F0E5DC);
-    float px = panel_x + 20, pw = panel - 40;
-    renderer_clip(panel_x, 18, panel, window_height - 155);
-    float bottom = renderer_text(string_field("title"), px, 36 - scroll, 30, pw, 0x302B25FF);
-    bottom = renderer_text(string_field("text"), px, bottom + 18, 20, pw, 0x40372FFF) + 24;
-    lua_getfield(L, -1, "buttons");
-    for (size_t i = 1; i <= lua_rawlen(L, -1); ++i) {
-        lua_rawgeti(L, -1, (lua_Integer)i);
-        const char *label = string_field("label");
-        int action = number_field("action");
-        char numbered[512];
-        snprintf(numbered, sizeof(numbered), "%d. %s", action, label);
-        /* Two lines accommodate the current Book interaction labels. */
-        button(px, bottom, pw, 60, numbered, action);
-        bottom += 68;
+    max_scroll = 0;
+    if (show_text) {
+        /* Hardcoded slide layout for now: prose top-left, choices bottom-right. */
+        float margin = fminf(32, window_width * .03f);
+        float prose_width = window_width * .44f;
+        float choice_width = window_width * .40f;
+        float choice_x = window_width - margin - choice_width;
+        float font_size = 24, choice_size = 22, gap = 16;
+        float limit = window_height - margin - (*input ? 40 : 0);
+        float choice_top = window_height * .52f;
+        float total = 0;
+        lua_getfield(L, -1, "buttons");
+        for (size_t i = 1; i <= lua_rawlen(L, -1); ++i) {
+            lua_rawgeti(L, -1, (lua_Integer)i);
+            total += renderer_text_height(string_field("label"), choice_size, choice_width) + gap;
+            lua_pop(L, 1);
+        }
+        total = fmaxf(0, total - gap);
+        choice_top = fmaxf(choice_top, limit - total);
+        int choice_scroll = MAX(0, (int)ceilf(total - (limit - choice_top)));
         lua_pop(L, 1);
+        float prose_height = renderer_text_height(string_field("text"), font_size, prose_width);
+        int prose_scroll = MAX(0, (int)ceilf(prose_height - (limit - margin)));
+        max_scroll = MAX(choice_scroll, prose_scroll);
+        scroll = MIN(scroll, max_scroll);
+        renderer_clip(margin, margin, prose_width + 2, limit - margin);
+        story_text(string_field("text"), margin, margin - MIN(scroll, prose_scroll), font_size, prose_width);
+        renderer_unclip();
+
+        renderer_clip(choice_x, choice_top, choice_width + 2, limit - choice_top);
+        float bottom = choice_top - MIN(scroll, choice_scroll);
+        lua_getfield(L, -1, "buttons");
+        for (size_t i = 1; i <= lua_rawlen(L, -1); ++i) {
+            lua_rawgeti(L, -1, (lua_Integer)i);
+            float end = story_text(string_field("label"), choice_x, bottom, choice_size, choice_width);
+            float hit_top = fmaxf(bottom, choice_top), hit_bottom = fminf(end, limit);
+            add_hit(choice_x, hit_top, choice_width, hit_bottom - hit_top, number_field("action"), 0);
+            bottom = end + gap;
+            lua_pop(L, 1);
+        }
+        lua_pop(L, 1);
+        renderer_unclip();
+        if (choice_scroll > scroll)
+            story_text("↓", window_width - margin - 18, limit, 18, 20);
     }
-    lua_pop(L, 1);
-    max_scroll = MAX(0, (int)(bottom + scroll - window_height + 145));
-    scroll = MIN(scroll, max_scroll);
-    renderer_unclip();
-    /* Reserve the bottom strip for command input and keep it above scroll content. */
-    renderer_rect(panel_x, window_height - 132, panel, 82, 0xF6F0E5DC);
-    renderer_text("Type a command • Enter to submit", px, window_height - 124, 15, pw, 0x6E6254FF);
-    renderer_rect(px, window_height - 97, pw, 38, 0xE8DCC8FF);
-    renderer_clip(px + 8, window_height - 97, pw - 16, 38);
-    renderer_text(input[0] ? input : ">", px + 8, window_height - 91, 18, pw - 16, 0x302B25FF);
-    renderer_unclip();
+    /* Keep parser input available without an empty input window on every slide. */
+    if (*input) {
+        char command[sizeof(input) + 3];
+        snprintf(command, sizeof(command), "> %s", input);
+        renderer_clip(32, window_height - 40, window_width - 64, 32);
+        story_text(command, 32, window_height - 40, 20, window_width - 64);
+        renderer_unclip();
     }
     lua_pop(L, 1);
     if (screenshot_path && !renderer_screenshot(screenshot_path)) fail("cannot write screenshot");
@@ -181,7 +197,7 @@ static void draw(void)
 
 static void key(struct AXmessage *event)
 {
-    if (event->keyCode == AX_KEY_TAB) { show_panel = !show_panel; hit_count = 0; }
+    if (event->keyCode == AX_KEY_TAB) { show_text = !show_text; hit_count = 0; }
     else if (event->keyCode == AX_KEY_F5) call("reload", NULL, 0);
     else if (event->keyCode == AX_KEY_ESCAPE) {
         if (*input) input[0] = 0;
@@ -243,12 +259,13 @@ int main(int argc, char **argv)
             else if (event.message == kEventKeyDown) key(&event);
             else if (event.message == kEventScrollWheel) scroll = CLAMP(scroll - event.dy * 30, 0, max_scroll);
             else if (event.message == kEventLeftButtonDown) {
-                float panel_left = window_width - fminf(390, window_width * .42f) - 18;
-                if (show_panel && event.x >= panel_left && event.x < window_width - 18 &&
-                    (event.y < 18 || event.y >= window_height - 137)) continue;
                 for (int i = hit_count - 1; i >= 0; --i) {
                     struct Hit hit = hits[i];
                     if (event.x >= hit.x && event.x < hit.x + hit.w && event.y >= hit.y && event.y < hit.y + hit.h) {
+                        if (hit.circle) {
+                            float dx = event.x - hit.x - hit.w / 2, dy = event.y - hit.y - hit.h / 2;
+                            if (dx * dx + dy * dy > hit.w * hit.w / 4) continue;
+                        }
                         call("action", NULL, hit.action);
                         break;
                     }

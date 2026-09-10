@@ -1,17 +1,17 @@
 .story-text {
   direction: vertical;
   gap: 10;
-  margin-right: 32;
-  margin-bottom: 100;
+  margin-left: 32;
+  margin-top: 32;
 }
 
 .scene-description {
-  font-size: 18;
+  font-size: 20;
   font-family: "Literata";
   color: #f4e6ca;
   box-shadow: 1 2 0 0 #120b07e6;
-  line-height: 24;
-  width: 400;
+  line-height: 27;
+  width: 440;
 }
 
 .continue-option {
@@ -43,7 +43,7 @@
 .choice-list {
   direction: vertical;
   gap: 8;
-  margin-left: 32;
+  margin-right: 32;
   margin-bottom: 28;
   width: 460;
 }
@@ -52,15 +52,12 @@
   font-size: 19;
   font-family: "Literata";
   color: #f4e6ca;
-  background-color: #1208050073;
   box-shadow: 1 2 0 0 #120b07e6;
-  padding: 7 14;
-  border-radius: 6;
+  padding: 7 0;
 }
 
 .choice-option:hover {
   color: #fff8e8;
-  background-color: #3a2412b0;
 }
 
 .exit-option {
@@ -68,11 +65,9 @@
   font-family: "Literata";
   font-style: italic;
   color: #d8c6a4;
-  padding: 7 14;
-  border-radius: 6;
+  padding: 7 0;
 }
 
 .exit-option:hover {
   color: #fff8e8;
-  background-color: #3a2412b0;
 }

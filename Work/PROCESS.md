@@ -374,8 +374,9 @@ design; older reference costumes do not override the selected cast model.
 
 Compose with the actual prose, object-circle and Continue footprints, including
 the displayed crop, from the start. In `workshop-floor`, prose occupies
-the lower-right floor, choices occupy the lower-left, circles belong on objects,
-and Continue sits below the prose during action beats. Keep reading regions in
+the top-left, choices occupy the lower-right, circles belong on objects,
+and Continue replaces the choices during action beats. These text positions are
+currently hardcoded; per-slide placement is planned. Keep reading regions in
 a narrow value range with soft edges and low local contrast. They can contain
 subdued floor variation, atmosphere, or broad natural shadows, but not a major
 prop, exit, or apparent interaction target. Keep high-contrast grain, bright

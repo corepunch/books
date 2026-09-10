@@ -106,7 +106,10 @@ bool renderer_init(const char *font_path)
     const char *fragment = "#version 150\n"
         "in vec2 texcoord; out vec4 outputColor; uniform sampler2D image;"
         "uniform vec4 color; uniform int glyph;"
-        "void main(){vec4 s=texture(image,texcoord);"
+        "void main(){if(glyph==2){float d=length(texcoord-vec2(.5));"
+        "float aa=fwidth(d);float a=(1.-smoothstep(.5-aa,.5,d))*"
+        "smoothstep(.4375-aa,.4375+aa,d);outputColor=vec4(color.rgb,color.a*a);return;}"
+        "vec4 s=texture(image,texcoord);"
         "outputColor=color*(glyph==1?vec4(1.,1.,1.,s.r):s);}";
     GLuint vs = shader_create(GL_VERTEX_SHADER, vertex);
     GLuint fs = shader_create(GL_FRAGMENT_SHADER, fragment);
@@ -198,7 +201,7 @@ void renderer_clear(void)
     glUniform2f(r.viewport_uniform, (float)r.width, (float)r.height);
 }
 
-static void quad(float x, float y, float w, float h, uint32_t rgba, GLuint texture, bool glyph)
+static void quad(float x, float y, float w, float h, uint32_t rgba, GLuint texture, int glyph)
 {
     if (w <= 0 || h <= 0 || x >= r.width || y >= r.height || x + w <= 0 || y + h <= 0) return;
     const float vertices[] = {
@@ -217,6 +220,11 @@ static void quad(float x, float y, float w, float h, uint32_t rgba, GLuint textu
 void renderer_rect(float x, float y, float width, float height, uint32_t rgba)
 {
     quad(x, y, width, height, rgba, r.white, false);
+}
+
+void renderer_ring(float x, float y, float diameter, uint32_t rgba)
+{
+    quad(x, y, diameter, diameter, rgba, r.white, 2);
 }
 
 static struct Glyph *glyph_get(int codepoint)
@@ -262,7 +270,7 @@ static float advance_for(int codepoint)
     return advance * r.font_scale;
 }
 
-float renderer_text(const char *text, float x, float y, float size, float max_width, uint32_t rgba)
+static float text_layout(const char *text, float x, float y, float size, float max_width, uint32_t rgba, bool draw)
 {
     if (!text || !*text || size <= 0) return y;
     float scale = size / FONT_PIXELS, pen = x, top = y;
@@ -286,7 +294,7 @@ float renderer_text(const char *text, float x, float y, float size, float max_wi
             top += line;
             if (cp == ' ' || cp == '\t') continue;
         }
-        if (cp != ' ' && cp != '\t' && top + line > 0 && top < r.height) {
+        if (draw && cp != ' ' && cp != '\t' && top + line > 0 && top < r.height) {
             struct Glyph *g = glyph_get(cp);
             if (g->texture) quad(pen + g->x * scale, top + (r.ascent + g->y) * scale,
                                  g->width * scale, g->height * scale, rgba, g->texture, true);
@@ -294,6 +302,16 @@ float renderer_text(const char *text, float x, float y, float size, float max_wi
         pen += advance;
     }
     return top + line;
+}
+
+float renderer_text(const char *text, float x, float y, float size, float max_width, uint32_t rgba)
+{
+    return text_layout(text, x, y, size, max_width, rgba, true);
+}
+
+float renderer_text_height(const char *text, float size, float max_width)
+{
+    return text_layout(text, 0, 0, size, max_width, 0, false);
 }
 
 static bool image_load(const char *path)

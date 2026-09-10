@@ -164,7 +164,8 @@ If the room reads as a showroom, add purposeful medium-scale clusters and
 architectural layering before adding tiny debris. If it reads as noise, group
 values and remove competing accents before deleting all dressing.
 
-The workshop places prose lower-right and choices lower-left. Check the actual
+Book currently hardcodes prose at the top-left and choices at the lower-right,
+directly over the scene without panels. Per-slide placement is planned. Check the actual
 UI for other shots. A 1536×1024 source fills a 1024×768 page with a centered
 horizontal crop; inspect that crop, not just the uncropped source. Use real
 prose, choice text and interaction circles. Quiet the reading field using a

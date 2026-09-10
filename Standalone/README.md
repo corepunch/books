@@ -12,9 +12,12 @@ load from the same source XML. F5 reloads the scene without resetting the story.
 The small renderer uses diffuse lighting; it does not reproduce Scener's shadows
 or its full material/CSG system. Unsupported geometry reports an error.
 
-The scene fills the window with its aspect ratio preserved. The story panel is a
-translucent overlay; Tab hides/shows it. Click numbered hotspots or action buttons,
-scroll for more actions, use Escape to step back, or type a command and press Enter.
+The scene fills the window with its aspect ratio preserved. Cream story text sits
+directly over the top-left of the scene, with plain text choices at the lower-right
+and white circular hotspots on interactive objects. The text positions are
+hardcoded for now. Tab hides/shows text and choices; scroll or use the arrow keys
+for overflowing text, press Escape to step back, or type a command and press Enter.
+Command input appears only while typing. There are no panels behind the text.
 
 From the repository root:
 

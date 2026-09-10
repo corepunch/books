@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := all
 
-# Use the sibling platform checkout available in the developer workspace.
+# The standalone client uses Orca's current AX_* platform API.
 # Override PLATFORM_DIR when building from a different workspace layout.
-PLATFORM_DIR ?= ../../platform
+PLATFORM_DIR ?= ../../orca/libs/platform
 BUILD_DIR ?= ../build/standalone
 PLATFORM_ROOT := $(abspath $(PLATFORM_DIR))
 BUILD_ROOT := $(abspath $(BUILD_DIR))
