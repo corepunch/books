@@ -1,66 +1,51 @@
 .DEFAULT_GOAL := run
 
+PLATFORM_DIR ?= ../orca/libs/platform
+BUILD_DIR ?= build
+BOOK ?= wondertown
+SCENE ?= workshop-new
 SCENER ?= $(shell command -v scener 2>/dev/null || printf '%s/.local/bin/scener' "$$HOME")
-LUA ?= lua
-ROOMS := $(basename $(notdir $(wildcard Rooms/*.blks)))
-ROOM ?= workshop-new
-FORMAT ?= jpg
 WIDTH ?= 1920
 HEIGHT ?= 1440
-RENDER_TARGETS := $(addprefix render-,$(ROOM))
-SANITY_TARGETS := $(addprefix sanity-,$(ROOM))
+CC ?= cc
+CFLAGS ?= -O2 -g
+LUA_PKG ?= $(shell for package in lua5.4 lua; do pkg-config --exists $$package 2>/dev/null && { echo $$package; break; }; done)
+PLATFORM_ROOT := $(abspath $(PLATFORM_DIR))
+BUILD_ROOT := $(abspath $(BUILD_DIR))
+CPPFLAGS += -Ivendor -I$(PLATFORM_ROOT) $(shell pkg-config --cflags $(LUA_PKG) libxml-2.0)
+CFLAGS += -std=c11 -Wall -Wextra -MMD -MP
+LDLIBS += -L$(BUILD_ROOT) -lplatform $(filter-out -lm,$(shell pkg-config --libs $(LUA_PKG) libxml-2.0)) -lm
+ifeq ($(shell uname -s),Darwin)
+CPPFLAGS += -I$(shell xcrun --show-sdk-path)/usr/include/libxml2
+PLATFORM_LIB := $(BUILD_ROOT)/libplatform.dylib
+LDLIBS += -framework OpenGL
+LDFLAGS += -Wl,-rpath,@loader_path
+else
+CPPFLAGS += -D_POSIX_C_SOURCE=200809L
+PLATFORM_LIB := $(BUILD_ROOT)/libplatform.so
+LDLIBS += -lGL
+LDFLAGS += -Wl,-rpath,'$$ORIGIN'
+endif
 
-LAYOUT_SCALE ?= 2
-
-.PHONY: standalone check run run-orca render layout sanity measure check-scener $(RENDER_TARGETS) $(LAYOUT_TARGETS) $(SANITY_TARGETS)
-
-LAYOUT_TARGETS := $(addprefix layout-,$(ROOM))
-
-standalone:
-	$(MAKE) -C Standalone
-
-check:
-	$(MAKE) -C Standalone check
-
-run:
-	$(MAKE) -C Standalone run
-
-run-orca: render
-	$(LUA) Tools/export_workshop_camera.lua $(WIDTH) $(HEIGHT)
-	$(MAKE) -C ../.. unite
-	cd ../.. && build/bin/orca samples/Book
-
-render: $(RENDER_TARGETS)
-
-layout: $(LAYOUT_TARGETS)
-
-sanity: $(SANITY_TARGETS)
-
-measure:
-	@test -n "$(OBJECT)" || { echo 'OBJECT is required, e.g. make measure ROOM=workshop OBJECT=SWEEP-BROOM'; exit 2; }
-	$(LUA) Tools/measure_scene.lua "Rooms/$(ROOM).blks" "$(OBJECT)" "$(TARGET)"
-
-check-scener:
-	@command -v "$(SCENER)" >/dev/null || { \
-		echo 'scener is required; build and deploy it as described in Work/RENDERING.md, then set SCENER or add $$HOME/.local/bin to PATH'; \
-		exit 1; \
-	}
-
-$(RENDER_TARGETS): render-%: Rooms/%.blks | check-scener
-	$(LUA) Tools/check_scene_sanity.lua "$<"
-	@mkdir -p "Rooms/render/$*"
-	@set -e; cd Rooms; \
-		render_tmp=$$(mktemp -d "render/.$*.XXXXXX"); \
-		trap 'rm -rf "$$render_tmp"' EXIT HUP INT TERM; \
-		"$(SCENER)" --render "$*.blks" --size "$(WIDTH)x$(HEIGHT)" \
-			--format "$(FORMAT)" --output-dir "$$render_tmp"; \
-		find "render/$*" -maxdepth 1 -type f \( -name '*.jpg' -o -name '*.png' \) ! -name 'layout.*' -delete; \
-		find "$$render_tmp" -maxdepth 1 -type f -exec mv {} "render/$*/" \;
-
-$(LAYOUT_TARGETS): layout-%: Rooms/%.blks | check-scener
-	$(LUA) Tools/check_scene_sanity.lua "$<"
-	cd Rooms && "$(SCENER)" --layout "$*.blks" --scale "$(LAYOUT_SCALE)" \
-		--format "$(FORMAT)" --output-dir "render/$*"
-
-$(SANITY_TARGETS): sanity-%: Rooms/%.blks
-	$(LUA) Tools/check_scene_sanity.lua "$<"
+.PHONY: all run check render layout platform clean
+all: $(BUILD_ROOT)/book
+$(BUILD_ROOT):
+	mkdir -p "$@"
+platform: | $(BUILD_ROOT)
+	$(MAKE) -C "$(PLATFORM_ROOT)" OUTDIR="$(BUILD_ROOT)"
+$(PLATFORM_LIB): | platform
+$(BUILD_ROOT)/main.o: main.c | $(BUILD_ROOT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c "$<" -o "$@"
+$(BUILD_ROOT)/book: $(BUILD_ROOT)/main.o $(PLATFORM_LIB)
+	$(CC) $(LDFLAGS) $^ $(filter-out -lplatform,$(LDLIBS)) -o "$@"
+run: all
+	"$(BUILD_ROOT)/book" --root "$(CURDIR)" --book "$(BOOK)"
+check: all
+	python3 tests/test_book.py "$(BUILD_ROOT)/book" "$(CURDIR)"
+render:
+	python3 tools/render.py --book "$(BOOK)" --scene "$(SCENE)" --scener "$(SCENER)" --width $(WIDTH) --height $(HEIGHT)
+layout:
+	cd "books/$(BOOK)/rooms" && "$(SCENER)" --layout "$(SCENE).blks" --scale 2 --format jpg --output-dir .
+clean:
+	rm -f "$(BUILD_ROOT)/main.o" "$(BUILD_ROOT)/main.d" "$(BUILD_ROOT)/book"
+-include $(BUILD_ROOT)/main.d

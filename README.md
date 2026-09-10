@@ -1,52 +1,90 @@
 # Book
 
-Book is a standalone interactive storybook application built on the
-`corepunch/platform` runtime.
+A small C engine for visual interactive ZIL books. `main.c` contains the host,
+2D drawing, fixed page UI and camera projection. C resumes zilscript's Lua
+coroutine directly. ZIL owns objects, exits, actions, prose and game state.
 
-## Requirements
+Book displays pre-rendered JPEGs. Scener renders the artwork offline; `.blks`
+files supply only camera and anchor metadata at runtime. There are no Book Lua
+scripts, Orca dependencies, UI XML files or per-adventure mapping manifests.
 
-- macOS with Xcode command-line tools
-- Lua 5.4 development files and `pkg-config`
-- The platform checkout at `../../platform` relative to this repository
+## Build and run
 
-The platform location can be overridden:
-
-```sh
-make PLATFORM_DIR=/path/to/platform run
-```
-
-## Run
-
-Build and launch the application with:
+Requires a C compiler, make, pkg-config, Lua **5.4**, libxml2 and
+[libplatform](https://github.com/corepunch/platform). macOS uses system OpenGL;
+Linux needs OpenGL and libplatform's display dependencies.
 
 ```sh
+git submodule update --init --recursive
 make run
-```
-
-Running `make` without a target does the same thing. In VS Code, press
-Cmd+Shift+B to run the configured application task.
-
-## Checks
-
-Run the standalone story and scene checks with:
-
-```sh
+make run BOOK=wondertown
 make check
 ```
 
-## Repository layout
-
-- `Standalone/` — native application and build files
-- `Rooms/` — 3D room source files and rendered assets
-- `Scenes/`, `Screens/`, `Scripts/` — runtime scene and interaction data
-- `libs/zilscript/` — story and parser library sources
-
-## Platform dependency
-
-The application uses [corepunch/platform](https://github.com/corepunch/platform).
-For a standard sibling checkout layout:
+The default platform path is `../orca/libs/platform`; override it with
+`make PLATFORM_DIR=/path/to/platform`. The application and platform library
+are built together in `build/`.
 
 ```sh
-git clone https://github.com/corepunch/platform.git ../platform
+build/book --root /path/to/books --book wondertown
 ```
 
+`--root` selects the engine's asset/library directory, independently of the
+working directory. `--book NAME` loads `libs/zilscript/books/NAME/NAME.zil` and
+uses `books/NAME/rooms/` for artwork and projection metadata. Another adventure
+needs its ZIL entry point and assets, with no C edits or mapping files.
+
+## Layout
+
+```text
+main.c                          complete native application
+fonts/                          shared font assets
+vendor/                         stb image/font headers
+libs/zilscript/                 the only Lua dependency, including ZIL adventures
+books/wondertown/rooms/          JPEGs, .blks camera/anchor sources and prefabs/
+books/wondertown/work/           art guides, references and historical studies
+tools/render.py                 offline Scener batch rendering
+tests/test_book.py               native host integration checks
+```
+
+Room art is `{room-id}-look.jpg`; focus art is `{room-id}-examine-{object-id}.jpg`; action art is
+`{room-id}-{verb}-{object-id}.jpg`. IDs come from ZIL declarations, lowercased with
+hyphens. Action art falls back to the room/object examine image and then the room look image.
+A room without artwork displays text on a plain background. Missing camera or
+anchor metadata leaves the object available as a text choice.
+
+The engine discovers named cameras in the book's `rooms/*.blks` files. Shared
+locations can use one scene with several room cameras. Each camera name must
+be unique across those files. The JPEG and camera/anchor source must describe
+the same shot. Actual JPEG dimensions determine the projection's aspect ratio
+and centered window crop.
+
+## Controls
+
+Click an object or its projected circle to focus it. The VM's object verbs
+become focus choices; the VM's exits become navigation choices. Parser commands
+execute every action. Continue dismisses a response; Back leaves focus. Type a
+command and press Enter for interactions requiring more words or another object.
+Escape clears input or goes back. Tab toggles prose and choices, scrolling or
+arrow keys scroll long pages, and F5 reloads images and projection metadata.
+
+## Rendering and checks
+
+```sh
+make render BOOK=wondertown SCENE=workshop-new WIDTH=1920 HEIGHT=1440
+make layout BOOK=wondertown SCENE=workshop-new
+make check
+build/book --root "$PWD" --book wondertown --smoke --screenshot /tmp/book.ppm
+```
+
+`make run` consumes existing art. Scener is required only to generate new art.
+`--headless` prints JSON page snapshots and accepts parser commands on stdin;
+`:choose N`, `:focus object-id`, `:continue`, `:back` and `:reload` exercise the
+same C presentation functions as the UI. Choice indexes start at zero.
+
+For example: `kitchen-look.jpg`, `kitchen-examine-spoon.jpg`, and
+`kitchen-take-spoon.jpg`. The noun is the declared ZIL object ID, so its synonyms
+resolve to the same image. For movement actions, the action filename uses the
+room where the action started; Continue shows the destination's look image.
+`--catalog` prints VM-derived object IDs and their owning rooms for artwork
+tools. It does not create a mapping file.
