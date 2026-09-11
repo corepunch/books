@@ -22,7 +22,7 @@ endif
 CPPFLAGS += -I$(shell xcrun --show-sdk-path)/usr/include/libxml2
 LDLIBS += -framework AppKit -framework Metal -framework QuartzCore
 
-.PHONY: all run mac check render layout clean ipad ipad-simulator ipad-mac ipad-run
+.PHONY: all run mac check check-ui render layout clean ipad ipad-simulator ipad-mac ipad-run
 # The AppKit executable remains a development/headless harness.
 # The shipping app is compiled directly with the iOS SDK, without an IDE project.
 ipad:
@@ -63,6 +63,8 @@ check: all $(BUILD_ROOT)/test_geometry $(BUILD_ROOT)/test_transition $(BUILD_ROO
 	"$(BUILD_ROOT)/test_transition"
 	"$(BUILD_ROOT)/test_hotspots"
 	python3 tests/test_book.py "$(BUILD_ROOT)/book" "$(CURDIR)"
+check-ui: all
+	python3 tests/test_ui.py "$(BUILD_ROOT)/book" "$(CURDIR)"
 render:
 	python3 tools/render.py --book "$(BOOK)" --scene "$(SCENE)" --scener "$(SCENER)" --width $(WIDTH) --height $(HEIGHT)
 layout:

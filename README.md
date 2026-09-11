@@ -160,7 +160,7 @@ Circles keep a 24-point edge gap (one radius). Crowded markers move to
 nearby free space and use short connector lines when their anchor lies outside
 the circle; their hit areas follow the displayed positions. Authored text regions
 remain clear. The VM still supplies object verbs, exits and Continue,
-but their text action list and hit regions are commented out for the current
+but their text action list and hit regions are hidden for the current
 visual pass. Drag or use the scroll wheel for long pages. The
 native Mac app also provides F5 to reload images and projection metadata during
 development. Parser commands remain available through `--headless` for engine
@@ -168,10 +168,12 @@ testing.
 
 Page changes reveal the next JPEG through a growing circle originating
 at the selected hotspot (or the click position for text choices).
-Text and circles fade in after the reveal. Navigation
+The outgoing page keeps its text, circles, connector lines and Back button
+until the reveal covers them. The new text and circles fade in after the reveal. Navigation
 is paused during animation; F5 cancels it and reloads. Same-image responses only
-fade the overlays. `src/transition.c` owns timing and easing; the UI coordinates
-navigation and drawing, and the renderer owns masking and opacity. Three cached
+crossfade the overlays. `src/transition.c` owns timing and easing; the UI coordinates
+navigation and drawing from independent page presentation snapshots, and the
+renderer owns masking and opacity. Three cached
 images keep both pages and the Back asset resident without render textures. The
 Metal fragment shader applies the circular reveal mask in logical
 window coordinates; the drawable and clipping use the screen backing scale.
@@ -182,6 +184,7 @@ window coordinates; the drawable and clipping use the screen backing scale.
 make render BOOK=wondertown SCENE=workshop-new WIDTH=1920 HEIGHT=1440
 make layout BOOK=wondertown SCENE=workshop-new
 make check
+make check-ui # Graphical transition regression; requires the macOS window server.
 build/book --root "$PWD" --book wondertown --smoke --screenshot /tmp/book.ppm
 build/book --root "$PWD" --book wondertown --smoke-transition 275 --screenshot /tmp/reveal.ppm
 ```

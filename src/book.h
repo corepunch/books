@@ -203,6 +203,12 @@ struct Hotspot { fvec2_t anchor, center; int choice; };
 typedef struct Hotspot hotspotList_t[MAX_CHOICES];
 /* Returns false if the viewport cannot accommodate every marker. */
 bool hotspots_place(struct Hotspot *spots, int count, fsize2_t viewport, frect_t prose);
+struct HotspotTarget { identifier_t key; int choice; };
+typedef struct HotspotTarget hotspotTargetList_t[MAX_CHOICES];
+/* Capture VM-derived targets once; layout and rendering can then retain either page. */
+int scene_hotspot_targets(hotspotTargetList_t targets);
+int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct HotspotTarget *targets,
+                          int count, bool has_text, hotspotList_t spots);
 int scene_hotspots(isize2_t image, fsize2_t viewport, hotspotList_t spots);
 
 /* Presentation animation, independent of the VM and graphics backend. Times are seconds. */

@@ -195,23 +195,42 @@ struct TextRegion scene_text_region(isize2_t image, fsize2_t viewport)
                                camera.text.font_size*cover.size.height/UI_HEIGHT,true};
 }
 
-int scene_hotspots(isize2_t image, fsize2_t viewport, hotspotList_t spots)
+int scene_hotspot_targets(hotspotTargetList_t targets)
 {
     if (book.beat || book.focus) return 0;
     int count=0;
-    frect_t safe=frect_inset(frect_from_size(viewport),fvec2(HOTSPOT_DIAMETER/2,HOTSPOT_DIAMETER/2));
     for (int i=0;i<book.choice_count;++i) {
-        fvec2_t anchor;
         const struct Choice *choice=&book.choices[i];
-        if (choice->focus && scene_project_anchor(book.objects[choice->object].key,image,viewport,&anchor) &&
-            frect_covers_point(safe,anchor)) spots[count++]=(struct Hotspot){anchor,anchor,i};
+        if (!choice->focus) continue;
+        copy(targets[count].key,sizeof(targets[count].key),book.objects[choice->object].key);
+        targets[count++].choice=i;
+    }
+    return count;
+}
+
+int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct HotspotTarget *targets,
+                          int target_count, bool has_text, hotspotList_t spots)
+{
+    int count=0;
+    frect_t safe=frect_inset(frect_from_size(viewport),fvec2(HOTSPOT_DIAMETER/2,HOTSPOT_DIAMETER/2));
+    for (int i=0;i<target_count;++i) {
+        fvec2_t anchor;
+        if (scene_project_anchor(targets[i].key,image,viewport,&anchor) && frect_covers_point(safe,anchor))
+            spots[count++]=(struct Hotspot){anchor,anchor,targets[i].choice};
     }
     struct TextRegion text=scene_text_region(image,viewport);
     /* Legacy text covers most of the page; only authored reading fields are reserved. */
-    frect_t prose=text.authored && *book.text ? text.bounds : frect_from_size(fsize2(0,0));
+    frect_t prose=text.authored && has_text ? text.bounds : frect_from_size(fsize2(0,0));
     if (!hotspots_place(spots,count,viewport,prose))
-        fail("camera %s cannot fit its interaction circles; recompose with more space",book.camera);
+        fail("camera %s cannot fit its interaction circles; recompose with more space",loaded_camera);
     return count;
+}
+
+int scene_hotspots(isize2_t image, fsize2_t viewport, hotspotList_t spots)
+{
+    hotspotTargetList_t targets;
+    int count=scene_hotspot_targets(targets);
+    return scene_layout_hotspots(image,viewport,targets,count,*book.text!=0,spots);
 }
 
 void scene_shutdown(void)

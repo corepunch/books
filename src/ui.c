@@ -11,9 +11,24 @@
 
 struct Hit { frect_t bounds; int action; bool circle; };
 static struct Hit hits[MAX_HITS];
-static int hit_count,scroll,max_scroll;
+/* A page owns its presentation so navigation cannot change the outgoing view. */
+struct Page {
+    filePath_t image, rooms, back_icon;
+    assetName_t camera;
+    storyText_t text;
+    hotspotTargetList_t targets;
+    int target_count, back_action;
+    hotspotList_t spots;
+    int spot_count, scroll, max_scroll;
+    struct TextRegion region;
+    float font_size;
+    fsize2_t viewport;
+    frect_t back_button;
+};
+static struct Page current_page, outgoing_page;
+static int hit_count;
+static bool page_ready;
 static struct Transition transition;
-static filePath_t outgoing_image;
 static double preview_time = -1;
 
 static double now(void)
@@ -25,15 +40,54 @@ static double now(void)
 
 static fsize2_t window_size(void) { return renderer_bounds().size; }
 
+static void layout_page(struct Page *page, fsize2_t window)
+{
+    isize2_t image=renderer_image_size(page->image);
+    if (*page->image && isize2_is_empty(image)) fail("cannot decode %s",page->image);
+    scene_load(page->rooms,page->camera);
+    page->region=scene_text_region(image,window);
+    page->spot_count=scene_layout_hotspots(image,window,page->targets,page->target_count,
+                                          *page->text!=0,page->spots);
+    frect_t prose=page->region.bounds;
+    page->font_size=page->region.authored ? text_fit_size(page->text,page->region.font_size,prose.size)
+                                        : page->region.font_size;
+    page->max_scroll=MAX(0,(int)ceilf(text_height(page->text,page->font_size,prose.size.width)-prose.size.height));
+    page->scroll=MIN(page->scroll,page->max_scroll);
+    float margin=fminf(32,window.width*.03f);
+    page->back_button=frect(fvec2(window.width-margin-BACK_BUTTON_DIAMETER,
+                                  window.height-margin-BACK_BUTTON_DIAMETER),
+                            fsize2(BACK_BUTTON_DIAMETER,BACK_BUTTON_DIAMETER));
+    page->viewport=window;
+}
+
+static void capture_page(struct Page *page)
+{
+    copy(page->image,sizeof(page->image),book.image);
+    copy(page->rooms,sizeof(page->rooms),book.rooms);
+    copy(page->camera,sizeof(page->camera),book.camera);
+    copy(page->text,sizeof(page->text),book.text);
+    page->target_count=scene_hotspot_targets(page->targets);
+    page->back_action=-1;
+    for (int i=0;i<book.choice_count;++i) {
+        const struct Choice *choice=&book.choices[i];
+        if (book.beat || choice->focus || *choice->command) continue;
+        page->back_action=i;
+        break;
+    }
+    snprintf(page->back_icon,sizeof(page->back_icon),"%s/assets/back-button.png",book.root);
+    page->scroll=0;
+    layout_page(page,window_size());
+}
+
 static void navigate(int action,fvec2_t origin,float radius)
 {
-    copy(outgoing_image,sizeof(outgoing_image),book.image);
+    outgoing_page=current_page;
     book_action(action);
-    /* Upload before starting the clock so disk/decode time cannot skip the reveal. */
-    if (*book.image && isize2_is_empty(renderer_image_size(book.image)))
-        fail("cannot decode %s",book.image);
-    transition_start(&transition,now(),origin,window_size(),radius,strcmp(outgoing_image,book.image)!=0);
-    scroll=0; hit_count=0;
+    /* Resolve and upload the new page before the animation clock starts. */
+    capture_page(&current_page);
+    transition_start(&transition,now(),origin,window_size(),radius,
+                     strcmp(outgoing_page.image,current_page.image)!=0);
+    hit_count=0;
 }
 
 static float story_text(const char *text,fvec2_t origin,float size,float width)
@@ -48,33 +102,19 @@ static void add_hit(frect_t bounds,int action,bool circle)
         hits[hit_count++]=(struct Hit){bounds,action,circle};
 }
 
-static isize2_t draw_image(const char *path,frect_t viewport)
+static void draw_image(const char *path,frect_t viewport)
 {
     isize2_t image=renderer_image_size(path);
     if (*path) {
         if (isize2_is_empty(image)) fail("cannot decode %s",path);
         renderer_image(path,frect_cover(isize2_to_float(image),viewport));
     } else renderer_rect(viewport,0x211C18FF);
-    return image;
 }
 
-void ui_draw(void)
+static void draw_overlays(const struct Page *page, bool interactive)
 {
-    fsize2_t window=window_size();
-    frect_t viewport=frect_from_size(window);
-    hit_count=0;
-    struct TransitionFrame frame=transition_sample(&transition,
-        preview_time>=0 ? transition.started+preview_time : now(),window);
-    if (frame.revealing) {
-        draw_image(outgoing_image,viewport);
-        renderer_reveal_begin(frame.center,frame.radius);
-    }
-    isize2_t image=draw_image(book.image,viewport);
-    renderer_reveal_end();
-    renderer_opacity(frame.overlay_opacity);
-    scene_load(book.rooms,book.camera);
-    hotspotList_t spots;
-    int count=scene_hotspots(image,window,spots);
+    const struct Hotspot *spots=page->spots;
+    int count=page->spot_count;
     for (int i=0;i<count;++i) {
         struct Hotspot spot=spots[i];
         fvec2_t delta=fvec2_sub(spot.anchor,spot.center);
@@ -89,55 +129,49 @@ void ui_draw(void)
         frect_t marker=frect_center_at(frect_from_size(fsize2(HOTSPOT_DIAMETER,HOTSPOT_DIAMETER)),spots[i].center);
         renderer_ring(frect_translate(marker,fvec2(0,2)),0x120B0780);
         renderer_ring(marker,0xFFFFFFFF);
-        add_hit(marker,spots[i].choice,true);
+        if (interactive) add_hit(marker,spots[i].choice,true);
     }
-    max_scroll=0;
-    {
-        float margin=fminf(32,window.width*.03f),limit=window.height-margin;
-        struct TextRegion region=scene_text_region(image,window);
-        frect_t prose=region.bounds;
-        float font_size=region.authored ? text_fit_size(book.text,region.font_size,prose.size) : region.font_size;
-        float prose_height=text_height(book.text,font_size,prose.size.width);
-        int prose_scroll=MAX(0,(int)ceilf(prose_height-prose.size.height));
-        max_scroll=prose_scroll; scroll=MIN(scroll,max_scroll);
-        renderer_clip(frect_expand(prose,fsize2(2,0)));
-        story_text(book.text,fvec2_add(prose.origin,fvec2(0,-MIN(scroll,prose_scroll))),font_size,prose.size.width);
-        renderer_unclip();
-#if 0 /* Text action list hidden for the visual pass, including its hit regions. */
-        float choice_width=window.width*.40f,choice_x=window.width-margin-choice_width;
-        float choice_size=33,gap=16*TEXT_SPACING_SCALE;
-        float choice_top=window.height*.52f,total=0;
-        for (int i=0;i<book.choice_count;++i)
-            total+=text_height(book.choices[i].label,choice_size,choice_width)+gap;
-        total=fmaxf(0,total-gap); choice_top=fmaxf(choice_top,limit-total);
-        frect_t choices=frect(fvec2(choice_x,choice_top),fsize2(choice_width,limit-choice_top));
-        int choice_scroll=MAX(0,(int)ceilf(total-choices.size.height));
-        max_scroll=MAX(choice_scroll,prose_scroll);
-        renderer_clip(frect_expand(choices,fsize2(2,0)));
-        fvec2_t cursor=fvec2_add(choices.origin,fvec2(0,-MIN(scroll,choice_scroll)));
-        for (int i=0;i<book.choice_count;++i) {
-            float end=story_text(book.choices[i].label,cursor,choice_size,choices.size.width);
-            frect_t row=frect(cursor,fsize2(choices.size.width,end-cursor.y));
-            add_hit(frect_intersection(row,choices),i,false);
-            cursor=fvec2_with_y(cursor,end+gap);
-        }
-        renderer_unclip();
-        if (choice_scroll>scroll) story_text("↓",fvec2(window.width-margin-27,limit),27,30);
-#endif
-        for (int i=0;i<book.choice_count;++i) {
-            const struct Choice *choice=&book.choices[i];
-            /* The empty-command action returns from focus; beats use Continue. */
-            if (book.beat || choice->focus || *choice->command) continue;
-            frect_t button=frect(fvec2(window.width-margin-BACK_BUTTON_DIAMETER,
-                                       limit-BACK_BUTTON_DIAMETER),
-                                 fsize2(BACK_BUTTON_DIAMETER,BACK_BUTTON_DIAMETER));
-            filePath_t icon;
-            snprintf(icon,sizeof(icon),"%s/assets/back-button.png",book.root);
-            if (!renderer_image(icon,button)) fail("cannot decode %s",icon);
-            add_hit(button,i,true);
-            break;
-        }
+    frect_t prose=page->region.bounds;
+    renderer_clip(frect_expand(prose,fsize2(2,0)));
+    story_text(page->text,fvec2_add(prose.origin,fvec2(0,-page->scroll)),page->font_size,prose.size.width);
+    renderer_unclip();
+    if (page->back_action>=0) {
+        if (!renderer_image(page->back_icon,page->back_button)) fail("cannot decode %s",page->back_icon);
+        if (interactive) add_hit(page->back_button,page->back_action,true);
     }
+}
+
+void ui_draw(void)
+{
+    fsize2_t window=window_size();
+    frect_t viewport=frect_from_size(window);
+    if (!page_ready) {
+        capture_page(&current_page);
+        page_ready=true;
+    }
+    if (current_page.viewport.width!=window.width || current_page.viewport.height!=window.height)
+        layout_page(&current_page,window);
+    hit_count=0;
+    struct TransitionFrame frame=transition_sample(&transition,
+        preview_time>=0 ? transition.started+preview_time : now(),window);
+    if (frame.revealing) {
+        if (outgoing_page.viewport.width!=window.width || outgoing_page.viewport.height!=window.height)
+            layout_page(&outgoing_page,window);
+        draw_image(outgoing_page.image,viewport);
+        draw_overlays(&outgoing_page,false);
+        renderer_reveal_begin(frame.center,frame.radius);
+    }
+    draw_image(current_page.image,viewport);
+    renderer_reveal_end();
+    /* Same-art responses crossfade their overlays without an empty-text frame. */
+    if (frame.active && !transition.reveal) {
+        if (outgoing_page.viewport.width!=window.width || outgoing_page.viewport.height!=window.height)
+            layout_page(&outgoing_page,window);
+        renderer_opacity(1-frame.overlay_opacity);
+        draw_overlays(&outgoing_page,false);
+    }
+    renderer_opacity(frame.overlay_opacity);
+    draw_overlays(&current_page,!frame.active);
     renderer_opacity(1);
 }
 
@@ -145,6 +179,8 @@ void ui_reload(void)
 {
     transition.active=false;
     hit_count=0;
+    page_ready=false;
+    preview_time=-1;
     scene_shutdown();
     renderer_invalidate_image();
     book_reload();
@@ -166,7 +202,7 @@ void ui_click(fvec2_t point)
 
 void ui_scroll(float delta)
 {
-    if (!transition.active) scroll=MIN(max_scroll,MAX(0,(int)roundf(scroll-delta)));
+    if (!transition.active) current_page.scroll=MIN(current_page.max_scroll,MAX(0,(int)roundf(current_page.scroll-delta)));
 }
 
 bool ui_animating(void) { return transition.active; }
