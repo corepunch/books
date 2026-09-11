@@ -27,7 +27,7 @@ def main():
         raise SystemExit('Missing adventure entry point: ' + adventure)
     target.mkdir(parents=True, exist_ok=True)
     # Clear only generated resources/signatures; never ship stale art or signing.
-    for directory in ('fonts', 'books', 'libs', '_CodeSignature'):
+    for directory in ('fonts', 'books', 'libs', 'assets', '_CodeSignature'):
         if (target / directory).exists():
             shutil.rmtree(target / directory)
     (target / 'embedded.mobileprovision').unlink(missing_ok=True)
@@ -41,6 +41,12 @@ def main():
                 shutil.copy2(file, destination)
 
     stage('fonts', {'.ttf', '.txt'})
+    back_button = root / 'assets/back-button.png'
+    if not back_button.is_file():
+        raise SystemExit('Missing runtime asset: ' + str(back_button))
+    destination = target / back_button.relative_to(root)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(back_button, destination)
     stage('libs/zilscript/zilscript', {'.lua'})
     stage('libs/zilscript/books/' + adventure, {'.zil', '.lua'})
     stage('libs/zilscript/infocom', {'.zil'})

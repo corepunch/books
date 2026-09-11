@@ -6,7 +6,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#define MAX_PAGE_IMAGES 2
+#define MAX_RENDERER_IMAGES 3 /* Two page images plus the Back button asset. */
 
 struct PageImage {
     texture_t texture;
@@ -14,21 +14,21 @@ struct PageImage {
     char *path;
 };
 static struct {
-    struct PageImage images[MAX_PAGE_IMAGES];
+    struct PageImage images[MAX_RENDERER_IMAGES];
     int recent_image;
 } r;
 
 static struct PageImage *image_load(const char *path)
 {
     if (!path || !*path) return NULL;
-    for (int i = 0; i < MAX_PAGE_IMAGES; ++i) {
+    for (int i = 0; i < MAX_RENDERER_IMAGES; ++i) {
         if (r.images[i].path && !strcmp(path, r.images[i].path)) {
             r.recent_image = i;
             return r.images[i].texture ? &r.images[i] : NULL;
         }
     }
-    /* Keep both sides of a reveal resident; never decode alternating JPEGs per frame. */
-    r.recent_image = (r.recent_image + 1) % MAX_PAGE_IMAGES;
+    /* Keep both sides of a reveal resident; never decode alternating page images per frame. */
+    r.recent_image = (r.recent_image + 1) % MAX_RENDERER_IMAGES;
     struct PageImage *image = &r.images[r.recent_image];
     renderer_texture_destroy(image->texture);
     free(image->path);
@@ -66,7 +66,7 @@ void renderer_shutdown(void)
 
 void renderer_invalidate_image(void)
 {
-    for (int i = 0; i < MAX_PAGE_IMAGES; ++i) {
+    for (int i = 0; i < MAX_RENDERER_IMAGES; ++i) {
         renderer_texture_destroy(r.images[i].texture);
         free(r.images[i].path);
         r.images[i] = (struct PageImage){0};

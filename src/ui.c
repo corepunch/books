@@ -7,6 +7,7 @@
 
 #define MIN(a,b) ((a)<(b)?(a):(b))
 #define MAX(a,b) ((a)>(b)?(a):(b))
+#define BACK_BUTTON_DIAMETER 96.0f
 
 struct Hit { frect_t bounds; int action; bool circle; };
 static struct Hit hits[MAX_HITS];
@@ -127,11 +128,13 @@ void ui_draw(void)
             const struct Choice *choice=&book.choices[i];
             /* The empty-command action returns from focus; beats use Continue. */
             if (book.beat || choice->focus || *choice->command) continue;
-            frect_t button=frect(fvec2(window.width-margin-112,limit-56),fsize2(112,56));
-            float label_height=text_height(choice->label,33,72);
-            renderer_rect(button,0x211C18DD);
-            story_text(choice->label,fvec2_add(button.origin,fvec2(20,(56-label_height)/2)),33,72);
-            add_hit(button,i,false);
+            frect_t button=frect(fvec2(window.width-margin-BACK_BUTTON_DIAMETER,
+                                       limit-BACK_BUTTON_DIAMETER),
+                                 fsize2(BACK_BUTTON_DIAMETER,BACK_BUTTON_DIAMETER));
+            filePath_t icon;
+            snprintf(icon,sizeof(icon),"%s/assets/back-button.png",book.root);
+            if (!renderer_image(icon,button)) fail("cannot decode %s",icon);
+            add_hit(button,i,true);
             break;
         }
     }
@@ -156,7 +159,7 @@ void ui_click(fvec2_t point)
         if (!frect_contains_point(h.bounds,point)) continue;
         if (h.circle && !frect_ellipse_contains_point(h.bounds,point)) continue;
         navigate(h.action,h.circle ? frect_center(h.bounds) : point,
-                 h.circle ? HOTSPOT_DIAMETER/2 : 0);
+                 h.circle ? fminf(h.bounds.size.width,h.bounds.size.height)/2 : 0);
         break;
     }
 }
@@ -172,7 +175,7 @@ void ui_preview(double seconds)
 {
     for (int i=0;i<hit_count;++i) if (hits[i].circle) {
         struct Hit h=hits[i];
-        navigate(h.action,frect_center(h.bounds),HOTSPOT_DIAMETER/2);
+        navigate(h.action,frect_center(h.bounds),fminf(h.bounds.size.width,h.bounds.size.height)/2);
         preview_time=seconds;
         return;
     }

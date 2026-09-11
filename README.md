@@ -154,8 +154,9 @@ other cameras keep the legacy placement until individually authored. See
 
 ## Controls
 
-Click or tap a circle to focus an object; the bottom-right Back button leaves
-focus. Circles keep a 24-point edge gap (one radius). Crowded markers move to
+Click or tap a circle to focus an object; the bottom-right circular Back button
+uses `assets/back-button.png` with a 96-point circular hit area and leaves focus.
+Circles keep a 24-point edge gap (one radius). Crowded markers move to
 nearby free space and use short connector lines when their anchor lies outside
 the circle; their hit areas follow the displayed positions. Authored text regions
 remain clear. The VM still supplies object verbs, exits and Continue,
@@ -170,9 +171,9 @@ at the selected hotspot (or the click position for text choices).
 Text and circles fade in after the reveal. Navigation
 is paused during animation; F5 cancels it and reloads. Same-image responses only
 fade the overlays. `src/transition.c` owns timing and easing; the UI coordinates
-navigation and drawing, and the renderer owns masking and opacity. Two cached
-JPEG textures allow both pages to draw directly into the window without render
-textures. The Metal fragment shader applies the circular reveal mask in logical
+navigation and drawing, and the renderer owns masking and opacity. Three cached
+images keep both pages and the Back asset resident without render textures. The
+Metal fragment shader applies the circular reveal mask in logical
 window coordinates; the drawable and clipping use the screen backing scale.
 
 ## Rendering and checks
