@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!-- Picture proxy: 90 X x 5 Y x 70 Z; center origin, back on Y0, front -Y. AI paints a non-clue landscape or toy study. -->
+<prefab>
+  <box pos="0 -2 0" size="90 4 70" material="oak" />
+  <box pos="0 -4.5 0" size="78 1 58" material="picture-ground" />
+</prefab>

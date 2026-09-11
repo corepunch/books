@@ -8,6 +8,7 @@
 #include <stb_truetype.h>
 
 #define FONT_PIXELS 72.0f
+#define MAX_TEXT_FIT_STEPS 12
 
 struct Glyph {
     int codepoint;
@@ -137,6 +138,20 @@ float text_draw(const char *text, fvec2_t origin, float size, float max_width, u
 float text_height(const char *text, float size, float max_width)
 {
     return text_layout(text, fvec2(0, 0), size, max_width, 0, false);
+}
+
+float text_fit_size(const char *text, float preferred_size, fsize2_t bounds)
+{
+    if (preferred_size<=0 || fsize2_is_empty(bounds)) return 0;
+    if (text_height(text,preferred_size,bounds.width)<=bounds.height) return preferred_size;
+    float low=preferred_size*TEXT_MIN_FIT_RATIO,high=preferred_size;
+    /* Preserve a readable floor; longer story states scroll within the same region. */
+    for (int i=0;i<MAX_TEXT_FIT_STEPS;++i) {
+        float middle=(low+high)/2;
+        if (text_height(text,middle,bounds.width)<=bounds.height) low=middle;
+        else high=middle;
+    }
+    return low;
 }
 
 void text_shutdown(void)

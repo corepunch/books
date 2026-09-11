@@ -4,8 +4,11 @@ A small C engine for visual interactive ZIL books. `src/` contains the host,
 2D drawing, fixed page UI and camera projection. C resumes zilscript's Lua
 coroutine directly. ZIL owns objects, exits, actions, prose and game state.
 
-Book displays pre-rendered JPEGs. Scener renders the artwork offline; `.blks`
-files supply only camera and anchor metadata at runtime. There are no Book Lua
+Book displays pre-rendered JPEGs. Scener produces consistent spatial references
+for an AI illustration pass: rough object shapes, layout, scale and shadows.
+The AI paints the final storybook finish over those references while preserving
+their camera and object registration. `.blks` files supply only camera and
+anchor metadata at runtime. There are no Book Lua
 scripts, Orca dependencies, UI XML files or per-adventure mapping manifests.
 
 ## iPad app
@@ -105,6 +108,7 @@ src/renderer.c                  JPEG decoding and page texture cache
 src/metal.m                     Metal drawing, textures and screenshot readback
 src/text.c                      font loading, glyphs and text layout/rendering
 src/scene.c                     fixed camera/anchor loading and projection
+src/hotspots.c                  spaced marker placement around projected anchors
 src/common.c                    shared error and string helpers
 src/geometry.c                  vector, size and rectangle operations
 src/book.h                      shared application types and declarations
@@ -141,10 +145,20 @@ be unique across those files. The JPEG and camera/anchor source must describe
 the same shot. Actual JPEG dimensions determine the projection's aspect ratio
 and centered window crop.
 
+Cameras may also declare `textRect="x y width height"` in normalized JPEG
+coordinates and a preferred `textScale`. Prose follows that image region through
+the centered crop, wraps and fits modestly, with scrolling for overflow. The
+workshop overview uses a lower-left region clear of its interaction circles;
+other cameras keep the legacy placement until individually authored. See
+[reading-region parameters](books/wondertown/work/RENDERING.md#per-camera-reading-regions).
+
 ## Controls
 
-Click or tap a projected circle to focus an object; the bottom-right Back
-button leaves focus. The VM still supplies object verbs, exits and Continue,
+Click or tap a circle to focus an object; the bottom-right Back button leaves
+focus. Circles keep a 24-point edge gap (one radius). Crowded markers move to
+nearby free space and use short connector lines when their anchor lies outside
+the circle; their hit areas follow the displayed positions. Authored text regions
+remain clear. The VM still supplies object verbs, exits and Continue,
 but their text action list and hit regions are commented out for the current
 visual pass. Drag or use the scroll wheel for long pages. The
 native Mac app also provides F5 to reload images and projection metadata during
@@ -175,7 +189,10 @@ build/book --root "$PWD" --book wondertown --smoke-transition 275 --screenshot /
 deterministic animation time: 275 ms mid-reveal, 550 ms before the overlay fade,
 700 ms mid-fade, and 850 ms complete. It requires a page with a projected hotspot.
 
-`make run` consumes existing art. Scener is required only to generate new art.
+`make run` consumes existing art. `make render` generates Scener references,
+currently also used as development backgrounds; it does not perform the final
+AI illustration pass. See [the artwork workflow](books/wondertown/work/RENDERING.md)
+before replacing an illustrated JPEG with a new reference render.
 `--headless` prints JSON page snapshots and accepts parser commands on stdin;
 `:choose N`, `:focus object-id`, `:continue`, `:back` and `:reload` exercise the
 same C presentation functions as the UI. Choice indexes start at zero.

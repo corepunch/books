@@ -25,7 +25,7 @@ clipping and hit tests; pass structs instead of separate coordinate components.
   exits. Derive image names from ZIL identifiers, lowercased with hyphens:
   `{room}-look.jpg`, `{room}-examine-{object}.jpg`, `{room}-{verb}-{object}.jpg`.
 - `books/<adventure>/rooms/` holds pre-rendered JPEGs and the matching `.blks`
-  camera/anchor sources. C reads those files solely for hotspot projection.
+  camera/anchor sources. C reads those files for hotspot projection and per-camera reading regions.
   Do not introduce a live scene renderer, Lua host scripts, Orca XML exports,
   UI configuration files or hand-maintained image/interaction maps.
 - The UI is hardcoded C over Metal with UIKit for iPad and AppKit/NSWindow for
@@ -33,6 +33,9 @@ clipping and hit tests; pass structs instead of separate coordinate components.
   only; reuse its focus, Back and Continue flow. Parser commands remain headless.
   Keep anchors aligned under the same centered crop as the JPEG. Missing art
   must not display another room.
+  Interaction circles must have at least one radius of clear space between
+  their edges. Use the shared marker layout for drawing, hit areas and headless
+  output; preserve exact projected anchors and connect displaced markers to them.
 - `make mac BOOK=<name>` (also `make run`) launches the native Mac app;
   `make ipad-mac BOOK=<name>` launches the iPad app on Apple silicon Mac. Build
   directly with the SDK tools; do not introduce an Xcode project. The conventional
@@ -40,6 +43,15 @@ clipping and hit tests; pass structs instead of separate coordinate components.
   needed per book.
 
 ## Artwork
+
+Scener renders are spatial references for AI-painted final illustrations, not
+finished artwork. Model recognizable rough shapes, sizes, supports, placement,
+openings and meaningful shadow casters so every camera describes the same place.
+Prioritize a rich inventory of larger objects over tiny geometric detail. Paint
+dust, shavings, grain, wear, ornament and other surface detail in the final AI
+pass. Keep exact story anchors and document required painted-only content; the
+final image must preserve camera perspective, object scale/layout and lighting
+direction. Do not invent new permanent furnishings independently in each image.
 
 Wondertown art and historical studies live in `books/wondertown/work/`.
 Read only the relevant guides: `LOCATION_BRIEFS.md` for story geography,
@@ -51,6 +63,10 @@ is historical and does not define the current engine.
 Scener is a separate checkout at `~/Developer/mapview/ui/apps/scener`.
 Read that checkout's instructions before changing it. Author centimetres,
 X east, Y north, Z up, degrees and unitless scale. New scenes declare `up="z"`.
+Compose establishing cameras obliquely; avoid frontal views and dominant
+screen-horizontal architectural lines. Reserve natural negative space for the
+full prose and keep interaction circles outside it. Author per-camera `textRect`
+and optional `textScale` in `.blks`; see `work/RENDERING.md` within the adventure.
 Geometry belongs in `.blks` scenes and `.blk` prefabs; finished/review images
 must be raster, never SVG. Keep connected zones in shared coordinates and
 named interactive anchors aligned with exact ZIL IDs.

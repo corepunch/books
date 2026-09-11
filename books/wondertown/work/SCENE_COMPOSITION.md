@@ -11,6 +11,26 @@ Wondertown into a horror mansion.
 Read [LOCATION_BRIEFS.md](LOCATION_BRIEFS.md) to decide **what exists**;
 [RENDERING.md](RENDERING.md) owns commands, renderer capabilities and deployment.
 
+## Purpose of the 3D scene
+
+Scener renders are consistent spatial references for AI-painted final images.
+Geometry defines what is present, its rough shape, scale, placement, support,
+occlusion and meaningful shadows. It does not need to reproduce the final
+illustration's finish. Recognizable rough furniture and prop shapes are enough.
+
+Prefer more purposeful medium and large objects to more components inside each
+object. Picture frames, cabinets, timber bundles, containers and broad tool/toy
+silhouettes establish a richer room. Keep their positions fixed in the scene.
+Individual shavings, dust particles, bristles, screws, page lines, grain, wear
+and decorative engraving usually belong to the AI pass. Retain a small part
+when it defines a story object's function, silhouette or state, such as the
+empty hook/string, an oil-can spout, ladder rungs or clock hands.
+
+An unmodelled surface treatment must not erase a story subject: document its
+painted footprint in the scene brief and preserve its interaction anchor and
+camera. Raw reference images may intentionally omit those textures; the final
+illustration must depict them and pass the hotspot overlay check.
+
 ## Build a place before choosing its pictures
 
 A ZIL room can be a tabletop, a work area or a floor within one physical room.
@@ -67,13 +87,13 @@ useful workshop blockout shortcut, **not a finished-scene limit**. Small story
 objects are exceptions, especially at Pip's scale. Proceed when the render and
 plan pass these checks; no separate approval step is implied.
 
-### 2. Designed room
+### 2. Populated reference scene
 
 Replace proxy masses with recognizable furniture and structural assemblies:
 bench legs and apron, usable drawers, a shaped clock case, shelf supports,
 window reveals, door thickness, loft support and a real ladder landing. Design
-silhouettes first, then materials. Avoid a dial pasted onto a slab or shelves
-that read as empty planks.
+silhouettes first, then broad material colors. A few joined shapes should explain
+each object's identity and size; omit construction detail that can be painted.
 
 Populate the room by activity rather than scattering props. Give each major
 work area a purposeful cluster: repair tools beside a partly repaired toy,
@@ -81,13 +101,14 @@ stored supplies on shelves, a tray and book beside a working surface. Keep
 these clusters subordinate to the scene's focal subject. Non-interactive
 objects may enrich the room without receiving ZIL names or hotspots.
 
-### 3. Finished background
+### 3. Reference review and illustration handoff
 
-Add camera-visible secondary forms, material changes, fittings and selective
-wear. Thin handles, clock hands, book spines and tool parts are appropriate when
-they explain function or read in a focus view. Direct Scener backgrounds need
-this design in geometry/materials; a later illustration pass must not be the
-only plan for making an empty render appealing.
+Review the whole object inventory, depth layers, support and shadow structure
+across the camera sequence. Add missing broad silhouettes where the room is
+sparse, and remove geometric microdetail that competes with those shapes.
+Record what each rough proxy represents and which surface details the AI must
+paint. The final illustration pass supplies the rich material and atmospheric
+finish; do not judge raw Scener output as finished art.
 
 Use large, medium and small forms together. As an initial workshop composition
 exercise, try 3–5 furniture masses, 2–4 purposeful dressing clusters and one
@@ -96,8 +117,8 @@ measured rules from the reference games. Judge projected coverage at delivery
 size. A shelf of tiny indistinguishable cubes adds count without adding richness.
 
 Vary shelf occupancy, height, spacing and orientation in supported groups. Give
-one area a dense history of use and another a clean active surface. Put wear
-where hands, feet and tools actually touch. Do not distribute contrast and
+one area a dense history of use and another a clean active surface. Describe
+wear for the AI pass where hands, feet and tools actually touch. Do not distribute contrast and
 clutter evenly, fill every floor gap, or invent keys, documents or unusual
 symbols that look like new clues.
 
@@ -107,6 +128,11 @@ Write the shot's purpose, required visible subjects, approach/departure directio
 state and UI footprint before setting its camera. Explore three candidates from
 the same unchanged room: an oblique wall/corner view, a lower occupant-scale view,
 and a threshold/reverse view. Compare thumbnails, then refine the strongest.
+
+Avoid straight-on, frontal establishing perspectives. Offset the camera and
+look target so walls, shelves, beams and floorboards recede diagonally; do not
+compose dominant architectural lines horizontally across the screen. Prefer a
+natural oblique viewpoint over rolling the camera just to tilt a level shot.
 
 For a high establishing view, 65–85% of room height, 15–35 degrees downward pitch
 and 55–75 degrees **vertical** FOV are optional starting ranges. They are not a
@@ -165,17 +191,30 @@ Density is the distribution of readable forms, not a prop count. At thumbnail
 size, identify one main subject, several supporting masses and a quiet reading
 field. At runtime size, inspect materials, support and interaction silhouettes.
 If the room reads as a showroom, add purposeful medium-scale clusters and
-architectural layering before adding tiny debris. If it reads as noise, group
+architectural layering. Leave tiny debris to the illustration pass. If it reads as noise, group
 values and remove competing accents before deleting all dressing.
 
-Book currently hardcodes prose at the top-left and choices at the lower-right,
-directly over the scene without panels. Per-slide placement is planned. Check the actual
-UI for other shots. A 1536×1024 source fills a 1024×768 page with a centered
-horizontal crop; inspect that crop, not just the uncropped source. Use real
-prose, choice text and interaction circles. Quiet the reading field using a
-broad material/value mass and soft light transitions. It can contain subdued
-floorboards and shadows; it must not look like an artificially empty rectangle.
-Do not move a required prop beneath prose or shorten story text to fix framing.
+Reserve the reading field before filling the room with props. Book supports a
+normalized image-space `textRect="x y width height"` and optional `textScale`
+on each camera; see [RENDERING.md](RENDERING.md#per-camera-reading-regions).
+Cameras without these attributes retain the legacy top-left layout. The workshop
+overview reserves the lower-left floor. Other cameras need their own composition
+review before adopting a region; do not copy the overview coordinates blindly.
+
+Use the full current ZIL prose and the actual projected interaction circles when
+choosing its size. Keep every circle, its shadow and at least a 12-point gutter
+outside the reading rectangle. Keep required object silhouettes and clues out
+of it too. Do not hide interactions or shorten story text to make a shot fit.
+Preferred text scale may vary by camera; modest fitting is a fallback, not a
+substitute for allocating enough space. Review long story states as well as the
+initial room description.
+
+The JPEG, text region and anchors share a centered cover crop. Inspect the
+runtime crop on supported screen shapes, not just the source image. Quiet the
+reading field with broad values and soft light transitions. It may contain
+subdued floorboards and shadows; it must not look like an empty panel. The AI
+painting pass must preserve this exact region and keep texture, sawdust and
+highlights there soft enough for cream prose to remain legible.
 
 ## Lighting and shadows
 
@@ -217,6 +256,16 @@ origin at the intended interaction center. Pure decoration gets distinct names
 that do not impersonate story objects. An empty anchor is useful while blocking,
 but it does not make the final pictured object visible: model or paint its
 recognizable form and verify it against the projected marker.
+
+Circles must not intersect or touch: leave at least one circle radius between
+their edges. At Book's 48-point diameter this means 24 points of clear space,
+or 72 points between centers. The shared runtime layout moves crowded markers
+to nearby free screen space while preserving the projected object anchors.
+Short connector lines identify anchors outside their circles; drawing and hit
+areas use the same placed positions. Do not move story objects merely to space
+UI circles. Review marker spacing and object association at runtime size, and
+retain the reading-region gutter. Closely spaced markers are never silently
+removed or merged by the layout.
 
 Projection checks only the point against the camera; it does not prove that a
 bench or wall is not hiding it. Inspect each required subject in the actual
@@ -356,9 +405,12 @@ Review these questions in order; fix the first failure before polishing detail:
    clusters and varied materials, with neither bare walls nor uniform clutter?
 5. **Light:** motivated source, readable recesses, grounded contacts and useful
    shadows, without leaks or competing high-contrast patterns?
-6. **Sequence and UI:** coherent forward/reverse travel, consistent state,
+6. **Illustration handoff:** clear proxy identities, recorded painted-only story
+   content, and no needless particle or surface-detail geometry?
+7. **Sequence and UI:** coherent forward/reverse travel, consistent state,
    readable prose/choices and correctly registered visible hotspots?
 
 Save the plan, representative before/after renders and a contact sheet with the
 room brief. Record remaining visual defects separately from renderer defects.
-Do not call a scene finished from a successful CLI exit or numeric camera check.
+Call an accepted Scener scene a reviewed spatial reference. Final-art acceptance
+requires the AI illustration pass and its own continuity and UI review.

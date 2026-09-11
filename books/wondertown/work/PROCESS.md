@@ -1,6 +1,6 @@
 # Book interaction and image workflow
 
-The engine is one `main.c`. It starts the selected adventure through zilscript
+The native engine lives in `src/`. It starts the selected adventure through zilscript
 and resumes its coroutine from C. ZIL supplies state, prose, object verbs and
 exits. There is no Wondertown Lua manifest, XML page or camera export step.
 
@@ -13,7 +13,10 @@ then object art, then the current room. Back leaves focus without executing a
 story command. Typed parser input remains available for compound interactions.
 
 All runtime art and camera/anchor source files live in
-`books/wondertown/rooms/`. Scener does the rendering offline. Named cameras and
+`books/wondertown/rooms/`. Scener renders rough spatial references offline, then
+AI draws the final illustrations over them with the same camera, scale, layout
+and lighting direction. Raw Scener JPEGs currently serve as development art.
+Named cameras and
 anchors in `.blks` are only used to project circles over those JPEGs. The C
 host scales the image and anchors together, using actual image dimensions.
 

@@ -16,6 +16,7 @@ struct DrawUniforms {
     float radius;
     int mode, reveal;
     float scale;
+    fvec2_t line_start, line_end;
 };
 
 static struct {
@@ -50,7 +51,7 @@ bool renderer_init(void *layer)
     NSString *source = @"#include <metal_stdlib>\n"
         "using namespace metal;\n"
         "struct Draw { float4 bounds; float2 viewport; float2 center; float4 color; "
-        "float radius; int mode; int reveal; float scale; };\n"
+        "float radius; int mode; int reveal; float scale; float2 line_start; float2 line_end; };\n"
         "struct Vertex { float4 position [[position]]; float2 uv; };\n"
         "vertex Vertex book_vertex(uint i [[vertex_id]], constant Draw &d [[buffer(0)]]) {"
         "const float2 corners[] = {float2(0,0),float2(1,0),float2(1,1),"
@@ -62,6 +63,11 @@ bool renderer_init(void *layer)
         "if(d.reveal && (d.radius<=0 || distance(v.position.xy/d.scale,d.center)>d.radius)) discard_fragment();"
         "if(d.mode==2) { float r=length(v.uv-float2(.5)); float aa=fwidth(r);"
         "float a=(1-smoothstep(.5-aa,.5,r))*smoothstep(.4375-aa,.4375+aa,r);"
+        "return float4(d.color.rgb,d.color.a*a); }"
+        "if(d.mode==3) { float2 delta=d.line_end-d.line_start;"
+        "float2 p=v.position.xy/d.scale-d.line_start;"
+        "float along=clamp(dot(p,delta)/max(dot(delta,delta),.001),0.0,1.0);"
+        "float a=1-smoothstep(.5,1.5,length(p-along*delta));"
         "return float4(d.color.rgb,d.color.a*a); }"
         "constexpr sampler linear_sampler(coord::normalized,address::clamp_to_edge,filter::linear);"
         "float4 s=image.sample(linear_sampler,v.uv);"
@@ -159,19 +165,33 @@ void renderer_unclip(void)
     [m.encoder setScissorRect:(MTLScissorRect){0, 0, m.framebuffer.width, m.framebuffer.height}];
 }
 
-void renderer_quad(frect_t bounds, uint32_t rgba, texture_t texture, int glyph)
+static void draw_quad(frect_t bounds, uint32_t rgba, texture_t texture, int glyph,
+                       fvec2_t line_start, fvec2_t line_end)
 {
     if (!m.encoder || m.clipped_out || !frect_overlaps(bounds, renderer_bounds())) return;
     struct DrawUniforms draw = {
         .bounds = bounds, .viewport = isize2_to_float(m.viewport), .center = m.center,
         .color = {((rgba >> 24) & 255)/255.f, ((rgba >> 16) & 255)/255.f,
                   ((rgba >> 8) & 255)/255.f, (rgba & 255)/255.f * m.opacity},
-        .radius = m.radius, .mode = glyph, .reveal = m.reveal, .scale = m.scale
+        .radius = m.radius, .mode = glyph, .reveal = m.reveal, .scale = m.scale,
+        .line_start = line_start, .line_end = line_end
     };
     [m.encoder setVertexBytes:&draw length:sizeof(draw) atIndex:0];
     [m.encoder setFragmentBytes:&draw length:sizeof(draw) atIndex:0];
     [m.encoder setFragmentTexture:texture ? (__bridge id<MTLTexture>)texture : m.white atIndex:0];
     [m.encoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6];
+}
+
+void renderer_quad(frect_t bounds, uint32_t rgba, texture_t texture, int glyph)
+{
+    draw_quad(bounds,rgba,texture,glyph,fvec2(0,0),fvec2(0,0));
+}
+
+void renderer_line(fvec2_t start, fvec2_t end, uint32_t rgba)
+{
+    frect_t bounds=frect(fvec2(fminf(start.x,end.x)-2,fminf(start.y,end.y)-2),
+                         fsize2(fabsf(end.x-start.x)+4,fabsf(end.y-start.y)+4));
+    draw_quad(bounds,rgba,NULL,3,start,end);
 }
 
 void renderer_rect(frect_t bounds, uint32_t rgba) { renderer_quad(bounds, rgba, NULL, 0); }

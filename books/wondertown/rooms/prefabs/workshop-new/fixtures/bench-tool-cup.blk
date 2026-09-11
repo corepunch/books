@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!-- Tool cup proxy: 18 X x 18 Y x 53 Z; baseline on work surface, three broad handles; AI supplies bristles and tool detail. -->
+<prefab>
+  <cylinder pos="0 0 10" radius="9" height="20" material="cream" rot="90 0 0" sides="24" />
+  <box pos="-4 0 28.5" size="3 4 37" material="oak-dark" />
+  <box pos="1 0 31.5" size="3 4 43" material="oak-dark" />
+  <box pos="5 0 26" size="3 4 32" material="oak-dark" />
+</prefab>

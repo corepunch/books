@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- Timber stock proxy: 130 X x 54 Y x 182 Z; floor baseline, front -Y. Four broad boards in a supported rack. -->
+<prefab>
+  <box pos="0 0 4" size="130 54 8" material="oak-dark" />
+  <box pos="-59 20 81" size="8 8 146" material="oak" />
+  <box pos="59 20 81" size="8 8 146" material="oak" />
+  <box pos="0 -22 44" size="130 7 12" material="oak" />
+  <box pos="-43 4 81" size="20 12 146" material="oak-light" />
+  <box pos="-12 4 95" size="24 12 174" material="oak" />
+  <box pos="20 4 71" size="22 12 126" material="oak-light" />
+  <box pos="47 4 87.5" size="16 12 159" material="oak" />
+</prefab>

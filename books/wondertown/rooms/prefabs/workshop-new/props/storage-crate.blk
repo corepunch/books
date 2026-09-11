@@ -1,23 +1,7 @@
-<!-- Z-up cm; baseline Z=0. Open face/top +Z; front label -Y; envelope X=-32.5..32.5 Y=-25.6..25 Z=0..45 including stocked contents. -->
+<!-- Z-up cm; baseline Z=0. Open supply crate proxy, 65 X x 50 Y x 45 Z; front label -Y; broad contents retained. -->
 <prefab>
   <attach name="under_center" pos="0 0 4" />
   <box material="oak-dark" castShadow="1" pos="0 0 2" size="65 50 4" />
-  <box material="oak-dark" castShadow="1" pos="-29.5 -22 24.5" size="6 6 41" />
-  <box material="oak-dark" castShadow="1" pos="-29.5 22 24.5" size="6 6 41" />
-  <box material="oak-dark" castShadow="1" pos="29.5 -22 24.5" size="6 6 41" />
-  <box material="oak-dark" castShadow="1" pos="29.5 22 24.5" size="6 6 41" />
-  <box material="oak-light" castShadow="1" pos="0 -23 7.5" size="59 4 9">
-    <array count="4" translation="0 0 11" />
-  </box>
-  <box material="oak-light" castShadow="1" pos="0 23 7.5" size="59 4 9">
-    <array count="4" translation="0 0 11" />
-  </box>
-  <box material="oak" castShadow="1" pos="-30.5 0 7.5" size="4 42 9">
-    <array count="4" translation="0 0 11" />
-  </box>
-  <box material="oak" castShadow="1" pos="30.5 0 7.5" size="4 42 9">
-    <array count="4" translation="0 0 11" />
-  </box>
   <box material="paper" castShadow="1" pos="0 -25.2 27" size="29 0.4 13" />
   <box material="ink" castShadow="1" pos="0 -25.5 29" size="20 0.2 1.2" />
   <box material="ink" castShadow="1" pos="0 -25.5 25" size="15 0.2 1.2" />
@@ -28,4 +12,8 @@
   <cylinder material="oak-dark" castShadow="1" pos="17 -9 4" radius="7" height="2" rot="90 0 0" sides="16" />
   <cylinder material="oak-dark" castShadow="1" pos="17 -9 44" radius="7" height="2" rot="90 0 0" sides="16" />
   <sphere material="cream" castShadow="1" pos="4 7 34.6" radius="8" scale="1 0.8 1.3" rings="8" slices="12" />
+  <box material="oak-light" pos="0 -23 24.5" size="65 4 41" />
+  <box material="oak-light" pos="0 23 24.5" size="65 4 41" />
+  <box material="oak-light" pos="-30.5 0 24.5" size="4 42 41" />
+  <box material="oak-light" pos="30.5 0 24.5" size="4 42 41" />
 </prefab>

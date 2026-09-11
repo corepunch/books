@@ -35,9 +35,4 @@
   <box pos="-75 -52 91" size="37 10 20" material="oak-dark" />
   <cylinder pos="-75 -57 87" radius="3" height="18" material="iron" rot="0 0 0" sides="24" />
   <cylinder pos="-75 -68 87" radius="1.5" height="24" material="oak-light" rot="90 0 0" sides="24" />
-  <cylinder pos="-84 -26 100.2" radius="1.3" height="0.4" material="oak-dark" rot="90 0 0" sides="24" />
-  <cylinder pos="-45 -26 100.2" radius="1.3" height="0.4" material="oak-dark" rot="90 0 0" sides="24" />
-  <cylinder pos="8 -26 100.2" radius="1.3" height="0.4" material="oak-dark" rot="90 0 0" sides="24" />
-  <cylinder pos="52 -26 100.2" radius="1.3" height="0.4" material="oak-dark" rot="90 0 0" sides="24" />
-  <cylinder pos="95 -26 100.2" radius="1.3" height="0.4" material="oak-dark" rot="90 0 0" sides="24" />
 </prefab>

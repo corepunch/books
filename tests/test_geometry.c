@@ -23,6 +23,13 @@ int main(void)
     assert(fsize2_is_empty(frect_cover(fsize2(0, 100), viewport).size));
     assert(fsize2_is_empty(frect_cover(fsize2(100, 100), frect_from_size(fsize2(-1, 100))).size));
 
+    /* Authored image regions follow the same centered crop as the artwork. */
+    frect_t relative = frect(fvec2(.25f, .25f), fsize2(.5f, .5f));
+    expect_rect(frect_relative(relative, frect_cover(fsize2(200, 100), viewport)),
+                frect(fvec2(10, 45), fsize2(100, 50)));
+    expect_rect(frect_relative(relative, frect_cover(fsize2(100, 200), viewport)),
+                frect(fvec2(35, 20), fsize2(50, 100)));
+
     /* Clipped text rows must not be clickable beyond the visible region. */
     frect_t row = frect_intersection(frect(fvec2(10, 10), fsize2(100, 30)), viewport);
     expect_rect(row, frect(fvec2(10, 20), fsize2(100, 20)));

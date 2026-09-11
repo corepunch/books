@@ -131,3 +131,10 @@ bool frect_ellipse_contains_point(frect_t rect, fvec2_t point)
     fvec2_t delta = fvec2_sub(point, frect_center(rect));
     return fvec2_length_squared(fvec2(delta.x / (rect.size.width / 2), delta.y / (rect.size.height / 2))) <= 1;
 }
+
+frect_t frect_relative(frect_t relative, frect_t bounds)
+{
+    return frect(fvec2_add(bounds.origin,fvec2(relative.origin.x*bounds.size.width,
+                                             relative.origin.y*bounds.size.height)),
+                 fsize2(relative.size.width*bounds.size.width,relative.size.height*bounds.size.height));
+}

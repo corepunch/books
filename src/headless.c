@@ -35,20 +35,25 @@ static void dump(void)
     scene_load(book.rooms,book.camera);
     isize2_t image=isize2(0,0);
     fsize2_t viewport=fsize2(UI_WIDTH,UI_HEIGHT);
-    frect_t safe=frect_inset(frect_from_size(viewport),fvec2(HOTSPOT_DIAMETER/2,HOTSPOT_DIAMETER/2));
-    int channels=0,count=0;
+    int channels=0;
     if (*book.image && !stbi_info(book.image,&image.width,&image.height,&channels)) fail("cannot inspect JPEG: %s",book.image);
-    if (!book.beat && !book.focus) {
-        for (int i=0;i<book.choice_count;++i) {
-            struct Choice *c=&book.choices[i]; fvec2_t point;
-            if (c->focus && scene_project_anchor(book.objects[c->object].key,image,viewport,&point) &&
-                frect_covers_point(safe,point)) {
-                printf("%s{\"object\":",count++ ? "," : ""); json_string(book.objects[c->object].key);
-                printf(",\"x\":%.6f,\"y\":%.6f}",point.x,point.y);
-            }
-        }
+    hotspotList_t spots;
+    int count=scene_hotspots(image,viewport,spots);
+    for (int i=0;i<count;++i) {
+        const struct Hotspot *spot=&spots[i];
+        printf("%s{\"object\":",i ? "," : "");
+        json_string(book.objects[book.choices[spot->choice].object].key);
+        printf(",\"x\":%.6f,\"y\":%.6f,\"anchor_x\":%.6f,\"anchor_y\":%.6f}",
+               spot->center.x,spot->center.y,spot->anchor.x,spot->anchor.y);
     }
-    printf("]}\n"); fflush(stdout);
+    struct TextRegion region=scene_text_region(image,viewport);
+    float size=region.authored ? text_fit_size(book.text,region.font_size,region.bounds.size) : region.font_size;
+    printf("],\"text_region\":{\"authored\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f,"
+           "\"preferred_size\":%.6f,\"font_size\":%.6f,\"content_height\":%.6f}}\n",
+           region.authored ? "true" : "false",region.bounds.origin.x,region.bounds.origin.y,
+           region.bounds.size.width,region.bounds.size.height,region.font_size,size,
+           text_height(book.text,size,region.bounds.size.width));
+    fflush(stdout);
 }
 
 void headless_catalog(void)
@@ -66,6 +71,7 @@ void headless_catalog(void)
 
 void headless_run(bool interactive)
 {
+    ui_init(); /* Font metrics only; measuring text never creates GPU textures. */
     dump();
     command_t line;
     while (interactive && fgets(line,sizeof(line),stdin)) {
@@ -78,4 +84,5 @@ void headless_run(bool interactive)
         } else book_command(line,0);
         dump();
     }
+    text_shutdown();
 }

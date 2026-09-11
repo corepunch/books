@@ -10,9 +10,13 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
-/* Read only fixed cameras and named anchor transforms from Scener XML. */
+/* Read fixed cameras, image-space text regions and named anchor transforms. */
 struct Vec { double x, y, z; };
-struct Camera { struct Vec pos, look; double fov; bool zup; };
+struct Camera { struct Vec pos, look; double fov; bool zup; struct TextRegion text; };
+#define TEXT_REGION_MARGIN 32.0f
+#define TEXT_REGION_MARGIN_RATIO 0.03f
+#define MIN_CAMERA_TEXT_SCALE 0.5f
+#define MAX_CAMERA_TEXT_SCALE 2.0f
 static xmlDoc *scene_doc;
 static struct Camera camera;
 static assetName_t loaded_camera;
@@ -40,6 +44,31 @@ static struct Vec xml_vec(xmlNode *node, const char *name, struct Vec fallback)
 static bool xml_name(xmlNode *node, const char *tag)
 {
     return node->type == XML_ELEMENT_NODE && !xmlStrcmp(node->name, (const xmlChar *)tag);
+}
+
+static struct TextRegion read_text_region(xmlNode *node)
+{
+    struct TextRegion region={0};
+    xmlChar *rect=xmlGetProp(node,(const xmlChar *)"textRect");
+    xmlChar *scale=xmlGetProp(node,(const xmlChar *)"textScale");
+    if (!rect && scale) fail("camera textScale requires textRect");
+    if (rect) {
+        frect_t r; char extra;
+        if (sscanf((char *)rect,"%f %f %f %f %c",&r.origin.x,&r.origin.y,
+                   &r.size.width,&r.size.height,&extra)!=4 ||
+            !isfinite(r.origin.x) || !isfinite(r.origin.y) ||
+            !isfinite(r.size.width) || !isfinite(r.size.height) ||
+            r.origin.x<0 || r.origin.y<0 || r.size.width<=0 || r.size.height<=0 ||
+            r.origin.x+r.size.width>1 || r.origin.y+r.size.height>1)
+            fail("camera textRect must be a positive normalized image rectangle");
+        float factor=1;
+        if (scale && (sscanf((char *)scale,"%f %c",&factor,&extra)!=1 || !isfinite(factor) ||
+                      factor<MIN_CAMERA_TEXT_SCALE || factor>MAX_CAMERA_TEXT_SCALE))
+            fail("camera textScale must be between 0.5 and 2");
+        region=(struct TextRegion){r,TEXT_BASE_SIZE*factor,true};
+    }
+    xmlFree(rect); xmlFree(scale);
+    return region;
 }
 
 static bool named(xmlNode *node, const char *key)
@@ -74,6 +103,7 @@ void scene_load(const char *rooms, const char *camera_name)
 {
     if (!strcmp(loaded_camera, camera_name) && !strcmp(loaded_rooms, rooms)) return;
     xmlFreeDoc(scene_doc); scene_doc = NULL;
+    camera=(struct Camera){0};
     copy(loaded_camera, sizeof(loaded_camera), camera_name);
     copy(loaded_rooms, sizeof(loaded_rooms), rooms);
     if (!*camera_name) return;
@@ -93,6 +123,7 @@ void scene_load(const char *rooms, const char *camera_name)
                 if (!xml_name(root,"scene") || node->parent != root) fail("camera must be a direct scene child");
                 camera.pos=xml_vec(node,"pos",(struct Vec){0,160,500});
                 camera.look=xml_vec(node,"look",(struct Vec){0,120,0});
+                camera.text=read_text_region(node);
                 xmlChar *fov=xmlGetProp(node,(const xmlChar *)"fov");
                 camera.fov=fov ? strtod((char *)fov,NULL) : 60; xmlFree(fov);
                 if (!(camera.fov>0 && camera.fov<180)) fail("invalid camera FOV");
@@ -151,6 +182,36 @@ bool scene_project_anchor(const char *key, isize2_t image, fsize2_t viewport, fv
 {
     struct Vec point;
     return anchor_point(key, &point) && project(camera, point, image, viewport, screen);
+}
+
+struct TextRegion scene_text_region(isize2_t image, fsize2_t viewport)
+{
+    float margin=fminf(TEXT_REGION_MARGIN,viewport.width*TEXT_REGION_MARGIN_RATIO);
+    frect_t safe=frect_inset(frect_from_size(viewport),fvec2(margin,margin));
+    if (!scene_doc || !camera.text.authored || isize2_is_empty(image))
+        return (struct TextRegion){frect(safe.origin,fsize2(viewport.width*.70f,safe.size.height)),TEXT_BASE_SIZE,false};
+    frect_t cover=frect_cover(isize2_to_float(image),frect_from_size(viewport));
+    return (struct TextRegion){frect_intersection(frect_relative(camera.text.bounds,cover),safe),
+                               camera.text.font_size*cover.size.height/UI_HEIGHT,true};
+}
+
+int scene_hotspots(isize2_t image, fsize2_t viewport, hotspotList_t spots)
+{
+    if (book.beat || book.focus) return 0;
+    int count=0;
+    frect_t safe=frect_inset(frect_from_size(viewport),fvec2(HOTSPOT_DIAMETER/2,HOTSPOT_DIAMETER/2));
+    for (int i=0;i<book.choice_count;++i) {
+        fvec2_t anchor;
+        const struct Choice *choice=&book.choices[i];
+        if (choice->focus && scene_project_anchor(book.objects[choice->object].key,image,viewport,&anchor) &&
+            frect_covers_point(safe,anchor)) spots[count++]=(struct Hotspot){anchor,anchor,i};
+    }
+    struct TextRegion text=scene_text_region(image,viewport);
+    /* Legacy text covers most of the page; only authored reading fields are reserved. */
+    frect_t prose=text.authored && *book.text ? text.bounds : frect_from_size(fsize2(0,0));
+    if (!hotspots_place(spots,count,viewport,prose))
+        fail("camera %s cannot fit its interaction circles; recompose with more space",book.camera);
+    return count;
 }
 
 void scene_shutdown(void)

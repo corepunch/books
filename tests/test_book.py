@@ -47,6 +47,17 @@ b = Book()
 assert b.view['room'] == 'workshop-floor'
 assert Path(b.view['image']) == root / 'books/wondertown/rooms/workshop-floor-look.jpg'
 assert len(b.view['hotspots']) == 10
+for i, first in enumerate(b.view['hotspots']):
+    for second in b.view['hotspots'][i+1:]:
+        assert math.hypot(first['x']-second['x'], first['y']-second['y']) >= 72 - .001, (first, second)
+region = b.view['text_region']
+assert region['authored']
+assert region['content_height'] <= region['height'], 'Full overview prose must fit without scrolling'
+assert region['preferred_size'] * .8 <= region['font_size'] <= region['preferred_size']
+for hotspot in b.view['hotspots']:
+    # Include each 48-point circle and a 12-point reading-space gutter.
+    assert (hotspot['x'] + 36 < region['x'] or hotspot['x'] - 36 > region['x'] + region['width'] or
+            hotspot['y'] + 36 < region['y'] or hotspot['y'] - 36 > region['y'] + region['height']), hotspot
 # Check the C projection against the Scener camera and the oil-can anchor.
 scene = ET.parse(root / 'books/wondertown/rooms/workshop-new.blks').getroot()
 cam = next(c for c in scene.findall('camera') if c.get('name') == 'workshop-floor-look')
@@ -66,7 +77,7 @@ scale = max(1100/1920, 800/1440)
 x = (960+dot(delta,right)*focal/dot(delta,fwd))*scale+(1100-1920*scale)/2
 y = (720-dot(delta,up)*focal/dot(delta,fwd))*scale+(800-1440*scale)/2
 spot = next(h for h in b.view['hotspots'] if h['object'] == 'oil-can')
-assert abs(spot['x']-x) < 0.001 and abs(spot['y']-y) < 0.001
+assert abs(spot['anchor_x']-x) < 0.001 and abs(spot['anchor_y']-y) < 0.001
 
 b.focus('workbench')
 assert b.view['kind'] == 'focus' and b.view['image'].endswith('/workshop-floor-examine-workbench.jpg')
@@ -109,6 +120,7 @@ b.close()
 # Symlink only the VM/substrate; the small fixture stays outside the submodule.
 with tempfile.TemporaryDirectory(prefix='book-engine-') as temp:
     assets = Path(temp)
+    (assets/'fonts').symlink_to(root/'fonts', target_is_directory=True)
     vm = assets / 'libs/zilscript'
     vm.mkdir(parents=True)
     for child in (root / 'libs/zilscript').iterdir():
@@ -150,7 +162,29 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as temp:
 </group></scene>''')
     b = Book(assets, 'testbook')
     assert b.view['room'] == 'test-room' and b.view['image'].endswith('/test-room-look.jpg')
-    assert b.view['hotspots'] == [{'object':'test-toy', 'x':550.0, 'y':400.0}]
+    assert b.view['hotspots'] == [{'object':'test-toy', 'x':550.0, 'y':400.0, 'anchor_x':550.0, 'anchor_y':400.0}]
+    assert not b.view['text_region']['authored']
+    assert b.view['text_region']['font_size'] == 36
+    metadata = rooms/'shared.blks'
+    original = metadata.read_text()
+    metadata.write_text(original.replace('fov="90"', 'fov="90" textRect="0.1 0.1 0.4 0.2" textScale="1.2"'))
+    b.send(':reload')
+    region = b.view['text_region']
+    assert region['authored']
+    assert abs(region['x'] - 110) < .001 and abs(region['y'] - 70) < .001
+    assert abs(region['width'] - 440) < .001 and abs(region['height'] - 165) < .001
+    assert abs(region['preferred_size'] - 44.55) < .001
+    assert region['font_size'] == region['preferred_size'], 'Short prose keeps its preferred size'
+    metadata.write_text(original.replace('fov="90"', 'fov="90" textRect="0.1 0.1 0.05 0.02"'))
+    b.send(':reload')
+    region = b.view['text_region']
+    assert abs(region['font_size'] - region['preferred_size'] * .8) < .001
+    assert region['content_height'] > region['height'], 'Overflow stays scrollable at the minimum size'
+    b.focus('test-toy')
+    assert not b.view['text_region']['authored'], 'A missing camera must not inherit the preceding text region'
+    b.send(':back')
+    metadata.write_text(original)
+    b.send(':reload')
     before = b.view
     b.send(':reload')
     assert b.view == before, 'metadata reload must not advance the story'
@@ -173,6 +207,14 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as temp:
     b.send('quit')
     assert b.view['kind'] == 'ended' and not b.view['choices']
     b.close()
+
+    for attributes in ('textScale="1"', 'textRect="0 0 -1 1"', 'textRect="0 0 1 1.1"',
+                       'textRect="nan 0 1 1"', 'textRect="0 0 1 1 extra"',
+                       'textRect="0 0 1 1" textScale="0.1"'):
+        metadata.write_text(original.replace('fov="90"', f'fov="90" {attributes}'))
+        result = subprocess.run([str(binary), '--root', str(assets), '--book', 'testbook', '--check'],
+                                capture_output=True, text=True)
+        assert result.returncode != 0 and 'camera text' in result.stderr, attributes
 
 assert not [p for p in root.rglob('*.lua') if 'libs' not in p.parts and '.git' not in p.parts], 'Book must not depend on host Lua files'
 print('Book: coroutine, automatic choices/images, focus, navigation, restart/quit and projection passed')

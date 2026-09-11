@@ -8,6 +8,14 @@ Target quality: **high-end illustrated children's storybook** — cinematic, atm
 
 ## Relationship to connected 3D backgrounds
 
+This guide describes the final AI-painted images. Scener inputs deliberately use
+rough object shapes and broad material colors to fix layout, scale, perspective,
+occlusion and shadows across viewpoints. Do not demand painterly finish or tiny
+surface detail from the 3D source. Redraw these proxies as rich, polished objects
+within their established silhouettes and footprints. Add dust, shavings, grain,
+wear, bristles, fittings and picture contents during painting, following the
+scene brief; do not add new permanent furniture separately in each view.
+
 [SCENE_COMPOSITION.md](SCENE_COMPOSITION.md) owns spatial continuity, staged
 room density, camera selection and lighting review. [LOCATION_BRIEFS.md](LOCATION_BRIEFS.md)
 owns story sources. This guide owns Wondertown's finish and visual identity;
@@ -135,12 +143,18 @@ at a real depth boundary rather than expanding into an arbitrary empty panel.
 	frame its edge with crisp silhouettes.
 - Keep foreground contours sharp; soften the field behind them rather than
 	blurring objects into it.
-- Contour wrapping around a foreground silhouette is welcome when readability
-	remains strong.
-- Match each camera's text-safe region to the actual runtime overlay. For
-	`workshop-floor`, prose occupies the lower-right floor, choices occupy
-	the lower-left, and Continue sits below the prose. Other shots may use a
-	different region when their UI and composition agree.
+- Book currently wraps prose in a rectangle; do not let a foreground silhouette
+  cut through that rectangle or assume contour wrapping is implemented.
+- Match each camera's negative space to its authored `textRect` and `textScale`
+  and inspect the full actual prose at runtime. The workshop overview uses the
+  lower-left floor, clear of all interaction circles. Other shots retain their
+  existing placement until individually composed and reviewed.
+- Keep interactive circles, faces and identifying object contours outside the
+  reading area. Preserve the region during AI painting; soften its grain,
+  sawdust and highlights instead of filling it with new props.
+- Avoid frontal, straight-on establishing views and dominant screen-horizontal
+  architectural lines. Compose obliquely in the shared scene before painting;
+  the final illustration must preserve that approved perspective.
 
 Reusable composition prompt:
 
@@ -158,13 +172,14 @@ Reusable composition prompt:
 - The same important characters, their identity, costume, pose, and emotional intention.
 - The same important props and story clues.
 - The same relative object relationships.
-- The same general camera angle unless a small adjustment improves composition.
+- The exact camera perspective, scale and object registration for Scener-backed
+  runtime images; camera experiments belong in the shared scene or concept work.
 - All narrative clues that matter to gameplay/story.
 
 ## What to Improve
 
-- Camera position, scale emphasis, object spacing.
-- Lighting, perspective, background richness.
+- Painterly form, material richness and atmospheric depth within the locked layout.
+- Light quality and color while preserving motivated sources and shadow direction.
 - Atmospheric effects, material detail, color grading.
 - Text-supporting negative space.
 - Overall visual direction, depth, materials, atmosphere, and detail hierarchy.

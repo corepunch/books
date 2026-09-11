@@ -72,24 +72,30 @@ void ui_draw(void)
     renderer_reveal_end();
     renderer_opacity(frame.overlay_opacity);
     scene_load(book.rooms,book.camera);
-    if (!book.beat && !book.focus) {
-        frect_t safe=frect_inset(viewport,fvec2(HOTSPOT_DIAMETER/2,HOTSPOT_DIAMETER/2));
-        for (int i=0;i<book.choice_count;++i) {
-            struct Choice *c=&book.choices[i]; fvec2_t point;
-            if (c->focus && scene_project_anchor(book.objects[c->object].key,image,window,&point) &&
-                frect_covers_point(safe,point)) {
-                frect_t marker=frect_center_at(frect_from_size(fsize2(HOTSPOT_DIAMETER,HOTSPOT_DIAMETER)),point);
-                renderer_ring(frect_translate(marker,fvec2(0,2)),0x120B0780);
-                renderer_ring(marker,0xFFFFFFFF);
-                add_hit(marker,i,true);
-            }
+    hotspotList_t spots;
+    int count=scene_hotspots(image,window,spots);
+    for (int i=0;i<count;++i) {
+        struct Hotspot spot=spots[i];
+        fvec2_t delta=fvec2_sub(spot.anchor,spot.center);
+        float distance=sqrtf(fvec2_length_squared(delta));
+        if (distance>HOTSPOT_DIAMETER/2) {
+            fvec2_t edge=fvec2_add(spot.center,fvec2_scale(delta,(HOTSPOT_DIAMETER/2)/distance));
+            renderer_line(fvec2_add(edge,fvec2(0,2)),fvec2_add(spot.anchor,fvec2(0,2)),0x120B0780);
+            renderer_line(edge,spot.anchor,0xFFFFFFB0);
         }
+    }
+    for (int i=0;i<count;++i) {
+        frect_t marker=frect_center_at(frect_from_size(fsize2(HOTSPOT_DIAMETER,HOTSPOT_DIAMETER)),spots[i].center);
+        renderer_ring(frect_translate(marker,fvec2(0,2)),0x120B0780);
+        renderer_ring(marker,0xFFFFFFFF);
+        add_hit(marker,spots[i].choice,true);
     }
     max_scroll=0;
     {
-        float margin=fminf(32,window.width*.03f),prose_width=window.width*.70f;
-        float font_size=36,limit=window.height-margin;
-        frect_t prose=frect(fvec2(margin,margin),fsize2(prose_width,limit-margin));
+        float margin=fminf(32,window.width*.03f),limit=window.height-margin;
+        struct TextRegion region=scene_text_region(image,window);
+        frect_t prose=region.bounds;
+        float font_size=region.authored ? text_fit_size(book.text,region.font_size,prose.size) : region.font_size;
         float prose_height=text_height(book.text,font_size,prose.size.width);
         int prose_scroll=MAX(0,(int)ceilf(prose_height-prose.size.height));
         max_scroll=prose_scroll; scroll=MIN(scroll,max_scroll);

@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Reproduce the newly authored workshop shell/furniture and camera layout.
+"""Reproduce the workshop spatial reference for the final AI illustration pass.
 
 All authoring coordinates are centimetres, Z-up. Props are independent .blk
 sources; this generator does not overwrite the props family.
 """
 from pathlib import Path
-import math
 import json
 import subprocess
 import xml.etree.ElementTree as E
@@ -55,7 +54,6 @@ def bench(p):
     box(p,(-75,-52,91),(37,10,20),'oak-dark')
     cyl(p,(-75,-57,87),3,18,'iron',rot=(0,0,0))
     cyl(p,(-75,-68,87),1.5,24,'oak-light')
-    for x in (-84,-45,8,52,95): cyl(p,(x,-26,100.2),1.3,0.4,'oak-dark')
 asset('furniture/workbench','Fresh bench: 240 X x 104 Y x 100 Z. Baseline Z0; working front -Y.',bench)
 
 def counter(p):
@@ -137,15 +135,6 @@ def window(p):
     box(p,(0,-8,0),(6,13,178),'oak-light')
     for z in (-28,24):
         for x in (-36,36):box(p,(x,-8,z),(66,13,5),'oak-light')
-    # Muted distant silhouettes and frost belong to the opaque glazing treatment.
-    for x,h in ((-45,23),(-24,34),(1,22),(42,27)):
-        box(p,(x,7,-83+h/2),(17,1,h),'blue',unlit=1,castShadow=0)
-    box(p,(25,6,-31),(16,1,104),'blue',unlit=1,castShadow=0)
-    node(p,'cone',pos=(25,6,29),rot=(90,0,0),radius=15,radiusTop=0,height=16,sides=4,material='blue',unlit=1,castShadow=0)
-    cyl(p,(25,4,4),5,1,'paper',rot=(0,0,0),unlit=1,castShadow=0)
-    for x in (-54,-11,48):
-        box(p,(x,4,40),(2,1,13),'cream',unlit=1,castShadow=0)
-        box(p,(x,4,40),(13,1,2),'cream',unlit=1,castShadow=0)
 asset('architecture/window','Roman window: opening centered at origin, width156 height198; front -Y; local Z up.',window)
 
 def rear_door(p):
@@ -173,6 +162,8 @@ def loft(p):
     prefab(p,'props/storage-box',(-74,16,240))
     prefab(p,'props/storage-box',(-64,18,285),scale=(.8,.8,.8))
     prefab(p,'props/storage-box',(25,40,240),rot=(0,0,10))
+    for x,mat in ((-76,'cream'),(0,'red')):
+        cyl(p,(x,70,253),13,58,mat,rot=(0,0,90))
 asset('furniture/loft','Supported loft: 284 X x 184 Y; floor Z240; front -Y, landing on front-right.',loft)
 
 def ladder(p):
@@ -193,8 +184,6 @@ def mechanism(p):
     cyl(p,(0,-13,31),4,8,'brass',rot=(0,0,0))
     box(p,(10,-20,31),(24,4,5),'iron')
     cyl(p,(22,-21,25),3,16,'oak',rot=(90,0,0))
-    for x in (-13,13):
-        for z in (8,44):cyl(p,(x,-4,z),2,2,'iron',rot=(0,0,0))
 asset('fixtures/ladder-mechanism','Rusted lift winch 40 X x 26 Y x 50 Z; mount baseline Z0, front -Y.',mechanism)
 
 def trolley(p):
@@ -211,6 +200,36 @@ def trolley(p):
     box(p,(4,-17,72),(30,16,5),'red')
 asset('furniture/repair-trolley','Stocked trolley 112 X x 64 Y x 89 Z; front -Y; wheels on Z0.',trolley)
 
+def picture(p):
+    box(p,(0,-2,0),(90,4,70),'oak')
+    box(p,(0,-4.5,0),(78,1,58),'picture-ground')
+asset('fixtures/picture-frame','Picture proxy: 90 X x 5 Y x 70 Z; center origin, back on Y0, front -Y. AI paints a non-clue landscape or toy study.',picture)
+
+def timber_rack(p):
+    box(p,(0,0,4),(130,54,8),'oak-dark')
+    for x in (-59,59):box(p,(x,20,81),(8,8,146),'oak')
+    box(p,(0,-22,44),(130,7,12),'oak')
+    for x,h,w,mat in ((-43,146,20,'oak-light'),(-12,174,24,'oak'),(20,126,22,'oak-light'),(47,159,16,'oak')):
+        box(p,(x,4,8+h/2),(w,12,h),mat)
+asset('furniture/timber-rack','Timber stock proxy: 130 X x 54 Y x 182 Z; floor baseline, front -Y. Four broad boards in a supported rack.',timber_rack)
+
+def supply_cabinet(p):
+    box(p,(0,0,72),(140,80,144),'teal-dark')
+    box(p,(0,0,148),(146,84,8),'oak-light')
+    for x in (-34,34):
+        box(p,(x,-41,76),(64,2,124),'teal')
+        box(p,(x/4,-44,81),(5,4,14),'brass')
+    for x,h,mat in ((-43,38,'paper'),(-23,29,'cream')):
+        cyl(p,(x,14,152+h/2),8,h,mat)
+    prefab(p,'props/storage-box',(30,6,152),scale=(.65,.65,.65))
+asset('furniture/supply-cabinet','Supply cabinet proxy: 146 X x 86 Y x 190 Z; floor baseline, front -Y; paper rolls and labeled box on top.',supply_cabinet)
+
+def tool_cup(p):
+    cyl(p,(0,0,10),9,20,'cream')
+    for x,h in ((-4,37),(1,43),(5,32)):
+        box(p,(x,0,10+h/2),(3,4,h),'oak-dark')
+asset('fixtures/bench-tool-cup','Tool cup proxy: 18 X x 18 Y x 53 Z; baseline on work surface, three broad handles; AI supplies bristles and tool detail.',tool_cup)
+
 s=E.Element('scene',ambient='.40 .43 .48',background='.08 .12 .18',up='z')
 materials={
 'oak':((.43,.26,.14),12),'oak-light':((.67,.45,.24),8),'oak-dark':((.22,.13,.085),5),
@@ -219,7 +238,8 @@ materials={
 'red':((.57,.17,.13),9),'cream':((.78,.72,.57),6),'blue':((.16,.29,.47),12),
 'green':((.19,.32,.18),9),'glass':((.38,.57,.72),55),'rope':((.50,.38,.22),2),
 'ink':((.075,.08,.09),3),'amber':((1,.90,.64),3),'stone':((.40,.43,.43),4),
-'snow':((.60,.70,.82),3),'floor-wood':((.43,.30,.20),5)}
+'snow':((.60,.70,.82),3),'floor-wood':((.43,.30,.20),5),
+'picture-ground':((.49,.53,.48),2)}
 for n,(c,sh) in materials.items():node(s,'material',id=n,color=c,shininess=sh)
 # Axis-correct structural walls retain real light blocking, including south camera wall.
 wall_finish=dict(height=400,thickness=24,material='plaster',lowerHeight=100,
@@ -264,25 +284,30 @@ prefab(s,'furniture/chair',(259,267,0),name='MAKESHIFT-STEPS')
 prefab(s,'props/books-stack',(259,261,50),(0,0,-90),scale=(.7,.9,1))
 prefab(s,'furniture/repair-trolley',(-105,159,0),(0,0,-12))
 prefab(s,'furniture/stocked-shelves',(338,724,108))
+prefab(s,'furniture/timber-rack',(-391,35,0),(0,0,90))
+prefab(s,'furniture/supply-cabinet',(365,20,0),(0,0,-90))
+prefab(s,'fixtures/bench-tool-cup',(-340,365,100))
+for pos,rot,scale in (
+        ((-418,205,250),(0,0,90),(1,1,1.4)),
+        ((418,188,264),(0,0,-90),(.85,1,1.2)),
+        ((-38,748,242),(0,0,0),(.9,1,1)),
+        ((126,748,337),(0,0,0),(1.15,1,.7)),
+        ((326,748,303),(0,0,0),(1.2,1,1))):
+    prefab(s,'fixtures/picture-frame',pos,rot,scale=scale)
 # The camera wall remains a real closed room boundary, with a return-view cabinet.
 prefab(s,'furniture/tool-counter',(0,-218,0),(0,0,180))
 box(s,(0,-254,155),(180,7,10),'oak')
 for x in (-63,0,63):
-    box(s,(x,-251,197),(44,5,66),'oak-dark')
-    box(s,(x,-247,197),(34,2,55),'paper')
-    node(s,'arch',pos=(x,-245,197),rot=(90,0,0),width=23,height=39,depth=1,tube=2,material='teal',segments=16)
-# Piles of broad curled shavings remain low contrast; deterministic variation.
-g=node(s,'group',name='SAWDUST',pos=(-182,370,0))
-for i in range(30):
-    x=math.sin(i*2.39)*67; y=math.cos(i*3.1)*106
-    box(g,(x,y,.5+(i%3)*.1),(8+i%7,1.3,1),'oak-light',rot=(0,0,i*137.5))
+    prefab(s,'fixtures/picture-frame',(x,-258,197),(0,0,180),scale=(.49,1,.94))
+# The illustration handoff defines the painted sawdust area; retain its ZIL anchor.
+node(s,'group',name='SAWDUST',pos=(-182,370,0))
 # Practical lighting belongs to the reusable fixture, secondary cool window spill is motivated.
 prefab(s,'fixtures/pendant',(-184,365,400))
 prefab(s,'fixtures/pendant',(256,431,400))
 node(s,'light',pos=(389,538,236),color=(.50,.67,1),intensity=1.4,radius=340,castShadows=1)
 # Scene cameras: physical room areas followed by focus subjects. No per-shot geometry moves.
 cameras=[
-('workshop-floor',(0,-230,330),(0,430,65),62,'Interaction overview: left workbench, ahead pet door/loft, right tool bench; back UI lower left.'),
+('workshop-floor',(330,-220,345),(-30,410,-70),65,'Oblique interaction overview; reserve lower-left floor for prose, clear of all ten hotspots.'),
 ('workbench-top',(-164,210,173),(-323,386,111),62,'Bench surface landscape, closed repair book and unfinished toys.'),
 ('tool-bench',(52,162,173),(321,388,86),65,'East work zone; crate-chair-books climb, tools and Bertrand.'),
 ('countertop',(163,624,207),(321,473,133),60,'Display case and doll beside frosted shop window; same countertop.'),
@@ -291,7 +316,7 @@ cameras=[
 ('key-string',(-311,177,192),(-413,310,180),37,'Frayed remnant below the missing-key hook.'),
 ('workbench',(-99,157,187),(-317,369,75),62,'Whole bench silhouette and clear front bay.'),
 ('oil-can',(-166,248,36),(-274,335,13),43,'Oil can under open workbench front, visible body and spout.'),
-('sawdust',(-25,237,32),(-184,372,2),62,'Wood shavings across boards with bench feet as context.'),
+('sawdust',(-25,237,32),(-184,372,2),62,'Painted sawdust reference: floor near the bench; see work/workshop-new/DESIGN.md for its footprint.'),
 ('sweep-broom',(-111,137,114),(-290,246,66),49,'Leaning broom beside the working bench.'),
 ('clock-face',(-208,363,269),(-404,540,258),47,'Cuckoo clock case, dial, pendulum and roof silhouette.'),
 ('pet-door',(28,546,88),(126,755,49),53,'Rear threshold, real pet opening and cool exterior continuation.'),
@@ -316,7 +341,10 @@ catalog = json.loads(subprocess.check_output([
 shots = {o['id']: (o['id'] + '-look' if o['id'] == o['room']
                   else o['room'] + '-examine-' + o['id']) for o in catalog}
 for name,pos,look,fov,comment in cameras:
-    node(s,'camera',name=shots.get(name,name),pos=pos,look=look,fov=fov,comment=comment)
+    shot=node(s,'camera',name=shots.get(name,name),pos=pos,look=look,fov=fov,comment=comment)
+    if name == 'workshop-floor':
+        shot.set('textRect',fmt((.04,.66,.56,.30)))
+        shot.set('textScale','0.85')
 # Named world anchors coincide with the interaction center, not the prefab floor origin.
 ANCHORS = {'key-hook': (-407, 310, 186), 'key-string': (-407, 310, 177), 'workbench': (-270, 365, 99), 'oil-can': (-274, 335, 13), 'sawdust': (-166, 356, 1), 'sweep-broom': (-290, 249, 76), 'clock-face': (-394, 540, 270), 'pet-door': (126, 746, 26), 'loft-ladder': (-170, 544, 83), 'ladder-mech': (-123, 537, 85), 'repair-book': (-300, 306, 109), 'half-finished-toys': (-325, 424, 124), 'bertrand': (225, 335, 29), 'makeshift-steps': (259, 261, 62), 'tool-rack': (403, 303, 198), 'varnish-pot': (305, 321, 119), 'display-case': (300, 451, 143), 'marzipan': (293, 516, 128), 'shop-window': (415, 538, 223)}
 node(s,'group',name='KEY-STRING',pos=ANCHORS['key-string'])

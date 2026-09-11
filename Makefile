@@ -52,11 +52,16 @@ $(BUILD_ROOT)/test_transition.o: tests/test_transition.c | $(BUILD_ROOT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -Isrc -c "$<" -o "$@"
 $(BUILD_ROOT)/test_transition: $(BUILD_ROOT)/test_transition.o $(BUILD_ROOT)/src/transition.o $(BUILD_ROOT)/src/geometry.o
 	$(CC) $(LDFLAGS) $^ -lm -o "$@"
+$(BUILD_ROOT)/test_hotspots.o: tests/test_hotspots.c | $(BUILD_ROOT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -Isrc -c "$<" -o "$@"
+$(BUILD_ROOT)/test_hotspots: $(BUILD_ROOT)/test_hotspots.o $(BUILD_ROOT)/src/hotspots.o $(BUILD_ROOT)/src/geometry.o
+	$(CC) $(LDFLAGS) $^ -lm -o "$@"
 mac run: all
 	"$(BUILD_ROOT)/book" --root "$(CURDIR)" --book "$(BOOK)"
-check: all $(BUILD_ROOT)/test_geometry $(BUILD_ROOT)/test_transition
+check: all $(BUILD_ROOT)/test_geometry $(BUILD_ROOT)/test_transition $(BUILD_ROOT)/test_hotspots
 	"$(BUILD_ROOT)/test_geometry"
 	"$(BUILD_ROOT)/test_transition"
+	"$(BUILD_ROOT)/test_hotspots"
 	python3 tests/test_book.py "$(BUILD_ROOT)/book" "$(CURDIR)"
 render:
 	python3 tools/render.py --book "$(BOOK)" --scene "$(SCENE)" --scener "$(SCENER)" --width $(WIDTH) --height $(HEIGHT)
@@ -67,4 +72,5 @@ clean:
 	rm -f $(OBJECTS) $(OBJECTS:.o=.d) "$(BUILD_ROOT)/book"
 	rm -f "$(BUILD_ROOT)/test_geometry" "$(BUILD_ROOT)/test_geometry.o" "$(BUILD_ROOT)/test_geometry.d"
 	rm -f "$(BUILD_ROOT)/test_transition" "$(BUILD_ROOT)/test_transition.o" "$(BUILD_ROOT)/test_transition.d"
--include $(OBJECTS:.o=.d) $(BUILD_ROOT)/test_geometry.d $(BUILD_ROOT)/test_transition.d
+	rm -f "$(BUILD_ROOT)/test_hotspots" "$(BUILD_ROOT)/test_hotspots.o" "$(BUILD_ROOT)/test_hotspots.d"
+-include $(OBJECTS:.o=.d) $(BUILD_ROOT)/test_geometry.d $(BUILD_ROOT)/test_transition.d $(BUILD_ROOT)/test_hotspots.d

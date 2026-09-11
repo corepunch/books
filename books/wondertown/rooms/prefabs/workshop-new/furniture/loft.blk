@@ -17,4 +17,6 @@
   <prefab source="workshop-new/props/storage-box" pos="-74 16 240" rot="0 0 0" />
   <prefab source="workshop-new/props/storage-box" pos="-64 18 285" rot="0 0 0" scale="0.8 0.8 0.8" />
   <prefab source="workshop-new/props/storage-box" pos="25 40 240" rot="0 0 10" />
+  <cylinder pos="-76 70 253" radius="13" height="58" material="cream" rot="0 0 90" sides="24" />
+  <cylinder pos="0 70 253" radius="13" height="58" material="red" rot="0 0 90" sides="24" />
 </prefab>

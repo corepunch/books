@@ -69,6 +69,8 @@ frect_t frect_expand(frect_t rect, fsize2_t extra);
 frect_t frect_flip_y(frect_t rect, float height);
 /* Preserve aspect ratio and center the image, cropping overflow. */
 frect_t frect_cover(fsize2_t image, frect_t bounds);
+/* Map a normalized rectangle into another rectangle, including its offset. */
+frect_t frect_relative(frect_t relative, frect_t bounds);
 bool frect_ellipse_contains_point(frect_t rect, fvec2_t point);
 
 /* Shared helpers */
@@ -153,6 +155,7 @@ bool renderer_begin(isize2_t size, float scale);
 void renderer_present(void);
 void renderer_rect(frect_t bounds, uint32_t rgba);
 void renderer_ring(frect_t bounds, uint32_t rgba);
+void renderer_line(fvec2_t start, fvec2_t end, uint32_t rgba);
 /* Circular masks affect subsequent drawing until explicitly ended. */
 void renderer_reveal_begin(fvec2_t center, float radius);
 void renderer_reveal_end(void);
@@ -171,20 +174,36 @@ frect_t renderer_bounds(void);
 /* Text rendering */
 #define MAX_GLYPHS 512
 #define TEXT_SPACING_SCALE 0.67f
+#define TEXT_BASE_SIZE 36.0f
+#define TEXT_MIN_FIT_RATIO 0.8f
 
 bool text_init(const char *font_path);
 void text_shutdown(void);
 float text_draw(const char *text, fvec2_t origin, float size, float max_width, uint32_t rgba);
 float text_height(const char *text, float size, float max_width);
+float text_fit_size(const char *text, float preferred_size, fsize2_t bounds);
 
 /* Scene projection */
-/* Read fixed cameras and anchors from the book's .blks files. */
+/* Read fixed cameras, reading regions and anchors from the book's .blks files. */
 void scene_load(const char *rooms, const char *camera_name);
 void scene_shutdown(void);
 bool scene_project_anchor(const char *key, isize2_t image, fsize2_t viewport, fvec2_t *point);
+struct TextRegion {
+    frect_t bounds; /* Returned in logical page coordinates after the image crop. */
+    float font_size;
+    bool authored;
+};
+struct TextRegion scene_text_region(isize2_t image, fsize2_t viewport);
 
 /* Graphical interface */
 #define HOTSPOT_DIAMETER 48.0f
+#define HOTSPOT_GAP (HOTSPOT_DIAMETER / 2)
+#define HOTSPOT_TEXT_GAP 12.0f
+struct Hotspot { fvec2_t anchor, center; int choice; };
+typedef struct Hotspot hotspotList_t[MAX_CHOICES];
+/* Returns false if the viewport cannot accommodate every marker. */
+bool hotspots_place(struct Hotspot *spots, int count, fsize2_t viewport, frect_t prose);
+int scene_hotspots(isize2_t image, fsize2_t viewport, hotspotList_t spots);
 
 /* Presentation animation, independent of the VM and graphics backend. Times are seconds. */
 struct Transition {
