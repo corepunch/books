@@ -25,6 +25,8 @@ make ipad-run                   # build, install and launch on an iPad simulator
 make ipad-run DEVICE="iPad Pro 11-inch (M5)"  # or a simulator UDID
 make ipad                       # compile an unsigned ARM64 iPad app
 make ipad-mac                   # development-sign and launch the iPad app on Mac
+make list-devices               # list physical device names and identifiers
+make ipad-deploy BOOK=wondertown DEVICE="Igor Chernakov’s iPad"
 ```
 
 Build products are in `build/ipad/iphoneos-arm64/` and
@@ -33,13 +35,16 @@ Build products are in `build/ipad/iphoneos-arm64/` and
 Apple silicon using macOS's iPad app support. Mac Catalyst is not involved.
 
 Simulator builds use ad-hoc signing and require no developer account. For local
-Mac execution, `tools/sign_ipad.py` selects an installed, unexpired development
+Mac execution and iPad deployment, `tools/sign_ipad.py` selects an installed, unexpired development
 profile and a matching certificate/private key for `BUNDLE_ID` (default
 `com.igor.book`). It can reuse a wildcard profile. Set `TEAM=...` to select a
 team or `PROFILE=/path/to/profile.mobileprovision` explicitly. This build never
 creates profiles or contacts the developer portal. Physical iPads also need a
-valid development signature and a profile covering the device; `make ipad`
-only produces an unsigned build. App Store release packaging is separate.
+valid development signature and a profile covering the device. `make ipad-deploy`
+builds, signs, installs and launches using `devicectl`; `DEVICE` accepts the name
+or UDID shown by `make list-devices`. The iPad must be paired with this Mac and
+have Developer Mode enabled. `make ipad` only produces an unsigned build.
+App Store release packaging is separate.
 
 `BOOK=wondertown` selects the bundled adventure. The native objects are cached;
 changing ZIL, Lua, art, or `BOOK` repackages resources without recompiling C.

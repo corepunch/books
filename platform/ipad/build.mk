@@ -29,7 +29,7 @@ OBJECTS := $(addprefix $(BUILD_ROOT)/,$(SOURCES:.c=.o))
 OBJECTS := $(OBJECTS:.m=.o) $(addprefix $(BUILD_ROOT)/,$(LUA_SOURCES:.c=.o))
 ICON_SOURCES := $(wildcard assets/AppIcon.xcassets/*/*.png assets/AppIcon.xcassets/*/*.json assets/AppIcon.xcassets/*.json)
 
-.PHONY: app mac run clean settings
+.PHONY: app mac run deploy clean settings
 
 # Record SDK/compiler settings so changing the deployment target or SDK rebuilds
 # native objects even when source timestamps have not changed.
@@ -68,6 +68,14 @@ mac: app
 run: app
 	@test "$(SDK)" = iphonesimulator || { echo 'Simulator launch requires SDK=iphonesimulator'; exit 1; }
 	python3 tools/run_ipad_simulator.py "$(APP)" $(if $(DEVICE),--device "$(DEVICE)")
+
+deploy:
+	@test "$(SDK)" = iphoneos -a "$(ARCH)" = arm64 || { echo 'iPad deployment requires SDK=iphoneos ARCH=arm64'; exit 1; }
+	@test -n "$(DEVICE)" || { echo 'Set DEVICE="iPad name or UDID"; use make list-devices to find it.'; exit 1; }
+	$(MAKE) -f platform/ipad/build.mk app
+	python3 tools/sign_ipad.py "$(APP)" $(if $(TEAM),--team "$(TEAM)") $(if $(PROFILE),--profile "$(PROFILE)")
+	xcrun devicectl device install app --device "$(DEVICE)" "$(APP)"
+	xcrun devicectl device process launch --device "$(DEVICE)" --terminate-existing "$(BUNDLE_ID)"
 
 clean:
 	rm -rf "$(BUILD_ROOT)"

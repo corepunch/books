@@ -22,7 +22,7 @@ endif
 CPPFLAGS += -I$(shell xcrun --show-sdk-path)/usr/include/libxml2
 LDLIBS += -framework AppKit -framework Metal -framework QuartzCore
 
-.PHONY: all run mac check check-ui render layout clean ipad ipad-simulator ipad-mac ipad-run
+.PHONY: all run mac check check-ui render layout clean ipad ipad-simulator ipad-mac ipad-run ipad-deploy list-devices
 # The AppKit executable remains a development/headless harness.
 # The shipping app is compiled directly with the iOS SDK, without an IDE project.
 ipad:
@@ -33,6 +33,10 @@ ipad-mac:
 	$(MAKE) -f platform/ipad/build.mk BUILD_DIR="$(BUILD_ROOT)/ipad" BOOK="$(BOOK)" SDK=iphoneos mac
 ipad-run:
 	$(MAKE) -f platform/ipad/build.mk BUILD_DIR="$(BUILD_ROOT)/ipad" BOOK="$(BOOK)" SDK=iphonesimulator run
+ipad-deploy:
+	$(MAKE) -f platform/ipad/build.mk BUILD_DIR="$(BUILD_ROOT)/ipad" BOOK="$(BOOK)" SDK=iphoneos deploy
+list-devices:
+	xcrun devicectl list devices
 all: $(BUILD_ROOT)/book
 $(BUILD_ROOT):
 	mkdir -p "$@"
