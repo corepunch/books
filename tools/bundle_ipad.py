@@ -30,6 +30,7 @@ def main():
         if (target / directory).exists():
             shutil.rmtree(target / directory)
     (target / 'embedded.mobileprovision').unlink(missing_ok=True)
+    (target / 'Lua-LICENSE.txt').unlink(missing_ok=True)
 
     def stage(directory, extensions):
         source = root / directory
