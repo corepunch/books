@@ -195,19 +195,6 @@ struct TextRegion scene_text_region(isize2_t image, fsize2_t viewport)
                                camera.text.font_size*cover.size.height/UI_HEIGHT,true};
 }
 
-int scene_hotspot_targets(hotspotTargetList_t targets)
-{
-    if (book.beat || book.focus) return 0;
-    int count=0;
-    for (int i=0;i<book.choice_count;++i) {
-        const struct Choice *choice=&book.choices[i];
-        if (!choice->focus) continue;
-        copy(targets[count].key,sizeof(targets[count].key),book.objects[choice->object].key);
-        targets[count++].choice=i;
-    }
-    return count;
-}
-
 int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct HotspotTarget *targets,
                           int target_count, bool has_text, hotspotList_t spots)
 {
@@ -224,13 +211,6 @@ int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct Hotspo
     if (!hotspots_place(spots,count,viewport,prose))
         fail("camera %s cannot fit its interaction circles; recompose with more space",loaded_camera);
     return count;
-}
-
-int scene_hotspots(isize2_t image, fsize2_t viewport, hotspotList_t spots)
-{
-    hotspotTargetList_t targets;
-    int count=scene_hotspot_targets(targets);
-    return scene_layout_hotspots(image,viewport,targets,count,*book.text!=0,spots);
 }
 
 void scene_shutdown(void)

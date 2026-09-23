@@ -21,7 +21,7 @@ APP := $(BUILD_ROOT)/Book.app
 ICON_DIR := $(BUILD_ROOT)/icons
 COMPILER := xcrun --sdk $(SDK) clang
 MIN_FLAG := $(if $(filter iphoneos,$(SDK)),-miphoneos-version-min,-mios-simulator-version-min)=$(IOS_MIN)
-COMPILE_FLAGS := -isysroot "$(SDK_PATH)" -arch $(ARCH) $(MIN_FLAG) -std=c11 -O2 -g -Wall -Wextra -MMD -MP
+COMPILE_FLAGS := -isysroot "$(SDK_PATH)" -arch $(ARCH) $(MIN_FLAG) -std=c11 -O2 -g -Wall -Wextra -Werror=switch-enum -MMD -MP
 INCLUDES := -Ivendor -I"$(SDK_PATH)/usr/include/libxml2"
 SOURCES := $(filter-out src/main.c src/headless.c,$(wildcard src/*.c)) src/ipad.m src/metal.m
 OBJECTS := $(addprefix $(BUILD_ROOT)/,$(SOURCES:.c=.o))

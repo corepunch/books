@@ -13,7 +13,7 @@ SOURCES := $(wildcard src/*.c)
 NATIVE_SOURCES := src/macos.m src/metal.m
 OBJECTS := $(patsubst src/%.c,$(BUILD_ROOT)/src/%.o,$(SOURCES)) $(patsubst src/%.m,$(BUILD_ROOT)/src/%.o,$(NATIVE_SOURCES))
 CPPFLAGS += -Ivendor $(shell pkg-config --cflags libxml-2.0)
-CFLAGS += -std=c11 -Wall -Wextra -MMD -MP
+CFLAGS += -std=c11 -Wall -Wextra -Werror=switch-enum -MMD -MP
 LDLIBS += $(filter-out -lm,$(shell pkg-config --libs libxml-2.0)) -lm
 ifneq ($(shell uname -s),Darwin)
 $(error Book requires macOS with AppKit and Metal)

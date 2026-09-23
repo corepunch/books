@@ -6,7 +6,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#define MAX_RENDERER_IMAGES 3 /* Two page images plus the Back button asset. */
+#define MAX_RENDERER_IMAGES 3 /* Artwork cache, including both sides of a page transition. */
 
 struct PageImage {
     texture_t texture;

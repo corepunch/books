@@ -6,8 +6,6 @@
 #include <string.h>
 #include <unistd.h>
 
-struct Book book;
-
 enum {
     ROOM_FLOOR = 1,
     ROOM_TABLE,
@@ -26,13 +24,18 @@ enum {
 
 static struct {
     unsigned int inventory;
-    storyText_t inventory_text;
+    int room;
+    filePath_t root, rooms;
+    struct Object objects[MAX_OBJECTS];
 } game;
+
+/* Build into private scratch storage; consumers only see validated, complete pages.
+ * Keep these large snapshots off the iPad main-thread stack. */
+static struct BookPage current, draft;
 
 static void set_object(int id, const char *key, const char *name, const char *description)
 {
-    struct Object *object = &book.objects[id];
-    copy(object->symbol, sizeof(object->symbol), key);
+    struct Object *object = &game.objects[id];
     copy(object->key, sizeof(object->key), key);
     copy(object->noun, sizeof(object->noun), name);
     copy(object->desc, sizeof(object->desc), description);
@@ -67,151 +70,199 @@ static const char *room_text(int room)
     }
 }
 
-static void select_image(const char *camera)
+static void select_image(struct BookPage *page, const char *camera)
 {
-    book.image[0] = book.camera[0] = 0;
-    if (!camera || !*camera) return;
+    page->image[0] = 0;
+    copy(page->camera, sizeof(page->camera), camera);
     filePath_t path;
-    int length = snprintf(path, sizeof(path), "%s/%s.jpg", book.rooms, camera);
+    int length = snprintf(path, sizeof(path), "%s/%s.jpg", game.rooms, camera);
     if (length < 0 || (size_t)length >= sizeof(path)) fail("illustration path is too long");
-    if (access(path, R_OK)) return;
-    copy(book.image, sizeof(book.image), path);
-    copy(book.camera, sizeof(book.camera), camera);
+    if (!access(path, R_OK)) copy(page->image, sizeof(page->image), path);
 }
 
-static void add_choice(int object, const char *label, const char *command)
+static struct Choice object_choice(int object, const char *label, const char *command)
 {
-    if (book.choice_count >= MAX_CHOICES) fail("too many adventure choices");
-    struct Choice *choice = &book.choices[book.choice_count++];
-    copy(choice->label, sizeof(choice->label), label);
-    copy(choice->command, sizeof(choice->command), command);
-    choice->object = object;
-    choice->focus = true;
+    struct Choice choice = {.kind = CHOICE_OBJECT, .object = object};
+    copy(choice.label, sizeof(choice.label), label);
+    copy(choice.command, sizeof(choice.command), command);
+    return choice;
 }
 
-static void refresh_choices(void)
+static struct Choice continue_choice(void)
 {
-    book.choice_count = 0;
-    if (book.beat || book.ended) {
-        if (book.beat) {
-            struct Choice *choice = &book.choices[book.choice_count++];
-            copy(choice->label, sizeof(choice->label), "Продолжить");
-            choice->object = 0;
-        }
-        return;
+    struct Choice choice = {.kind = CHOICE_CONTINUE};
+    copy(choice.label, sizeof(choice.label), "Дальше");
+    return choice;
+}
+
+static void append_choice(struct Choice choice)
+{
+    if (draft.choice_count >= MAX_CHOICES) fail("too many adventure choices");
+    draft.choices[draft.choice_count++] = choice;
+}
+
+static void begin_page(enum PageKind kind, const char *text, const char *camera)
+{
+    memset(&draft, 0, sizeof(draft));
+    draft.kind = kind;
+    draft.room = game.room;
+    copy(draft.text, sizeof(draft.text), text);
+    select_image(&draft, camera);
+}
+
+static void publish_page(void)
+{
+    if (draft.room <= 0 || draft.room >= MAX_OBJECTS || !*game.objects[draft.room].key)
+        fail("page has no valid room");
+    if (!*draft.text || !*draft.camera) fail("page must have prose and a camera");
+    if (draft.choice_count < 0 || draft.choice_count > MAX_CHOICES) fail("invalid choice count");
+    switch (draft.kind) {
+    case PAGE_ROOM:
+        if (!draft.choice_count) fail("room page has no actions");
+        break;
+    case PAGE_BEAT:
+        if (draft.choice_count != 1) fail("intermediate page must have exactly one Continue choice");
+        break;
+    case PAGE_ENDED:
+        if (draft.choice_count) fail("ending page must not have choices");
+        break;
+    case PAGE_INVALID:
+    default: fail("invalid page kind %d", draft.kind);
     }
+    for (int i = 0; i < draft.choice_count; ++i) {
+        const struct Choice *choice = &draft.choices[i];
+        if (!*choice->label) fail("choice %d has no label", i);
+        switch (choice->kind) {
+        case CHOICE_OBJECT:
+            if (draft.kind != PAGE_ROOM || !*choice->command || choice->object <= 0 ||
+                choice->object >= MAX_OBJECTS || !*game.objects[choice->object].key)
+                fail("invalid object choice %d", i);
+            break;
+        case CHOICE_CONTINUE:
+            if (draft.kind != PAGE_BEAT || choice->object || *choice->command)
+                fail("invalid Continue choice %d", i);
+            break;
+        case CHOICE_INVALID:
+        default: fail("invalid kind for choice %d", i);
+        }
+    }
+    current = draft;
+}
 
-    switch (book.room) {
+static void add_room_choices(void)
+{
+    switch (game.room) {
     case ROOM_FLOOR:
         if (!(game.inventory & STAR_BRASS))
-            add_choice(OBJECT_BRASS_STAR, "Поднять латунную звёздочку", "take brass-star");
-        add_choice(OBJECT_BOOK_STAIRS, "Взобраться на стол по книгам", "go table");
+            append_choice(object_choice(OBJECT_BRASS_STAR, "Поднять латунную звёздочку", "take brass-star"));
+        append_choice(object_choice(OBJECT_BOOK_STAIRS, "Взобраться на стол по книгам", "go table"));
         break;
     case ROOM_TABLE:
         if (!(game.inventory & STAR_COPPER))
-            add_choice(OBJECT_COPPER_STAR, "Поднять медную звёздочку", "take copper-star");
-        add_choice(OBJECT_BOOK_STAIRS, "Спуститься на пол по книгам", "go floor");
-        add_choice(OBJECT_POSTCARD_STAIRS, "Подняться к окну по открыткам", "go sill");
+            append_choice(object_choice(OBJECT_COPPER_STAR, "Поднять медную звёздочку", "take copper-star"));
+        append_choice(object_choice(OBJECT_BOOK_STAIRS, "Спуститься на пол по книгам", "go floor"));
+        append_choice(object_choice(OBJECT_POSTCARD_STAIRS, "Подняться к окну по открыткам", "go sill"));
         break;
     case ROOM_SILL:
         if (!(game.inventory & STAR_PEARL))
-            add_choice(OBJECT_PEARL_STAR, "Поднять светлую звёздочку", "take pearl-star");
-        add_choice(OBJECT_POSTCARD_STAIRS, "Спуститься на стол по открыткам", "go table");
+            append_choice(object_choice(OBJECT_PEARL_STAR, "Поднять светлую звёздочку", "take pearl-star"));
+        append_choice(object_choice(OBJECT_POSTCARD_STAIRS, "Спуститься на стол по открыткам", "go table"));
         break;
+    default: fail("unknown room %d", game.room);
     }
 }
 
 static void show_room(void)
 {
-    book.beat = false;
-    book.focus = 0;
-    book.room_text[0] = 0;
-    copy(book.room_text, sizeof(book.room_text), room_text(book.room));
-    copy(book.text, sizeof(book.text), book.room_text);
-    const char *camera = book.room == ROOM_FLOOR
+    const char *camera = game.room == ROOM_FLOOR
         ? ((game.inventory & STAR_BRASS) ? "floor-show-cleared-room" : "floor-show-room")
-        : book.room == ROOM_TABLE
+        : game.room == ROOM_TABLE
             ? ((game.inventory & STAR_COPPER) ? "table-show-cleared-desk" : "table-show-desk")
             : "sill-show-window";
-    select_image(camera);
-    refresh_choices();
+    begin_page(PAGE_ROOM, room_text(game.room), camera);
+    add_room_choices();
+    publish_page();
+}
+
+/* Story actions call this constructor; they never need to remember navigation. */
+static void show_beat(const char *text, const char *camera)
+{
+    begin_page(PAGE_BEAT, text, camera);
+    append_choice(continue_choice());
+    publish_page();
 }
 
 static void finish_story(void)
 {
-    book.beat = false;
-    book.ended = true;
-    book.choice_count = 0;
-    copy(book.text, sizeof(book.text),
-         "Мира возвращает все три звёздочки на бумажное созвездие. Чердак снова становится тихим, а над гнездом сияет маленькая карта неба.");
-    select_image("attic-return-stars");
+    begin_page(PAGE_ENDED,
+        "Мира возвращает все три звёздочки на бумажное созвездие. Чердак снова становится тихим, а над гнездом сияет маленькая карта неба.",
+        "attic-return-stars");
+    publish_page();
 }
 
-static void perform(int object)
+static bool perform(int object)
 {
-    if (book.ended || book.beat) return;
-    book.focus = 0;
+    if (current.kind != PAGE_ROOM) return false;
+    const char *text, *camera;
     switch (object) {
     case OBJECT_BRASS_STAR:
-        if (book.room != ROOM_FLOOR || game.inventory & STAR_BRASS) return;
+        if (game.room != ROOM_FLOOR || game.inventory & STAR_BRASS) return false;
         game.inventory |= STAR_BRASS;
-        copy(book.text, sizeof(book.text), "Мира бережно поднимает латунную звёздочку у своего гнезда.");
-        select_image("floor-take-gold-star");
+        text = "Мира бережно поднимает латунную звёздочку у своего гнезда.";
+        camera = "floor-take-gold-star";
         break;
     case OBJECT_COPPER_STAR:
-        if (book.room != ROOM_TABLE || game.inventory & STAR_COPPER) return;
+        if (game.room != ROOM_TABLE || game.inventory & STAR_COPPER) return false;
         game.inventory |= STAR_COPPER;
-        copy(book.text, sizeof(book.text), "Мира находит медную звёздочку между листами.");
-        select_image("table-take-copper-star");
+        text = "Мира находит медную звёздочку между листами.";
+        camera = "table-take-copper-star";
         break;
     case OBJECT_PEARL_STAR:
-        if (book.room != ROOM_SILL || game.inventory & STAR_PEARL) return;
+        if (game.room != ROOM_SILL || game.inventory & STAR_PEARL) return false;
         game.inventory |= STAR_PEARL;
-        copy(book.text, sizeof(book.text), "Мира поднимает последнюю звёздочку у оконной рамы.");
-        select_image("sill-take-pearl-star");
+        text = "Мира поднимает последнюю звёздочку у оконной рамы.";
+        camera = "sill-take-pearl-star";
         break;
     case OBJECT_BOOK_STAIRS:
-        if (book.room == ROOM_FLOOR) {
-            book.room = ROOM_TABLE;
-            copy(book.text, sizeof(book.text), "Мира перебирается по книжным ступеням на столешницу.");
-            select_image("floor-climb-table");
-        } else if (book.room == ROOM_TABLE) {
-            book.room = ROOM_FLOOR;
-            copy(book.text, sizeof(book.text), "Мира осторожно спускается по книгам на пол.");
-            select_image("table-go-floor");
-        } else return;
+        if (game.room == ROOM_FLOOR) {
+            game.room = ROOM_TABLE;
+            text = "Мира перебирается по книжным ступеням на столешницу.";
+            camera = "floor-climb-table";
+        } else if (game.room == ROOM_TABLE) {
+            game.room = ROOM_FLOOR;
+            text = "Мира осторожно спускается по книгам на пол.";
+            camera = "table-go-floor";
+        } else return false;
         break;
     case OBJECT_POSTCARD_STAIRS:
-        if (book.room == ROOM_TABLE) {
-            book.room = ROOM_SILL;
-            copy(book.text, sizeof(book.text), "Мира взбирается по открыткам на подоконник.");
-            select_image("table-climb-sill");
-        } else if (book.room == ROOM_SILL) {
-            book.room = ROOM_TABLE;
-            copy(book.text, sizeof(book.text), "Мира спускается по открыткам обратно на стол.");
-            select_image("sill-go-table");
-        } else return;
+        if (game.room == ROOM_TABLE) {
+            game.room = ROOM_SILL;
+            text = "Мира взбирается по открыткам на подоконник.";
+            camera = "table-climb-sill";
+        } else if (game.room == ROOM_SILL) {
+            game.room = ROOM_TABLE;
+            text = "Мира спускается по открыткам обратно на стол.";
+            camera = "sill-go-table";
+        } else return false;
         break;
-    default: return;
+    default: return false;
     }
 
     if (game.inventory == ALL_STARS) finish_story();
-    else {
-        book.beat = true;
-        refresh_choices();
-    }
+    else show_beat(text, camera);
+    return true;
 }
 
 void book_init(const char *root, const char *adventure)
 {
     (void)adventure;
-    memset(&book, 0, sizeof(book));
+    memset(&current, 0, sizeof(current));
+    memset(&draft, 0, sizeof(draft));
     memset(&game, 0, sizeof(game));
-    if (!realpath(root, book.root)) fail("cannot resolve asset root: %s", root);
-    copy(book.adventure, sizeof(book.adventure), "three-stars");
-    int length = snprintf(book.rooms, sizeof(book.rooms), "%s/books/three-stars/rooms", book.root);
-    if (length < 0 || (size_t)length >= sizeof(book.rooms)) fail("adventure path is too long");
-    book.room = ROOM_FLOOR;
+    if (!realpath(root, game.root)) fail("cannot resolve asset root: %s", root);
+    int length = snprintf(game.rooms, sizeof(game.rooms), "%s/books/three-stars/rooms", game.root);
+    if (length < 0 || (size_t)length >= sizeof(game.rooms)) fail("adventure path is too long");
+    game.room = ROOM_FLOOR;
     set_object(ROOM_FLOOR, "attic-floor", room_name(ROOM_FLOOR), "Чердачный пол");
     set_object(ROOM_TABLE, "writing-desk", room_name(ROOM_TABLE), "Письменный стол");
     set_object(ROOM_SILL, "window-sill", room_name(ROOM_SILL), "Подоконник");
@@ -220,64 +271,111 @@ void book_init(const char *root, const char *adventure)
     set_object(OBJECT_COPPER_STAR, "copperstar", "звёздочка", "медная звёздочка");
     set_object(OBJECT_POSTCARD_STAIRS, "postcard-stairs", "открытки", "сложенные открытки");
     set_object(OBJECT_PEARL_STAR, "pearlstar", "звёздочка", "светлая звёздочка");
-    copy(book.room_text, sizeof(book.room_text), room_text(book.room));
-    copy(book.text, sizeof(book.text), book.room_text);
-    select_image("floor-show-room");
-    refresh_choices();
+    show_room();
 }
 
-void book_shutdown(void) { memset(&game, 0, sizeof(game)); }
-
-void book_command(const char *input, int subject)
+void book_shutdown(void)
 {
-    (void)subject;
-    if (!input || !*input || book.ended) return;
+    memset(&game, 0, sizeof(game));
+    memset(&current, 0, sizeof(current));
+    memset(&draft, 0, sizeof(draft));
+}
+
+const struct BookPage *book_page(void) { return &current; }
+const char *book_root(void) { return game.root; }
+const char *book_rooms(void) { return game.rooms; }
+const struct Object *book_object(int object)
+{
+    return &game.objects[object > 0 && object < MAX_OBJECTS ? object : 0];
+}
+
+const char *book_page_kind_name(enum PageKind kind)
+{
+    switch (kind) {
+    case PAGE_ROOM: return "room";
+    case PAGE_BEAT: return "beat";
+    case PAGE_ENDED: return "ended";
+    case PAGE_INVALID: break;
+    }
+    fail("invalid page kind %d", kind);
+}
+
+const char *book_choice_kind_name(enum ChoiceKind kind)
+{
+    switch (kind) {
+    case CHOICE_OBJECT: return "object";
+    case CHOICE_CONTINUE: return "continue";
+    case CHOICE_INVALID: break;
+    }
+    fail("invalid choice kind %d", kind);
+}
+
+bool book_action(int index)
+{
+    if (index < 0 || index >= current.choice_count) return false;
+    const struct Choice choice = current.choices[index];
+    switch (choice.kind) {
+    case CHOICE_OBJECT: return perform(choice.object);
+    case CHOICE_CONTINUE: show_room(); return true;
+    case CHOICE_INVALID: break;
+    }
+    fail("cannot execute choice kind %d", choice.kind);
+}
+
+bool book_continue(void)
+{
+    for (int i = 0; i < current.choice_count; ++i)
+        if (current.choices[i].kind == CHOICE_CONTINUE) return book_action(i);
+    return false;
+}
+
+bool book_choose_object(const char *key)
+{
+    for (int i = 0; i < current.choice_count; ++i) {
+        const struct Choice *choice = &current.choices[i];
+        if (choice->kind == CHOICE_OBJECT && !strcmp(book_object(choice->object)->key, key))
+            return book_action(i);
+    }
+    return false;
+}
+
+bool book_command(const char *input)
+{
+    if (!input || !*input || current.kind == PAGE_ENDED) return false;
     if (!strcmp(input, "inventory")) {
-        size_t used = 0;
-        used += (size_t)snprintf(game.inventory_text, sizeof(game.inventory_text), "У Миры: ");
-        if (!game.inventory) snprintf(game.inventory_text + used, sizeof(game.inventory_text) - used, "пока нет звёздочек.");
+        /* Diagnostic prose preserves the current page's typed actions. */
+        draft = current;
+        size_t used = (size_t)snprintf(draft.text, sizeof(draft.text), "У Миры: ");
+        if (!game.inventory) snprintf(draft.text + used, sizeof(draft.text) - used, "пока нет звёздочек.");
         else {
             bool first = true;
             const struct { unsigned int bit; const char *name; } names[] = {
                 {STAR_BRASS, "латунная звёздочка"}, {STAR_COPPER, "медная звёздочка"}, {STAR_PEARL, "светлая звёздочка"}
             };
             for (size_t i = 0; i < sizeof(names) / sizeof(names[0]); ++i) if (game.inventory & names[i].bit) {
-                int n = snprintf(game.inventory_text + used, sizeof(game.inventory_text) - used,
+                int n = snprintf(draft.text + used, sizeof(draft.text) - used,
                                  "%s%s", first ? "" : ", ", names[i].name);
                 if (n > 0) used += (size_t)n;
                 first = false;
             }
         }
-        copy(book.text, sizeof(book.text), game.inventory_text);
-        return;
+        publish_page();
+        return true;
     }
-    for (int i = 0; i < book.choice_count; ++i)
-        if (*book.choices[i].command && !strcmp(input, book.choices[i].command)) {
-            perform(book.choices[i].object);
-            return;
-        }
-}
-
-void book_back(void)
-{
-    if (book.ended) return;
-    show_room();
-}
-
-void book_focus_object(int object) { perform(object); }
-
-void book_action(int index)
-{
-    if (index < 0 || index >= book.choice_count) return;
-    const struct Choice choice = book.choices[index];
-    if (choice.focus) perform(choice.object);
-    else if (book.beat) book_back();
+    for (int i = 0; i < current.choice_count; ++i)
+        if (*current.choices[i].command && !strcmp(input, current.choices[i].command))
+            return book_action(i);
+    return false;
 }
 
 void book_reload(void)
 {
-    if (!book.beat && !book.ended) show_room();
-    else if (book.ended) select_image("attic-return-stars");
+    if (current.kind == PAGE_ROOM) show_room();
+    else {
+        draft = current;
+        select_image(&draft, current.camera);
+        publish_page();
+    }
 }
 
 int book_object_room(int object)

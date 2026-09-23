@@ -17,6 +17,16 @@ and hit tests; pass structs instead of separate coordinate components.
 ## Runtime
 
 - The C adventure owns all game state, text, rooms, objects and actions.
+- Keep mutable adventure state private to `book.c`. Consumers read `book_page()`;
+  build new pages through the private constructors and `publish_page()`. Create
+  whole choice values with explicit `ChoiceKind`; never partially overwrite a
+  reused choice or infer its action from text or empty strings. `show_beat()`
+  always supplies Continue. See README's "Extending the adventure" for the path
+  to add an action.
+- Route all input through `book_action()`. Drawing and headless input share
+  `page_layout()` and `page_hit_test()`; keep control bounds and labels there and
+  in the published page. Tests must activate the published Continue choice or
+  tap its control, so they exercise the player-facing navigation path.
 - The UI discovers tappable targets from the current C page choices. Camera
   names select the matching illustrations in `books/three-stars/rooms/`.
 - Camera and anchor metadata live in the `.blks` scene source. Keep named

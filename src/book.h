@@ -78,7 +78,7 @@ _Noreturn void fail(const char *format, ...);
 void copy(char *dst, size_t size, const char *src);
 void lower(char *s);
 
-/* Current C adventure state and the page presented by the native UI. */
+/* Read-only adventure pages. Mutable story state stays private to book.c. */
 #define MAX_OBJECTS 256
 #define MAX_CHOICES 512
 /* String capacities include the terminating null byte. */
@@ -104,37 +104,42 @@ typedef char storyText_t[MAX_STORY_TEXT];
 typedef char nounPhrase_t[MAX_NOUN_PHRASE];
 
 struct Object {
-    identifier_t symbol, key;
+    identifier_t key;
     noun_t noun;
-    word_t adjective;
     description_t desc;
 };
+/* Zero is deliberately invalid: missing initialization must fail at publication. */
+enum PageKind { PAGE_INVALID, PAGE_ROOM, PAGE_BEAT, PAGE_ENDED };
+enum ChoiceKind { CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE };
 struct Choice {
+    enum ChoiceKind kind;
     choiceLabel_t label;
     command_t command;
     int object;
-    bool focus;
 };
-struct Book {
-    struct Object objects[MAX_OBJECTS];
+struct BookPage {
+    enum PageKind kind;
     struct Choice choices[MAX_CHOICES];
-    int choice_count, room, focus;
-    bool beat, ended;
-    filePath_t root;
-    identifier_t adventure;
-    filePath_t rooms, image;
+    int choice_count, room;
+    filePath_t image;
     assetName_t camera;
-    storyText_t text, room_text, focus_text;
+    storyText_t text;
 };
-
-extern struct Book book;
 
 void book_init(const char *root, const char *adventure);
 void book_shutdown(void);
-void book_command(const char *input, int subject);
-void book_back(void);
-void book_focus_object(int object);
-void book_action(int index);
+/* Borrowed until the next accepted action/reload. Copy to retain an outgoing page. */
+const struct BookPage *book_page(void);
+const struct Object *book_object(int object);
+const char *book_root(void);
+const char *book_rooms(void);
+const char *book_page_kind_name(enum PageKind kind);
+const char *book_choice_kind_name(enum ChoiceKind kind);
+/* Every input adapter resolves a current choice and calls this dispatcher. */
+bool book_action(int index);
+bool book_command(const char *input);
+bool book_continue(void);
+bool book_choose_object(const char *key);
 void book_reload(void);
 /* Return the object's room, or zero when it has none. */
 int book_object_room(int object);
@@ -202,13 +207,25 @@ typedef struct Hotspot hotspotList_t[MAX_CHOICES];
 bool hotspots_place(struct Hotspot *spots, int count, fsize2_t viewport, frect_t prose);
 struct HotspotTarget { identifier_t key; int choice; };
 typedef struct HotspotTarget hotspotTargetList_t[MAX_CHOICES];
-/* Capture VM-derived targets once; layout and rendering can then retain either page. */
-int scene_hotspot_targets(hotspotTargetList_t targets);
 int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct HotspotTarget *targets,
                           int count, bool has_text, hotspotList_t spots);
-int scene_hotspots(isize2_t image, fsize2_t viewport, hotspotList_t spots);
 
-/* Presentation animation, independent of the VM and graphics backend. Times are seconds. */
+/* One layout supplies rendering, hit testing and headless inspection. */
+struct PageControl { frect_t bounds; int choice; bool circle; };
+struct PageLayout {
+    struct TextRegion region;
+    float font_size;
+    int max_scroll;
+    hotspotList_t spots;
+    int spot_count;
+    struct PageControl controls[MAX_CHOICES];
+    int control_count;
+};
+void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
+                 struct PageLayout *layout);
+const struct PageControl *page_hit_test(const struct PageLayout *layout, fvec2_t point);
+
+/* Presentation animation, independent of the adventure and graphics backend. Times are seconds. */
 struct Transition {
     double started;
     fvec2_t origin;
@@ -224,8 +241,6 @@ void transition_start(struct Transition *transition, double now, fvec2_t point,
                       fsize2_t viewport, float initial_radius, bool reveal);
 struct TransitionFrame transition_sample(struct Transition *transition, double now,
                                          fsize2_t viewport);
-
-#define MAX_HITS (MAX_CHOICES * 2) /* Each choice can have a marker and a text hit. */
 
 enum { UI_WIDTH = 1100, UI_HEIGHT = 800 };
 void ui_run(bool smoke, const char *screenshot, double smoke_transition);

@@ -35,16 +35,56 @@ orientations, and keeps progress in memory until the app closes.
 ## Headless interface
 
 `build/book --headless` prints a JSON snapshot for each page. It accepts
-`:choose N`, `:continue`, `:back`, and `:reload`; `N` is a zero-based choice
-index. `make check` exercises the C adventure and projection without opening a
-window. `make check-ui` exercises the graphical reveal and requires a window
-server.
+`:choose N`, `:tap X Y`, `:continue`, `:back`, and `:reload`; `N` is a zero-based
+choice index and tap coordinates are logical pixels in the 1100 × 800 viewport.
+Snapshots include explicit choice kinds and the controls used by drawing and hit
+testing. `:continue` and the legacy `:back` alias select the published Continue
+choice; `:focus KEY` selects a current object choice. They cannot bypass the page.
+`make check` exercises the adventure, shared controls and projection without
+opening a window. `make check-ui` checks the graphical reveal and visible
+Continue label; it requires access to Metal and the window server.
+
+## Extending the adventure
+
+`book.c` owns mutable story state and publishes a read-only `BookPage` through
+`book_page()`. A page has one kind: room, intermediate (`PAGE_BEAT`), or ending.
+Each choice has an explicit kind: object action or Continue. Consumers must use
+these kinds, rather than infer behavior from labels, command strings or flags.
+
+To add an action:
+
+1. Register its object in `book_init()` and add its room choice in
+   `add_room_choices()` using `append_choice(object_choice(...))`.
+2. Handle it in `perform()`, updating private story state and selecting the
+   response prose and camera. The existing `show_beat()` call supplies Continue
+   automatically. Use `finish_story()` for a terminal response.
+3. Add the matching JPEG and camera/anchor metadata. Only object anchors that
+   project into the current camera become circles.
+4. Extend `tests/test_book.py` with the route and use `continue_page()` to tap the
+   actual Continue control. Run `make check`; for display changes also run
+   `make check-ui` and inspect a smoke capture.
+
+Page constructors clear private scratch storage and append complete choice
+values. `publish_page()` checks the contract before exposing the result: rooms
+have object actions, intermediate pages have exactly one Continue with no object
+or command, and endings have no choices. Never write into a published page or
+reuse choice slots by changing selected fields. Large snapshots stay in static
+storage to avoid exhausting the iPad main-thread stack.
+
+All input adapters resolve a current choice and call `book_action()`. `page.c`
+turns a published page into a `PageLayout`; its control rectangles supply both
+drawing and `page_hit_test()`, including the headless `:tap` path. The UI retains
+its own copy of the published page during transitions, including button labels.
+Adding a page or choice kind requires updating publication checks, dispatch,
+layout, rendering and JSON names. Both build targets treat incomplete enum
+switches as errors so those sites are identified by the compiler.
 
 ## Source layout
 
 ```text
 src/book.c                     C adventure state, story data and actions
-src/ui.c                       page layout, interaction circles and navigation
+src/page.c                     shared page layout, control bounds and hit testing
+src/ui.c                       rendering, retained page views and transitions
 src/headless.c                 JSON snapshots for the headless interface
 src/scene.c                    camera, text-region and anchor projection
 src/renderer.c                 JPEG decoding and image cache
