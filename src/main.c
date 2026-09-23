@@ -6,7 +6,7 @@
 
 int main(int argc,char **argv)
 {
-    const char *root=".",*adventure="wondertown",*screenshot_path=NULL;
+    const char *root=".",*adventure="three-stars",*screenshot_path=NULL;
     bool smoke=false,headless=false,check=false,list=false;
     double smoke_transition=-1;
     for (int i=1;i<argc;++i) {

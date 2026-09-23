@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
-"""Exercise the real C host and ZIL coroutine, without a graphical context."""
+"""Exercise the C Three Stars adventure through its headless page interface."""
 import json
-import math
 from pathlib import Path
-import shutil
 import subprocess
 import sys
-import tempfile
-import xml.etree.ElementTree as ET
 
-binary, root = (Path(x).resolve() for x in sys.argv[1:3])
+binary, root = (Path(value).resolve() for value in sys.argv[1:3])
+
 
 class Book:
-    def __init__(self, assets=root, name='wondertown'):
-        self.process = subprocess.Popen([str(binary), '--root', str(assets), '--book', name, '--headless'],
-                                        cwd='/tmp', stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE, text=True)
+    def __init__(self):
+        self.process = subprocess.Popen(
+            [str(binary), '--root', str(root), '--book', 'three-stars', '--headless'],
+            cwd='/tmp', stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, text=True)
         self.view = self.read()
 
     def read(self):
@@ -31,190 +29,43 @@ class Book:
         return self.read()
 
     def choose(self, command):
-        index = next(i for i, c in enumerate(self.view['choices']) if c['command'] == command)
-        return self.send(f':choose {index}')
-
-    def focus(self, object_id):
-        index = next(i for i, c in enumerate(self.view['choices'])
-                     if c['object'] == object_id and not c['command'])
+        index = next(i for i, choice in enumerate(self.view['choices'])
+                     if choice['command'] == command)
         return self.send(f':choose {index}')
 
     def close(self):
         self.process.stdin.close()
         assert self.process.wait(timeout=10) == 0, self.process.stderr.read()
 
-b = Book()
-assert b.view['room'] == 'workshop-floor'
-assert Path(b.view['image']) == root / 'books/wondertown/rooms/workshop-floor-look.jpg'
-assert len(b.view['hotspots']) == 10
-for i, first in enumerate(b.view['hotspots']):
-    for second in b.view['hotspots'][i+1:]:
-        assert math.hypot(first['x']-second['x'], first['y']-second['y']) >= 72 - .001, (first, second)
-region = b.view['text_region']
-assert region['authored']
-assert region['content_height'] <= region['height'], 'Full overview prose must fit without scrolling'
-assert region['preferred_size'] * .8 <= region['font_size'] <= region['preferred_size']
-for hotspot in b.view['hotspots']:
-    # Include each 48-point circle and a 12-point reading-space gutter.
-    assert (hotspot['x'] + 36 < region['x'] or hotspot['x'] - 36 > region['x'] + region['width'] or
-            hotspot['y'] + 36 < region['y'] or hotspot['y'] - 36 > region['y'] + region['height']), hotspot
-# Check the C projection against the Scener camera and the oil-can anchor.
-scene = ET.parse(root / 'books/wondertown/rooms/workshop-new.blks').getroot()
-cam = next(c for c in scene.findall('camera') if c.get('name') == 'workshop-floor-look')
-obj = next(c for c in scene.findall('group') if c.get('name') == 'OIL-CAN')
-vec = lambda text: [float(n) for n in text.split()]
-sub = lambda a, b: [x-y for x,y in zip(a,b)]
-dot = lambda a,b: sum(x*y for x,y in zip(a,b))
-norm = lambda a: [x/math.sqrt(dot(a,a)) for x in a]
-cross = lambda a,b: [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]
-pos = vec(cam.get('pos'))
-fwd = norm(sub(vec(cam.get('look')), pos))
-right = norm(cross(fwd, [0,0,1]))
-up = cross(right, fwd)
-delta = sub(vec(obj.get('pos')), pos)
-focal = 1440 / (2*math.tan(math.radians(float(cam.get('fov')))/2))
-scale = max(1100/1920, 800/1440)
-x = (960+dot(delta,right)*focal/dot(delta,fwd))*scale+(1100-1920*scale)/2
-y = (720-dot(delta,up)*focal/dot(delta,fwd))*scale+(800-1440*scale)/2
-spot = next(h for h in b.view['hotspots'] if h['object'] == 'oil-can')
-assert abs(spot['anchor_x']-x) < 0.001 and abs(spot['anchor_y']-y) < 0.001
 
-b.focus('workbench')
-assert b.view['kind'] == 'focus' and b.view['image'].endswith('/workshop-floor-examine-workbench.jpg')
-b.choose('climb bench')
-assert b.view['room'] == 'workbench-top' and b.view['kind'] == 'beat'
+b = Book()
+assert b.view['room'] == 'attic-floor'
+assert Path(b.view['image']) == root / 'books/three-stars/rooms/floor-show-room.jpg'
+assert {choice['command'] for choice in b.view['choices']} == {'take brass-star', 'go table'}
+
+b.choose('take brass-star')
+assert b.view['kind'] == 'beat' and b.view['image'].endswith('/floor-take-gold-star.jpg')
 b.send(':continue')
-b.focus('repair-book')
-assert "can't see" not in b.view['text']
-b.choose('open book')
-assert b.view['kind'] == 'beat' and 'cover opens' in b.view['text']
+assert b.view['image'].endswith('/floor-show-cleared-room.jpg')
+b.choose('go table')
+assert b.view['room'] == 'writing-desk' and b.view['image'].endswith('/floor-climb-table.jpg')
 b.send(':continue')
-assert any(c['command'] == 'close book' for c in b.view['choices'])
-b.choose('read book')
-assert 'read' in b.view['text'].lower() or 'Tolliver' in b.view['text']
+assert b.view['image'].endswith('/table-show-desk.jpg')
+b.choose('take copper-star')
 b.send(':continue')
-b.send(':back')
-b.choose('down')  # a PER exit must remain visible and let ZIL enforce the rule
-assert 'must be closed' in b.view['text']
-b.send('close book')
+assert b.view['image'].endswith('/table-show-cleared-desk.jpg')
+b.choose('go sill')
+assert b.view['room'] == 'window-sill' and b.view['image'].endswith('/table-climb-sill.jpg')
 b.send(':continue')
-b.choose('down')
-b.send(':continue')
-assert b.view['room'] == 'workshop-floor'
-b.focus('oil-can')
-b.choose('take can')
-assert 'Taken' in b.view['text']
-b.send(':continue')
-b.send(':back')
-assert not any(h['object'] == 'oil-can' for h in b.view['hotspots'])
-b.choose('north')
-b.send(':continue')
-assert b.view['room'] == 'snowy-alley' and not b.view['image']
-b.choose('south')
-b.send(':continue')
-assert b.view['room'] == 'workshop-floor' and b.view['image'].endswith('/workshop-floor-look.jpg')
-b.send(':reload')
+assert b.view['image'].endswith('/sill-show-window.jpg')
+b.choose('take pearl-star')
+assert b.view['kind'] == 'ended' and b.view['image'].endswith('/attic-return-stars.jpg')
+assert 'три звёздочки' in b.view['text'].lower()
 b.close()
 
-# A different ZIL book, with no C edits, presentation Lua, XML UI or manifest.
-# Symlink only the VM/substrate; the small fixture stays outside the submodule.
-with tempfile.TemporaryDirectory(prefix='book-engine-') as temp:
-    assets = Path(temp)
-    (assets/'fonts').symlink_to(root/'fonts', target_is_directory=True)
-    vm = assets / 'libs/zilscript'
-    vm.mkdir(parents=True)
-    for child in (root / 'libs/zilscript').iterdir():
-        if child.name not in ('books', '.git'):
-            (vm / child.name).symlink_to(child, target_is_directory=child.is_dir())
-    source = vm / 'books/testbook'
-    source.mkdir(parents=True)
-    (source/'testbook.zil').write_text('''
-<VERSION ZIP>
-<CONSTANT RELEASEID 1>
-<INSERT-FILE "infocom.zork1.main">
-<INSERT-FILE "infocom.zork1.clock">
-<INSERT-FILE "infocom.zork1.parser">
-<INSERT-FILE "infocom.zork1.syntax">
-<INSERT-FILE "infocom.zork1.macros">
-<INSERT-FILE "infocom.zork1.verbs">
-<INSERT-FILE "infocom.zork1.globals">
-<DIRECTIONS NORTH SOUTH>
-<ROOM TEST-ROOM (IN ROOMS) (DESC "Test room") (LDESC "A different book.")
- (NORTH TO NEXT-ROOM) (FLAGS RLANDBIT ONBIT)>
-<ROOM NEXT-ROOM (IN ROOMS) (DESC "Next room") (LDESC "The next page.")
- (SOUTH TO TEST-ROOM) (FLAGS RLANDBIT ONBIT)>
-<OBJECT TEST-TOY (IN TEST-ROOM) (SYNONYM TOY) (DESC "test toy")
- (FLAGS TAKEBIT) (TEXT "A small wooden toy.")>
-<ROUTINE V-RESTART () <RESTART>>
-<ROUTINE V-QUIT () <QUIT>>
-<ROUTINE GO () <SETG HERE ,TEST-ROOM> <SETG WINNER ,ADVENTURER>
- <SETG PLAYER ,WINNER> <SETG LIT T> <MOVE ,WINNER ,HERE> <V-LOOK> <MAIN-LOOP>>
-''')
-    rooms = assets/'books/testbook/rooms'
-    rooms.mkdir(parents=True)
-    jpg = root/'books/wondertown/rooms/workshop-floor-look.jpg'
-    for name in ('test-room-look', 'test-room-examine-test-toy', 'test-room-take-test-toy'):
-        shutil.copyfile(jpg, rooms/f'{name}.jpg')
-    (rooms/'shared.blks').write_text('''<scene up="z">
-<camera name="test-room-look" pos="0 -200 100" look="0 0 100" fov="90"/>
-<group pos="100 0 0" rot="0 0 90" scale="2 2 2">
-  <group name="TEST-TOY" pos="0 50 50"/>
-</group></scene>''')
-    b = Book(assets, 'testbook')
-    assert b.view['room'] == 'test-room' and b.view['image'].endswith('/test-room-look.jpg')
-    assert b.view['hotspots'] == [{'object':'test-toy', 'x':550.0, 'y':400.0, 'anchor_x':550.0, 'anchor_y':400.0}]
-    assert not b.view['text_region']['authored']
-    assert b.view['text_region']['font_size'] == 36
-    metadata = rooms/'shared.blks'
-    original = metadata.read_text()
-    metadata.write_text(original.replace('fov="90"', 'fov="90" textRect="0.1 0.1 0.4 0.2" textScale="1.2"'))
-    b.send(':reload')
-    region = b.view['text_region']
-    assert region['authored']
-    assert abs(region['x'] - 110) < .001 and abs(region['y'] - 70) < .001
-    assert abs(region['width'] - 440) < .001 and abs(region['height'] - 165) < .001
-    assert abs(region['preferred_size'] - 44.55) < .001
-    assert region['font_size'] == region['preferred_size'], 'Short prose keeps its preferred size'
-    metadata.write_text(original.replace('fov="90"', 'fov="90" textRect="0.1 0.1 0.05 0.02"'))
-    b.send(':reload')
-    region = b.view['text_region']
-    assert abs(region['font_size'] - region['preferred_size'] * .8) < .001
-    assert region['content_height'] > region['height'], 'Overflow stays scrollable at the minimum size'
-    b.focus('test-toy')
-    assert not b.view['text_region']['authored'], 'A missing camera must not inherit the preceding text region'
-    b.send(':back')
-    metadata.write_text(original)
-    b.send(':reload')
-    before = b.view
-    b.send(':reload')
-    assert b.view == before, 'metadata reload must not advance the story'
-    b.focus('test-toy')
-    assert b.view['image'].endswith('/test-room-examine-test-toy.jpg')
-    b.choose('take toy')
-    assert b.view['image'].endswith('/test-room-take-test-toy.jpg')
-    b.send(':continue')
-    b.send(':back')
-    assert not b.view['hotspots']
-    b.choose('north')
-    b.send(':continue')
-    assert b.view['room'] == 'next-room' and not b.view['image']
-    b.choose('south')
-    b.send(':continue')
-    assert b.view['image'].endswith('/test-room-look.jpg')
-    b.send('restart')
-    b.send(':continue')
-    assert b.view['room'] == 'test-room' and b.view['hotspots']
-    b.send('quit')
-    assert b.view['kind'] == 'ended' and not b.view['choices']
-    b.close()
+for source in root.rglob('*'):
+    if not source.is_file() or '.git' in source.parts or 'build' in source.parts:
+        continue
+    assert source.suffix.lower() not in {'.lua', '.zil'}, f'legacy adventure source remains: {source}'
 
-    for attributes in ('textScale="1"', 'textRect="0 0 -1 1"', 'textRect="0 0 1 1.1"',
-                       'textRect="nan 0 1 1"', 'textRect="0 0 1 1 extra"',
-                       'textRect="0 0 1 1" textScale="0.1"'):
-        metadata.write_text(original.replace('fov="90"', f'fov="90" {attributes}'))
-        result = subprocess.run([str(binary), '--root', str(assets), '--book', 'testbook', '--check'],
-                                capture_output=True, text=True)
-        assert result.returncode != 0 and 'camera text' in result.stderr, attributes
-
-assert not [p for p in root.rglob('*.lua') if 'libs' not in p.parts and '.git' not in p.parts], 'Book must not depend on host Lua files'
-print('Book: coroutine, automatic choices/images, focus, navigation, restart/quit and projection passed')
+print('Book: C adventure route, images and ending passed')

@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<!-- Z-up cm; baseline Z=0. SWEEP-BROOM rough silhouette: handle and solid bristle mass; front -Y; AI paints individual bristles. -->
-<prefab>
-  <cylinder material="oak-light" pos="0 0 82" radius="1.5" height="116" rot="90 0 0" sides="16" />
-  <box material="oak-dark" pos="0 0 23" size="16 6 7" />
-  <box material="rope" pos="0 0 10" size="20.8 5.6 20">
-    <taper amount="0.3" axis="z" />
-  </box>
-</prefab>

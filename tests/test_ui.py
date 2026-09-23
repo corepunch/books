@@ -7,7 +7,7 @@ import sys
 import tempfile
 
 binary, root = map(lambda value: str(Path(value).resolve()), sys.argv[1:3])
-args = [binary, '--root', root, '--book', 'wondertown']
+args = [binary, '--root', root, '--book', 'three-stars']
 page = json.loads(subprocess.check_output(args + ['--check'], text=True))
 origin = page['hotspots'][0]
 

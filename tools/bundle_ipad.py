@@ -22,9 +22,8 @@ def main():
         raise SystemExit('Target must be a separate .app bundle')
     if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', adventure):
         raise SystemExit('BOOK must be a lowercase adventure identifier')
-    zil = root / 'libs/zilscript'
-    if not (zil / 'books' / adventure / (adventure + '.zil')).is_file():
-        raise SystemExit('Missing adventure entry point: ' + adventure)
+    if adventure != 'three-stars' or not (root / 'books/three-stars/rooms/attic.blks').is_file():
+        raise SystemExit('Missing C adventure assets: ' + adventure)
     target.mkdir(parents=True, exist_ok=True)
     # Clear only generated resources/signatures; never ship stale art or signing.
     for directory in ('fonts', 'books', 'libs', 'assets', '_CodeSignature'):
@@ -47,11 +46,7 @@ def main():
     destination = target / back_button.relative_to(root)
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(back_button, destination)
-    stage('libs/zilscript/zilscript', {'.lua'})
-    stage('libs/zilscript/books/' + adventure, {'.zil', '.lua'})
-    stage('libs/zilscript/infocom', {'.zil'})
     stage('books/' + adventure + '/rooms', {'.jpg', '.jpeg', '.blks', '.blk'})
-    shutil.copy2(root / 'vendor/lua/LICENSE', target / 'Lua-LICENSE.txt')
     shutil.copy2(args.binary, target / 'Book')
     for icon in args.icons.iterdir():
         if icon.suffix in ('.car', '.png'):

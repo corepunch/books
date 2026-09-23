@@ -1,21 +1,20 @@
 .DEFAULT_GOAL := run
 
 BUILD_DIR ?= build
-BOOK ?= wondertown
-SCENE ?= workshop-new
+BOOK ?= three-stars
+SCENE ?= attic
 SCENER ?= $(shell command -v scener 2>/dev/null || printf '%s/.local/bin/scener' "$$HOME")
 WIDTH ?= 1920
 HEIGHT ?= 1440
 CC ?= cc
 CFLAGS ?= -O2 -g
-LUA_PKG ?= $(shell for package in lua5.4 lua; do pkg-config --exists $$package 2>/dev/null && { echo $$package; break; }; done)
 BUILD_ROOT := $(abspath $(BUILD_DIR))
 SOURCES := $(wildcard src/*.c)
 NATIVE_SOURCES := src/macos.m src/metal.m
 OBJECTS := $(patsubst src/%.c,$(BUILD_ROOT)/src/%.o,$(SOURCES)) $(patsubst src/%.m,$(BUILD_ROOT)/src/%.o,$(NATIVE_SOURCES))
-CPPFLAGS += -Ivendor $(shell pkg-config --cflags $(LUA_PKG) libxml-2.0)
+CPPFLAGS += -Ivendor $(shell pkg-config --cflags libxml-2.0)
 CFLAGS += -std=c11 -Wall -Wextra -MMD -MP
-LDLIBS += $(filter-out -lm,$(shell pkg-config --libs $(LUA_PKG) libxml-2.0)) -lm
+LDLIBS += $(filter-out -lm,$(shell pkg-config --libs libxml-2.0)) -lm
 ifneq ($(shell uname -s),Darwin)
 $(error Book requires macOS with AppKit and Metal)
 endif

@@ -78,8 +78,7 @@ _Noreturn void fail(const char *format, ...);
 void copy(char *dst, size_t size, const char *src);
 void lower(char *s);
 
-/* ZIL host and current page */
-/* ZIL is the world model. C owns only the coroutine, current page and input. */
+/* Current C adventure state and the page presented by the native UI. */
 #define MAX_OBJECTS 256
 #define MAX_CHOICES 512
 /* String capacities include the terminating null byte. */
@@ -92,7 +91,6 @@ void lower(char *s);
 #define MAX_ASSET_NAME 512
 #define MAX_STORY_TEXT 32768
 #define MAX_NOUN_PHRASE (MAX_WORD + MAX_NOUN)
-#define MAX_MODULE_NAME 384
 
 typedef char filePath_t[PATH_MAX];
 typedef char identifier_t[MAX_IDENTIFIER];
@@ -104,7 +102,6 @@ typedef char command_t[MAX_COMMAND];
 typedef char assetName_t[MAX_ASSET_NAME];
 typedef char storyText_t[MAX_STORY_TEXT];
 typedef char nounPhrase_t[MAX_NOUN_PHRASE];
-typedef char moduleName_t[MAX_MODULE_NAME];
 
 struct Object {
     identifier_t symbol, key;
@@ -139,7 +136,7 @@ void book_back(void);
 void book_focus_object(int object);
 void book_action(int index);
 void book_reload(void);
-/* Return the object's enclosing room, or zero when it has none. */
+/* Return the object's room, or zero when it has none. */
 int book_object_room(int object);
 
 /* Rendering */

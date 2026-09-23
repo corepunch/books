@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := app
 .DELETE_ON_ERROR:
 BUILD_DIR ?= build/ipad
-BOOK ?= wondertown
+BOOK ?= three-stars
 SDK ?= iphoneos
 ARCH ?= $(if $(filter iphoneos,$(SDK)),arm64,$(shell uname -m))
 IOS_MIN ?= 16.0
@@ -22,11 +22,10 @@ ICON_DIR := $(BUILD_ROOT)/icons
 COMPILER := xcrun --sdk $(SDK) clang
 MIN_FLAG := $(if $(filter iphoneos,$(SDK)),-miphoneos-version-min,-mios-simulator-version-min)=$(IOS_MIN)
 COMPILE_FLAGS := -isysroot "$(SDK_PATH)" -arch $(ARCH) $(MIN_FLAG) -std=c11 -O2 -g -Wall -Wextra -MMD -MP
-INCLUDES := -Ivendor -Ivendor/lua -I"$(SDK_PATH)/usr/include/libxml2" -DLUA_USE_IOS
+INCLUDES := -Ivendor -I"$(SDK_PATH)/usr/include/libxml2"
 SOURCES := $(filter-out src/main.c src/headless.c,$(wildcard src/*.c)) src/ipad.m src/metal.m
-LUA_SOURCES := $(filter-out vendor/lua/lua.c vendor/lua/luac.c,$(wildcard vendor/lua/*.c))
 OBJECTS := $(addprefix $(BUILD_ROOT)/,$(SOURCES:.c=.o))
-OBJECTS := $(OBJECTS:.m=.o) $(addprefix $(BUILD_ROOT)/,$(LUA_SOURCES:.c=.o))
+OBJECTS := $(OBJECTS:.m=.o)
 ICON_SOURCES := $(wildcard assets/AppIcon.xcassets/*/*.png assets/AppIcon.xcassets/*/*.json assets/AppIcon.xcassets/*.json)
 
 .PHONY: app mac run deploy clean settings

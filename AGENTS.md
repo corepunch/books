@@ -1,81 +1,62 @@
 # Book Engine Guide
 
-Book is a native engine for multiple visual interactive ZIL adventures.
-The native application lives in `src/`, split into the entry point, ZIL host,
-UI, headless interface, renderer, text rendering and scene projection. Keep
-module internals private and shared declarations in the single `src/book.h`
-header. Compile stb_image in `renderer.c` and stb_truetype in `text.c`.
-Use descriptive `MAX_*` macros for buffer capacities and collection limits;
-do not hardcode numeric array capacities.
-Define shared string buffer array typedefs in `src/book.h` (for example,
-`typedef char storyText_t[MAX_STORY_TEXT];`) and use them for fields and locals.
-Use `fvec2_t`/`ivec2_t`, `fsize2_t`/`isize2_t` and `frect_t`/`irect_t` for 2D
-geometry. Prefer value-returning geometry helpers for offsets, scaling, crops,
-clipping and hit tests; pass structs instead of separate coordinate components.
-`fonts/` contains shared application assets.
-`libs/zilscript/` is the only Lua dependency; read its `AGENTS.md` and
-`ARCHITECTURE.md` before modifying the VM.
+Book is a native C engine for visual interactive adventures. The built-in
+adventure is “Три звёздочки для карты”; its state, objects, rooms, prose and
+actions are implemented in C under `src/`. There is no ZIL or Lua runtime.
+Keep module internals private and shared declarations in the single
+`src/book.h` header. Compile stb_image in `renderer.c` and stb_truetype in
+`text.c`.
+
+Use descriptive `MAX_*` macros for buffer capacities and collection limits; do
+not hardcode numeric array capacities. Define shared string buffer array
+typedefs in `src/book.h` and use them for fields and locals. Use `fvec2_t` /
+`ivec2_t`, `fsize2_t` / `isize2_t` and `frect_t` / `irect_t` for 2D geometry.
+Prefer value-returning geometry helpers for offsets, scaling, crops, clipping
+and hit tests; pass structs instead of separate coordinate components.
 
 ## Runtime
 
-- C loads the selected ZIL adventure through zilscript and resumes its coroutine
-  directly with `lua_resume`. ZIL owns all game state, text, rooms, objects and
-  actions. Do not duplicate adventure rules in C or a presentation manifest.
-- Discover interaction choices from the VM's object/verb metadata and room
-  exits. Derive image names from ZIL identifiers, lowercased with hyphens:
-  `{room}-look.jpg`, `{room}-examine-{object}.jpg`, `{room}-{verb}-{object}.jpg`.
-- `books/<adventure>/rooms/` holds pre-rendered JPEGs and the matching `.blks`
-  camera/anchor sources. C reads those files for hotspot projection and per-camera reading regions.
-  Do not introduce a live scene renderer, Lua host scripts, Orca XML exports,
-  UI configuration files or hand-maintained image/interaction maps.
+- The C adventure owns all game state, text, rooms, objects and actions.
+- The UI discovers tappable targets from the current C page choices. Camera
+  names select the matching illustrations in `books/three-stars/rooms/`.
+- Camera and anchor metadata live in the `.blks` scene source. Keep named
+  anchors aligned with the objects and routes shown in every matching image.
 - The UI is hardcoded C over Metal with UIKit for iPad and AppKit/NSWindow for
   the fixed-size native Mac testing app. Graphical play uses circle/action taps
-  only; reuse its focus, Back and Continue flow. Parser commands remain headless.
-  Keep anchors aligned under the same centered crop as the JPEG. Missing art
-  must not display another room.
-  Interaction circles must have at least one radius of clear space between
-  their edges. Use the shared marker layout for drawing, hit areas and headless
-  output; preserve exact projected anchors and connect displaced markers to them.
-- `make mac BOOK=<name>` (also `make run`) launches the native Mac app;
-  `make ipad-mac BOOK=<name>` launches the iPad app on Apple silicon Mac. Build
-  directly with the SDK tools; do not introduce an Xcode project. The conventional
-  ZIL entry point is `libs/zilscript/books/<name>/<name>.zil`. No new C code is
-  needed per book.
+  only; reuse its focus, Back and Continue flow.
+- Keep anchors aligned under the same centered crop as the JPEG. Missing art
+  must not display another room. Interaction circles must have at least one
+  radius of clear space between their edges. Use the shared marker layout for
+  drawing, hit areas and headless output; preserve exact projected anchors and
+  connect displaced markers to them.
+
+`make mac` (also `make run`) launches the native Mac app; `make ipad-mac`
+launches the iPad app on Apple silicon Mac. Build directly with the SDK tools;
+do not introduce an Xcode project.
 
 ## Artwork
 
-Scener renders are spatial references for AI-painted final illustrations, not
-finished artwork. Model recognizable rough shapes, sizes, supports, placement,
-openings and meaningful shadow casters so every camera describes the same place.
-Prioritize a rich inventory of larger objects over tiny geometric detail. Paint
-dust, shavings, grain, wear, ornament and other surface detail in the final AI
-pass. Keep exact story anchors and document required painted-only content; the
-final image must preserve camera perspective, object scale/layout and lighting
-direction. Do not invent new permanent furnishings independently in each image.
+`books/three-stars/rooms/` holds pre-rendered JPEGs and the matching `.blks`
+camera/anchor source. C reads those files for hotspot projection and per-camera
+reading regions. Keep images and metadata synchronized. Scener renders are
+spatial references for finished illustrations, not final artwork. Keep camera
+perspective, object scale, layout and lighting direction consistent across
+views. Do not invent permanent furnishings independently in each image.
 
-Wondertown art and historical studies live in `books/wondertown/work/`.
-Read only the relevant guides: `LOCATION_BRIEFS.md` for story geography,
-`SCENE_COMPOSITION.md` for density/cameras, `ARTSTYLE.md` and
-`CHARACTER_DESIGN_BIBLE.md` for the approved storybook identity, and
-`RENDERING.md` for the offline workflow. Archived Orca/prototype documentation
-is historical and does not define the current engine.
-
-Scener is a separate checkout at `~/Developer/mapview/ui/apps/scener`.
-Read that checkout's instructions before changing it. Author centimetres,
-X east, Y north, Z up, degrees and unitless scale. New scenes declare `up="z"`.
-Compose establishing cameras obliquely; avoid frontal views and dominant
-screen-horizontal architectural lines. Reserve natural negative space for the
-full prose and keep interaction circles outside it. Author per-camera `textRect`
-and optional `textScale` in `.blks`; see `work/RENDERING.md` within the adventure.
-Geometry belongs in `.blks` scenes and `.blk` prefabs; finished/review images
-must be raster, never SVG. Keep connected zones in shared coordinates and
-named interactive anchors aligned with exact ZIL IDs.
+Author Scener centimetres, X east, Y north, Z up, degrees and unitless scale.
+New scenes declare `up="z"`. Compose establishing cameras obliquely; avoid
+frontal views and dominant screen-horizontal architectural lines. Reserve
+natural negative space for the full prose and keep interaction circles outside
+it. Author per-camera `textRect` and optional `textScale` in `.blks`.
+Geometry belongs in `.blks` scenes and `.blk` prefabs; finished and review
+images must be raster, never SVG. The Scener checkout is separate at
+`~/Developer/mapview/ui/apps/scener`; read its instructions before changing it.
 
 ## Validation
 
-Run `make check` after host changes. It builds the native application and tests real
-coroutine interactions, inferred asset names and projection without a display.
-For display changes, run a graphical smoke capture and inspect the JPEG with
-its hotspot/UI overlays. Do not rerender unchanged artwork just to test C code.
-Use `make render BOOK=<name> SCENE=<scene>` for artwork changes; render and
-inspect affected cameras, keeping their source and images synchronized.
+Run `make check` after host changes. It builds the native application and checks
+the C adventure, inferred asset names and projection without a display. For
+display changes, run a graphical smoke capture and inspect the JPEG with its
+hotspot/UI overlays. Do not rerender unchanged artwork just to test C code.
+Use `make render BOOK=three-stars SCENE=attic` for artwork changes; render and
+inspect affected cameras, keeping source and images synchronized.
