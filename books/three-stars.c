@@ -11,9 +11,9 @@ enum {
     ROOM_TABLE,
     ROOM_SILL,
     OBJECT_BRASS_STAR,
-    OBJECT_BOOK_STAIRS,
+    OBJECT_CHAIR,
     OBJECT_COPPER_STAR,
-    OBJECT_POSTCARD_STAIRS,
+    OBJECT_SILL_LEDGE,
     OBJECT_PEARL_STAR
 };
 
@@ -56,16 +56,16 @@ static const char *room_text(int room)
     switch (room) {
     case ROOM_FLOOR:
         return (game.inventory & STAR_BRASS)
-            ? "Латунная звёздочка уже у Миры. Над её бумажным гнездом ждёт созвездие, а к столу ведут ступени из книг."
-            : "Сквозняк сорвал три звёздочки с бумажного созвездия Миры. У гнезда лежит латунная звёздочка. К столу ведут ступени из книг.";
+            ? "Латунная звёздочка уже у Миры. Над корзинкой ждёт бумажное созвездие, а у стола стоит бабушкин стул."
+            : "Сквозняк сорвал три звёздочки с бумажного созвездия над корзинкой Миры. Одна лежит на полу, а до стола можно допрыгнуть через стул.";
     case ROOM_TABLE:
         return (game.inventory & STAR_COPPER)
-            ? "Мира уже забрала медную звёздочку. Среди листов остался карандаш, а сложенные открытки ведут к подоконнику."
-            : "Между листами и карандашом поблёскивает медная звёздочка. Книжная лестница ведёт вниз, а открытки — выше, к окну.";
+            ? "Мира уже забрала медную звёздочку. Среди писем остался карандаш, а прямо над столом — подоконник."
+            : "Среди бабушкиных писем поблёскивает медная звёздочка. Вниз ведёт стул, а над столом — подоконник.";
     case ROOM_SILL:
         return (game.inventory & STAR_PEARL)
-            ? "У оконной рамы больше нет звёздочки. Внизу виден письменный стол, а за окном лежит тихая ночь."
-            : "У оконной рамы Мира замечает светлую звёздочку. За окном темно, а внизу виден письменный стол.";
+            ? "На подоконнике больше нет звёздочки. Внизу письменный стол, а за окном лежит тихая ночь."
+            : "На подоконнике, у цветочного горшка, светится последняя звёздочка. За окном тихая ночь.";
     default: return "";
     }
 }
@@ -85,6 +85,14 @@ static void select_image(struct BookPage *page, const char *camera, const char *
     length = snprintf(path, sizeof(path), "%s/%s.jpg", game.rooms, illustration);
     if (length < 0 || (size_t)length >= sizeof(path)) fail("reference image path is too long");
     if (!access(path, R_OK)) copy(page->image, sizeof(page->image), path);
+}
+
+static bool painted(const char *relative)
+{
+    filePath_t path;
+    int length = snprintf(path, sizeof(path), "%s/%s.png", game.illustrations, relative);
+    if (length < 0 || (size_t)length >= sizeof(path)) fail("illustration path is too long");
+    return !access(path, R_OK);
 }
 
 static void select_overlay(struct BookPage *page, const char *item)
@@ -172,18 +180,18 @@ static void add_room_choices(void)
     case ROOM_FLOOR:
         if (!(game.inventory & STAR_BRASS))
             append_choice(object_choice(OBJECT_BRASS_STAR, "Поднять латунную звёздочку", "take brass-star"));
-        append_choice(object_choice(OBJECT_BOOK_STAIRS, "Взобраться на стол по книгам", "go table"));
+        append_choice(object_choice(OBJECT_CHAIR, "Запрыгнуть на стол через стул", "go table"));
         break;
     case ROOM_TABLE:
         if (!(game.inventory & STAR_COPPER))
             append_choice(object_choice(OBJECT_COPPER_STAR, "Поднять медную звёздочку", "take copper-star"));
-        append_choice(object_choice(OBJECT_BOOK_STAIRS, "Спуститься на пол по книгам", "go floor"));
-        append_choice(object_choice(OBJECT_POSTCARD_STAIRS, "Подняться к окну по открыткам", "go sill"));
+        append_choice(object_choice(OBJECT_CHAIR, "Спрыгнуть на пол через стул", "go floor"));
+        append_choice(object_choice(OBJECT_SILL_LEDGE, "Запрыгнуть на подоконник", "go sill"));
         break;
     case ROOM_SILL:
         if (!(game.inventory & STAR_PEARL))
             append_choice(object_choice(OBJECT_PEARL_STAR, "Поднять светлую звёздочку", "take pearl-star"));
-        append_choice(object_choice(OBJECT_POSTCARD_STAIRS, "Спуститься на стол по открыткам", "go table"));
+        append_choice(object_choice(OBJECT_SILL_LEDGE, "Спрыгнуть на стол", "go table"));
         break;
     default: fail("unknown room %d", game.room);
     }
@@ -201,9 +209,16 @@ static void show_room(void)
         illustration = "table-show-cleared-desk";
         if (!(game.inventory & STAR_COPPER)) item_layer = "copper-star-table-show-desk";
     } else {
-        camera = "sill-show-window";
+        camera = (game.inventory & STAR_PEARL) ? "sill-show-cleared-window" : "sill-show-window";
         illustration = "sill-show-cleared-window";
         if (!(game.inventory & STAR_PEARL)) item_layer = "pearl-star-sill-show-window";
+    }
+    /* Until a clean painted plate and its item layer exist, show the camera's own render. */
+    assetName_t layer;
+    if (item_layer) snprintf(layer, sizeof(layer), "items/%s", item_layer);
+    if (!painted(illustration) || (item_layer && !painted(layer))) {
+        illustration = camera;
+        item_layer = NULL;
     }
     begin_page(PAGE_ROOM, room_text(game.room), camera, illustration);
     if (item_layer) select_overlay(&draft, item_layer);
@@ -222,7 +237,7 @@ static void show_beat(const char *text, const char *camera)
 static void finish_story(void)
 {
     begin_page(PAGE_ENDED,
-        "Мира возвращает все три звёздочки на бумажное созвездие. Чердак снова становится тихим, а над гнездом сияет маленькая карта неба.",
+        "Мира приносит все три звёздочки в свою корзинку, прямо под бумажное созвездие. Утром бабушка вернёт их на ниточки, а пока они светятся рядом с Мирой.",
         "attic-return-stars", "attic-return-stars");
     publish_page();
 }
@@ -235,40 +250,40 @@ static bool perform(int object)
     case OBJECT_BRASS_STAR:
         if (game.room != ROOM_FLOOR || game.inventory & STAR_BRASS) return false;
         game.inventory |= STAR_BRASS;
-        text = "Мира бережно поднимает латунную звёздочку у своего гнезда.";
+        text = "Мира осторожно трогает лапкой латунную звёздочку и берёт её в зубки.";
         camera = "floor-take-gold-star";
         break;
     case OBJECT_COPPER_STAR:
         if (game.room != ROOM_TABLE || game.inventory & STAR_COPPER) return false;
         game.inventory |= STAR_COPPER;
-        text = "Мира находит медную звёздочку между листами.";
+        text = "Мира находит медную звёздочку между письмами и бережно берёт её.";
         camera = "table-take-copper-star";
         break;
     case OBJECT_PEARL_STAR:
         if (game.room != ROOM_SILL || game.inventory & STAR_PEARL) return false;
         game.inventory |= STAR_PEARL;
-        text = "Мира поднимает последнюю звёздочку у оконной рамы.";
+        text = "Мира достаёт последнюю звёздочку у самого окна.";
         camera = "sill-take-pearl-star";
         break;
-    case OBJECT_BOOK_STAIRS:
+    case OBJECT_CHAIR:
         if (game.room == ROOM_FLOOR) {
             game.room = ROOM_TABLE;
-            text = "Мира перебирается по книжным ступеням на столешницу.";
+            text = "Мира прыгает на сиденье стула, а оттуда — лапками на край стола.";
             camera = "floor-climb-table";
         } else if (game.room == ROOM_TABLE) {
             game.room = ROOM_FLOOR;
-            text = "Мира осторожно спускается по книгам на пол.";
+            text = "Мира смотрит вниз, прыгает на стул, а потом на пол.";
             camera = "table-go-floor";
         } else return false;
         break;
-    case OBJECT_POSTCARD_STAIRS:
+    case OBJECT_SILL_LEDGE:
         if (game.room == ROOM_TABLE) {
             game.room = ROOM_SILL;
-            text = "Мира взбирается по открыткам на подоконник.";
+            text = "Мира тянется вверх и запрыгивает на подоконник.";
             camera = "table-climb-sill";
         } else if (game.room == ROOM_SILL) {
             game.room = ROOM_TABLE;
-            text = "Мира спускается по открыткам обратно на стол.";
+            text = "Мира мягко спрыгивает с подоконника на стол.";
             camera = "sill-go-table";
         } else return false;
         break;
@@ -300,9 +315,9 @@ void book_init(const char *root)
     set_object(ROOM_TABLE, "writing-desk", room_name(ROOM_TABLE), "Письменный стол");
     set_object(ROOM_SILL, "window-sill", room_name(ROOM_SILL), "Подоконник");
     set_object(OBJECT_BRASS_STAR, "brassstar", "звёздочка", "латунная звёздочка");
-    set_object(OBJECT_BOOK_STAIRS, "book-stairs", "ступени", "книжные ступени");
+    set_object(OBJECT_CHAIR, "chair", "стул", "бабушкин стул");
     set_object(OBJECT_COPPER_STAR, "copperstar", "звёздочка", "медная звёздочка");
-    set_object(OBJECT_POSTCARD_STAIRS, "postcard-stairs", "открытки", "сложенные открытки");
+    set_object(OBJECT_SILL_LEDGE, "sill-ledge", "подоконник", "край подоконника");
     set_object(OBJECT_PEARL_STAR, "pearlstar", "звёздочка", "светлая звёздочка");
     show_room();
 }
@@ -416,8 +431,8 @@ void book_reload(void)
 
 int book_object_room(int object)
 {
-    if (object == OBJECT_BRASS_STAR || object == OBJECT_BOOK_STAIRS) return ROOM_FLOOR;
-    if (object == OBJECT_COPPER_STAR || object == OBJECT_POSTCARD_STAIRS) return ROOM_TABLE;
+    if (object == OBJECT_BRASS_STAR || object == OBJECT_CHAIR) return ROOM_FLOOR;
+    if (object == OBJECT_COPPER_STAR || object == OBJECT_SILL_LEDGE) return ROOM_TABLE;
     if (object == OBJECT_PEARL_STAR) return ROOM_SILL;
     return object >= ROOM_FLOOR && object <= ROOM_SILL ? object : 0;
 }

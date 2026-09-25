@@ -7,6 +7,29 @@ import subprocess
 import sys
 
 binary, root = (Path(value).resolve() for value in sys.argv[1:3])
+art = root / 'books/three-stars/illustrations'
+renders = root / 'books/three-stars/rooms'
+
+
+def beat_image(camera):
+    painted = art / f'{camera}.png'
+    return painted if painted.exists() else renders / f'{camera}.jpg'
+
+
+def assert_room(view, camera, plate, layer=None):
+    """Rooms use a painted plate with its item layer when both exist, else the camera render."""
+    item = art / 'items' / f'{layer}.png' if layer else None
+    if (art / f'{plate}.png').exists() and (item is None or item.exists()):
+        image, overlay = art / f'{plate}.png', item
+    else:
+        image, overlay = renders / f'{camera}.jpg', None
+    assert view['kind'] == 'room' and Path(view['image']) == image, view['image']
+    assert Path(view['overlay']) == overlay if overlay else view['overlay'] == '', view['overlay']
+
+
+def assert_beat(view, camera):
+    assert view['kind'] == 'beat' and Path(view['image']) == beat_image(camera), view['image']
+    assert view['overlay'] == ''
 
 
 class Book:
@@ -76,17 +99,16 @@ b = Book()
 initial = b.view
 for invalid in (':choose -1', ':choose 9999', ':choose nope', ':continue', ':back', ':focus pearlstar'):
     assert b.send(invalid) == initial
-b.tap_choice(1)  # The reported failure: floor -> book stairs -> intermediate page.
-assert b.view['image'].endswith('/floor-climb-table.png') and b.view['overlay'] == ''
+b.tap_choice(1)  # The reported failure: floor -> chair -> intermediate page.
+assert_beat(b.view, 'floor-climb-table')
 beat = b.view
-for ignored in (':choose 1', 'go table', 'take brass-star', ':focus book-stairs', ':reload'):
+for ignored in (':choose 1', 'go table', 'take brass-star', ':focus chair', ':reload'):
     assert b.send(ignored) == beat
 button = beat['controls'][0]
 assert b.send(f":tap {button['x'] - 1} {button['y']}") == beat
 assert b.send(f":tap {button['x'] + button['width']} {button['y']}") == beat
 b.send(':choose 0')  # This used to fail while the :continue shortcut passed.
-assert b.view['kind'] == 'room' and b.view['image'].endswith('/table-show-cleared-desk.png')
-assert b.view['overlay'].endswith('/copper-star-table-show-desk.png')
+assert_room(b.view, 'table-show-desk', 'table-show-cleared-desk', 'copper-star-table-show-desk')
 for alias in (':continue', ':back'):
     b.choose('go floor')
     b.send(alias)
@@ -97,37 +119,34 @@ b.close()
 
 b = Book()
 assert b.view['room'] == 'attic-floor'
-assert Path(b.view['image']) == root / 'books/three-stars/illustrations/floor-show-cleared-room.png'
-assert b.view['overlay'].endswith('/brass-star-floor-show-room.png')
+assert_room(b.view, 'floor-show-room', 'floor-show-cleared-room', 'brass-star-floor-show-room')
 assert {choice['command'] for choice in b.view['choices']} == {'take brass-star', 'go table'}
 
 b.choose('take brass-star')
-assert b.view['kind'] == 'beat' and b.view['image'].endswith('/floor-take-gold-star.png')
-assert b.view['overlay'] == ''
+assert_beat(b.view, 'floor-take-gold-star')
 b.continue_page()
-assert b.view['image'].endswith('/floor-show-cleared-room.png') and b.view['overlay'] == ''
+assert_room(b.view, 'floor-show-cleared-room', 'floor-show-cleared-room')
 b.choose('go table')
-assert b.view['room'] == 'writing-desk' and b.view['image'].endswith('/floor-climb-table.png')
+assert b.view['room'] == 'writing-desk'
+assert_beat(b.view, 'floor-climb-table')
 b.continue_page()
-assert b.view['image'].endswith('/table-show-cleared-desk.png')
-assert b.view['overlay'].endswith('/copper-star-table-show-desk.png')
+assert_room(b.view, 'table-show-desk', 'table-show-cleared-desk', 'copper-star-table-show-desk')
 b.choose('take copper-star')
 b.continue_page()
-assert b.view['image'].endswith('/table-show-cleared-desk.png') and b.view['overlay'] == ''
+assert_room(b.view, 'table-show-cleared-desk', 'table-show-cleared-desk')
 b.choose('go sill')
-assert b.view['room'] == 'window-sill' and b.view['image'].endswith('/table-climb-sill.png')
+assert b.view['room'] == 'window-sill'
+assert_beat(b.view, 'table-climb-sill')
 b.continue_page()
-assert b.view['image'].endswith('/sill-show-cleared-window.png')
-assert b.view['overlay'].endswith('/pearl-star-sill-show-window.png')
+assert_room(b.view, 'sill-show-window', 'sill-show-cleared-window', 'pearl-star-sill-show-window')
 b.choose('take pearl-star')
-assert b.view['kind'] == 'beat' and b.view['image'].endswith('/sill-take-pearl-star.png')
-assert b.view['overlay'] == ''
+assert_beat(b.view, 'sill-take-pearl-star')
 b.continue_page()
-assert b.view['kind'] == 'ended' and b.view['image'].endswith('/attic-return-stars.png')
+assert b.view['kind'] == 'ended' and Path(b.view['image']) == beat_image('attic-return-stars')
 assert 'три звёздочки' in b.view['text'].lower()
 b.close()
 
-# All collection orders exercise both stairs in both directions, repeated page
+# All collection orders exercise both routes in both directions, repeated page
 # construction, cleared rooms, and endings reached from each possible room.
 locations = ['attic-floor', 'writing-desk', 'window-sill']
 stars = ['brass-star', 'copper-star', 'pearl-star']
@@ -145,9 +164,7 @@ for order in permutations(range(len(stars))):
             b.continue_page()
             assert command not in [c['command'] for c in b.view['choices']]
         else:
-            pickup_image = ['floor-take-gold-star.png', 'table-take-copper-star.png',
-                            'sill-take-pearl-star.png'][target]
-            assert b.view['kind'] == 'beat' and b.view['image'].endswith('/' + pickup_image)
+            assert_beat(b.view, ['floor-take-gold-star', 'table-take-copper-star', 'sill-take-pearl-star'][target])
             b.continue_page()
             ending = b.view
             assert ending['kind'] == 'ended'

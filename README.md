@@ -1,16 +1,17 @@
 # Book
 
 Book is a native C adventure app. Its built-in story, **Три звёздочки для карты**,
-follows Mira the mouse as she gathers three stars from the floor, desk and
+follows Mira the kitten as she gathers three stars from the floor, desk and
 window sill of one attic. The story state, locations, inventory, choices and
 prose all live in C. There is no ZIL or Lua runtime.
 
-The app displays finished PNG illustrations from `books/three-stars/illustrations/`.
-Collectible stars use transparent layers extracted from the matching painted
-scene; after collection, the page uses its clean PNG plate. The matching JPG
-camera renders and `attic.blks` source remain in `books/three-stars/rooms/` for
-camera and anchor references. Tap a circle to collect a star or travel along the
-book and postcard steps. The lower-right button continues after an action.
+The app displays finished PNG illustrations from `books/three-stars/illustrations/`
+when they exist. Collectible stars use transparent layers extracted from the
+matching painted scene; after collection, the page uses its clean PNG plate.
+Until a page's painting and item layer exist, it shows the camera's own Scener
+render from `books/three-stars/rooms/`, where `attic.blks` also holds camera and
+anchor references. Tap a circle to collect a star or to jump between floor,
+chair, desk and window sill. The lower-right button continues after an action.
 
 ## Build and launch
 
