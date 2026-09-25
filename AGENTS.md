@@ -17,9 +17,9 @@ and hit tests; pass structs instead of separate coordinate components.
 ## Writing a book
 
 To create a new illustrated adventure book, follow the staged guide in
-[authoring/README.md](authoring/README.md): premise, story map, room bible,
-characters, shot list, page text, 3D blockout, implementation, illustration and
-review, one stage at a time. Books have no inventory; they remember a few story
+[authoring/README.md](authoring/README.md), starting with its `CRAFT.md`:
+premise, story map, room bible, characters, shot list, page text, 3D blockout,
+implementation, illustration, packaging and review, one stage at a time. Books have no inventory; they remember a few story
 facts that later pages check.
 
 ## Runtime

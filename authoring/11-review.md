@@ -1,12 +1,13 @@
-# Stage 10 — Review
+# Stage 11 — Review
 
-Check the finished book from four independent points of view, then fix what
-they find. Keep the evidence for each kind of finding separate.
+Check the finished book from several independent points of view, then fix
+what they find. Keep the evidence for each kind of finding separate.
 
 ## Inputs
 
 - The built book with its current art (reference renders or paintings)
-- `DESIGN.md` and the `work/` documents
+- `DESIGN.md`, the `work/` documents and `package/`
+- [CRAFT.md](CRAFT.md), including its checklist
 
 ## Required actions
 
@@ -29,14 +30,23 @@ they find. Keep the evidence for each kind of finding separate.
    - does the world stay consistent from page to page;
    - does the ending recall specific discoveries and feel earned.
 
-   Classify each finding as a defect, a risk, a deliberate choice, or an
-   opportunity.
+   Also go through the [CRAFT.md](CRAFT.md) checklist item by item. Classify
+   each finding as a defect, a risk, a deliberate choice, or an opportunity.
 4. **Audience pass.** Read the book as the declared audience: a child reading
    alone, and an adult reading aloud to a child. Check vocabulary, sentence
    length, how frightening pages are, whether choices can be made from the
    picture and text alone, and whether a young reader can find the circles
    and the Continue button.
-5. **Fix and confirm.** Fix defects in the stage that owns them (story map,
+5. **Visual continuity pass.** Lay every page out in story order and check:
+   the hero matches the model sheet on every page; recurring details match the
+   painted-detail registry; furniture, routes and light direction agree with
+   the location's key art; each promised clue is visible; the colour script
+   flows; no text zone is busy and none repeats its position on consecutive
+   pages.
+6. **Materials pass.** Check that every deliverable in
+   [README.md](README.md#deliverables) exists and is consistent with the book:
+   titles, synopsis, metadata, map names, parent hints.
+7. **Fix and confirm.** Fix defects in the stage that owns them (story map,
    room bible, shots, text, blockout, code or painting), then rerun the
    affected pass. Record decisions for findings you deliberately keep.
 
@@ -48,7 +58,7 @@ with `READY`, `READY WITH RISKS` or `REVISE`.
 
 ## Acceptance checks
 
-- All four passes ran, and the blind read was done before its reader saw the
+- All passes ran, and the blind read was done before its reader saw the
   design.
 - Every defect is fixed, or kept with a recorded decision.
 - `make check` and `make check-ui` pass after the last change.

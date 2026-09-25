@@ -44,7 +44,11 @@ book through the headless interface.
    Each output line is one page as JSON (kind, text, choices, hotspots, text
    region). Check every page's text, choices and hotspots against `TEXT.md`
    and `SHOTS.md`.
-10. **Checks.** Run `make check BOOK=<name>`, then `make check-ui BOOK=<name>`,
+10. **Text fits its zone.** In each page's `text_region`, `content_height` must
+    not exceed `height`, and `font_size` must equal `preferred_size`. A smaller
+    font means the text was shrunk to fit: shorten the passage or enlarge the
+    camera's `textRect`.
+11. **Checks.** Run `make check BOOK=<name>`, then `make check-ui BOOK=<name>`,
     and inspect a smoke capture:
 
     ```sh
@@ -62,5 +66,6 @@ book through the headless interface.
   from `TEXT.md`.
 - Every room-page choice has a visible circle on its anchor, and no circle
   overlaps the page text.
+- Every page's text fits its zone at its preferred size.
 - Every fact is set once and changes something later.
 - No code path exposes an inventory or a failure message.

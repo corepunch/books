@@ -1,68 +1,105 @@
 # Stage 9 — Illustration
 
-Paint finished pages over the reference renders. The render fixes
-perspective, positions, scale and light; the painting adds material, detail,
-atmosphere and character.
+Paint the finished pages. The render is a rough spatial reference that keeps
+every page consistent: camera, layout, scale, the hero's pose and the light
+direction. The painting is the art: material, detail, atmosphere, character
+and charm. Paint *over* the model's decisions, not its surfaces.
 
 ## Inputs
 
-- `rooms/<camera>.jpg` for every camera, with its `textRect` from the scene
-- `work/ROOMS.md` (materials, painting notes, palette), `work/CHARACTERS.md`,
-  `work/SHOTS.md`
+- `rooms/<camera>.jpg` for every page camera, with its `textRect`
+- Model-sheet renders and the plan view from stage 7
+- `work/ROOMS.md` (materials, palette, painted-detail registry),
+  `work/CHARACTERS.md`, `work/SHOTS.md` (story questions, clues, colour script)
+
+## What the painter keeps and what the painter may change
+
+**Keep** (the reader relies on these across pages):
+
+- the camera, perspective and horizon, and the page's framing;
+- the position, scale and facing of the hero, characters, furniture, story
+  objects and routes;
+- the hero's pose and gesture;
+- the key light direction and the main cast shadows;
+- every clue the shot promises, clearly visible;
+- the text zone as a quiet area, and each anchor's object at its rendered
+  position (so the circles still land on it).
+
+**Change freely** (this is where the art lives):
+
+- materials, textures, wear and colour, following `ROOMS.md`;
+- blockout simplifications: boxy furniture becomes turned legs and carved
+  aprons, spheres become fur, an ellipsoid becomes a face;
+- small props and dressing, provided a detail seen on more than one page is in
+  the painted-detail registry and painted the same way each time;
+- atmosphere: dust in the light, haze, glow, depth of field;
+- small adjustments to proportion or pose for appeal, as long as the silhouette
+  and position still match.
+
+Never add or move permanent furniture, a route, or a story object on one page
+only. If a page needs that, change `ROOMS.md` and the scene, and re-render.
 
 ## Required actions
 
+Work in this order; approve each step before the next.
+
 1. **Style bible.** At the top of `work/ILLUSTRATION.md`, write the book's
    visual style once: medium and rendering (painterly storybook, soft
-   gouache), palette logic per location and time of day, how light behaves,
-   level of detail, edge treatment, and the character model sheet (hero from
-   front, side and three-quarter, with colours). Every page brief refers to
-   it.
-2. **One brief per camera.** For each camera, write:
-   - the story question from `SHOTS.md`;
-   - what must stay exactly as rendered: camera, perspective, horizon,
-     furniture and object positions, the hero's pose and position, light
-     direction, story objects;
-   - what to enrich from `ROOMS.md`: materials and wear, secondary props that
-     already have a reason, texture, atmosphere (dust in the lamplight,
-     moonlight on the sill);
-   - the detail hierarchy: the hero and story object first, the route and
-     landmarks second, the room third;
-   - the text zone: keep it naturally quiet (plain wall, dark window, soft
-     shadow), with even values and no faces, strong edges or clues, and no
-     panels or frames;
-   - continuity notes: what the previous and next pages show.
-3. **Lighting and depth.** Keep the rendered key light and cast shadows, and
-   strengthen depth with values: foreground darker or softer, focal area with
-   the highest contrast, background hazier. Avoid flat lighting and an
-   all-over orange grade; keep each location's own mood.
-4. **Keep the world stable.** Never add permanent furniture that is not in
-   the blockout, move a route object, or change the hero's design. If a page
-   needs something new, add it to `ROOMS.md` and the scene first, then
-   re-render.
-5. **Collectible objects on room pages.** Paint the full room with the object
-   in place. Make a clean plate by removing only that object from the same
-   painting, and cut the object from the same painting into a transparent
-   full-size layer in `illustrations/items/`, so the in-game object matches
-   the room exactly. Keep the plate's text zone unchanged.
-6. **Output.** Save finished pages as `illustrations/<camera>.png` at the
-   render size. Plates for rooms use the "cleared" camera name. Item layers
-   are named `<object>-<camera>.png`.
-7. **Review each page** against its brief and render at full size and as a
-   thumbnail: story question readable, hero recognisable, anchors still on
-   their objects, text zone quiet.
+   gouache), edge treatment, detail density, how light and shadow behave,
+   and what to avoid (flat lighting, an all-over orange grade, decorative text
+   panels, clutter competing with the hero).
+2. **Character model sheets.** Paint each character over the turnaround
+   renders: front, side, back, three-quarter, the expression set from
+   `CHARACTERS.md`, and a scale line-up next to the chair or another landmark.
+   Every page paints the character from these sheets.
+3. **Story object sheets.** Paint each story object and clue close up from its
+   model-sheet render, with its states. Its look on every page comes from
+   here.
+4. **Location key art.** For each location, paint one master painting from
+   its widest camera, applying the materials, palette and registry details.
+   This fixes how the place looks; all other pages of that location match it.
+5. **Colour script.** Lay out small thumbnails of every page in story order,
+   following the colour script in `SHOTS.md`, to check the flow of light and
+   mood across the book before painting pages in full.
+6. **Page briefs.** For each camera, write in `ILLUSTRATION.md`: the story
+   question; the keep list specific to this page (hero pose, story objects,
+   clues, anchors); what to enrich; the detail hierarchy; the text zone and
+   how to keep it quiet naturally (plain wall, dark window, soft shadow, with
+   even values and no faces or edges); continuity notes (what the previous and
+   next pages show).
+7. **Paint the pages** in story order, each from its render, its location key
+   art, the model sheets and the registry. Strengthen depth with values:
+   foreground softer or darker, the focal area with the highest contrast,
+   background hazier. Keep each location's own mood.
+8. **Collectible objects on room pages.** Paint the full room with the object
+   in place. Make the clean plate by removing only that object from the same
+   painting, saved under the "cleared" camera's name. Draw the object's
+   outline in `illustrations/items/polygons.json` and run
+   `swift tools/extract_items.swift books/<name>/illustrations` to cut the
+   transparent full-size layer (`items/<object>-<camera>.png`), a compact crop
+   and `items/rects.json`. The in-game object then matches the room exactly.
+9. **Files.** Save pages as `illustrations/<camera>.png` in 4:3, ideally at the
+   render size. The `illustrations/` folder is local and not in git; keep a
+   backup.
+10. **Review each page** in the app, at full size and as a thumbnail: story
+    question readable, hero on model, clues visible, circles still on their
+    objects, text readable in its zone, and continuity with its neighbours.
 
 ## Outputs
 
-- `work/ILLUSTRATION.md` (style bible and per-camera briefs)
-- `illustrations/*.png` and `illustrations/items/*.png`
+- `work/ILLUSTRATION.md` (style bible, sheet notes, colour script, page briefs)
+- Character and object sheets, location key art (kept with the illustrations)
+- `illustrations/*.png`, `illustrations/items/*.png`,
+  `illustrations/items/polygons.json`
 
 ## Acceptance checks
 
-- Every page matches its render's camera, positions, pose and light
-  direction; the hotspot circles still land on their objects.
-- The hero looks the same on every page.
-- Every text zone is quiet and varies in position between consecutive pages.
-- Room plates and item layers come from the same painting and line up
-  exactly.
-- The book reads correctly in the app with the painted pages.
+- Every page keeps its render's camera, layout, pose, light direction and
+  clues, and the circles land on their objects in the app.
+- Every page of a location matches its key art; recurring details match the
+  registry.
+- The hero and story objects match their sheets on every page.
+- Text zones are quiet and vary in position between consecutive pages.
+- Plates and item layers come from the same painting and line up exactly.
+- Read in order, the colour script builds and releases rather than staying one
+  mood.
