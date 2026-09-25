@@ -9,7 +9,9 @@ short passage of story text, and either two or three choices or a Continue
 button.
 
 Read [CRAFT.md](CRAFT.md) first: it explains what makes these books
-interesting. Then run the stages in order, one at a time. Each stage file lists
+interesting. [books/lighthouse](../books/lighthouse/) («Огонь на маяке») is a
+complete worked example of every stage: design, story map, room bible, cast,
+shots, text, three Scener scenes, the story table, tests, packaging and review. Then run the stages in order, one at a time. Each stage file lists
 its inputs, required actions, outputs and acceptance checks. Do not start a
 stage until the previous stage's acceptance checks pass. When a later stage
 exposes a problem in an earlier artifact, fix that artifact first and record
@@ -36,20 +38,27 @@ Paths are relative to `books/<name>/` unless they start with `books/` or
 
 ## What makes these books work
 
+- **An adventure is a journey.** The heroes set out, cross many different
+  places, meet strangers, face dangers and can fail along the way. *The Forces
+  of Krill* visits about twenty-five places, has a decision on roughly every
+  third page and twenty endings. A puzzle solved in one room is not an
+  adventure; see [CRAFT.md](CRAFT.md) §1.
 - **A picture book on the surface, a world underneath.** The illustration
   carries the concrete scene and the text tells the story beat. Underneath is
   a consistent place: fixed geography, furniture that stays put, routes that
   make physical sense.
-- **Challenges the reader can solve.** The answer is always in the world
-  before the choice: in a picture, in the text, in what a character said.
+- **Choices the reader can judge.** Which way, whom to trust, fight or flee.
+  Warnings and advice come before the choice: in a picture, in the text, in
+  what a character said.
 - **Choices are decisions, not verbs.** "Follow the music" or "Hide under the
   table" is a choice. "Take lamp" is not.
 - **No inventory and no picking things up.** The book remembers a few story
-  facts, such as whether the mirror has been turned, and later pages check
-  them. Facts stay few and change the picture or the choices. The hero never
+  facts, such as whether the heroes heard the old man's warning, and later
+  pages check them. Facts stay few and change the picture or the choices. The hero never
   collects or carries objects.
-- **One world, many cameras.** Every page is a camera in one 3D blockout. The
-  blockout fixes perspective, scale, layout and light so that paintings stay
+- **Many places, one consistent world.** Every page is a camera in a 3D
+  blockout, one Scener scene per location or cluster of rooms. The blockout
+  fixes perspective, scale, layout and light so that paintings stay
   consistent; the paintings bring the art.
 - **It must make sense.** Every object has a support and a reason to be there,
   and every route uses things a resident would own. See Scener's
@@ -103,10 +112,17 @@ A finished book has all of these:
 
 ## Engine facts every stage relies on
 
-- Page kinds: room pages (each choice is a circle on its object with its
-  label as a caption, tappable on either), beat pages (one Continue button)
-  and ending pages. State lives in the book's C file as
-  named facts.
+- Page kinds: room pages (decision pages: each choice is a circle on its
+  object with its label as a caption, tappable on either), beat pages (story
+  pages with one Continue button) and ending pages. State lives in the book's
+  C file as named facts.
+- Books are data: a table of pages in `books/<name>.c` (decision, story,
+  ending and invisible check pages) that `src/story.c` runs (stage 8).
+- Every ending has one button. Failure and partial endings offer "try again"
+  back to the reader's last decision (or a named earlier one) with the facts
+  they had there; the success ending offers "start again" (CRAFT §6).
+- A book may have several `.blks` scenes in `rooms/`; each camera name is
+  unique across them. Consecutive pages may share a camera.
 - Pages are 4:3 images. The app window is 11:8 on Mac, so about 3 % is
   cropped from the top and bottom; keep essential content 5 % inside every
   edge.

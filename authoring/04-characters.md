@@ -12,9 +12,12 @@ as Scener bone skeletons and painted the same way on every page.
 ## Required actions
 
 1. **Choose a readable hero.** The hero must stay recognisable at 6–8 % of
-   the frame height in wide shots. If the natural size is too small for the
-   rooms (a mouse in a human house), choose a larger species or a smaller
-   world, and record the decision.
+   the frame height in wide shots. A child or small adult human reads best in
+   a journey: people fit every place the story visits, from a cottage to a
+   cliff, and strangers are people too. If the hero is an animal, check the
+   scale against every location on the route, and record the decision.
+   Give the hero one or two bright story colours (a yellow coat, a red hat)
+   that nothing else in any location uses.
 2. **Scale sheet.** Height, length, head size, reach, and the step or jump
    limits used by the routes in `ROOMS.md`. Recheck every route step against
    these limits.
@@ -34,9 +37,34 @@ as Scener bone skeletons and painted the same way on every page.
    neck and head, limbs with `mirror`, tail and ears with `segments` and
    `taper`, and surface details placed with `on`. List bone names; poses and
    IK refer to them.
-8. **Pose list.** Every pose the shot list will need, named by action (sit,
-   look down, reach up, jump from seat to desk, carry in teeth), with which
-   bones re-aim and which paws or hands plant with IK.
+
+   **People share one skeleton.** Build every human from the same template
+   with the same bone names, so one pose library serves the whole cast:
+
+   ```text
+   spine (root, aim 0 90, 2 segments)
+   ├── hem        coat or skirt hanging from the hips (at 0.12, from 0 -90, aim 0 -90, taper > 1)
+   ├── neck → head   head extras with on=: hat, cap, scarf, eyes, nose; braid or beard bones
+   ├── left_arm (at 0.92, from 90 0, aim 10 -85, mirror) → left_forearm → left_hand
+   └── left_thigh (at 0.02, from 90 -40, aim 0 -90, mirror) → left_shin → left_foot (foot=1)
+   ```
+
+   Vary only lengths, girth and materials per person. Scale the head more
+   slowly than the body (a child's head is a larger share of its height), so
+   children read as children and adults as adults at thumbnail size.
+   Name materials per person (`varya_coat`, `savely_beard`) and define them in
+   each scene that shows that person. The Lighthouse cast in
+   `books/lighthouse/rooms/prefabs/characters/` is a working set.
+8. **Pose list.** Every pose the shot list will need, named by action (walk,
+   run, balance on a plank, hang from a rope, sit, row, point, push a door),
+   with which bones re-aim and which feet or hands plant with IK.
+
+   A joint's `aim` is relative to its parent's *current* direction, not the
+   body's. With a thigh re-aimed from `0 -90` to straight forward (`0 0`), the
+   shin must be aimed `0 -178` to hang down; a child keeps its parent's turn
+   unless re-aimed. Prefer re-aims to IK for poses reused across cameras: IK
+   targets are world positions, so an IK pose only fits the one place it was
+   made for.
 9. **Model sheet shots.** Plan turnaround cameras (front, side, back,
    three-quarter) and a scale line-up next to a familiar object (the chair)
    for stage 7 to render. These renders plus the painted model sheet from

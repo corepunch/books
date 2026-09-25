@@ -1,0 +1,11 @@
+<!-- A fisherman's cottage. Z up; footprint 400 x 300 cm, walls 240 high, ridge at 380, baseline z=0.
+     The door faces local -Y; a window either side of it. -->
+<prefab>
+  <box pos="0 0 120" size="400 300 240" material="whitewash" />
+  <box pos="0 -75 310" rot="42 0 0" size="420 205 12" material="roof" />
+  <box pos="0 75 310" rot="-42 0 0" size="420 205 12" material="roof" />
+  <box pos="0 -151 95" size="90 4 190" material="dark_wood" />
+  <box pos="-120 -151 140" size="70 4 60" material="window_dark" />
+  <box pos="120 -151 140" size="70 4 60" material="window_dark" />
+  <box pos="130 60 400" size="40 40 90" material="stone" />
+</prefab>

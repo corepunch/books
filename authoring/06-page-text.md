@@ -15,17 +15,19 @@ carries the scene, the text carries the story.
    how the hero feels, and what changed. It does not repeat what the picture
    plainly shows ("there is a desk and a chair"); it names only what the
    reader needs to understand the choices.
-2. **Length.** Room pages: 1–3 sentences, about 25–45 words. Beat pages: 1–2
-   sentences. Endings may run a little longer. Check that each passage fits
+2. **Length.** Decision (room) pages: 2–4 sentences, about 30–60 words.
+   Story (beat) pages carry the journey: 2–4 sentences, about 30–60 words.
+   Endings may run a little longer. Check that each passage fits
    its text zone at its text scale.
-3. **Room pages invite choices.** Mention every choice's anchor in the story
-   so the choices make sense ("the chair stands right by the desk"). The first
-   visit sets the scene; revisits are shorter and reflect current facts
-   ("The brass star is already Mira's").
-4. **Beat pages resolve the choice.** Show the hero's action with a concrete
-   physical detail ("she jumps onto the seat, then puts her front paws on the
-   edge of the desk"), then let Continue return to a room or advance the
-   story.
+3. **Decision pages invite choices.** Mention every choice's anchor in the
+   story so the choices make sense ("One trail is covered with leaves; the
+   other is bare earth. A big tree with low branches stands at the fork.").
+   If the story ever returns to a place, say what has changed.
+4. **Story pages move the adventure.** Resolve the last choice with a
+   concrete action, then travel, meet someone, bring news or show danger
+   coming. Each story page should leave the reader wanting the next.
+   Failure endings are short, clear about what went wrong, and gentle or funny
+   for young readers (CRAFT §6).
 5. **Choice captions.** Short questions about an action, as in the Zork
    books ("Jump onto the chair?", "Take the dirt trail?"), all in the same
    form, under about 30 characters. Set every option up in the passage first

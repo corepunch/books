@@ -1,0 +1,7 @@
+<!-- The old signpost at the fork: a weathered post 220 cm tall with two boards. Z up, baseline z=0.
+     The boards point local +X (to the flats) and -X (to the cliffs). -->
+<prefab>
+  <box pos="0 0 110" size="12 12 220" material="dark_wood" />
+  <box pos="45 0 190" rot="0 0 -4" size="90 4 22" material="wood" />
+  <box pos="-45 0 160" rot="0 0 5" size="90 4 22" material="wood" />
+</prefab>

@@ -1,0 +1,24 @@
+<!-- The rope bridge over the gully: 420 cm long along local Y, 90 wide, deck at z=0.
+     Twelve planks hang from two hand ropes; the third plank from the south end (local -Y) is the rotten one,
+     named in the scene. Posts stand on both rims. -->
+<prefab>
+  <box pos="-50 -212 55" size="10 10 130" material="dark_wood" />
+  <box pos="50 -212 55" size="10 10 130" material="dark_wood" />
+  <box pos="-50 212 55" size="10 10 130" material="dark_wood" />
+  <box pos="50 212 55" size="10 10 130" material="dark_wood" />
+  <cylinder pos="-45 0 95" rot="90 0 0" radius="1.2" height="424" material="rope" />
+  <cylinder pos="45 0 95" rot="90 0 0" radius="1.2" height="424" material="rope" />
+  <cylinder pos="-45 0 -2" rot="90 0 0" radius="1" height="424" material="rope" />
+  <cylinder pos="45 0 -2" rot="90 0 0" radius="1" height="424" material="rope" />
+  <box pos="0 -186 0" size="90 26 4" material="wood" />
+  <box pos="0 -152 0" size="90 26 4" material="wood" />
+  <box pos="0 -84 0" size="90 26 4" material="wood" />
+  <box pos="0 -50 0" size="90 26 4" material="wood" />
+  <box pos="0 -16 0" size="90 26 4" material="wood" />
+  <box pos="0 18 0" size="90 26 4" material="wood" />
+  <box pos="0 52 0" size="90 26 4" material="wood" />
+  <box pos="0 86 0" size="90 26 4" material="wood" />
+  <box pos="0 120 0" size="90 26 4" material="wood" />
+  <box pos="0 154 0" size="90 26 4" material="wood" />
+  <box pos="0 188 0" size="90 26 4" material="wood" />
+</prefab>

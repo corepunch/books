@@ -116,7 +116,8 @@ static void draw_overlays(const struct PageView *view)
             text_draw(choice->label, fvec2_add(control->caption.origin, fvec2(CAPTION_PADDING, CAPTION_PADDING / 2)),
                       CAPTION_TEXT_SIZE, control->caption.size.width - 2 * CAPTION_PADDING + 1, 0xF4E6CAFF);
             break;
-        case CHOICE_CONTINUE: draw_continue(control, choice->label); break;
+        case CHOICE_CONTINUE:
+        case CHOICE_RETRY: draw_continue(control, choice->label); break;
         case CHOICE_INVALID: fail("cannot draw an uninitialized choice");
         }
     }
@@ -182,14 +183,16 @@ bool ui_animating(void) { return transition.active; }
 
 void ui_preview(double seconds)
 {
-    for (int i = 0; i < current_page.layout.control_count; ++i) {
-        const struct PageControl control = current_page.layout.controls[i];
-        if (!control.circle) continue;
-        ui_click(frect_center(control.bounds));
-        preview_time = seconds;
-        return;
-    }
-    fail("transition smoke requires a projected hotspot");
+    /* Prefer a circle, whose reveal grows from its edge; otherwise press the page's button. */
+    for (int pass = 0; pass < 2; ++pass)
+        for (int i = 0; i < current_page.layout.control_count; ++i) {
+            const struct PageControl control = current_page.layout.controls[i];
+            if (control.circle != (pass == 0)) continue;
+            ui_click(frect_center(control.bounds));
+            preview_time = seconds;
+            return;
+        }
+    fail("transition smoke requires a control on the first page");
 }
 
 void ui_init(void)

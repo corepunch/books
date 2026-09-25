@@ -1,0 +1,28 @@
+<!-- Grandfather Matvei, the lighthouse keeper: white beard, grey hair, striped nightshirt.
+     One shared human skeleton: body frame Z up, faces local -Y, left is +X; about
+     173 cm tall. Every human uses the same bone names (spine, hem, neck, head, left_/right_ arm,
+     forearm, hand, thigh, shin, foot) so the scene poses work on all of them. -->
+<prefab>
+  <bone name="spine" aim="0 90" segments="2" length="48.6" radius="16.2 12.5" material="grandpa_coat">
+    <bone name="hem" at="0.12" from="0 -90" sink="14.7" aim="0 -90" length="12.8" radius="16.9 13.2" taper="1.25" material="grandpa_coat" />
+    <bone name="neck" aim="0 90" length="6.4" radius="5.9" material="grandpa_skin">
+      <bone name="head" aim="0 90" length="22.2" radius="11.0 11.4" material="grandpa_skin">
+        <sphere on="0 60" at="0.55" radius="11.7" scale="1 1 0.7" material="grandpa_hair" />
+        <sphere on="18 10" at="0.45" radius="1.5" material="grandpa_eye" />
+        <sphere on="-18 10" at="0.45" radius="1.5" material="grandpa_eye" />
+        <sphere on="0 -5" at="0.38" radius="1.6" material="grandpa_skin" />
+        <bone name="beard" at="0.25" from="0 -40" aim="0 -80" length="15.9" radius="8.5 5.7" taper="0.45" material="grandpa_beard" />
+      </bone>
+    </bone>
+    <bone name="left_arm" at="0.92" from="90 0" aim="10 -85" length="26.9" radius="6.2 5.9" mirror="1" material="grandpa_coat">
+      <bone name="left_forearm" aim="0 -90" length="24.3" radius="5.3" material="grandpa_coat">
+        <bone name="left_hand" aim="0 -90" length="9.0" radius="4.4 2.9" material="grandpa_skin" />
+      </bone>
+    </bone>
+    <bone name="left_thigh" at="0.02" from="90 -40" aim="0 -90" length="39.7" radius="8.8 9.6" mirror="1" material="grandpa_legs">
+      <bone name="left_shin" aim="0 -90" length="38.4" radius="6.3" material="grandpa_boots">
+        <bone name="left_foot" foot="1" aim="0 -6" length="16.6" radius="5.3 4.1" material="grandpa_boots" />
+      </bone>
+    </bone>
+  </bone>
+</prefab>

@@ -1,0 +1,339 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Огонь на маяке: the bay. Every outdoor page is a camera here, so the lighthouse, the island and
+     the shores stay in the same places on every page. Z up, X east, Y north, centimetres,
+     storybook-compressed: the village is 70 m from the island.
+     Village and beach: y < 250, land top z=40. The spit and the fork: x -400..1400, y 250..700.
+     Cliff plateau: x -600..1300, y 700..4300, top z=600, cut by the gully at y 2900..3300 (rope bridge
+     at x=500). The flats: x 1300..3500, sand at z=5, wreck of the Chaika at (2300, 2650), the sandbar
+     that stays dry at z=30. North shore y 4700..5400 with the ferry landing. The channel y 5400..6600,
+     stepping stones at x=900. The island rock and the lighthouse at (800, 7200).
+     The Sea group sits at low tide; cameras raise it for the tide. -->
+<scene up="z" ambient="0.30 0.30 0.36" background="0.36 0.36 0.46">
+  <camera name="harbour-show-timka" comment="The harbour: Timka mends nets on the pier, Varya runs up; boats on the shingle; the lighthouse far across the bay" pos="-720 60 150" look="-1010 700 110" fov="58" textRect="0.57 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="-1000 300 55" rot="0 0 180" /><use-pose instance="Varya" name="Run" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="harbour-show-fork" comment="The fork by the old signpost: the path up to the cliffs on the left, the sand path to the flats on the right, the lighthouse ahead" pos="1400 -250 260" look="875 1367 300" fov="66" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1130 250 40" rot="0 0 165" /><use-pose instance="Varya" name="Walk" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="flats-show-wreck" comment="The tidal flats: the wreck of the Chaika, the seal on its rock, the path up the cliff face behind, the lighthouse far north" pos="2150 950 260" look="1800 2700 120" fov="66" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1900 1500 5" rot="0 0 150" /><use-pose instance="Varya" name="LookUp" /></camera>
+  <camera name="flats-climb-wreck" comment="Varya climbs out through the hole in the wreck; water already round the hull" pos="2700 2300 130" look="2330 2650 80" fov="55" textRect="0.57 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="2400 2560 5" rot="0 0 150" /><use-pose instance="Varya" name="Climb" /><transform target="Sea" pos="0 0 28" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="flats-show-tide" comment="The tide comes in round the wreck: knee-deep water to the north shore, the dry deck above" pos="2800 2300 220" look="2150 3500 60" fov="62" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="2250 2950 5" rot="0 0 170" /><use-pose instance="Varya" name="LookUp" /><transform target="Sea" pos="0 0 30" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="flats-night-wreck" comment="Ending: Varya hugs her knees on the deck, the sea all round, the lighthouse dark" pos="2550 2380 240" look="2230 2700 120" fov="58" textRect="0.57 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="2220 2700 118" rot="0 0 200" /><use-pose instance="Varya" name="SitHug" /><transform target="Sea" pos="0 0 70" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="flats-run-stones" comment="Varya splashes through the rising water toward the north shore" pos="2450 3750 160" look="2000 4900 60" fov="58" textRect="0.57 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="2150 4300 5" rot="0 0 170" /><use-pose instance="Varya" name="Run" /><transform target="Sea" pos="0 0 38" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="flats-follow-seal" comment="The secret sandbar: Varya walks the dry strip while the seal swims beside her" pos="2650 3450 230" look="2000 4300 30" fov="58" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="2080 3950 30" rot="0 0 200" /><use-pose instance="Varya" name="Walk" /><transform target="Sea" pos="0 0 28" /><transform target="SealActor" pos="1215 -1204 -65" rot="0 0 50" /><use-pose instance="SealActor" name="SealSwim" /></camera>
+  <camera name="cliffs-show-hut" comment="The cliff top: Agafya at her hut and goat pen, the rope bridge over the gully beyond, the path down to the flats" pos="-150 1150 820" look="650 2700 640" fov="62" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="100 1560 600" rot="0 0 110" /><use-pose instance="Varya" name="LookUp" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="cliffs-cross-bridge" comment="On the rope bridge: Varya on the second plank before the rotten third one, the stream far below" pos="720 2930 660" look="500 3000 605" fov="60" textRect="0.57 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="500 2948 600" rot="0 0 180" /><use-pose instance="Varya" name="Balance" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="cliffs-hang-bridge" comment="Ending: the third plank has broken; Varya hangs from the ropes and Agafya runs up" pos="780 2800 560" look="480 3000 520" fov="60" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="500 2982 425" rot="0 0 180" /><use-pose instance="Varya" name="Hang" /><transform target="AgafyaActor" pos="-734 909 0" rot="0 0 230" /><use-pose instance="AgafyaActor" name="Wave" /><transform target="BrokenPlank" pos="0 0 1000" /><transform target="RottenPlank" pos="0 0 -1000" rot="0 0 0" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="cliffs-past-bridge" comment="Varya steps off the far end of the bridge; the path runs down to the channel" pos="150 3600 720" look="550 3100 620" fov="55" textRect="0.57 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="500 3330 600" rot="0 0 180" /><use-pose instance="Varya" name="Walk" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="cliffs-walk-agafya" comment="Agafya leads Varya round the gully by the sheep track at sunset" pos="-950 2250 760" look="-500 2800 640" fov="58" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="-520 2520 600" rot="0 0 180" /><use-pose instance="Varya" name="Walk" /><transform target="AgafyaActor" pos="-1182 93 0" rot="0 0 240" /><use-pose instance="AgafyaActor" name="Point" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="channel-show-ferry" comment="The landing: Savely smokes by his hut, his boat at the jetty, the stepping stones running across to the island" pos="1000 4700 300" look="1600 6300 150" fov="62" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1250 5000 40" rot="0 0 180" /><use-pose instance="Varya" name="LookUp" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /><transform target="Sea" pos="0 0 8" /></camera>
+  <camera name="channel-talk-ferryman" comment="Varya and Savely at the hut door" pos="1380 5040 170" look="1170 5300 140" fov="50" textRect="0.03 0.04 0.38 0.20" textScale="0.72"><transform target="Varya" pos="1230 5250 40" rot="0 0 -126" /><use-pose instance="Varya" name="LookUp" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /><transform target="Sea" pos="0 0 8" /></camera>
+  <camera name="channel-row-ferry" comment="Mid-channel: Savely rows into the waves, Varya grips the bench, the island ahead" pos="1250 5750 200" look="1650 6500 120" fov="55" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1600 6185 2" rot="0 0 180" /><use-pose instance="Varya" name="Sit" /><transform target="Ferry" pos="180 480 0" rot="0 0 188" /><transform target="Savely" pos="-668 -457 -38" rot="0 0 158" /><use-pose instance="Savely" name="Row" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /><transform target="Sea" pos="0 0 8" /></camera>
+  <camera name="channel-stones-seal" comment="The stepping stones: the seal surfaces beside Varya and shows the way to the island" pos="2300 5500 170" look="1900 6150 30" fov="58" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1900 5840 0" rot="0 0 180" /><use-pose instance="Varya" name="Jump" /><transform target="Sea" pos="0 0 10" /><transform target="SealActor" pos="2445 -2815 -78" rot="0 0 30" /><use-pose instance="SealActor" name="SealSwim" /></camera>
+  <camera name="channel-stones-mid" comment="Halfway across: waves wash over the stones; a big jump ahead, the landing behind" pos="2350 5900 190" look="1900 6100 20" fov="58" textRect="0.57 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1900 6020 0" rot="0 0 180" /><use-pose instance="Varya" name="Balance" /><transform target="Sea" pos="0 0 18" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="channel-fall-stones" comment="Ending: Varya in the cold water between the stones; Savely runs along the jetty" pos="2350 5850 180" look="1750 6050 0" fov="58" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1900 6110 -95" rot="0 0 180" /><use-pose instance="Varya" name="Swim" /><transform target="Sea" pos="0 0 18" /><transform target="Savely" pos="-254 -280 15" rot="0 0 310" /><use-pose instance="Savely" name="Run" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="channel-hut-night" comment="Ending: inside the ferry hut, Varya warms herself at the stove under Savely's coat" pos="883 4969 175" look="985 5273 75" fov="56" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="980 5253 40" rot="0 0 165" /><use-pose instance="Varya" name="Sit" /><transform target="Savely" pos="363 -131 0" rot="0 0 260" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /><transform target="Sea" pos="0 0 8" /></camera>
+  <camera name="island-show-door" comment="The island: Varya at the lighthouse door, spray bursting on the rocks" pos="2150 6550 420" look="1800 7000 500" fov="62" textRect="0.03 0.04 0.40 0.20" textScale="0.72"><transform target="Varya" pos="1800 6905 250" rot="0 0 180" /><use-pose instance="Varya" name="Push" /><transform target="Sea" pos="0 0 25" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <camera name="cover" comment="Cover: Varya at the fork with the whole bay and the lighthouse ahead; sky for the title" pos="1500 -520 300" look="1250 2500 700" fov="58"><transform target="Varya" pos="1180 120 40" rot="0 0 170" /><use-pose instance="Varya" name="Walk" /><transform target="SealActor" pos="0 0 -3000" rot="0 0 0" /></camera>
+  <pose name="Walk">
+    <joint target="left_thigh" aim="0 -68" />
+    <joint target="left_shin" aim="0 -110" />
+    <joint target="right_thigh" aim="180 -76" />
+    <joint target="left_arm" aim="180 -72" />
+    <joint target="right_arm" aim="0 -65" />
+  </pose>
+  <pose name="Run">
+    <joint target="spine" aim="0 76" />
+    <joint target="left_thigh" aim="0 -40" />
+    <joint target="left_shin" aim="0 -150" />
+    <joint target="right_thigh" aim="180 -58" />
+    <joint target="right_shin" aim="180 -60" />
+    <joint target="left_arm" aim="180 -45" />
+    <joint target="right_arm" aim="0 -35" />
+    <joint target="right_forearm" aim="0 -10" />
+  </pose>
+  <pose name="LookUp">
+    <joint target="head" aim="180 72" />
+    <joint target="left_arm" aim="15 -80" />
+  </pose>
+  <pose name="LookDown">
+    <joint target="neck" aim="0 70" />
+    <joint target="head" aim="0 60" />
+  </pose>
+  <pose name="Balance">
+    <joint target="left_arm" aim="90 -5" />
+    <joint target="right_arm" aim="-90 -5" />
+    <joint target="left_thigh" aim="0 -62" />
+    <joint target="left_shin" aim="0 -118" />
+    <joint target="neck" aim="0 75" />
+  </pose>
+  <pose name="Hang">
+    <joint target="spine" pos="0 0 -8" />
+    <joint target="left_arm" aim="10 85" />
+    <joint target="right_arm" aim="-10 85" />
+    <joint target="left_thigh" aim="10 -80" />
+    <joint target="right_thigh" aim="-5 -95" />
+    <joint target="head" aim="180 70" />
+  </pose>
+  <pose name="Climb">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_thigh" aim="0 -15" />
+    <joint target="left_shin" aim="0 -165" />
+    <joint target="left_arm" aim="0 35" />
+    <joint target="right_arm" aim="0 25" />
+  </pose>
+  <pose name="Sit">
+    <joint target="spine" pos="0 0 -58" />
+    <joint target="left_thigh" aim="5 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-5 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -60" />
+    <joint target="right_arm" aim="-20 -60" />
+  </pose>
+  <pose name="SitHug">
+    <joint target="spine" pos="0 0 -60" aim="0 80" />
+    <joint target="left_thigh" aim="5 40" />
+    <joint target="left_shin" aim="0 -175" />
+    <joint target="right_thigh" aim="-5 40" />
+    <joint target="right_shin" aim="0 -175" />
+    <joint target="left_arm" aim="0 -20" />
+    <joint target="right_arm" aim="0 -20" />
+    <joint target="head" aim="0 80" />
+  </pose>
+  <pose name="Row">
+    <joint target="spine" pos="0 0 -58" aim="180 80" />
+    <joint target="left_thigh" aim="0 5" />
+    <joint target="left_shin" aim="0 -170" />
+    <joint target="right_thigh" aim="0 5" />
+    <joint target="right_shin" aim="0 -170" />
+    <joint target="left_arm" aim="20 -10" />
+    <joint target="right_arm" aim="-20 -10" />
+  </pose>
+  <pose name="Point">
+    <joint target="right_arm" aim="-35 15" />
+    <joint target="right_forearm" aim="0 -5" />
+    <joint target="head" aim="-15 88" />
+  </pose>
+  <pose name="Smoke">
+    <joint target="right_arm" aim="-10 -40" />
+    <joint target="right_forearm" aim="0 30" />
+    <joint target="left_arm" aim="30 -80" />
+  </pose>
+  <pose name="Wave">
+    <joint target="right_arm" aim="-40 60" />
+    <joint target="right_forearm" aim="0 -20" />
+    <joint target="head" aim="0 95" />
+  </pose>
+  <pose name="Mend">
+    <joint target="spine" pos="0 0 -58" aim="0 80" />
+    <joint target="left_thigh" aim="10 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-10 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -20" />
+    <joint target="right_arm" aim="-20 -20" />
+    <joint target="head" aim="0 65" />
+  </pose>
+  <pose name="Push">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_arm" aim="10 20" />
+    <joint target="right_arm" aim="-10 20" />
+    <joint target="right_thigh" aim="180 -65" />
+  </pose>
+  <pose name="Jump">
+    <joint target="spine" pos="0 0 18" aim="0 80" />
+    <joint target="left_thigh" aim="0 -30" />
+    <joint target="left_shin" aim="0 -120" />
+    <joint target="right_thigh" aim="180 -50" />
+    <joint target="right_shin" aim="0 -70" />
+    <joint target="left_arm" aim="60 40" />
+    <joint target="right_arm" aim="-60 40" />
+  </pose>
+  <pose name="Swim">
+    <joint target="left_arm" aim="40 60" />
+    <joint target="right_arm" aim="-30 70" />
+    <joint target="head" aim="180 75" />
+  </pose>
+  <pose name="Reach">
+    <joint target="spine" aim="0 78" />
+    <joint target="left_arm" aim="0 10" />
+    <joint target="right_arm" aim="0 30" />
+    <joint target="head" aim="0 88" />
+  </pose>
+  <pose name="Lie">
+    <joint target="head" aim="-20 80" />
+    <joint target="left_arm" aim="40 -60" />
+  </pose>
+  <pose name="SealSwim">
+    <joint target="spine" aim="0 -5" />
+    <joint target="head" aim="0 30" />
+  </pose>
+  <material id="sea" color="0.22 0.32 0.40" shininess="90" />
+  <material id="sand" color="0.74 0.66 0.48" shininess="4" />
+  <material id="wet_sand" color="0.55 0.50 0.40" shininess="30" />
+  <material id="grass" color="0.40 0.47 0.30" shininess="3" />
+  <material id="rock" color="0.46 0.45 0.43" shininess="6" />
+  <material id="stone" color="0.40 0.40 0.40" shininess="10" />
+  <material id="shingle" color="0.52 0.50 0.46" shininess="6" />
+  <material id="whitewash" color="0.86 0.85 0.82" shininess="4" />
+  <material id="roof" color="0.60 0.22 0.18" shininess="8" />
+  <material id="window_dark" color="0.12 0.14 0.18" shininess="60" />
+  <material id="lamp_glass" color="0.20 0.24 0.30" shininess="90" />
+  <material id="wood" color="0.58 0.42 0.28" shininess="8" />
+  <material id="old_wood" color="0.44 0.36 0.28" shininess="5" />
+  <material id="dark_wood" color="0.32 0.24 0.18" shininess="8" />
+  <material id="iron" color="0.16 0.16 0.17" shininess="20" />
+  <material id="rope" color="0.66 0.56 0.38" shininess="3" />
+  <material id="rotten" color="0.28 0.34 0.22" shininess="3" />
+  <material id="boat_hull" color="0.30 0.40 0.52" shininess="20" />
+  <material id="boat_trim" color="0.80 0.78 0.70" shininess="20" />
+  <material id="wreck_hull" color="0.36 0.30 0.26" shininess="4" />
+  <material id="goat" color="0.86 0.84 0.78" shininess="3" />
+  <material id="net" color="0.46 0.52 0.44" shininess="2" />
+  <material id="stream" color="0.40 0.52 0.60" shininess="80" />
+  <material id="varya_coat" color="0.92 0.72 0.20" shininess="20" />
+  <material id="varya_hat" color="0.78 0.20 0.18" shininess="5" />
+  <material id="varya_hair" color="0.45 0.28 0.14" shininess="5" />
+  <material id="varya_legs" color="0.92 0.72 0.20" shininess="5" />
+  <material id="varya_boots" color="0.18 0.20 0.24" shininess="20" />
+  <material id="varya_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="varya_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="varya_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="varya_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="timka_coat" color="0.50 0.52 0.54" shininess="20" />
+  <material id="timka_hat" color="0.20 0.32 0.62" shininess="5" />
+  <material id="timka_hair" color="0.40 0.26 0.14" shininess="5" />
+  <material id="timka_legs" color="0.30 0.30 0.36" shininess="5" />
+  <material id="timka_boots" color="0.15 0.30 0.20" shininess="20" />
+  <material id="timka_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="timka_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="timka_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="timka_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="agafya_coat" color="0.45 0.32 0.22" shininess="20" />
+  <material id="agafya_hat" color="0.60 0.14 0.14" shininess="5" />
+  <material id="agafya_hair" color="0.60 0.60 0.60" shininess="5" />
+  <material id="agafya_legs" color="0.30 0.42 0.30" shininess="5" />
+  <material id="agafya_boots" color="0.25 0.20 0.16" shininess="20" />
+  <material id="agafya_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="agafya_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="agafya_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="agafya_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="savely_coat" color="0.16 0.20 0.34" shininess="20" />
+  <material id="savely_hat" color="0.10 0.10 0.12" shininess="5" />
+  <material id="savely_hair" color="0.30 0.22 0.16" shininess="5" />
+  <material id="savely_legs" color="0.20 0.22 0.28" shininess="5" />
+  <material id="savely_boots" color="0.12 0.10 0.10" shininess="20" />
+  <material id="savely_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="savely_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="savely_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="savely_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="seal_fur" color="0.42 0.43 0.45" shininess="40" />
+  <material id="seal_nose" color="0.08 0.08 0.08" shininess="30" />
+  <material id="seal_eye" color="0.04 0.04 0.04" shininess="60" />
+  <!-- Low sun behind storm clouds in the west-south-west; shadows run east-north-east. -->
+  <sun dir="0.75 0.45 -0.55" color="1.0 0.78 0.55" intensity="1.25" castShadows="1" />
+
+  <!-- The sea, at low tide. -->
+  <group name="Sea"><box pos="1000 3000 -45" size="16000 16000 50" material="sea" /></group>
+
+  <!-- Village land, beach and the spit to the fork. -->
+  <box pos="0 -1250 -80" size="8000 2500 240" material="grass" />
+  <box pos="-500 120 -30" rot="-12 0 0" size="3000 300 60" material="shingle" />
+  <box pos="500 475 -80" size="1800 450 240" material="grass" />
+  <box pos="1350 470 -35" rot="0 -18 0" size="160 450 60" material="sand" />
+
+  <!-- The cliff plateau, cut by the gully, with its paths. -->
+  <box pos="350 1800 300" size="1900 2200 600" material="grass" />
+  <box pos="350 3800 300" size="1900 1000 600" material="grass" />
+  <box pos="350 3100 50" size="1900 420 100" material="rock" />
+  <box pos="500 3100 101" size="60 420 2" material="stream" />
+  <box pos="150 650 320" rot="0 30 0" size="1120 110 20" material="rock" />
+  <box pos="1345 1900 300" rot="-31 0 0" size="80 1160 20" material="rock" />
+  <box pos="350 4750 320" rot="48 0 0" size="160 820 20" material="rock" />
+
+  <!-- The flats: sand at low water, the sandbar that stays dry, rocks. -->
+  <box pos="2400 2500 -60" size="2200 4400 130" material="wet_sand" />
+  <box pos="2150 3800 -60" rot="0 0 25" size="140 1900 180" material="sand" />
+  <ellipsoid pos="2700 2300 0" radii="80 60 55" material="rock" />
+  <ellipsoid pos="1800 3300 0" radii="60 50 30" material="rock" />
+
+  <!-- North shore and the channel landing. -->
+  <box pos="1500 5050 -80" size="4600 700 240" material="grass" />
+  <box pos="1330 5560 50" size="120 520 8" material="wood" />
+  <cylinder pos="1280 5780 0" rot="90 0 0" radius="8" height="120" material="dark_wood" />
+  <cylinder pos="1380 5780 0" rot="90 0 0" radius="8" height="120" material="dark_wood" />
+  <cylinder pos="1900 5480 -30" rot="90 0 0" radius="48" height="60" material="stone" />
+  <cylinder pos="1900 5660 -30" rot="90 0 0" radius="42" height="60" material="stone" />
+  <cylinder pos="1900 5840 -30" rot="90 0 0" radius="48" height="60" material="stone" />
+  <cylinder pos="1900 6020 -30" rot="90 0 0" radius="42" height="60" material="stone" />
+  <cylinder pos="1900 6200 -30" rot="90 0 0" radius="48" height="60" material="stone" />
+  <cylinder pos="1900 6380 -30" rot="90 0 0" radius="42" height="60" material="stone" />
+
+  <!-- The island and the lighthouse. -->
+  <ellipsoid pos="1800 7250 -120" radii="1000 700 380" material="rock" />
+  <box pos="1800 7200 235" size="700 700 30" material="rock" />
+  <prefab source="terrain/lighthouse" pos="1800 7200 250" />
+  <!-- The beam, shown only when the lamp is lit (tower.blks shows the lamp room itself). -->
+  <group name="Beam" pos="1800 7200 -5000"><cone pos="-400 -1500 1850" rot="0 0 165" radius="40" radiusTop="420" height="3000" color="1.0 0.92 0.60" unlit="1" castShadow="0" /></group>
+
+  <!-- The village: cottages facing the bay, boats on the shingle, the pier. -->
+  <prefab source="terrain/house" pos="-1500 -700 40" rot="0 0 180" />
+  <prefab source="terrain/house" pos="-900 -760 40" rot="0 0 184" />
+  <prefab source="terrain/house" pos="-300 -700 40" rot="0 0 178" />
+  <prefab source="terrain/house" pos="400 -780 40" rot="0 0 182" />
+  <prefab source="terrain/boat" pos="-600 60 5" rot="0 -8 10" />
+  <prefab source="terrain/boat" pos="-250 90 5" rot="0 -8 -14" />
+  <box pos="-1000 450 50" size="160 1100 10" material="wood" />
+  <cylinder pos="-1070 200 -20" rot="90 0 0" radius="8" height="140" material="dark_wood" />
+  <cylinder pos="-930 200 -20" rot="90 0 0" radius="8" height="140" material="dark_wood" />
+  <cylinder pos="-1070 700 -20" rot="90 0 0" radius="8" height="140" material="dark_wood" />
+  <cylinder pos="-930 700 -20" rot="90 0 0" radius="8" height="140" material="dark_wood" />
+  <box pos="-960 520 60" size="70 90 10" material="net" />
+
+  <!-- The fork. -->
+  <prefab source="terrain/signpost" pos="900 460 40" />
+
+  <!-- The Chaika, an old wreck lying on its side, holed amidships. -->
+  <group pos="2300 2650 -20" rot="0 55 -35">
+    <prefab source="terrain/boat" scale="2.4 2.3 2.4" />
+  </group>
+  <ellipsoid pos="2340 2600 40" radii="40 70 45" rot="0 0 -35" color="0.10 0.09 0.08" />
+
+  <!-- Agafya's hut and goats on the cliff top. -->
+  <prefab source="terrain/house" pos="-150 1900 600" rot="0 0 30" scale="0.8 0.8 0.8" />
+  <ellipsoid pos="80 2150 625" radii="30 14 18" material="goat" />
+  <ellipsoid pos="160 2230 625" radii="30 14 18" rot="0 0 60" material="goat" />
+  <box pos="100 2350 640" size="300 8 80" material="old_wood" />
+
+  <!-- The rope bridge; its third plank is the rotten one. -->
+  <prefab source="terrain/rope_bridge" pos="500 3100 600" />
+  <group name="RottenPlank" pos="500 2982 600"><box size="90 26 4.5" material="rotten" /></group>
+  <group name="BrokenPlank" pos="500 2982 -1000"><box pos="0 0 540" rot="60 0 10" size="80 24 4" material="rotten" /></group>
+
+  <!-- The ferry landing: Savely's hut and his boat at the jetty. -->
+  <prefab source="terrain/ferry_hut" pos="950 5220 40" rot="0 0 -15" />
+  <group name="Ferry" pos="1420 5620 -30"><prefab source="terrain/boat" /></group>
+
+  <!-- The cast. Cameras move Varya and the seal; the others keep their places unless moved. -->
+  <prefab source="characters/varya" name="Varya" />
+  <prefab source="characters/timka" name="Timka" pos="-960 600 55" rot="0 0 150" pose="Mend" />
+  <prefab source="characters/agafya" name="AgafyaActor" pos="-40 1690 600" rot="0 0 -60" pose="Point" />
+  <prefab source="characters/savely" name="Savely" pos="1250 5330 40" rot="0 0 -150" pose="Smoke" />
+  <prefab source="characters/seal" name="SealActor" pos="2700 2300 50" rot="0 0 150" />
+
+  <!-- Anchors for the interaction circles, on the first step of each route or on the person. -->
+  <group name="Flats-Path" pos="1330 470 30" />
+  <group name="Cliff-Path" pos="560 650 110" />
+  <group name="Wreck" pos="2330 2620 110" />
+  <group name="Seal" pos="2700 2300 90" />
+  <group name="Dune-Path" pos="1345 2150 380" />
+  <group name="Channel-Stones" pos="1900 4750 60" />
+  <group name="Deck" pos="2230 2700 150" />
+  <group name="Bridge" pos="500 2890 640" />
+  <group name="Agafya" pos="-40 1690 700" />
+  <group name="Flats-Down" pos="1300 2350 620" />
+  <group name="Plank" pos="500 2982 604" />
+  <group name="Far-Plank" pos="500 3084 604" />
+  <group name="Ferryman" pos="1250 5330 175" />
+  <group name="Stones" pos="1900 5480 20" />
+  <group name="Hut-Door" pos="960 5100 120" />
+  <group name="Far-Stone" pos="1900 6200 20" />
+  <group name="Near-Stone" pos="1900 5840 20" />
+</scene>

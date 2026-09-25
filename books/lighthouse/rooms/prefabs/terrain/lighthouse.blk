@@ -1,0 +1,13 @@
+<!-- The lighthouse on the island rock: a whitewashed tower with a red band, 1500 cm tall from its
+     base at z=0 to the gallery, a glazed lamp room above and a red cap; total 1900 cm. Z up.
+     The door faces local -Y. The lamp and its window are modelled in tower.blks; the beam is a
+     separate hidden object in the scene. -->
+<prefab>
+  <cylinder pos="0 0 750" rot="90 0 0" radius="260" height="1500" material="whitewash"><taper amount="0.35" axis="y" /></cylinder>
+  <cylinder pos="0 0 1000" rot="90 0 0" radius="205" height="180" material="roof"><taper amount="0.06" axis="y" /></cylinder>
+  <cylinder pos="0 0 1510" rot="90 0 0" radius="215" height="20" material="iron" />
+  <cylinder pos="0 0 1600" rot="90 0 0" radius="140" height="160" material="lamp_glass" />
+  <cone pos="0 0 1740" rot="90 0 0" radius="160" radiusTop="10" height="120" material="roof" />
+  <box pos="0 -258 110" size="100 20 210" material="dark_wood" />
+  <box pos="-60 -230 600" size="50 20 80" material="window_dark" />
+</prefab>

@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Огонь на маяке: grandfather Matvei's cottage in the village, at sunset. Z up, X east, Y north, cm.
+     Interior x -200..200, y -175..175, ceiling 240. The window in the north wall looks across the bay
+     to the lighthouse (a distant stand-in model; the bay itself is bay.blks). The door is in the
+     east wall. Grandfather lies in the iron bed against the west wall, the oil lamp on the table
+     beside him is the key light; the stormy sunset comes through the window. -->
+<scene up="z" ambient="0.28 0.28 0.32" background="0.36 0.36 0.46">
+  <camera name="home-show-grandpa" comment="Grandfather feverish in bed, Varya at his side, the dark lighthouse far out through the window" pos="150 -120 150" look="-60 110 100" fov="60" textRect="0.03 0.04 0.36 0.26" textScale="0.72"><transform target="Varya" pos="30 -30 0" rot="0 0 130" /><use-pose instance="Varya" name="LookDown" /></camera>
+  <camera name="home-show-door" comment="Varya between the bed and the door; her coat on, the storm at the window" pos="-185 -150 170" look="80 60 90" fov="66" textRect="0.30 0.04 0.40 0.22" textScale="0.72"><transform target="Varya" pos="40 -20 0" rot="0 0 60" /><use-pose instance="Varya" name="LookUp" /></camera>
+  <camera name="home-night-stay" comment="Ending: night; Varya on the stool holding grandfather's hand, the window black" pos="160 -60 110" look="-80 70 70" fov="58" textRect="0.55 0.04 0.42 0.28" textScale="0.72"><transform target="Varya" pos="-20 30 36" rot="0 0 120" /><use-pose instance="Varya" name="Sit" /></camera>
+  <pose name="Walk">
+    <joint target="left_thigh" aim="0 -68" />
+    <joint target="left_shin" aim="0 -110" />
+    <joint target="right_thigh" aim="180 -76" />
+    <joint target="left_arm" aim="180 -72" />
+    <joint target="right_arm" aim="0 -65" />
+  </pose>
+  <pose name="Run">
+    <joint target="spine" aim="0 76" />
+    <joint target="left_thigh" aim="0 -40" />
+    <joint target="left_shin" aim="0 -150" />
+    <joint target="right_thigh" aim="180 -58" />
+    <joint target="right_shin" aim="180 -60" />
+    <joint target="left_arm" aim="180 -45" />
+    <joint target="right_arm" aim="0 -35" />
+    <joint target="right_forearm" aim="0 -10" />
+  </pose>
+  <pose name="LookUp">
+    <joint target="head" aim="180 72" />
+    <joint target="left_arm" aim="15 -80" />
+  </pose>
+  <pose name="LookDown">
+    <joint target="neck" aim="0 70" />
+    <joint target="head" aim="0 60" />
+  </pose>
+  <pose name="Balance">
+    <joint target="left_arm" aim="90 -5" />
+    <joint target="right_arm" aim="-90 -5" />
+    <joint target="left_thigh" aim="0 -62" />
+    <joint target="left_shin" aim="0 -118" />
+    <joint target="neck" aim="0 75" />
+  </pose>
+  <pose name="Hang">
+    <joint target="spine" pos="0 0 -8" />
+    <joint target="left_arm" aim="10 85" />
+    <joint target="right_arm" aim="-10 85" />
+    <joint target="left_thigh" aim="10 -80" />
+    <joint target="right_thigh" aim="-5 -95" />
+    <joint target="head" aim="180 70" />
+  </pose>
+  <pose name="Climb">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_thigh" aim="0 -15" />
+    <joint target="left_shin" aim="0 -165" />
+    <joint target="left_arm" aim="0 35" />
+    <joint target="right_arm" aim="0 25" />
+  </pose>
+  <pose name="Sit">
+    <joint target="spine" pos="0 0 -58" />
+    <joint target="left_thigh" aim="5 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-5 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -60" />
+    <joint target="right_arm" aim="-20 -60" />
+  </pose>
+  <pose name="SitHug">
+    <joint target="spine" pos="0 0 -60" aim="0 80" />
+    <joint target="left_thigh" aim="5 40" />
+    <joint target="left_shin" aim="0 -175" />
+    <joint target="right_thigh" aim="-5 40" />
+    <joint target="right_shin" aim="0 -175" />
+    <joint target="left_arm" aim="0 -20" />
+    <joint target="right_arm" aim="0 -20" />
+    <joint target="head" aim="0 80" />
+  </pose>
+  <pose name="Row">
+    <joint target="spine" pos="0 0 -58" aim="180 80" />
+    <joint target="left_thigh" aim="0 5" />
+    <joint target="left_shin" aim="0 -170" />
+    <joint target="right_thigh" aim="0 5" />
+    <joint target="right_shin" aim="0 -170" />
+    <joint target="left_arm" aim="20 -10" />
+    <joint target="right_arm" aim="-20 -10" />
+  </pose>
+  <pose name="Point">
+    <joint target="right_arm" aim="-35 15" />
+    <joint target="right_forearm" aim="0 -5" />
+    <joint target="head" aim="-15 88" />
+  </pose>
+  <pose name="Smoke">
+    <joint target="right_arm" aim="-10 -40" />
+    <joint target="right_forearm" aim="0 30" />
+    <joint target="left_arm" aim="30 -80" />
+  </pose>
+  <pose name="Wave">
+    <joint target="right_arm" aim="-40 60" />
+    <joint target="right_forearm" aim="0 -20" />
+    <joint target="head" aim="0 95" />
+  </pose>
+  <pose name="Mend">
+    <joint target="spine" pos="0 0 -58" aim="0 80" />
+    <joint target="left_thigh" aim="10 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-10 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -20" />
+    <joint target="right_arm" aim="-20 -20" />
+    <joint target="head" aim="0 65" />
+  </pose>
+  <pose name="Push">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_arm" aim="10 20" />
+    <joint target="right_arm" aim="-10 20" />
+    <joint target="right_thigh" aim="180 -65" />
+  </pose>
+  <pose name="Jump">
+    <joint target="spine" pos="0 0 18" aim="0 80" />
+    <joint target="left_thigh" aim="0 -30" />
+    <joint target="left_shin" aim="0 -120" />
+    <joint target="right_thigh" aim="180 -50" />
+    <joint target="right_shin" aim="0 -70" />
+    <joint target="left_arm" aim="60 40" />
+    <joint target="right_arm" aim="-60 40" />
+  </pose>
+  <pose name="Swim">
+    <joint target="left_arm" aim="40 60" />
+    <joint target="right_arm" aim="-30 70" />
+    <joint target="head" aim="180 75" />
+  </pose>
+  <pose name="Reach">
+    <joint target="spine" aim="0 78" />
+    <joint target="left_arm" aim="0 10" />
+    <joint target="right_arm" aim="0 30" />
+    <joint target="head" aim="0 88" />
+  </pose>
+  <pose name="Lie">
+    <joint target="head" aim="-20 80" />
+    <joint target="left_arm" aim="40 -60" />
+  </pose>
+  <pose name="SealSwim">
+    <joint target="spine" aim="0 -5" />
+    <joint target="head" aim="0 30" />
+  </pose>
+  <material id="plaster" color="0.80 0.76 0.68" shininess="2" />
+  <material id="floorboards" color="0.50 0.36 0.25" shininess="6" />
+  <material id="dark_wood" color="0.32 0.24 0.18" shininess="8" />
+  <material id="wood" color="0.58 0.42 0.28" shininess="8" />
+  <material id="iron" color="0.20 0.20 0.22" shininess="30" />
+  <material id="linen" color="0.86 0.84 0.78" shininess="3" />
+  <material id="quilt" color="0.62 0.28 0.26" shininess="3" />
+  <material id="brass" color="0.72 0.52 0.22" shininess="40" />
+  <material id="sea" color="0.22 0.32 0.40" shininess="90" />
+  <material id="whitewash" color="0.86 0.85 0.82" shininess="4" />
+  <material id="rock" color="0.46 0.45 0.43" shininess="6" />
+  <material id="roof" color="0.60 0.22 0.18" shininess="8" />
+  <material id="window_dark" color="0.12 0.14 0.18" shininess="60" />
+  <material id="lamp_glass" color="0.20 0.24 0.30" shininess="90" />
+  <material id="coat_hook" color="0.30 0.22 0.16" shininess="8" />
+  <material id="varya_coat" color="0.92 0.72 0.20" shininess="20" />
+  <material id="varya_hat" color="0.78 0.20 0.18" shininess="5" />
+  <material id="varya_hair" color="0.45 0.28 0.14" shininess="5" />
+  <material id="varya_legs" color="0.92 0.72 0.20" shininess="5" />
+  <material id="varya_boots" color="0.18 0.20 0.24" shininess="20" />
+  <material id="varya_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="varya_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="varya_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="varya_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="grandpa_coat" color="0.80 0.82 0.86" shininess="20" />
+  <material id="grandpa_hat" color="0.70 0.70 0.70" shininess="5" />
+  <material id="grandpa_hair" color="0.75 0.75 0.75" shininess="5" />
+  <material id="grandpa_legs" color="0.60 0.62 0.70" shininess="5" />
+  <material id="grandpa_boots" color="0.30 0.25 0.22" shininess="20" />
+  <material id="grandpa_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="grandpa_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="grandpa_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="grandpa_beard" color="0.88 0.88 0.88" shininess="5" />
+  <sun dir="0.55 -0.75 -0.45" color="1.0 0.72 0.50" intensity="1.1" castShadows="1" />
+
+  <!-- Shell. -->
+  <box pos="0 0 -5" size="432 382 10" material="floorboards" />
+  <box pos="0 0 248" size="432 382 16" material="plaster" />
+  <group pos="0 183 0" rot="90 0 0">
+    <wall length="432" height="240" thickness="16" material="plaster" bottomTrimHeight="10" trimMaterial="dark_wood" />
+    <window preset="cottage" pos="20 145 0" width="100" height="100" pane="0" sill="0" frameMaterial="wood" />
+  </group>
+  <group pos="-208 0 0" rot="90 0 90">
+    <wall length="350" height="240" thickness="16" material="plaster" bottomTrimHeight="10" trimMaterial="dark_wood" />
+  </group>
+  <group pos="208 0 0" rot="90 0 -90">
+    <wall length="350" height="240" thickness="16" material="plaster" bottomTrimHeight="10" trimMaterial="dark_wood" />
+    <door preset="rectangular" pos="-60 100 0" width="90" height="200" hinge="left" frameMaterial="dark_wood" leafMaterial="wood" hardwareMaterial="brass" />
+  </group>
+  <group pos="0 -183 0" rot="90 0 180">
+    <wall length="432" height="240" thickness="16" material="plaster" bottomTrimHeight="10" trimMaterial="dark_wood" />
+  </group>
+
+  <!-- Grandfather's iron bed against the west wall, the table with the oil lamp. -->
+  <box pos="-140 40 40" size="100 200 12" material="linen" />
+  <box pos="-140 40 22" size="96 196 24" material="dark_wood" />
+  <box pos="-140 -58 55" size="104 6 110" material="iron" />
+  <box pos="-140 138 65" size="104 6 130" material="iron" />
+  <box pos="-140 20 50" size="104 150 8" material="quilt" />
+  <box pos="-140 125 52" size="60 30 12" material="linen" />
+  <box pos="-40 130 35" size="50 50 70" material="wood" />
+  <cylinder pos="-40 130 78" rot="90 0 0" radius="7" height="16" material="brass" />
+  <sphere pos="-40 130 92" radius="5" color="1.0 0.85 0.55" unlit="1" castShadow="0" />
+  <light pos="-40 130 104" color="1.0 0.72 0.42" intensity="1.3" radius="420" castShadows="1" />
+  <!-- The stool Varya sits on; the coat hook by the door. -->
+  <box pos="-20 30 22" size="36 36 44" material="wood" />
+  <box pos="195 40 170" size="10 40 8" material="coat_hook" />
+
+  <!-- The bay through the window: sea, the island and the dark lighthouse far away. -->
+  <box pos="0 5000 -60" size="20000 8000 40" material="sea" />
+  <ellipsoid pos="-2400 6000 -100" radii="900 500 300" material="rock" />
+  <group pos="-2400 6000 180" scale="1.2 1.2 1.2">
+    <cylinder pos="0 0 750" rot="90 0 0" radius="260" height="1500" material="whitewash"><taper amount="0.35" axis="y" /></cylinder>
+    <cylinder pos="0 0 1600" rot="90 0 0" radius="140" height="160" material="lamp_glass" />
+    <cone pos="0 0 1740" rot="90 0 0" radius="160" radiusTop="10" height="120" material="roof" />
+  </group>
+
+  <!-- Grandfather lies on his back; Varya is placed by every camera. -->
+  <prefab source="characters/grandpa" name="GrandpaActor" pos="-140 -30 58" rot="-90 0 0" pose="Lie" />
+  <prefab source="characters/varya" name="Varya" />
+
+  <!-- Anchors. -->
+  <group name="Door" pos="200 -60 110" />
+  <group name="Grandpa" pos="-140 90 80" />
+</scene>

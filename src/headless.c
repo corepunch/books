@@ -25,6 +25,7 @@ static void dump(void)
     printf("{\"room\":"); json_string(book_object(page->room)->key);
     printf(",\"focus\":\"\""); /* Compatibility with earlier snapshots. */
     printf(",\"kind\":"); json_string(book_page_kind_name(page->kind));
+    printf(",\"ending\":"); json_string(book_ending_kind_name(page->ending));
     printf(",\"image\":"); json_string(page->image);
     printf(",\"text\":"); json_string(page->text);
     printf(",\"choices\":[");

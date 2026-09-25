@@ -16,8 +16,12 @@ sits, where the choice circles land, and how the page looks in the sequence.
    `floor-climb-table`, `bridge-cross-river`. Camera names are unique
    across the whole book. A room page whose picture changes with a fact gets
    another camera (`gate-show-open`), painted as its own whole picture.
+   Consecutive story pages of one continuous moment may share a camera (the
+   knights ride up, the knight speaks); a new place, a new action or a new
+   decision gets a new camera. Most cameras show a different place from the
+   previous one.
 2. **Story question.** For each shot, the one thing the reader must
-   understand at a glance: "Mira is halfway between the chair and the desk".
+   understand at a glance: "Varya is halfway across the stones and the water is rising".
 3. **Actor, action, target.** Who is in frame, what they are doing (a pose
    and expression from `CHARACTERS.md`), and what they act on. Action pages
    always show all three; never imply an action by pointing the camera at an

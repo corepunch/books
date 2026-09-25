@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Огонь на маяке: painters' reference, not book pages. The whole cast at rest in a line-up
+     (Savely, Agafya, Varya, Timka, grandfather, the seal), Varya's key poses, and a turnaround. Z up, cm. -->
+<scene up="z" ambient="0.34 0.34 0.36" background="0.62 0.62 0.64">
+  <camera name="sheet-cast" comment="The cast line-up at rest, front three-quarter" pos="60 -560 130" look="60 0 85" fov="40" />
+  <camera name="sheet-varya-turn" comment="Varya front, side and back" pos="1000 -330 90" look="1000 0 70" fov="40" />
+  <camera name="sheet-varya-poses" comment="Varya: walk, run, balance, climb, sit, hang, jump" pos="2300 -620 110" look="2300 0 70" fov="42"><use-pose instance="PWalk" name="Walk" /><use-pose instance="PRun" name="Run" /><use-pose instance="PBalance" name="Balance" /><use-pose instance="PClimb" name="Climb" /><use-pose instance="PSit" name="Sit" /><use-pose instance="PHang" name="Hang" /><use-pose instance="PJump" name="Jump" /></camera>
+  <pose name="Walk">
+    <joint target="left_thigh" aim="0 -68" />
+    <joint target="left_shin" aim="0 -110" />
+    <joint target="right_thigh" aim="180 -76" />
+    <joint target="left_arm" aim="180 -72" />
+    <joint target="right_arm" aim="0 -65" />
+  </pose>
+  <pose name="Run">
+    <joint target="spine" aim="0 76" />
+    <joint target="left_thigh" aim="0 -40" />
+    <joint target="left_shin" aim="0 -150" />
+    <joint target="right_thigh" aim="180 -58" />
+    <joint target="right_shin" aim="180 -60" />
+    <joint target="left_arm" aim="180 -45" />
+    <joint target="right_arm" aim="0 -35" />
+    <joint target="right_forearm" aim="0 -10" />
+  </pose>
+  <pose name="LookUp">
+    <joint target="head" aim="180 72" />
+    <joint target="left_arm" aim="15 -80" />
+  </pose>
+  <pose name="LookDown">
+    <joint target="neck" aim="0 70" />
+    <joint target="head" aim="0 60" />
+  </pose>
+  <pose name="Balance">
+    <joint target="left_arm" aim="90 -5" />
+    <joint target="right_arm" aim="-90 -5" />
+    <joint target="left_thigh" aim="0 -62" />
+    <joint target="left_shin" aim="0 -118" />
+    <joint target="neck" aim="0 75" />
+  </pose>
+  <pose name="Hang">
+    <joint target="spine" pos="0 0 -8" />
+    <joint target="left_arm" aim="10 85" />
+    <joint target="right_arm" aim="-10 85" />
+    <joint target="left_thigh" aim="10 -80" />
+    <joint target="right_thigh" aim="-5 -95" />
+    <joint target="head" aim="180 70" />
+  </pose>
+  <pose name="Climb">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_thigh" aim="0 -15" />
+    <joint target="left_shin" aim="0 -165" />
+    <joint target="left_arm" aim="0 35" />
+    <joint target="right_arm" aim="0 25" />
+  </pose>
+  <pose name="Sit">
+    <joint target="spine" pos="0 0 -58" />
+    <joint target="left_thigh" aim="5 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-5 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -60" />
+    <joint target="right_arm" aim="-20 -60" />
+  </pose>
+  <pose name="SitHug">
+    <joint target="spine" pos="0 0 -60" aim="0 80" />
+    <joint target="left_thigh" aim="5 40" />
+    <joint target="left_shin" aim="0 -175" />
+    <joint target="right_thigh" aim="-5 40" />
+    <joint target="right_shin" aim="0 -175" />
+    <joint target="left_arm" aim="0 -20" />
+    <joint target="right_arm" aim="0 -20" />
+    <joint target="head" aim="0 80" />
+  </pose>
+  <pose name="Row">
+    <joint target="spine" pos="0 0 -58" aim="180 80" />
+    <joint target="left_thigh" aim="0 5" />
+    <joint target="left_shin" aim="0 -170" />
+    <joint target="right_thigh" aim="0 5" />
+    <joint target="right_shin" aim="0 -170" />
+    <joint target="left_arm" aim="20 -10" />
+    <joint target="right_arm" aim="-20 -10" />
+  </pose>
+  <pose name="Point">
+    <joint target="right_arm" aim="-35 15" />
+    <joint target="right_forearm" aim="0 -5" />
+    <joint target="head" aim="-15 88" />
+  </pose>
+  <pose name="Smoke">
+    <joint target="right_arm" aim="-10 -40" />
+    <joint target="right_forearm" aim="0 30" />
+    <joint target="left_arm" aim="30 -80" />
+  </pose>
+  <pose name="Wave">
+    <joint target="right_arm" aim="-40 60" />
+    <joint target="right_forearm" aim="0 -20" />
+    <joint target="head" aim="0 95" />
+  </pose>
+  <pose name="Mend">
+    <joint target="spine" pos="0 0 -58" aim="0 80" />
+    <joint target="left_thigh" aim="10 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-10 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -20" />
+    <joint target="right_arm" aim="-20 -20" />
+    <joint target="head" aim="0 65" />
+  </pose>
+  <pose name="Push">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_arm" aim="10 20" />
+    <joint target="right_arm" aim="-10 20" />
+    <joint target="right_thigh" aim="180 -65" />
+  </pose>
+  <pose name="Jump">
+    <joint target="spine" pos="0 0 18" aim="0 80" />
+    <joint target="left_thigh" aim="0 -30" />
+    <joint target="left_shin" aim="0 -120" />
+    <joint target="right_thigh" aim="180 -50" />
+    <joint target="right_shin" aim="0 -70" />
+    <joint target="left_arm" aim="60 40" />
+    <joint target="right_arm" aim="-60 40" />
+  </pose>
+  <pose name="Swim">
+    <joint target="left_arm" aim="40 60" />
+    <joint target="right_arm" aim="-30 70" />
+    <joint target="head" aim="180 75" />
+  </pose>
+  <pose name="Reach">
+    <joint target="spine" aim="0 78" />
+    <joint target="left_arm" aim="0 10" />
+    <joint target="right_arm" aim="0 30" />
+    <joint target="head" aim="0 88" />
+  </pose>
+  <pose name="Lie">
+    <joint target="head" aim="-20 80" />
+    <joint target="left_arm" aim="40 -60" />
+  </pose>
+  <pose name="SealSwim">
+    <joint target="spine" aim="0 -5" />
+    <joint target="head" aim="0 30" />
+  </pose>
+  <material id="varya_coat" color="0.92 0.72 0.20" shininess="20" />
+  <material id="varya_hat" color="0.78 0.20 0.18" shininess="5" />
+  <material id="varya_hair" color="0.45 0.28 0.14" shininess="5" />
+  <material id="varya_legs" color="0.92 0.72 0.20" shininess="5" />
+  <material id="varya_boots" color="0.18 0.20 0.24" shininess="20" />
+  <material id="varya_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="varya_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="varya_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="varya_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="timka_coat" color="0.50 0.52 0.54" shininess="20" />
+  <material id="timka_hat" color="0.20 0.32 0.62" shininess="5" />
+  <material id="timka_hair" color="0.40 0.26 0.14" shininess="5" />
+  <material id="timka_legs" color="0.30 0.30 0.36" shininess="5" />
+  <material id="timka_boots" color="0.15 0.30 0.20" shininess="20" />
+  <material id="timka_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="timka_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="timka_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="timka_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="grandpa_coat" color="0.80 0.82 0.86" shininess="20" />
+  <material id="grandpa_hat" color="0.70 0.70 0.70" shininess="5" />
+  <material id="grandpa_hair" color="0.75 0.75 0.75" shininess="5" />
+  <material id="grandpa_legs" color="0.60 0.62 0.70" shininess="5" />
+  <material id="grandpa_boots" color="0.30 0.25 0.22" shininess="20" />
+  <material id="grandpa_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="grandpa_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="grandpa_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="grandpa_beard" color="0.88 0.88 0.88" shininess="5" />
+  <material id="agafya_coat" color="0.45 0.32 0.22" shininess="20" />
+  <material id="agafya_hat" color="0.60 0.14 0.14" shininess="5" />
+  <material id="agafya_hair" color="0.60 0.60 0.60" shininess="5" />
+  <material id="agafya_legs" color="0.30 0.42 0.30" shininess="5" />
+  <material id="agafya_boots" color="0.25 0.20 0.16" shininess="20" />
+  <material id="agafya_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="agafya_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="agafya_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="agafya_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="savely_coat" color="0.16 0.20 0.34" shininess="20" />
+  <material id="savely_hat" color="0.10 0.10 0.12" shininess="5" />
+  <material id="savely_hair" color="0.30 0.22 0.16" shininess="5" />
+  <material id="savely_legs" color="0.20 0.22 0.28" shininess="5" />
+  <material id="savely_boots" color="0.12 0.10 0.10" shininess="20" />
+  <material id="savely_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="savely_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="savely_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="savely_beard" color="0.35 0.25 0.18" shininess="5" />
+  <material id="seal_fur" color="0.42 0.43 0.45" shininess="40" />
+  <material id="seal_nose" color="0.08 0.08 0.08" shininess="30" />
+  <material id="seal_eye" color="0.04 0.04 0.04" shininess="60" />
+  <sun dir="-0.5 0.7 -1" color="1 0.97 0.92" intensity="1.1" castShadows="1" />
+  <box pos="1200 0 -1" size="3200 800 2" color="0.70 0.70 0.68" />
+  <prefab source="characters/savely" pos="-160 0 0" />
+  <prefab source="characters/agafya" pos="-60 0 0" />
+  <prefab source="characters/varya" pos="30 0 0" />
+  <prefab source="characters/timka" pos="100 0 0" />
+  <prefab source="characters/grandpa" pos="190 0 0" />
+  <prefab source="characters/seal" pos="310 -40 0" rot="0 0 -60" />
+  <prefab source="characters/varya" pos="920 0 0" rot="0 0 -20" />
+  <prefab source="characters/varya" pos="1000 0 0" rot="0 0 -90" />
+  <prefab source="characters/varya" pos="1080 0 0" rot="0 0 180" />
+  <prefab source="characters/varya" name="PWalk" pos="2000 0 0" rot="0 0 -60" />
+  <prefab source="characters/varya" name="PRun" pos="2100 0 0" rot="0 0 -60" />
+  <prefab source="characters/varya" name="PBalance" pos="2200 0 0" rot="0 0 -20" />
+  <prefab source="characters/varya" name="PClimb" pos="2300 0 0" rot="0 0 -60" />
+  <box pos="2400 0 22" size="50 50 44" color="0.55 0.42 0.30" />
+  <prefab source="characters/varya" name="PSit" pos="2400 0 44" rot="0 0 -30" />
+  <prefab source="characters/varya" name="PHang" pos="2500 0 30" rot="0 0 -20" />
+  <prefab source="characters/varya" name="PJump" pos="2600 0 0" rot="0 0 -60" />
+</scene>

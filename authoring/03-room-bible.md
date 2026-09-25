@@ -6,6 +6,13 @@ questions. This is the richest document in the book. The reader never sees
 it; page text (stage 6) stays short because the picture and this bible carry
 the detail.
 
+An adventure has many locations. Give the full treatment below to the places
+where the hero stays for several pages or makes decisions (the white house,
+the dam). A place the hero only passes through on one or two story pages (the
+cliff edge, the river bank) needs only a resident story or reason, a
+walk-in paragraph, the ground and backdrop, light, palette and the painted
+details that recur; mark it *passing* in its heading.
+
 The bible serves two different jobs:
 
 - **Modelling** needs measurable facts: sizes, positions, supports, heights,

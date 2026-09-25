@@ -100,7 +100,10 @@ struct Object {
 };
 /* Zero is deliberately invalid: missing initialization must fail at publication. */
 enum PageKind { PAGE_INVALID, PAGE_ROOM, PAGE_BEAT, PAGE_ENDED };
-enum ChoiceKind { CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE };
+/* An ending page offers one RETRY choice: back to a decision page, or to the start. */
+enum ChoiceKind { CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE, CHOICE_RETRY };
+/* How an ending resolves the quest; only ending pages carry one. */
+enum EndingKind { ENDING_NONE, ENDING_SUCCESS, ENDING_PARTIAL, ENDING_FAILURE };
 struct Choice {
     enum ChoiceKind kind;
     choiceLabel_t label;
@@ -111,12 +114,52 @@ struct BookPage {
     enum PageKind kind;
     struct Choice choices[MAX_CHOICES];
     int choice_count, room;
+    enum EndingKind ending;
     filePath_t image;
     assetName_t camera;
     storyText_t text;
 };
 
-/* Each build links one books/<name>.c implementation. */
+/* Story definition. Each books/<name>.c is data: a table of pages that src/story.c
+ * validates, publishes and navigates. Page IDs are unique; targets name page IDs. */
+#define MAX_STORY_PAGES 512
+#define MAX_PAGE_CHOICES 3
+typedef unsigned int storyFacts_t;
+enum StoryNode {
+    STORY_INVALID,
+    STORY_DECISION, /* a room page: 1..3 choices, each a circle on its scene anchor */
+    STORY_PASSAGE,  /* a beat page: text, picture and Continue to .next */
+    STORY_CHECK,    /* invisible: goes to .next when .fact is set, else to .otherwise */
+    STORY_ENDING    /* success, partial or failure, with a retry target */
+};
+struct StoryChoice {
+    const char *label, *anchor, *target;
+    storyFacts_t requires, excludes; /* offered only when all requires and no excludes are set */
+};
+struct StoryPage {
+    const char *id;
+    enum StoryNode kind;
+    const char *location; /* the place the page is in; a scene anchor key or a plain name */
+    const char *camera;   /* consecutive pages of one moment may share a camera */
+    const char *text;
+    struct StoryChoice choices[MAX_PAGE_CHOICES];
+    const char *next;      /* passage: Continue target; check: target when .fact is set */
+    storyFacts_t sets;     /* facts set when the page is shown */
+    storyFacts_t fact;     /* check only */
+    const char *otherwise; /* check only */
+    enum EndingKind ending;
+    const char *retry;     /* failure or partial ending: an earlier decision page to try again
+                              from; by default the reader retries their last decision */
+};
+struct Story {
+    const char *name, *start;
+    const char *continue_label, *retry_label, *restart_label;
+    const struct StoryPage *pages;
+    int page_count;
+};
+/* The one story compiled into this build, defined by books/<name>.c. */
+const struct Story *book_story(void);
+
 const char *book_name(void);
 void book_init(const char *root);
 void book_shutdown(void);
@@ -127,6 +170,7 @@ const char *book_root(void);
 const char *book_rooms(void);
 const char *book_page_kind_name(enum PageKind kind);
 const char *book_choice_kind_name(enum ChoiceKind kind);
+const char *book_ending_kind_name(enum EndingKind kind);
 /* Every input adapter resolves a current choice and calls this dispatcher. */
 bool book_action(int index);
 bool book_command(const char *input);

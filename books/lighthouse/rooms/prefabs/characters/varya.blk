@@ -1,0 +1,29 @@
+<!-- Varya, ten, the keeper's granddaughter: yellow oilskin coat, red knitted hat, dark boots, one braid.
+     One shared human skeleton: body frame Z up, faces local -Y, left is +X; about
+     135 cm tall. Every human uses the same bone names (spine, hem, neck, head, left_/right_ arm,
+     forearm, hand, thigh, shin, foot) so the scene poses work on all of them. -->
+<prefab>
+  <bone name="spine" aim="0 90" segments="2" length="38.0" radius="11.0 8.5" material="varya_coat">
+    <bone name="hem" at="0.12" from="0 -90" sink="10.0" aim="0 -90" length="26.0" radius="11.5 9.0" taper="1.25" material="varya_coat" />
+    <bone name="neck" aim="0 90" length="5.0" radius="4.0" material="varya_skin">
+      <bone name="head" aim="0 90" length="19.1" radius="9.5 9.8" material="varya_skin">
+        <sphere on="0 88" at="0.62" radius="10.1" scale="1 1 0.75" material="varya_hat" />
+        <sphere on="0 90" at="1" radius="3.0" material="varya_hat" />
+        <sphere on="18 10" at="0.45" radius="1.3" material="varya_eye" />
+        <sphere on="-18 10" at="0.45" radius="1.3" material="varya_eye" />
+        <sphere on="0 -5" at="0.38" radius="1.4" material="varya_skin" />
+        <bone name="braid" at="0.45" from="180 0" aim="180 -70" length="18.0" radius="2.4" taper="0.5" material="varya_hair" />
+      </bone>
+    </bone>
+    <bone name="left_arm" at="0.92" from="90 0" aim="10 -85" length="21.0" radius="4.2 4.0" mirror="1" material="varya_coat">
+      <bone name="left_forearm" aim="0 -90" length="19.0" radius="3.6" material="varya_coat">
+        <bone name="left_hand" aim="0 -90" length="7.0" radius="3.0 2.0" material="varya_skin" />
+      </bone>
+    </bone>
+    <bone name="left_thigh" at="0.02" from="90 -40" aim="0 -90" length="31.0" radius="6.0 6.5" mirror="1" material="varya_legs">
+      <bone name="left_shin" aim="0 -90" length="30.0" radius="4.3" material="varya_boots">
+        <bone name="left_foot" foot="1" aim="0 -6" length="13.0" radius="3.6 2.8" material="varya_boots" />
+      </bone>
+    </bone>
+  </bone>
+</prefab>

@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Огонь на маяке: inside the lighthouse. Z up, cm; the tower axis is at x=0, y=0 and its floor at z=0
+     (the tower stands on the island rock in bay.blks). A stone stair spirals round a central column
+     to the lamp room floor at z=1500. The lamp room is a glazed drum, radius 150, with the great lamp in
+     the middle: a brass base, the wick and a glass lens. One casement, facing the sea to the south,
+     bangs open; cameras close it by turning it. Boats show as lights out at sea. -->
+<scene up="z" ambient="0.24 0.24 0.30" background="0.18 0.20 0.28">
+  <camera name="tower-climb-stairs" comment="Inside the tower: Varya runs up the spiral stairs, the light of the lamp room far above" pos="120 -60 80" look="-30 40 300" fov="70" textRect="0.03 0.04 0.38 0.22" textScale="0.72"><transform target="Varya" pos="-55 60 176" rot="0 0 135" /><use-pose instance="Varya" name="Run" /></camera>
+  <camera name="lamp-show-window" comment="The lamp room: the great lamp and its wick, the matches on the shelf, one casement banging open on the storm" pos="120 95 1690" look="-40 -80 1590" fov="72" textRect="0.03 0.04 0.44 0.22" textScale="0.72"><transform target="Varya" pos="-70 40 1500" rot="0 0 -130" /><use-pose instance="Varya" name="LookUp" /></camera>
+  <camera name="lamp-wind-out" comment="Ending: Varya strikes a match at the wick while the wind through the open casement blows it out" pos="125 -30 1650" look="-20 -40 1590" fov="66" textRect="0.52 0.04 0.44 0.24" textScale="0.72"><transform target="Varya" pos="-5 -62 1500" rot="0 0 180" /><use-pose instance="Varya" name="Reach" /></camera>
+  <camera name="lamp-light-shines" comment="Ending: the casement shut, the lamp blazing, the beam over the sea and the boats turning home" pos="100 120 1690" look="-40 -110 1580" fov="72" textRect="0.03 0.04 0.42 0.22" textScale="0.72"><transform target="Varya" pos="-70 40 1500" rot="0 0 200" /><use-pose instance="Varya" name="LookUp" /><transform target="Flame" pos="0 0 1000" /><transform target="Glow" pos="0 0 1000" /><transform target="Casement" rot="0 0 -80" /></camera>
+  <pose name="Walk">
+    <joint target="left_thigh" aim="0 -68" />
+    <joint target="left_shin" aim="0 -110" />
+    <joint target="right_thigh" aim="180 -76" />
+    <joint target="left_arm" aim="180 -72" />
+    <joint target="right_arm" aim="0 -65" />
+  </pose>
+  <pose name="Run">
+    <joint target="spine" aim="0 76" />
+    <joint target="left_thigh" aim="0 -40" />
+    <joint target="left_shin" aim="0 -150" />
+    <joint target="right_thigh" aim="180 -58" />
+    <joint target="right_shin" aim="180 -60" />
+    <joint target="left_arm" aim="180 -45" />
+    <joint target="right_arm" aim="0 -35" />
+    <joint target="right_forearm" aim="0 -10" />
+  </pose>
+  <pose name="LookUp">
+    <joint target="head" aim="180 72" />
+    <joint target="left_arm" aim="15 -80" />
+  </pose>
+  <pose name="LookDown">
+    <joint target="neck" aim="0 70" />
+    <joint target="head" aim="0 60" />
+  </pose>
+  <pose name="Balance">
+    <joint target="left_arm" aim="90 -5" />
+    <joint target="right_arm" aim="-90 -5" />
+    <joint target="left_thigh" aim="0 -62" />
+    <joint target="left_shin" aim="0 -118" />
+    <joint target="neck" aim="0 75" />
+  </pose>
+  <pose name="Hang">
+    <joint target="spine" pos="0 0 -8" />
+    <joint target="left_arm" aim="10 85" />
+    <joint target="right_arm" aim="-10 85" />
+    <joint target="left_thigh" aim="10 -80" />
+    <joint target="right_thigh" aim="-5 -95" />
+    <joint target="head" aim="180 70" />
+  </pose>
+  <pose name="Climb">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_thigh" aim="0 -15" />
+    <joint target="left_shin" aim="0 -165" />
+    <joint target="left_arm" aim="0 35" />
+    <joint target="right_arm" aim="0 25" />
+  </pose>
+  <pose name="Sit">
+    <joint target="spine" pos="0 0 -58" />
+    <joint target="left_thigh" aim="5 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-5 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -60" />
+    <joint target="right_arm" aim="-20 -60" />
+  </pose>
+  <pose name="SitHug">
+    <joint target="spine" pos="0 0 -60" aim="0 80" />
+    <joint target="left_thigh" aim="5 40" />
+    <joint target="left_shin" aim="0 -175" />
+    <joint target="right_thigh" aim="-5 40" />
+    <joint target="right_shin" aim="0 -175" />
+    <joint target="left_arm" aim="0 -20" />
+    <joint target="right_arm" aim="0 -20" />
+    <joint target="head" aim="0 80" />
+  </pose>
+  <pose name="Row">
+    <joint target="spine" pos="0 0 -58" aim="180 80" />
+    <joint target="left_thigh" aim="0 5" />
+    <joint target="left_shin" aim="0 -170" />
+    <joint target="right_thigh" aim="0 5" />
+    <joint target="right_shin" aim="0 -170" />
+    <joint target="left_arm" aim="20 -10" />
+    <joint target="right_arm" aim="-20 -10" />
+  </pose>
+  <pose name="Point">
+    <joint target="right_arm" aim="-35 15" />
+    <joint target="right_forearm" aim="0 -5" />
+    <joint target="head" aim="-15 88" />
+  </pose>
+  <pose name="Smoke">
+    <joint target="right_arm" aim="-10 -40" />
+    <joint target="right_forearm" aim="0 30" />
+    <joint target="left_arm" aim="30 -80" />
+  </pose>
+  <pose name="Wave">
+    <joint target="right_arm" aim="-40 60" />
+    <joint target="right_forearm" aim="0 -20" />
+    <joint target="head" aim="0 95" />
+  </pose>
+  <pose name="Mend">
+    <joint target="spine" pos="0 0 -58" aim="0 80" />
+    <joint target="left_thigh" aim="10 0" />
+    <joint target="left_shin" aim="0 -178" />
+    <joint target="right_thigh" aim="-10 0" />
+    <joint target="right_shin" aim="0 -178" />
+    <joint target="left_arm" aim="20 -20" />
+    <joint target="right_arm" aim="-20 -20" />
+    <joint target="head" aim="0 65" />
+  </pose>
+  <pose name="Push">
+    <joint target="spine" aim="0 70" />
+    <joint target="left_arm" aim="10 20" />
+    <joint target="right_arm" aim="-10 20" />
+    <joint target="right_thigh" aim="180 -65" />
+  </pose>
+  <pose name="Jump">
+    <joint target="spine" pos="0 0 18" aim="0 80" />
+    <joint target="left_thigh" aim="0 -30" />
+    <joint target="left_shin" aim="0 -120" />
+    <joint target="right_thigh" aim="180 -50" />
+    <joint target="right_shin" aim="0 -70" />
+    <joint target="left_arm" aim="60 40" />
+    <joint target="right_arm" aim="-60 40" />
+  </pose>
+  <pose name="Swim">
+    <joint target="left_arm" aim="40 60" />
+    <joint target="right_arm" aim="-30 70" />
+    <joint target="head" aim="180 75" />
+  </pose>
+  <pose name="Reach">
+    <joint target="spine" aim="0 78" />
+    <joint target="left_arm" aim="0 10" />
+    <joint target="right_arm" aim="0 30" />
+    <joint target="head" aim="0 88" />
+  </pose>
+  <pose name="Lie">
+    <joint target="head" aim="-20 80" />
+    <joint target="left_arm" aim="40 -60" />
+  </pose>
+  <pose name="SealSwim">
+    <joint target="spine" aim="0 -5" />
+    <joint target="head" aim="0 30" />
+  </pose>
+  <material id="whitewash" color="0.86 0.85 0.82" shininess="4" />
+  <material id="stone" color="0.55 0.53 0.50" shininess="6" />
+  <material id="iron" color="0.18 0.18 0.20" shininess="30" />
+  <material id="brass" color="0.76 0.56 0.24" shininess="50" />
+  <material id="lens" color="0.82 0.90 0.94" shininess="120" />
+  <material id="wood" color="0.58 0.42 0.28" shininess="8" />
+  <material id="sea" color="0.16 0.22 0.30" shininess="90" />
+  <material id="varya_coat" color="0.92 0.72 0.20" shininess="20" />
+  <material id="varya_hat" color="0.78 0.20 0.18" shininess="5" />
+  <material id="varya_hair" color="0.45 0.28 0.14" shininess="5" />
+  <material id="varya_legs" color="0.92 0.72 0.20" shininess="5" />
+  <material id="varya_boots" color="0.18 0.20 0.24" shininess="20" />
+  <material id="varya_skin" color="0.93 0.76 0.64" shininess="5" />
+  <material id="varya_eye" color="0.10 0.08 0.08" shininess="5" />
+  <material id="varya_skirt" color="0.30 0.42 0.30" shininess="5" />
+  <material id="varya_beard" color="0.35 0.25 0.18" shininess="5" />
+  <!-- The last storm light from the west through the glazing; the stairwell is lit from its windows. -->
+  <sun dir="0.8 0.3 -0.5" color="0.70 0.72 0.90" intensity="1.0" castShadows="1" />
+  <light pos="80 0 1350" color="0.80 0.82 0.95" intensity="0.8" radius="900" castShadows="1" />
+
+  <!-- The stairwell: tower wall, central column, spiral steps, a slit window. -->
+  <cylinder pos="0 0 750" rot="90 0 0" radius="140" height="1500" tube="12" material="whitewash" />
+  <cylinder pos="0 0 750" rot="90 0 0" radius="18" height="1500" material="stone" />
+  <box pos="75.0 0.0 9" rot="0 0 0" size="100 36 6" material="stone" />
+  <box pos="69.5 28.1 27" rot="0 0 22" size="100 36 6" material="stone" />
+  <box pos="54.0 52.1 45" rot="0 0 44" size="100 36 6" material="stone" />
+  <box pos="30.5 68.5 63" rot="0 0 66" size="100 36 6" material="stone" />
+  <box pos="2.6 75.0 81" rot="0 0 88" size="100 36 6" material="stone" />
+  <box pos="-25.7 70.5 99" rot="0 0 110" size="100 36 6" material="stone" />
+  <box pos="-50.2 55.7 117" rot="0 0 132" size="100 36 6" material="stone" />
+  <box pos="-67.4 32.9 135" rot="0 0 154" size="100 36 6" material="stone" />
+  <box pos="-74.8 5.2 153" rot="0 0 176" size="100 36 6" material="stone" />
+  <box pos="-71.3 -23.2 171" rot="0 0 198" size="100 36 6" material="stone" />
+  <box pos="-57.5 -48.2 189" rot="0 0 220" size="100 36 6" material="stone" />
+  <box pos="-35.2 -66.2 207" rot="0 0 242" size="100 36 6" material="stone" />
+  <box pos="-7.8 -74.6 225" rot="0 0 264" size="100 36 6" material="stone" />
+  <box pos="20.7 -72.1 243" rot="0 0 286" size="100 36 6" material="stone" />
+  <box pos="46.2 -59.1 261" rot="0 0 308" size="100 36 6" material="stone" />
+  <box pos="65.0 -37.5 279" rot="0 0 330" size="100 36 6" material="stone" />
+  <box pos="74.3 -10.4 297" rot="0 0 352" size="100 36 6" material="stone" />
+  <box pos="72.8 18.1 315" rot="0 0 374" size="100 36 6" material="stone" />
+  <box pos="60.7 44.1 333" rot="0 0 396" size="100 36 6" material="stone" />
+  <box pos="39.7 63.6 351" rot="0 0 418" size="100 36 6" material="stone" />
+  <box pos="13.0 73.9 369" rot="0 0 440" size="100 36 6" material="stone" />
+  <box pos="-15.6 73.4 387" rot="0 0 462" size="100 36 6" material="stone" />
+  <box pos="-41.9 62.2 405" rot="0 0 484" size="100 36 6" material="stone" />
+  <box pos="-62.2 41.9 423" rot="0 0 506" size="100 36 6" material="stone" />
+  <box pos="-8 -138 330" size="40 20 70" color="0.60 0.66 0.80" unlit="1" castShadow="0" />
+
+  <!-- The lamp room floor, the glazing and roof. -->
+  <cylinder pos="0 0 1495" rot="90 0 0" radius="160" height="10" material="stone" />
+  <cylinder pos="0 0 1600" rot="90 0 0" radius="152" height="190" tube="2" color="0.45 0.52 0.62" />
+  <box pos="138.6 57.4 1600" rot="0 0 22.5" size="6 10 170" material="iron" />
+  <box pos="57.4 138.6 1600" rot="0 0 67.5" size="6 10 170" material="iron" />
+  <box pos="-57.4 138.6 1600" rot="0 0 112.5" size="6 10 170" material="iron" />
+  <box pos="-138.6 57.4 1600" rot="0 0 157.5" size="6 10 170" material="iron" />
+  <box pos="-138.6 -57.4 1600" rot="0 0 202.5" size="6 10 170" material="iron" />
+  <box pos="-57.4 -138.6 1600" rot="0 0 247.5" size="6 10 170" material="iron" />
+  <box pos="57.4 -138.6 1600" rot="0 0 292.5" size="6 10 170" material="iron" />
+  <box pos="138.6 -57.4 1600" rot="0 0 337.5" size="6 10 170" material="iron" />
+  <cylinder pos="0 0 1700" rot="90 0 0" radius="160" height="10" material="iron" />
+  <!-- The open casement on the south side; its hinge is on the west edge. -->
+  <group name="Casement" pos="-30 -150 1600" pivotOffset="-30 0 0" rot="0 0 -70"><box pos="30 0 0" size="60 4 120" color="0.50 0.58 0.70" /></group>
+
+  <!-- The great lamp: a brass pedestal, the wick holder, the glass lens round it. -->
+  <cylinder pos="0 0 1530" rot="90 0 0" radius="22" height="60" material="brass" />
+  <cylinder pos="0 0 1580" rot="90 0 0" radius="3" height="30" material="iron" />
+  <cylinder pos="0 0 1605" rot="90 0 0" radius="34" height="50" tube="2" material="lens" />
+  <group name="Flame" pos="0 0 -1000"><sphere pos="0 0 1600" radius="8" color="1.0 0.85 0.45" unlit="1" castShadow="0" /></group>
+  <group name="Glow" pos="0 0 -1000"><light pos="0 0 1600" color="1.0 0.85 0.55" intensity="2.5" radius="700" castShadows="0" /></group>
+  <!-- The shelf with the matches, on a bracket by the stair hatch. -->
+  <box pos="-110 70 1560" rot="0 0 30" size="50 20 4" material="wood" />
+  <box pos="-110 70 1566" rot="0 0 30" size="10 6 4" color="0.70 0.30 0.20" />
+
+  <!-- The sea far below with the boats' lights. -->
+  <box pos="0 -6000 -20" size="20000 10000 40" material="sea" />
+  <sphere pos="-900 -5200 30" radius="25" color="1.0 0.80 0.40" unlit="1" castShadow="0" />
+  <sphere pos="400 -6500 30" radius="25" color="1.0 0.80 0.40" unlit="1" castShadow="0" />
+  <sphere pos="1400 -4800 30" radius="25" color="1.0 0.80 0.40" unlit="1" castShadow="0" />
+
+  <prefab source="characters/varya" name="Varya" />
+
+  <!-- Anchors. -->
+  <group name="Wick" pos="0 0 1600" />
+  <group name="Window" pos="0 -150 1620" />
+</scene>

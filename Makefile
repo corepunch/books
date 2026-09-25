@@ -1,11 +1,13 @@
 .DEFAULT_GOAL := run
 
 BUILD_DIR ?= build
-BOOK ?= moon-spot
+BOOK ?= lighthouse
 SCENE ?= kitchen
 SCENER ?= $(shell command -v scener 2>/dev/null || printf '%s/.local/bin/scener' "$$HOME")
 WIDTH ?= 1920
 HEIGHT ?= 1440
+# Plan views of large exterior scenes need fewer pixels per centimetre.
+LAYOUT_SCALE ?= 2
 CC ?= cc
 CFLAGS ?= -O2 -g
 BUILD_ROOT := $(abspath $(BUILD_DIR))
@@ -83,7 +85,7 @@ check-ui: $(BOOK_BUILD_ROOT)/book
 render:
 	python3 tools/render.py --book "$(BOOK)" --scene "$(SCENE)" --scener "$(SCENER)" --width $(WIDTH) --height $(HEIGHT)
 layout:
-	cd "books/$(BOOK)/rooms" && "$(SCENER)" --layout "$(SCENE).blks" --scale 2 --format jpg --output-dir .
+	cd "books/$(BOOK)/rooms" && "$(SCENER)" --layout "$(SCENE).blks" --scale $(LAYOUT_SCALE) --format jpg --output-dir .
 clean:
 	rm -rf "$(BUILD_ROOT)"
 -include $(OBJECTS:.o=.d) $(BOOK_BUILD_ROOT)/test_geometry.d $(BOOK_BUILD_ROOT)/test_transition.d $(BOOK_BUILD_ROOT)/test_hotspots.d

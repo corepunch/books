@@ -7,13 +7,15 @@ import sys
 import tempfile
 
 binary, root = map(lambda value: str(Path(value).resolve()), sys.argv[1:3])
-book = sys.argv[3] if len(sys.argv) > 3 else 'moon-spot'
+book = sys.argv[3] if len(sys.argv) > 3 else 'lighthouse'
 args = [binary, '--root', root, '--book', book]
 page = json.loads(subprocess.check_output(args + ['--check'], text=True))
-origin = page['hotspots'][0]
-route = subprocess.check_output(args + ['--headless'], input=f":choose {origin['choice']}\n", text=True)
-beat = json.loads(route.splitlines()[-1])
-button = next(c for c in beat['controls'] if c['kind'] == 'continue')
+# The smoke transition presses the first circle, or the button when the page has none.
+circles = [c for c in page['controls'] if c['circle']]
+control = circles[0] if circles else page['controls'][0]
+route = subprocess.check_output(args + ['--headless'], input=f":choose {control['choice']}\n", text=True)
+after_page = json.loads(route.splitlines()[-1])
+button = next(c for c in after_page['controls'] if not c['circle'])
 
 
 def capture(directory, milliseconds=None):
@@ -33,14 +35,20 @@ with tempfile.TemporaryDirectory(prefix='book-ui-') as directory:
     width, height, before = capture(directory)
     scale = width / 1100
     assert height / 800 == scale
-    cx, cy = origin['x'], origin['y']
+    cx, cy = control['x'] + control['width'] / 2, control['y'] + control['height'] / 2
+    start_radius = 24 if control['circle'] else 0
     end_radius = math.hypot(max(cx, 1100 - cx), max(cy, 800 - cy)) + 1
+    # A new picture is revealed in a growing circle; the same picture crossfades its text.
+    reveal = after_page['image'] != page['image']
     for milliseconds in (0, 100, 275):
         frame_width, frame_height, frame = capture(directory, milliseconds)
         assert (frame_width, frame_height) == (width, height)
+        if not reveal:
+            assert milliseconds == 0 or frame != before, f'crossfade did not start by {milliseconds} ms'
+            continue
         progress = milliseconds / 550
         eased = progress * progress * (3 - 2 * progress)
-        radius = 24 + (end_radius - 24) * eased
+        radius = start_radius + (end_radius - start_radius) * eased
         unchanged = changed = 0
         for y in range(height):
             for x in range(width):
@@ -62,6 +70,6 @@ with tempfile.TemporaryDirectory(prefix='book-ui-') as directory:
             offset = (y * width + x) * 3
             rgb = after[offset:offset + 3]
             cream_pixels += all(abs(actual - expected) <= 6 for actual, expected in zip(rgb, (244, 230, 202)))
-    assert cream_pixels > 50, 'Continue label is missing from the rendered intermediate page'
+    assert cream_pixels > 50, 'The button label is missing from the rendered next page'
 
-print('Book: reveal preserves outgoing overlays and the intermediate page visibly renders Continue')
+print('Book: the page transition keeps the outgoing page outside the reveal and the next page renders its button')

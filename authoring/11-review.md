@@ -22,7 +22,11 @@ what they find. Keep the evidence for each kind of finding separate.
    where they got confused, where a choice felt meaningless, where they could
    not tell where they were or what they were trying to do, and whether they
    reached an ending. Freeze these notes before reading the design.
-3. **Artistic pass.** Compare the experience with `DESIGN.md`:
+3. **Artistic pass.** First ask whether it reads as an adventure: count the
+   locations on the golden path, the share of pages in the busiest location,
+   story pages per decision page and the endings (CRAFT checklist). A book
+   that stays in one place or is a single puzzle is a `REVISE`, whatever else
+   is good. Then compare the experience with `DESIGN.md`:
    - does the opening pose a clear question, and does the ending answer it;
    - do the pages alternate discovery, action and rest, with rising stakes;
    - are the funny, beautiful and warm moments present;

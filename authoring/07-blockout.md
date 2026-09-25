@@ -16,12 +16,22 @@ over.
 
 ## Required actions
 
-1. **Scene file.** Create `rooms/<scene>.blks` with `up="z"`, centimetres,
-   X east, Y north. Put the resident story and route summary in its leading
-   comment.
-2. **Shell first.** Floor, walls, ceiling, doors and windows as in
-   `ROOMS.md`. Every camera is inside the room, so every wall is visible; use
-   real doors and windows rather than invisible walls.
+1. **Scene files.** Create one `rooms/<scene>.blks` per location or cluster
+   of rooms (`forest-fork.blks`, `white-house.blks`, `dam.blks`), each with
+   `up="z"`, centimetres, X east, Y north, and the resident story or reason
+   for the place in its leading comment. Share prefabs across scenes. Passing
+   locations can be simple: ground, a few large masses, the landmark, the
+   light and a background colour.
+   For an outdoor journey, one scene can hold every exterior location in one
+   coordinate system (the Lighthouse `bay.blks` holds the village, flats,
+   cliffs, channel and island), so landmarks such as a lighthouse on the
+   horizon stay in the same place on every page. Compress distances the way a
+   storybook map does: tens of metres, not kilometres. Keep interiors in
+   their own scenes.
+2. **Shell first.** For interiors: floor, walls, ceiling, doors and windows
+   as in `ROOMS.md`; every camera is inside the room, so use real doors and
+   windows rather than invisible walls. For exteriors: ground shape, paths,
+   water and the near, middle and far backdrop masses.
 3. **Model what is marked M.** Build the items `ROOMS.md` marks M (shell,
    furniture, story objects, clues, route steps, large shadow casters). Leave
    P items to the painter; the blockout is a spatial reference, not the art.
@@ -49,6 +59,15 @@ over.
    `textScale`. Place characters per camera with `<transform target="…">`
    plus `<use-pose>`. Show each picture state with its own camera, using
    camera `<transform>` to move or hide the objects that differ.
+   - A transform's `pos` is added in the target's *own rotated frame*, and its
+     `rot` adds to the authored rotation. Author the hero at the origin with
+     no rotation so camera positions read as world positions; for other actors
+     convert the world target into their frame.
+   - Changing conditions are groups moved per camera: the `Sea` group raised
+     for the tide, a broken plank shown and the whole one lowered away, a
+     lamp's flame and light moved into place when it is lit.
+   - Give actor instances and anchor groups different names (`AgafyaActor`
+     and `Agafya`); a scene name must be unique or the anchor lookup fails.
 10. **Load cleanly.** `scener --list-cameras rooms/<scene>.blks` must print no
    warnings: no ignored attributes, no sealed lights, no missing prefabs, no
    foot or IK messages.
@@ -64,7 +83,7 @@ over.
     with `make render BOOK=<name> SCENE=model-sheet`. Cameras here are
     painters' references, not pages.
 13. **Plan view.** Run `make layout BOOK=<name> SCENE=<scene>` for a top-down
-    plan. Check it against the footprint and furniture positions in
+    plan (add `LAYOUT_SCALE=0.1` for a large exterior). Check it against the footprint and furniture positions in
     `ROOMS.md`; it is also the basis for the map in stage 10.
 14. **Safe area and circles.** For each room camera, confirm the story
     objects, clues and anchors sit at least 5 % inside the frame, and that the

@@ -73,7 +73,11 @@ class Book:
             assert choices == [{'kind': 'continue', 'label': 'Дальше', 'command': '', 'object': ''}]
             assert not view['hotspots'] and len(controls) == 1
         else:
-            assert view['kind'] == 'ended' and not choices and not controls and not view['hotspots']
+            # An ending offers exactly one button: try again, or start over after the success.
+            assert view['kind'] == 'ended' and view['ending'] in ('success', 'partial', 'failure'), view
+            assert len(choices) == 1 and choices[0]['kind'] == 'retry' and choices[0]['command'], choices
+            assert not view['hotspots'] and len(controls) == 1 and not controls[0]['circle']
+        assert (view['ending'] != '') == (view['kind'] == 'ended'), view
 
     def send(self, command):
         self.process.stdin.write(command + '\n')
@@ -91,6 +95,10 @@ class Book:
 
     def continue_page(self):
         assert self.view['kind'] == 'beat'
+        return self.tap_choice(0)
+
+    def retry(self):
+        assert self.view['kind'] == 'ended'
         return self.tap_choice(0)
 
     def close(self):

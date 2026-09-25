@@ -1,0 +1,12 @@
+<!-- A clinker rowing boat, 420 cm long, 120 wide, gunwale at z=55 when upright. Z up; bow at local -Y.
+     Rests on its keel on shingle or floats with the waterline at z=20. -->
+<prefab>
+  <attach name="seat" pos="0 20 40" />
+  <box pos="0 0 30" size="120 420 50" material="boat_hull" inset="8"><taper amount="0.75" axis="y" /></box>
+  <box pos="0 0 8" size="100 380 6" material="boat_hull"><taper amount="0.75" axis="y" /></box>
+  <box pos="-54 10 50" rot="0 0 -5" size="10 380 8" material="boat_trim" />
+  <box pos="54 10 50" rot="0 0 5" size="10 380 8" material="boat_trim" />
+  <box pos="0 205 50" size="100 10 8" material="boat_trim" />
+  <box pos="0 60 40" size="100 26 5" material="wood" />
+  <box pos="0 -80 40" size="80 26 5" material="wood" />
+</prefab>

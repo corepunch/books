@@ -1,0 +1,17 @@
+<!-- The grey seal of the bay, as a bone skeleton. Body frame Z up, faces local -Y, left is +X.
+     About 120 cm nose to tail; it lies on its belly or swims with only head and back above water. -->
+<prefab>
+  <bone name="spine" aim="0 0" aimEnd="0 12" segments="3" length="70" radius="17 15" taper="0.8" material="seal_fur">
+    <bone name="head" aim="0 10" length="18" radius="10 9" material="seal_fur">
+      <bone name="snout" aim="0 -8" length="8" radius="6 5" taper="0.8" material="seal_fur">
+        <sphere on="0 0" at="1" radius="1.8" material="seal_nose" />
+      </bone>
+      <sphere on="35 25" at="0.6" radius="2.2" material="seal_eye" />
+      <sphere on="-35 25" at="0.6" radius="2.2" material="seal_eye" />
+    </bone>
+    <bone name="left_flipper" at="0.8" from="90 -60" aim="75 -20" length="16" radius="5 1.8" taper="0.6" mirror="1" material="seal_fur" />
+    <bone name="tail" at="0" from="180 0" aim="180 -10" length="22" radius="11 5" taper="0.4" material="seal_fur">
+      <bone name="left_hind" at="1" from="90 0" aim="160 0" length="12" radius="6 1.5" taper="0.8" mirror="1" material="seal_fur" />
+    </bone>
+  </bone>
+</prefab>

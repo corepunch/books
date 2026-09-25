@@ -5,6 +5,8 @@
 
 #define CONTINUE_BUTTON_WIDTH 248.0f
 #define CONTINUE_BUTTON_HEIGHT 80.0f
+#define BUTTON_TEXT_SIZE 36.0f
+#define BUTTON_TEXT_INSET 36.0f
 
 static void add_control(struct PageLayout *layout, frect_t bounds, int choice, bool circle)
 {
@@ -76,10 +78,14 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
             copy(targets[target_count].key, sizeof(targets[target_count].key), book_object(choice->object)->key);
             targets[target_count++].choice = i;
             break;
-        case CHOICE_CONTINUE: {
-            frect_t bounds = frect(fvec2(viewport.width - margin - CONTINUE_BUTTON_WIDTH,
+        case CHOICE_CONTINUE:
+        case CHOICE_RETRY: {
+            /* Continue and "try again" share the lower-right button, widened to fit its label. */
+            float width = fmaxf(CONTINUE_BUTTON_WIDTH, text_size(choice->label, BUTTON_TEXT_SIZE,
+                                viewport.width).width + 2 * BUTTON_TEXT_INSET);
+            frect_t bounds = frect(fvec2(viewport.width - margin - width,
                                         viewport.height - margin - CONTINUE_BUTTON_HEIGHT),
-                                  fsize2(CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT));
+                                  fsize2(width, CONTINUE_BUTTON_HEIGHT));
             add_control(layout, bounds, i, false);
             break;
         }

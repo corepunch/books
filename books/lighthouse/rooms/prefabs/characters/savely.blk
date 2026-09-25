@@ -1,0 +1,29 @@
+<!-- Savely, the ferryman: black cap, huge beard, dark blue pea jacket, big boots.
+     One shared human skeleton: body frame Z up, faces local -Y, left is +X; about
+     184 cm tall. Every human uses the same bone names (spine, hem, neck, head, left_/right_ arm,
+     forearm, hand, thigh, shin, foot) so the scene poses work on all of them. -->
+<prefab>
+  <bone name="spine" aim="0 90" segments="2" length="51.7" radius="20.2 15.6" material="savely_coat">
+    <bone name="hem" at="0.12" from="0 -90" sink="18.4" aim="0 -90" length="19.0" radius="21.1 16.5" taper="1.25" material="savely_coat" />
+    <bone name="neck" aim="0 90" length="6.8" radius="7.3" material="savely_skin">
+      <bone name="head" aim="0 90" length="23.0" radius="11.4 11.8" material="savely_skin">
+        <sphere on="0 85" at="0.66" radius="12.1" scale="1 1 0.55" material="savely_hat" />
+        <sphere on="0 20" at="0.85" radius="9.4" scale="1 1 0.25" material="savely_hat" />
+        <sphere on="18 10" at="0.45" radius="1.5" material="savely_eye" />
+        <sphere on="-18 10" at="0.45" radius="1.5" material="savely_eye" />
+        <sphere on="0 -5" at="0.38" radius="1.6" material="savely_skin" />
+        <bone name="beard" at="0.25" from="0 -40" aim="0 -80" length="16.5" radius="8.8 5.9" taper="0.45" material="savely_beard" />
+      </bone>
+    </bone>
+    <bone name="left_arm" at="0.92" from="90 0" aim="10 -85" length="28.6" radius="7.7 7.3" mirror="1" material="savely_coat">
+      <bone name="left_forearm" aim="0 -90" length="25.8" radius="6.6" material="savely_coat">
+        <bone name="left_hand" aim="0 -90" length="9.5" radius="5.5 3.7" material="savely_skin" />
+      </bone>
+    </bone>
+    <bone name="left_thigh" at="0.02" from="90 -40" aim="0 -90" length="42.2" radius="11.0 11.9" mirror="1" material="savely_legs">
+      <bone name="left_shin" aim="0 -90" length="40.8" radius="7.9" material="savely_boots">
+        <bone name="left_foot" foot="1" aim="0 -6" length="17.7" radius="6.6 5.1" material="savely_boots" />
+      </bone>
+    </bone>
+  </bone>
+</prefab>

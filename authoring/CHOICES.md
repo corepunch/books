@@ -56,8 +56,8 @@ So a decision page has:
 1. **Set them up in the text.** Every option's object or direction is named or
    clearly implied in the passage before it appears as a caption. End the
    passage on the dilemma, as a thought, a question from a character, or the
-   situation itself ("The stool stands by the table, and the moon-spot trembles
-   on the dresser.").
+   situation itself ("The trail forks, and a big tree with low branches stands
+   right beside it.").
 2. **Two or three options.** One is not a choice; four crowds the picture.
 3. **Short questions, like Krill.** Write each caption as a short question
    about an action: "Take the dirt trail?", "Follow the owl?", "Jump onto the
@@ -101,19 +101,21 @@ Placement rules:
 
 ## Implementing an option
 
-In the book's C file:
+In the book's story table (`books/<name>.c`, see stage 8):
 
-1. Register the anchor object with `set_object(OBJECT_…, "key")`. The key
-   matches the scene's anchor group name (lowercase, `_` becomes `-`), so the
-   `Chair` group is the `chair` key.
-2. On the room page, add the option with
-   `append_choice(object_choice(OBJECT_…, "Запрыгнуть на стул?", "go table"))`:
-   the caption, then a unique command used by tests and headless play.
-3. Handle the object in `perform()`: update facts, then call `show_beat()`
-   with the outcome text and camera. The beat page's Continue returns to the
-   room or advances the story.
-4. Offer an option only when it is possible under the current facts; remove it
-   once it no longer makes sense (the gate is already open).
+1. Give the decision page up to three choices, each
+   `{.label = "Перейти мост?", .anchor = "bridge", .target = "bridge"}`: the
+   caption, the scene anchor its circle sits on, and the page it leads to. The
+   anchor is a named group in that camera's scene (lowercase, `_` becomes `-`),
+   so the `Bridge` group is the `bridge` anchor.
+2. Anchors must be unique names in their scene. Name the actor prefab
+   differently from its anchor (`AgafyaActor` and the `Agafya` anchor group),
+   or the anchor lookup stops at the duplicate.
+3. The target page tells what happens: usually a story page with the outcome,
+   whose Continue moves on.
+4. Offer an option only when it is possible: limit it with `.requires` or
+   `.excludes`, or send the reader through a `STORY_CHECK` to a page variant
+   (the ferryman is only asked once).
 
 ## Checking options
 

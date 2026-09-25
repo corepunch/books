@@ -1,0 +1,27 @@
+<!-- Agafya, the old shepherd: dark red headscarf, brown shawl, long green skirt.
+     One shared human skeleton: body frame Z up, faces local -Y, left is +X; about
+     159 cm tall. Every human uses the same bone names (spine, hem, neck, head, left_/right_ arm,
+     forearm, hand, thigh, shin, foot) so the scene poses work on all of them. -->
+<prefab>
+  <bone name="spine" aim="0 90" segments="2" length="44.8" radius="14.9 11.5" material="agafya_coat">
+    <bone name="hem" at="0.12" from="0 -90" sink="13.6" aim="0 -90" length="73.2" radius="15.6 12.2" taper="1.25" material="agafya_skirt" />
+    <bone name="neck" aim="0 90" length="5.9" radius="5.4" material="agafya_skin">
+      <bone name="head" aim="0 90" length="21.1" radius="10.5 10.8" material="agafya_skin">
+        <sphere on="0 80" at="0.55" radius="11.7" scale="1 1 0.95" material="agafya_hat" />
+        <sphere on="18 10" at="0.45" radius="1.4" material="agafya_eye" />
+        <sphere on="-18 10" at="0.45" radius="1.4" material="agafya_eye" />
+        <sphere on="0 -5" at="0.38" radius="1.5" material="agafya_skin" />
+      </bone>
+    </bone>
+    <bone name="left_arm" at="0.92" from="90 0" aim="10 -85" length="24.8" radius="5.7 5.4" mirror="1" material="agafya_coat">
+      <bone name="left_forearm" aim="0 -90" length="22.4" radius="4.9" material="agafya_coat">
+        <bone name="left_hand" aim="0 -90" length="8.3" radius="4.1 2.7" material="agafya_skin" />
+      </bone>
+    </bone>
+    <bone name="left_thigh" at="0.02" from="90 -40" aim="0 -90" length="36.6" radius="8.1 8.8" mirror="1" material="agafya_legs">
+      <bone name="left_shin" aim="0 -90" length="35.4" radius="5.8" material="agafya_boots">
+        <bone name="left_foot" foot="1" aim="0 -6" length="15.3" radius="4.9 3.8" material="agafya_boots" />
+      </bone>
+    </bone>
+  </bone>
+</prefab>
