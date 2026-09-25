@@ -20,7 +20,7 @@ struct Glyph {
 static struct {
     unsigned char *font_data;
     stbtt_fontinfo font;
-    float font_scale, ascent, line_height;
+    float font_scale, ascent, line_height, cap_height;
     int glyph_count;
     struct Glyph glyphs[MAX_GLYPHS];
 } t;
@@ -44,6 +44,9 @@ bool text_init(const char *font_path)
     stbtt_GetFontVMetrics(&t.font, &ascent, &descent, &gap);
     t.ascent = ascent * t.font_scale;
     t.line_height = (ascent - descent + gap) * t.font_scale;
+    int x0, y0, x1, y1;
+    /* Capital height centres labels by the letters' visual band, not the font's ascent. */
+    t.cap_height = stbtt_GetCodepointBox(&t.font, 'H', &x0, &y0, &x1, &y1) ? y1 * t.font_scale : t.ascent * .7f;
     return true;
 }
 
@@ -136,6 +139,34 @@ static float text_layout(const char *text, fvec2_t origin, float size, float max
 float text_draw(const char *text, fvec2_t origin, float size, float max_width, uint32_t rgba)
 {
     return text_layout(text, origin, size, max_width, rgba, true, NULL);
+}
+
+struct TextMetrics text_metrics(float size)
+{
+    float scale = size / FONT_PIXELS;
+    return (struct TextMetrics){fmaxf(t.line_height * scale, size * 1.3f) * TEXT_SPACING_SCALE,
+                                t.ascent * scale, t.cap_height * scale};
+}
+
+frect_t text_label_box(const char *text, float size, float max_width, fvec2_t padding)
+{
+    struct TextMetrics metrics = text_metrics(size);
+    fsize2_t content = text_size(text, size, max_width);
+    int lines = (int)lroundf(content.height / metrics.line);
+    float band = (lines > 0 ? lines - 1 : 0) * metrics.line + metrics.cap_height;
+    return frect(fvec2(0, 0), fsize2(content.width + 2 * padding.x, band + 2 * padding.y));
+}
+
+float text_draw_centered(const char *text, frect_t box, float size, uint32_t rgba)
+{
+    struct TextMetrics metrics = text_metrics(size);
+    fsize2_t content = text_size(text, size, box.size.width);
+    int lines = (int)lroundf(content.height / metrics.line);
+    float band = (lines > 0 ? lines - 1 : 0) * metrics.line + metrics.cap_height;
+    /* Put the capital-height band of all lines in the middle of the box. */
+    fvec2_t origin = fvec2(box.origin.x + (box.size.width - content.width) / 2,
+                           box.origin.y + (box.size.height - band) / 2 + metrics.cap_height - metrics.baseline);
+    return text_draw(text, origin, size, content.width + 1, rgba);
 }
 
 float text_height(const char *text, float size, float max_width)

@@ -193,6 +193,8 @@ bool renderer_begin(isize2_t size, float scale);
 void renderer_present(void);
 void renderer_rect(frect_t bounds, uint32_t rgba);
 void renderer_ring(frect_t bounds, uint32_t rgba);
+/* Rounded rectangle, filled when stroke is zero, else an inner outline of that width. */
+void renderer_round_rect(frect_t bounds, float corner, float stroke, uint32_t rgba);
 void renderer_line(fvec2_t start, fvec2_t end, uint32_t rgba);
 /* Circular masks affect subsequent drawing until explicitly ended. */
 void renderer_reveal_begin(fvec2_t center, float radius);
@@ -221,6 +223,13 @@ float text_draw(const char *text, fvec2_t origin, float size, float max_width, u
 float text_height(const char *text, float size, float max_width);
 fsize2_t text_size(const char *text, float size, float max_width);
 float text_fit_size(const char *text, float preferred_size, fsize2_t bounds);
+/* Offsets from a text_draw origin for one font size: line advance, first baseline, capital height. */
+struct TextMetrics { float line, baseline, cap_height; };
+struct TextMetrics text_metrics(float size);
+/* A label box: the text's width plus padding, and its capital-height band plus padding. */
+frect_t text_label_box(const char *text, float size, float max_width, fvec2_t padding);
+/* Draw text centred in a box by its capital-height band; returns the bottom of the text. */
+float text_draw_centered(const char *text, frect_t box, float size, uint32_t rgba);
 
 /* Scene projection */
 /* Read fixed cameras, reading regions and anchors from the book's .blks files. */
@@ -243,6 +252,8 @@ struct TextRegion scene_text_region(isize2_t image, fsize2_t viewport);
 #define CAPTION_MAX_WIDTH 230.0f
 #define CAPTION_PADDING 8.0f
 #define CAPTION_GAP 6.0f
+#define CAPTION_CORNER_RADIUS 8.0f
+#define BUTTON_CORNER_RADIUS 14.0f
 struct Hotspot { fvec2_t anchor, center; int choice; };
 typedef struct Hotspot hotspotList_t[MAX_CHOICES];
 /* Returns false if the viewport cannot accommodate every marker. */

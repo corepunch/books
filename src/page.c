@@ -33,8 +33,8 @@ static bool caption_fits(const struct PageLayout *layout, int index, frect_t cap
 static void place_caption(struct PageLayout *layout, int index, const char *label, fsize2_t viewport, frect_t prose)
 {
     struct PageControl *control = &layout->controls[index];
-    fsize2_t text = text_size(label, CAPTION_TEXT_SIZE, CAPTION_MAX_WIDTH);
-    fsize2_t size = fsize2(text.width + 2 * CAPTION_PADDING, text.height + CAPTION_PADDING);
+    fsize2_t size = text_label_box(label, CAPTION_TEXT_SIZE, CAPTION_MAX_WIDTH,
+                                   fvec2(CAPTION_PADDING, CAPTION_PADDING)).size;
     frect_t circle = control->bounds;
     float cx = circle.origin.x + circle.size.width / 2, cy = circle.origin.y + circle.size.height / 2;
     float left = cx - size.width / 2, top = cy - size.height / 2;

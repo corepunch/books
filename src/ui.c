@@ -78,14 +78,9 @@ static void draw_page_image(const struct PageView *view, frect_t viewport)
 static void draw_continue(const struct PageControl *control, const char *label)
 {
     frect_t button = control->bounds;
-    renderer_rect(button, 0x211C18E8);
-    fvec2_t top_right = fvec2_add(button.origin, fvec2(button.size.width, 0));
-    fvec2_t bottom_left = fvec2_add(button.origin, fvec2(0, button.size.height));
-    renderer_line(button.origin, top_right, 0xF4E6CAFF);
-    renderer_line(top_right, frect_bottom_right(button), 0xF4E6CAFF);
-    renderer_line(frect_bottom_right(button), bottom_left, 0xF4E6CAFF);
-    renderer_line(bottom_left, button.origin, 0xF4E6CAFF);
-    text_draw(label, fvec2_add(button.origin, fvec2(36, 20)), 36, button.size.width - 72, 0xF4E6CAFF);
+    renderer_round_rect(button, BUTTON_CORNER_RADIUS, 0, 0x211C18E8);
+    renderer_round_rect(button, BUTTON_CORNER_RADIUS, 1.5f, 0xF4E6CAFF);
+    text_draw_centered(label, button, 36, 0xF4E6CAFF);
 }
 
 static void draw_overlays(const struct PageView *view)
@@ -112,9 +107,8 @@ static void draw_overlays(const struct PageView *view)
         case CHOICE_OBJECT:
             renderer_ring(frect_translate(control->bounds, fvec2(0, 2)), 0x120B0780);
             renderer_ring(control->bounds, 0xFFFFFFFF);
-            renderer_rect(control->caption, 0x211C18C8);
-            text_draw(choice->label, fvec2_add(control->caption.origin, fvec2(CAPTION_PADDING, CAPTION_PADDING / 2)),
-                      CAPTION_TEXT_SIZE, control->caption.size.width - 2 * CAPTION_PADDING + 1, 0xF4E6CAFF);
+            renderer_round_rect(control->caption, CAPTION_CORNER_RADIUS, 0, 0x211C18C8);
+            text_draw_centered(choice->label, control->caption, CAPTION_TEXT_SIZE, 0xF4E6CAFF);
             break;
         case CHOICE_CONTINUE:
         case CHOICE_RETRY: draw_continue(control, choice->label); break;
