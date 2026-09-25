@@ -58,6 +58,19 @@ New scenes declare `up="z"`. Compose establishing cameras obliquely; avoid
 frontal views and dominant screen-horizontal architectural lines. Reserve
 natural negative space for the full prose and keep interaction circles outside
 it. Author per-camera `textRect` and optional `textScale` in `.blks`.
+Scenes must make physical sense. Follow Scener's
+`skills/populate-simplegl-scenes/references/world-logic.md`: every object has
+a support and a reason to be there, and character routes use plausible
+furniture (a chair, a drawer, a trunk), never props stacked into stairs. Each
+book's `DESIGN.md` holds its resident story and scale sheet: protagonist size,
+reach and jump limits, the height of every route surface, and the
+protagonist's on-screen size in establishing shots. Scenes resolve prefabs from
+their own `rooms/prefabs/`; start furniture by adapting Scener's
+`prefabs/furniture`, `fixtures` and `items` into that folder rather than
+modelling from raw boxes. Build characters as Scener `<bone>` skeletons
+(direction, length, girth, `mirror`, `segments`) following Scener's
+`docs/character-authoring.md`; pose them with `aim` and tip IK, never with
+hand-placed spheres.
 Geometry belongs in `.blks` scenes and `.blk` prefabs; finished and review
 images must be raster, never SVG. The Scener checkout is separate at
 `~/Developer/mapview/ui/apps/scener`; read its instructions before changing it.
