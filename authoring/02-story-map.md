@@ -6,7 +6,7 @@ the book remembers.
 ## Inputs
 
 - `DESIGN.md`
-- [CRAFT.md](CRAFT.md) §1, §3–§11
+- [CRAFT.md](CRAFT.md) §1, §3–§11, [CHOICES.md](CHOICES.md)
 
 ## Required actions
 
@@ -58,7 +58,8 @@ the book remembers.
    threshold.
 9. **Picture states.** For each location, list every visible variant caused
    by facts and thresholds ("desk with copper star", "desk without it", "attic
-   at dawn"). Each variant becomes a camera or item layer in stage 5.
+   at dawn"). Each variant becomes its own camera and its own whole painting
+   in stage 5; nothing is drawn on top of a picture.
 10. **Failure and danger.** Decide what poor choices lead to, matching the
     audience in `DESIGN.md`. Never punish a choice the reader had no way to
     judge.

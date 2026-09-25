@@ -51,8 +51,7 @@ static void navigate(int action, fvec2_t origin, float radius)
     /* Resolve and upload the new page before the animation clock starts. */
     capture_page(&current_page);
     transition_start(&transition, now(), origin, window_size(), radius,
-                     strcmp(outgoing_page.content.image, current_page.content.image) != 0 ||
-                     strcmp(outgoing_page.content.overlay, current_page.content.overlay) != 0);
+                     strcmp(outgoing_page.content.image, current_page.content.image) != 0);
     preview_time = -1;
 }
 
@@ -74,13 +73,6 @@ static void draw_image(const char *path,frect_t viewport)
 static void draw_page_image(const struct PageView *view, frect_t viewport)
 {
     draw_image(view->content.image, viewport);
-    if (!*view->content.overlay) return;
-    isize2_t image = renderer_image_size(view->content.image);
-    isize2_t overlay = renderer_image_size(view->content.overlay);
-    if (isize2_is_empty(overlay)) fail("cannot decode %s", view->content.overlay);
-    if (overlay.width != image.width || overlay.height != image.height)
-        fail("item layer canvas does not match %s", view->content.image);
-    renderer_image(view->content.overlay, frect_cover(isize2_to_float(image), viewport));
 }
 
 static void draw_continue(const struct PageControl *control, const char *label)
@@ -120,6 +112,9 @@ static void draw_overlays(const struct PageView *view)
         case CHOICE_OBJECT:
             renderer_ring(frect_translate(control->bounds, fvec2(0, 2)), 0x120B0780);
             renderer_ring(control->bounds, 0xFFFFFFFF);
+            renderer_rect(control->caption, 0x211C18C8);
+            text_draw(choice->label, fvec2_add(control->caption.origin, fvec2(CAPTION_PADDING, CAPTION_PADDING / 2)),
+                      CAPTION_TEXT_SIZE, control->caption.size.width - 2 * CAPTION_PADDING + 1, 0xF4E6CAFF);
             break;
         case CHOICE_CONTINUE: draw_continue(control, choice->label); break;
         case CHOICE_INVALID: fail("cannot draw an uninitialized choice");

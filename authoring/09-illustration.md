@@ -71,13 +71,10 @@ Work in this order; approve each step before the next.
    art, the model sheets and the registry. Strengthen depth with values:
    foreground softer or darker, the focal area with the highest contrast,
    background hazier. Keep each location's own mood.
-8. **Collectible objects on room pages.** Paint the full room with the object
-   in place. Make the clean plate by removing only that object from the same
-   painting, saved under the "cleared" camera's name. Draw the object's
-   outline in `illustrations/items/polygons.json` and run
-   `swift tools/extract_items.swift books/<name>/illustrations` to cut the
-   transparent full-size layer (`items/<object>-<camera>.png`), a compact crop
-   and `items/rects.json`. The in-game object then matches the room exactly.
+8. **Picture states.** When a fact changes how a place looks (the gate open,
+   the lamp lit), that state has its own camera and is painted as its own
+   whole picture from the same key art, matching the other state everywhere
+   except what changed. Nothing is cut out or layered on top of a page.
 9. **Files.** Save pages as `illustrations/<camera>.png` in 4:3, ideally at the
    render size. The `illustrations/` folder is local and not in git; keep a
    backup.
@@ -89,8 +86,7 @@ Work in this order; approve each step before the next.
 
 - `work/ILLUSTRATION.md` (style bible, sheet notes, colour script, page briefs)
 - Character and object sheets, location key art (kept with the illustrations)
-- `illustrations/*.png`, `illustrations/items/*.png`,
-  `illustrations/items/polygons.json`
+- `illustrations/*.png`
 
 ## Acceptance checks
 
@@ -100,6 +96,7 @@ Work in this order; approve each step before the next.
   registry.
 - The hero and story objects match their sheets on every page.
 - Text zones are quiet and vary in position between consecutive pages.
-- Plates and item layers come from the same painting and line up exactly.
+- Paintings of different states of one place match everywhere except what
+  changed.
 - Read in order, the colour script builds and releases rather than staying one
   mood.

@@ -90,8 +90,10 @@ static float advance_for(int codepoint)
     return advance * t.font_scale;
 }
 
-static float text_layout(const char *text, fvec2_t origin, float size, float max_width, uint32_t rgba, bool draw)
+static float text_layout(const char *text, fvec2_t origin, float size, float max_width, uint32_t rgba, bool draw,
+                         float *widest)
 {
+    if (widest) *widest = 0;
     if (!text || !*text || size <= 0) return origin.y;
     float scale = size / FONT_PIXELS;
     fvec2_t pen = origin;
@@ -126,18 +128,26 @@ static float text_layout(const char *text, fvec2_t origin, float size, float max
             if (g->texture) renderer_quad(glyph, rgba, g->texture, true);
         }
         pen = fvec2_add(pen, fvec2(advance, 0));
+        if (widest) *widest = fmaxf(*widest, pen.x - origin.x);
     }
     return pen.y + line;
 }
 
 float text_draw(const char *text, fvec2_t origin, float size, float max_width, uint32_t rgba)
 {
-    return text_layout(text, origin, size, max_width, rgba, true);
+    return text_layout(text, origin, size, max_width, rgba, true, NULL);
 }
 
 float text_height(const char *text, float size, float max_width)
 {
-    return text_layout(text, fvec2(0, 0), size, max_width, 0, false);
+    return text_layout(text, fvec2(0, 0), size, max_width, 0, false, NULL);
+}
+
+fsize2_t text_size(const char *text, float size, float max_width)
+{
+    float width;
+    float height = text_layout(text, fvec2(0, 0), size, max_width, 0, false, &width);
+    return fsize2(width, height);
 }
 
 float text_fit_size(const char *text, float preferred_size, fsize2_t bounds)

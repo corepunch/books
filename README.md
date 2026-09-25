@@ -5,13 +5,11 @@ follows Mira the kitten as she gathers three stars from the floor, desk and
 window sill of one attic. The story facts, locations, choices and
 prose all live in C. There is no ZIL or Lua runtime.
 
-The app displays finished PNG illustrations from `books/three-stars/illustrations/`
-when they exist. Collectible stars use transparent layers extracted from the
-matching painted scene; after collection, the page uses its clean PNG plate.
-Until a page's painting and item layer exist, it shows the camera's own Scener
-render from `books/three-stars/rooms/`, where `attic.blks` also holds camera and
-anchor references. Tap a circle to collect a star or to jump between floor,
-chair, desk and window sill. The lower-right button continues after an action.
+Each page shows one whole picture: the finished PNG illustration for its camera
+from `books/three-stars/illustrations/` when it exists, otherwise the camera's
+own Scener render from `books/three-stars/rooms/`, where `attic.blks` also holds
+camera and anchor references. Nothing is layered on top of a page picture; a
+changed room state is another camera. Tap a circle or its caption to choose. The lower-right button continues after an action.
 
 ## Build and launch
 

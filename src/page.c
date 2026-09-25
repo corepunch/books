@@ -9,7 +9,50 @@
 static void add_control(struct PageLayout *layout, frect_t bounds, int choice, bool circle)
 {
     if (layout->control_count >= MAX_CHOICES) fail("too many page controls");
-    layout->controls[layout->control_count++] = (struct PageControl){bounds, choice, circle};
+    layout->controls[layout->control_count++] = (struct PageControl){bounds, frect(fvec2(0, 0), fsize2(0, 0)),
+                                                                     choice, circle};
+}
+
+static bool caption_fits(const struct PageLayout *layout, int index, frect_t caption, frect_t safe, frect_t prose)
+{
+    if (frect_intersection(caption, safe).size.width < caption.size.width ||
+        frect_intersection(caption, safe).size.height < caption.size.height) return false;
+    if (frect_overlaps(caption, prose)) return false;
+    for (int i = 0; i < layout->control_count; ++i) {
+        const struct PageControl *other = &layout->controls[i];
+        if (i != index && frect_overlaps(caption, other->bounds)) return false;
+        if (i < index && other->circle && frect_overlaps(caption, other->caption)) return false;
+    }
+    return true;
+}
+
+/* Put each label below its circle when possible, else above, right or left; captions
+   never cover the prose, another circle or an earlier caption. */
+static void place_caption(struct PageLayout *layout, int index, const char *label, fsize2_t viewport, frect_t prose)
+{
+    struct PageControl *control = &layout->controls[index];
+    fsize2_t text = text_size(label, CAPTION_TEXT_SIZE, CAPTION_MAX_WIDTH);
+    fsize2_t size = fsize2(text.width + 2 * CAPTION_PADDING, text.height + CAPTION_PADDING);
+    frect_t circle = control->bounds;
+    float cx = circle.origin.x + circle.size.width / 2, cy = circle.origin.y + circle.size.height / 2;
+    float left = cx - size.width / 2, top = cy - size.height / 2;
+    frect_t candidates[] = {
+        frect(fvec2(left, circle.origin.y + circle.size.height + CAPTION_GAP), size),
+        frect(fvec2(left, circle.origin.y - CAPTION_GAP - size.height), size),
+        frect(fvec2(circle.origin.x + circle.size.width + CAPTION_GAP, top), size),
+        frect(fvec2(circle.origin.x - CAPTION_GAP - size.width, top), size),
+    };
+    frect_t safe = frect_inset(frect_from_size(viewport), fvec2(CAPTION_GAP, CAPTION_GAP));
+    frect_t excluded = fsize2_is_empty(prose.size) ? prose :
+        frect_inset(prose, fvec2(-HOTSPOT_TEXT_GAP, -HOTSPOT_TEXT_GAP));
+    control->caption = candidates[0];
+    for (size_t i = 0; i < sizeof(candidates) / sizeof(candidates[0]); ++i)
+        if (caption_fits(layout, index, candidates[i], safe, excluded)) { control->caption = candidates[i]; return; }
+    /* No free side: keep it below, clamped on screen; tests report the collision. */
+    control->caption.origin.x = fmaxf(safe.origin.x, fminf(control->caption.origin.x,
+                                      safe.origin.x + safe.size.width - size.width));
+    control->caption.origin.y = fmaxf(safe.origin.y, fminf(control->caption.origin.y,
+                                      safe.origin.y + safe.size.height - size.height));
 }
 
 void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
@@ -50,12 +93,17 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
         frect_t bounds = frect_center_at(frect_from_size(fsize2(HOTSPOT_DIAMETER, HOTSPOT_DIAMETER)), spot->center);
         add_control(layout, bounds, spot->choice, true);
     }
+    frect_t prose = region.authored && *page->text ? region.bounds : frect(fvec2(0, 0), fsize2(0, 0));
+    for (int i = 0; i < layout->control_count; ++i)
+        if (layout->controls[i].circle)
+            place_caption(layout, i, page->choices[layout->controls[i].choice].label, viewport, prose);
 }
 
 const struct PageControl *page_hit_test(const struct PageLayout *layout, fvec2_t point)
 {
     for (int i = layout->control_count - 1; i >= 0; --i) {
         const struct PageControl *control = &layout->controls[i];
+        if (control->circle && frect_contains_point(control->caption, point)) return control;
         if (!frect_contains_point(control->bounds, point)) continue;
         if (control->circle && !frect_ellipse_contains_point(control->bounds, point)) continue;
         return control;

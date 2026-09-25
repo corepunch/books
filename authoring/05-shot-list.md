@@ -7,14 +7,15 @@ sits, where the choice circles land, and how the page looks in the sequence.
 
 - `work/STORY_MAP.md`, `work/ROOMS.md`, `work/CHARACTERS.md`
 - Scener's `references/shot-composition-guide.md`
+- [CHOICES.md](CHOICES.md) (anchors and caption space)
 
 ## Required actions
 
 1. **One camera per page and per picture state.** Name cameras
    `location-verb-object`, for example `floor-show-room`,
-   `floor-climb-table`, `table-take-copper-star`. Camera names are unique
-   across the whole book. A room page whose picture changes with a fact gets a
-   second camera (`floor-show-cleared-room`) or an item layer.
+   `floor-climb-table`, `bridge-cross-river`. Camera names are unique
+   across the whole book. A room page whose picture changes with a fact gets
+   another camera (`gate-show-open`), painted as its own whole picture.
 2. **Story question.** For each shot, the one thing the reader must
    understand at a glance: "Mira is halfway between the chair and the desk".
 3. **Actor, action, target.** Who is in frame, what they are doing (a pose
@@ -42,7 +43,8 @@ sits, where the choice circles land, and how the page looks in the sequence.
    where its circle appears (the star itself, the chair seat, the sill edge).
    Every anchor must be visible in that camera. Circles are 48 px across on an
    1100 × 800 page, so anchors need at least a circle's radius of clear space
-   from each other, and must stay out of the text zone.
+   from each other, and must stay out of the text zone. Each circle also shows
+   its caption, so keep about 250 × 60 px free on one side of every anchor.
 9. **Safe area.** Pages are 4:3; on wider screens the app crops about 3 %
    from the top and bottom. Keep the hero, story objects, clues, anchors and
    text zones at least 5 % inside every edge.
@@ -58,7 +60,7 @@ zone, anchors, picture state.
 ## Acceptance checks
 
 - Every page in `STORY_MAP.md` has exactly one camera, and every picture
-  state has a camera or item layer.
+  state has its own camera.
 - Every action shot shows the actor, the action and the target.
 - Every clue the story map relies on is visible in the shots that promise it.
 - Every room-page choice has an anchor visible in that camera, with clear

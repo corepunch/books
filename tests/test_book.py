@@ -16,20 +16,12 @@ def beat_image(camera):
     return painted if painted.exists() else renders / f'{camera}.jpg'
 
 
-def assert_room(view, camera, plate, layer=None):
-    """Rooms use a painted plate with its item layer when both exist, else the camera render."""
-    item = art / 'items' / f'{layer}.png' if layer else None
-    if (art / f'{plate}.png').exists() and (item is None or item.exists()):
-        image, overlay = art / f'{plate}.png', item
-    else:
-        image, overlay = renders / f'{camera}.jpg', None
-    assert view['kind'] == 'room' and Path(view['image']) == image, view['image']
-    assert Path(view['overlay']) == overlay if overlay else view['overlay'] == '', view['overlay']
+def assert_room(view, camera):
+    assert view['kind'] == 'room' and Path(view['image']) == beat_image(camera), view['image']
 
 
 def assert_beat(view, camera):
     assert view['kind'] == 'beat' and Path(view['image']) == beat_image(camera), view['image']
-    assert view['overlay'] == ''
 
 
 class Book:
@@ -59,6 +51,26 @@ class Book:
             assert 0 <= control['x'] < control['x'] + control['width'] <= 1100
             assert 0 <= control['y'] < control['y'] + control['height'] <= 800
             assert control['circle'] == (choice['kind'] == 'object')
+        # Every circle shows its label as a caption that collides with nothing else.
+        def box(r):
+            return (r['x'], r['y'], r['x'] + r['width'], r['y'] + r['height'])
+
+        def overlaps(a, b):
+            return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
+
+        circles = [c for c in controls if c['circle']]
+        text = view['text_region']
+        prose = box(text) if text['authored'] and view['text'] else None
+        for control in circles:
+            caption = box(control['caption'])
+            assert control['caption']['width'] > 0 and control['caption']['height'] > 0, control
+            assert 0 <= caption[0] and caption[2] <= 1100 and 0 <= caption[1] and caption[3] <= 800, control
+            assert prose is None or not overlaps(caption, prose), (control['label'], text)
+            for other in controls:
+                if other is not control:
+                    assert not overlaps(caption, box(other)), (control['label'], other['label'])
+                    if other['circle']:
+                        assert not overlaps(caption, box(other['caption'])), (control['label'], other['label'])
         if view['kind'] == 'room':
             assert choices
             # Art determines which object anchors project into this camera.
@@ -108,7 +120,7 @@ button = beat['controls'][0]
 assert b.send(f":tap {button['x'] - 1} {button['y']}") == beat
 assert b.send(f":tap {button['x'] + button['width']} {button['y']}") == beat
 b.send(':choose 0')  # This used to fail while the :continue shortcut passed.
-assert_room(b.view, 'table-show-desk', 'table-show-cleared-desk', 'copper-star-table-show-desk')
+assert_room(b.view, 'table-show-desk')
 for alias in (':continue', ':back'):
     b.choose('go floor')
     b.send(alias)
@@ -117,28 +129,35 @@ for alias in (':continue', ':back'):
     b.continue_page()
 b.close()
 
+# A caption is part of its choice: tapping the label acts like tapping the circle.
+b = Book()
+caption = next(c for c in b.view['controls'] if c['circle'] and c['choice'] == 0)['caption']
+b.send(f":tap {caption['x'] + caption['width'] / 2} {caption['y'] + caption['height'] / 2}")
+assert b.view['kind'] == 'beat', b.view
+b.close()
+
 b = Book()
 assert b.view['room'] == 'attic-floor'
-assert_room(b.view, 'floor-show-room', 'floor-show-cleared-room', 'brass-star-floor-show-room')
+assert_room(b.view, 'floor-show-room')
 assert {choice['command'] for choice in b.view['choices']} == {'take brass-star', 'go table'}
 
 b.choose('take brass-star')
 assert_beat(b.view, 'floor-take-gold-star')
 b.continue_page()
-assert_room(b.view, 'floor-show-cleared-room', 'floor-show-cleared-room')
+assert_room(b.view, 'floor-show-cleared-room')
 b.choose('go table')
 assert b.view['room'] == 'writing-desk'
 assert_beat(b.view, 'floor-climb-table')
 b.continue_page()
-assert_room(b.view, 'table-show-desk', 'table-show-cleared-desk', 'copper-star-table-show-desk')
+assert_room(b.view, 'table-show-desk')
 b.choose('take copper-star')
 b.continue_page()
-assert_room(b.view, 'table-show-cleared-desk', 'table-show-cleared-desk')
+assert_room(b.view, 'table-show-cleared-desk')
 b.choose('go sill')
 assert b.view['room'] == 'window-sill'
 assert_beat(b.view, 'table-climb-sill')
 b.continue_page()
-assert_room(b.view, 'sill-show-window', 'sill-show-cleared-window', 'pearl-star-sill-show-window')
+assert_room(b.view, 'sill-show-window')
 b.choose('take pearl-star')
 assert_beat(b.view, 'sill-take-pearl-star')
 b.continue_page()

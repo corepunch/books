@@ -47,8 +47,8 @@ over.
    anchor groups for route choices (`Chair`, `Sill-Ledge`).
 9. **Cameras.** Add every camera from `SHOTS.md` with `textRect` and
    `textScale`. Place characters per camera with `<transform target="…">`
-   plus `<use-pose>`. Hide collected story objects in "cleared" cameras by
-   moving them out of the room.
+   plus `<use-pose>`. Show each picture state with its own camera, using
+   camera `<transform>` to move or hide the objects that differ.
 10. **Load cleanly.** `scener --list-cameras rooms/<scene>.blks` must print no
    warnings: no ignored attributes, no sealed lights, no missing prefabs, no
    foot or IK messages.

@@ -73,7 +73,6 @@ static const char *room_text(int room)
 static void select_image(struct BookPage *page, const char *camera, const char *illustration)
 {
     page->image[0] = 0;
-    page->overlay[0] = 0;
     copy(page->camera, sizeof(page->camera), camera);
     filePath_t path;
     int length = snprintf(path, sizeof(path), "%s/%s.png", game.illustrations, illustration);
@@ -85,23 +84,6 @@ static void select_image(struct BookPage *page, const char *camera, const char *
     length = snprintf(path, sizeof(path), "%s/%s.jpg", game.rooms, illustration);
     if (length < 0 || (size_t)length >= sizeof(path)) fail("reference image path is too long");
     if (!access(path, R_OK)) copy(page->image, sizeof(page->image), path);
-}
-
-static bool painted(const char *relative)
-{
-    filePath_t path;
-    int length = snprintf(path, sizeof(path), "%s/%s.png", game.illustrations, relative);
-    if (length < 0 || (size_t)length >= sizeof(path)) fail("illustration path is too long");
-    return !access(path, R_OK);
-}
-
-static void select_overlay(struct BookPage *page, const char *item)
-{
-    filePath_t path;
-    int length = snprintf(path, sizeof(path), "%s/items/%s.png", game.illustrations, item);
-    if (length < 0 || (size_t)length >= sizeof(path)) fail("item layer path is too long");
-    if (access(path, R_OK)) fail("cannot read item layer: %s", path);
-    copy(page->overlay, sizeof(page->overlay), path);
 }
 
 static struct Choice object_choice(int object, const char *label, const char *command)
@@ -140,7 +122,6 @@ static void publish_page(void)
         fail("page has no valid room");
     if (!*draft.text || !*draft.camera) fail("page must have prose and a camera");
     if (draft.choice_count < 0 || draft.choice_count > MAX_CHOICES) fail("invalid choice count");
-    if (*draft.overlay && draft.kind != PAGE_ROOM) fail("item layers belong only to room pages");
     switch (draft.kind) {
     case PAGE_ROOM:
         if (!draft.choice_count) fail("room page has no actions");
@@ -179,19 +160,19 @@ static void add_room_choices(void)
     switch (game.room) {
     case ROOM_FLOOR:
         if (!(game.facts & FOUND_BRASS_STAR))
-            append_choice(object_choice(OBJECT_BRASS_STAR, "Поднять латунную звёздочку", "take brass-star"));
-        append_choice(object_choice(OBJECT_CHAIR, "Запрыгнуть на стол через стул", "go table"));
+            append_choice(object_choice(OBJECT_BRASS_STAR, "Поднять латунную звёздочку?", "take brass-star"));
+        append_choice(object_choice(OBJECT_CHAIR, "Запрыгнуть на стол через стул?", "go table"));
         break;
     case ROOM_TABLE:
         if (!(game.facts & FOUND_COPPER_STAR))
-            append_choice(object_choice(OBJECT_COPPER_STAR, "Поднять медную звёздочку", "take copper-star"));
-        append_choice(object_choice(OBJECT_CHAIR, "Спрыгнуть на пол через стул", "go floor"));
-        append_choice(object_choice(OBJECT_SILL_LEDGE, "Запрыгнуть на подоконник", "go sill"));
+            append_choice(object_choice(OBJECT_COPPER_STAR, "Поднять медную звёздочку?", "take copper-star"));
+        append_choice(object_choice(OBJECT_CHAIR, "Спрыгнуть на пол через стул?", "go floor"));
+        append_choice(object_choice(OBJECT_SILL_LEDGE, "Запрыгнуть на подоконник?", "go sill"));
         break;
     case ROOM_SILL:
         if (!(game.facts & FOUND_PEARL_STAR))
-            append_choice(object_choice(OBJECT_PEARL_STAR, "Поднять светлую звёздочку", "take pearl-star"));
-        append_choice(object_choice(OBJECT_SILL_LEDGE, "Спрыгнуть на стол", "go table"));
+            append_choice(object_choice(OBJECT_PEARL_STAR, "Поднять светлую звёздочку?", "take pearl-star"));
+        append_choice(object_choice(OBJECT_SILL_LEDGE, "Спрыгнуть на стол?", "go table"));
         break;
     default: fail("unknown room %d", game.room);
     }
@@ -199,29 +180,15 @@ static void add_room_choices(void)
 
 static void show_room(void)
 {
-    const char *camera, *illustration, *item_layer = NULL;
-    if (game.room == ROOM_FLOOR) {
+    const char *camera;
+    if (game.room == ROOM_FLOOR)
         camera = (game.facts & FOUND_BRASS_STAR) ? "floor-show-cleared-room" : "floor-show-room";
-        illustration = "floor-show-cleared-room";
-        if (!(game.facts & FOUND_BRASS_STAR)) item_layer = "brass-star-floor-show-room";
-    } else if (game.room == ROOM_TABLE) {
+    else if (game.room == ROOM_TABLE)
         camera = (game.facts & FOUND_COPPER_STAR) ? "table-show-cleared-desk" : "table-show-desk";
-        illustration = "table-show-cleared-desk";
-        if (!(game.facts & FOUND_COPPER_STAR)) item_layer = "copper-star-table-show-desk";
-    } else {
+    else
         camera = (game.facts & FOUND_PEARL_STAR) ? "sill-show-cleared-window" : "sill-show-window";
-        illustration = "sill-show-cleared-window";
-        if (!(game.facts & FOUND_PEARL_STAR)) item_layer = "pearl-star-sill-show-window";
-    }
-    /* Until a clean painted plate and its item layer exist, show the camera's own render. */
-    assetName_t layer;
-    if (item_layer) snprintf(layer, sizeof(layer), "items/%s", item_layer);
-    if (!painted(illustration) || (item_layer && !painted(layer))) {
-        illustration = camera;
-        item_layer = NULL;
-    }
-    begin_page(PAGE_ROOM, room_text(game.room), camera, illustration);
-    if (item_layer) select_overlay(&draft, item_layer);
+    /* Every page is one whole picture: the painting for its camera, else the camera's render. */
+    begin_page(PAGE_ROOM, room_text(game.room), camera, camera);
     add_room_choices();
     publish_page();
 }

@@ -18,6 +18,7 @@ the change there.
 | Stage | File | Produces |
 |---|---|---|
 | — | [CRAFT.md](CRAFT.md) | Principles and checklist used by every stage |
+| — | [CHOICES.md](CHOICES.md) | How decision pages set up, show, place and implement options |
 | 1 | [01-premise.md](01-premise.md) | `DESIGN.md` |
 | 2 | [02-story-map.md](02-story-map.md) | `work/STORY_MAP.md` |
 | 3 | [03-room-bible.md](03-room-bible.md) | `work/ROOMS.md` |
@@ -26,7 +27,7 @@ the change there.
 | 6 | [06-page-text.md](06-page-text.md) | `work/TEXT.md` |
 | 7 | [07-blockout.md](07-blockout.md) | Scener scene, prefabs, reference renders, model sheets, plan view |
 | 8 | [08-implementation.md](08-implementation.md) | `books/<name>.c`, `WALKTHROUGH.md`, tests |
-| 9 | [09-illustration.md](09-illustration.md) | `work/ILLUSTRATION.md`, sheets, key art, painted pages, item layers |
+| 9 | [09-illustration.md](09-illustration.md) | `work/ILLUSTRATION.md`, sheets, key art, painted pages |
 | 10 | [10-packaging.md](10-packaging.md) | `package/`: title, synopsis, cover, metadata, map, parent notes |
 | 11 | [11-review.md](11-review.md) | `work/REVIEW.md`, fixes |
 
@@ -78,13 +79,9 @@ books/<name>/
 ├── package/                     stage 10
 │   ├── TITLE.md  SYNOPSIS.md  METADATA.md  PARENT_NOTES.md
 └── illustrations/               local, not in git
-    ├── <camera>.png             painted pages and room plates
+    ├── <camera>.png             one whole painting per camera
     ├── cover.png, map and extras
-    ├── sheets/                  model sheets, object sheets, key art
-    └── items/
-        ├── polygons.json        outlines of collectible objects
-        ├── <object>-<camera>.png
-        ├── crops/  rects.json   produced by tools/extract_items.swift
+    └── sheets/                  model sheets, object sheets, key art
 ```
 
 ## Deliverables
@@ -99,15 +96,16 @@ A finished book has all of these:
   characters and poses, one render per camera, model-sheet renders, plan view.
 - **Art:** style bible and page briefs in `ILLUSTRATION.md`, character and
   object sheets, key art per location, one painted page per camera, room
-  plates with item layers, the cover.
+  the cover.
 - **Package:** title and tagline, synopsis, metadata, map, parent notes,
   optional in-world extras.
 - **Review:** `REVIEW.md` ending in `READY` or `READY WITH RISKS`.
 
 ## Engine facts every stage relies on
 
-- Page kinds: room pages (choices shown as circles on the picture), beat pages
-  (one Continue button) and ending pages. State lives in the book's C file as
+- Page kinds: room pages (each choice is a circle on its object with its
+  label as a caption, tappable on either), beat pages (one Continue button)
+  and ending pages. State lives in the book's C file as
   named facts.
 - Pages are 4:3 images. The app window is 11:8 on Mac, so about 3 % is
   cropped from the top and bottom; keep essential content 5 % inside every
@@ -116,8 +114,8 @@ A finished book has all of these:
   radius of clear space, and appear on named anchors in the scene.
 - Page text sits in each camera's `textRect` at base size 36 px scaled by
   `textScale`; the headless `text_region` reports whether it fits.
-- Room pages fall back to the camera's render until a painted plate and its
-  item layer exist, so a book is readable before painting.
+- Each page shows one whole picture: its camera's painting, or the camera's
+  render until the painting exists. Nothing is layered on top of a picture.
 
 ## Rules for every stage
 

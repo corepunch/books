@@ -7,7 +7,7 @@ carries the scene, the text carries the story.
 ## Inputs
 
 - `DESIGN.md`, `work/STORY_MAP.md`, `work/ROOMS.md`, `work/SHOTS.md`
-- [CRAFT.md](CRAFT.md) §4, §6, §10, §12
+- [CRAFT.md](CRAFT.md) §4, §6, §10, §12, [CHOICES.md](CHOICES.md)
 
 ## Required actions
 
@@ -26,9 +26,11 @@ carries the scene, the text carries the story.
    physical detail ("she jumps onto the seat, then puts her front paws on the
    edge of the desk"), then let Continue return to a room or advance the
    story.
-5. **Choice labels.** Short intentions in the hero's voice, 2–5 words, all in
-   the same grammatical form ("Jump onto the chair", "Take the copper star").
-   Never write system commands, parser verbs or item lists.
+5. **Choice captions.** Short questions about an action, as in the Zork
+   books ("Jump onto the chair?", "Take the dirt trail?"), all in the same
+   form, under about 30 characters. Set every option up in the passage first
+   and end the passage on the dilemma. Never write system commands, parser
+   verbs or item lists. See [CHOICES.md](CHOICES.md).
 6. **No mechanics on the page.** No inventory, no "you can't", no "nothing
    happens", no counts or scores. If a choice is not possible, do not offer
    it. Carried things appear in the text only when they matter ("the key she

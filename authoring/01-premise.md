@@ -33,8 +33,8 @@ Decide what book is being made before any map, model or text exists.
    activity, the threshold that ends it, and how the world changes after it
    (CRAFT §9).
 8. **Size and painting budget.** Number of locations, room pages, beat pages
-   and endings. Every page is one painting, and each collectible on a room page
-   adds a clean plate and an item layer. A short first book: 1–3 locations,
+   and endings. Every page is one whole painting, and every picture state of a
+   room (door open, door shut) is another painting. A short first book: 1–3 locations,
    10–20 pages. A Zork-book-sized story: 8–15 locations, 40–60 pages, several
    endings.
 9. **Structure.** Choose one and say why:
@@ -63,7 +63,8 @@ a working example of several of these.
 ## Acceptance checks
 
 - The premise and high concept each fit in one sentence and could be pitched
-  aloud; the concept is more than "collect the things".
+  aloud; the concept is more than "collect the things", and the plot does not
+  depend on picking up and carrying items.
 - The audience is specific enough to judge vocabulary and danger.
 - The good ending is concrete and testable ("all three stars are in the
   basket"), not a mood.

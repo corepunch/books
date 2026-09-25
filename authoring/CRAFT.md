@@ -22,8 +22,11 @@ the same feeling.
 
 The pitch must name a fantasy of play, not just a quest: "a kitten crossing a
 giant's attic in the dark", "guiding a baby dragon who melts ice at the worst
-moments", "a detective who solves the case by noticing". If the pitch is only
-"collect three items", add a twist to the premise, the hero or the world.
+moments", "a detective who solves the case by noticing". Do not build the
+story around picking up and carrying things. Goals are about reaching a
+place, helping someone, finding out the truth, escaping, or deciding who to
+trust. When the hero does take something, it is one story moment that a later
+page remembers as a fact, never a collection.
 
 ## 3. Challenges are the memory engine
 
@@ -59,7 +62,8 @@ Rules:
   to the same outcome.
 - Two or three choices per room page. One is too few; four overwhelms the
   picture.
-- Label choices as intentions the hero would say, not verbs from a game.
+- Set every option up in the text, then offer it as a short question under
+  its circle, as the Zork books do (see [CHOICES.md](CHOICES.md)).
 - When branches reconverge, the rejoined page should acknowledge the path
   taken (a line of text or a detail in the picture), so choices feel real.
 - A "wrong" choice teaches something: a funny setback, a new clue, a small

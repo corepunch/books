@@ -26,7 +26,6 @@ static void dump(void)
     printf(",\"focus\":\"\""); /* Compatibility with earlier snapshots. */
     printf(",\"kind\":"); json_string(book_page_kind_name(page->kind));
     printf(",\"image\":"); json_string(page->image);
-    printf(",\"overlay\":"); json_string(page->overlay);
     printf(",\"text\":"); json_string(page->text);
     printf(",\"choices\":[");
     for (int i = 0; i < page->choice_count; ++i) {
@@ -56,9 +55,12 @@ static void dump(void)
         printf("%s{\"choice\":%d,\"kind\":", i ? "," : "", control->choice);
         json_string(book_choice_kind_name(choice->kind));
         printf(",\"label\":"); json_string(choice->label);
-        printf(",\"circle\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f}",
+        printf(",\"circle\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f",
                control->circle ? "true" : "false", control->bounds.origin.x, control->bounds.origin.y,
                control->bounds.size.width, control->bounds.size.height);
+        printf(",\"caption\":{\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f}}",
+               control->caption.origin.x, control->caption.origin.y,
+               control->caption.size.width, control->caption.size.height);
     }
     struct TextRegion region = layout.region;
     printf("],\"text_region\":{\"authored\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f,"

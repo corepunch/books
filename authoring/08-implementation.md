@@ -8,11 +8,13 @@ book through the headless interface.
 - `work/STORY_MAP.md`, `work/TEXT.md`, `work/SHOTS.md`
 - The blockout from stage 7
 - Repository `README.md` ("Extending the adventure") and `AGENTS.md`
+- [CHOICES.md](CHOICES.md) (implementing an option)
 
 ## Required actions
 
 1. **Source file.** Create `books/<name>.c`, with `book_name()` returning
-   `<name>`. Use `books/three-stars.c` as the template.
+   `<name>`. Use the engine interface in `src/book.h` and the page
+   constructors described in the repository `README.md`.
 2. **Locations and objects.** Register each location and each chosen thing
    (story objects and route anchors) with `set_object()`. Object keys must
    match the anchor group names in the scene (lowercased, `_` becomes `-`).
@@ -25,9 +27,10 @@ book through the headless interface.
    page.
 5. **Choices.** Append complete choices with `append_choice(object_choice(…))`
    using the labels from `TEXT.md`, and handle each in `perform()`.
-6. **Art fallback.** Room pages show a painted plate plus item layer when both
-   exist, and otherwise the camera's own render, so the book is readable
-   before painting.
+6. **Art.** Every page shows one whole picture: the painting
+   `illustrations/<camera>.png` when it exists, otherwise the camera's render,
+   so the book is readable before painting. Never draw objects on top of a
+   page picture; a changed state is another camera.
 7. **Tests.** Add `tests/test_<name>.py`, modelled on `tests/test_book.py`, that
    walks the golden path and every alternative route, taps the published
    Continue control, and reaches every ending. Make `make check` run the test
@@ -64,8 +67,8 @@ book through the headless interface.
 - `make check` and `make check-ui` pass.
 - Every page from `STORY_MAP.md` appears in a headless read, with the text
   from `TEXT.md`.
-- Every room-page choice has a visible circle on its anchor, and no circle
-  overlaps the page text.
+- Every room-page choice has a visible circle on its anchor with a readable
+  caption, and no circle or caption overlaps the page text.
 - Every page's text fits its zone at its preferred size.
 - Every fact is set once and changes something later.
 - No code path exposes an inventory or a failure message.

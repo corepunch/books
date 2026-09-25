@@ -121,7 +121,7 @@ struct BookPage {
     enum PageKind kind;
     struct Choice choices[MAX_CHOICES];
     int choice_count, room;
-    filePath_t image, overlay;
+    filePath_t image;
     assetName_t camera;
     storyText_t text;
 };
@@ -185,6 +185,7 @@ bool text_init(const char *font_path);
 void text_shutdown(void);
 float text_draw(const char *text, fvec2_t origin, float size, float max_width, uint32_t rgba);
 float text_height(const char *text, float size, float max_width);
+fsize2_t text_size(const char *text, float size, float max_width);
 float text_fit_size(const char *text, float preferred_size, fsize2_t bounds);
 
 /* Scene projection */
@@ -203,6 +204,11 @@ struct TextRegion scene_text_region(isize2_t image, fsize2_t viewport);
 #define HOTSPOT_DIAMETER 48.0f
 #define HOTSPOT_GAP (HOTSPOT_DIAMETER / 2)
 #define HOTSPOT_TEXT_GAP 12.0f
+/* Each circle carries its choice label as a caption, like a gamebook's printed option. */
+#define CAPTION_TEXT_SIZE 22.0f
+#define CAPTION_MAX_WIDTH 230.0f
+#define CAPTION_PADDING 8.0f
+#define CAPTION_GAP 6.0f
 struct Hotspot { fvec2_t anchor, center; int choice; };
 typedef struct Hotspot hotspotList_t[MAX_CHOICES];
 /* Returns false if the viewport cannot accommodate every marker. */
@@ -213,7 +219,7 @@ int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct Hotspo
                           int count, bool has_text, hotspotList_t spots);
 
 /* One layout supplies rendering, hit testing and headless inspection. */
-struct PageControl { frect_t bounds; int choice; bool circle; };
+struct PageControl { frect_t bounds; frect_t caption; int choice; bool circle; };
 struct PageLayout {
     struct TextRegion region;
     float font_size;
