@@ -22,8 +22,10 @@ def main():
         raise SystemExit('Target must be a separate .app bundle')
     if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', adventure):
         raise SystemExit('BOOK must be a lowercase adventure identifier')
-    if adventure != 'three-stars' or not (root / 'books/three-stars/rooms/attic.blks').is_file():
-        raise SystemExit('Missing C adventure assets: ' + adventure)
+    book_dir = root / 'books' / adventure
+    rooms_dir = book_dir / 'rooms'
+    if not rooms_dir.is_dir() or not any(rooms_dir.glob('*.blks')):
+        raise SystemExit('Missing book scene metadata: ' + str(rooms_dir))
     target.mkdir(parents=True, exist_ok=True)
     # Clear only generated resources/signatures; never ship stale art or signing.
     for directory in ('fonts', 'books', 'libs', 'assets', '_CodeSignature'):
@@ -48,6 +50,7 @@ def main():
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(back_button, destination)
     stage('books/' + adventure + '/rooms', {'.jpg', '.jpeg', '.blks', '.blk'})
+    stage('books/' + adventure + '/illustrations', {'.png'})
     shutil.copy2(args.binary, target / 'Book')
     for icon in args.icons.iterdir():
         if icon.suffix in ('.car', '.png'):
@@ -55,7 +58,7 @@ def main():
     info = plistlib.loads((root / 'platform/ipad/Info.plist').read_bytes())
     info.update(plistlib.loads((args.icons / 'partial.plist').read_bytes()))
     info.update({
-        'BookAdventure': adventure,
+        'BookName': adventure,
         'CFBundleIdentifier': args.bundle_id,
         'CFBundleExecutable': 'Book',
         'CFBundleName': 'Book',

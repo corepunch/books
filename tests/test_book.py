@@ -77,7 +77,7 @@ initial = b.view
 for invalid in (':choose -1', ':choose 9999', ':choose nope', ':continue', ':back', ':focus pearlstar'):
     assert b.send(invalid) == initial
 b.tap_choice(1)  # The reported failure: floor -> book stairs -> intermediate page.
-assert b.view['image'].endswith('/floor-climb-table.jpg')
+assert b.view['image'].endswith('/floor-climb-table.png') and b.view['overlay'] == ''
 beat = b.view
 for ignored in (':choose 1', 'go table', 'take brass-star', ':focus book-stairs', ':reload'):
     assert b.send(ignored) == beat
@@ -85,7 +85,8 @@ button = beat['controls'][0]
 assert b.send(f":tap {button['x'] - 1} {button['y']}") == beat
 assert b.send(f":tap {button['x'] + button['width']} {button['y']}") == beat
 b.send(':choose 0')  # This used to fail while the :continue shortcut passed.
-assert b.view['kind'] == 'room' and b.view['image'].endswith('/table-show-desk.jpg')
+assert b.view['kind'] == 'room' and b.view['image'].endswith('/table-show-cleared-desk.png')
+assert b.view['overlay'].endswith('/copper-star-table-show-desk.png')
 for alias in (':continue', ':back'):
     b.choose('go floor')
     b.send(alias)
@@ -96,26 +97,33 @@ b.close()
 
 b = Book()
 assert b.view['room'] == 'attic-floor'
-assert Path(b.view['image']) == root / 'books/three-stars/rooms/floor-show-room.jpg'
+assert Path(b.view['image']) == root / 'books/three-stars/illustrations/floor-show-cleared-room.png'
+assert b.view['overlay'].endswith('/brass-star-floor-show-room.png')
 assert {choice['command'] for choice in b.view['choices']} == {'take brass-star', 'go table'}
 
 b.choose('take brass-star')
-assert b.view['kind'] == 'beat' and b.view['image'].endswith('/floor-take-gold-star.jpg')
+assert b.view['kind'] == 'beat' and b.view['image'].endswith('/floor-take-gold-star.png')
+assert b.view['overlay'] == ''
 b.continue_page()
-assert b.view['image'].endswith('/floor-show-cleared-room.jpg')
+assert b.view['image'].endswith('/floor-show-cleared-room.png') and b.view['overlay'] == ''
 b.choose('go table')
-assert b.view['room'] == 'writing-desk' and b.view['image'].endswith('/floor-climb-table.jpg')
+assert b.view['room'] == 'writing-desk' and b.view['image'].endswith('/floor-climb-table.png')
 b.continue_page()
-assert b.view['image'].endswith('/table-show-desk.jpg')
+assert b.view['image'].endswith('/table-show-cleared-desk.png')
+assert b.view['overlay'].endswith('/copper-star-table-show-desk.png')
 b.choose('take copper-star')
 b.continue_page()
-assert b.view['image'].endswith('/table-show-cleared-desk.jpg')
+assert b.view['image'].endswith('/table-show-cleared-desk.png') and b.view['overlay'] == ''
 b.choose('go sill')
-assert b.view['room'] == 'window-sill' and b.view['image'].endswith('/table-climb-sill.jpg')
+assert b.view['room'] == 'window-sill' and b.view['image'].endswith('/table-climb-sill.png')
 b.continue_page()
-assert b.view['image'].endswith('/sill-show-window.jpg')
+assert b.view['image'].endswith('/sill-show-cleared-window.png')
+assert b.view['overlay'].endswith('/pearl-star-sill-show-window.png')
 b.choose('take pearl-star')
-assert b.view['kind'] == 'ended' and b.view['image'].endswith('/attic-return-stars.jpg')
+assert b.view['kind'] == 'beat' and b.view['image'].endswith('/sill-take-pearl-star.png')
+assert b.view['overlay'] == ''
+b.continue_page()
+assert b.view['kind'] == 'ended' and b.view['image'].endswith('/attic-return-stars.png')
 assert 'три звёздочки' in b.view['text'].lower()
 b.close()
 
@@ -137,6 +145,10 @@ for order in permutations(range(len(stars))):
             b.continue_page()
             assert command not in [c['command'] for c in b.view['choices']]
         else:
+            pickup_image = ['floor-take-gold-star.png', 'table-take-copper-star.png',
+                            'sill-take-pearl-star.png'][target]
+            assert b.view['kind'] == 'beat' and b.view['image'].endswith('/' + pickup_image)
+            b.continue_page()
             ending = b.view
             assert ending['kind'] == 'ended'
             for ignored in (':choose 0', ':continue', ':back', ':focus brassstar', 'inventory', ':reload'):

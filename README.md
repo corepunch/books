@@ -5,10 +5,12 @@ follows Mira the mouse as she gathers three stars from the floor, desk and
 window sill of one attic. The story state, locations, inventory, choices and
 prose all live in C. There is no ZIL or Lua runtime.
 
-The app displays pre-rendered JPEG illustrations. `books/three-stars/rooms/attic.blks`
-stores camera and named-anchor metadata used to place story text and interaction
-circles over each image. Tap a circle to collect a star or travel along the book
-and postcard steps. The lower-right button continues after an action.
+The app displays finished PNG illustrations from `books/three-stars/illustrations/`.
+Collectible stars use transparent layers extracted from the matching painted
+scene; after collection, the page uses its clean PNG plate. The matching JPG
+camera renders and `attic.blks` source remain in `books/three-stars/rooms/` for
+camera and anchor references. Tap a circle to collect a star or travel along the
+book and postcard steps. The lower-right button continues after an action.
 
 ## Build and launch
 
@@ -26,15 +28,18 @@ make ipad-mac
 
 `make ipad` builds an unsigned iPad app. `make ipad-deploy DEVICE="iPad name or UDID"`
 installs it on a paired device. iPad builds use the installed Xcode SDK and
-`actool`; the Lua interpreter and its source are not part of either target.
+`actool`; the Lua interpreter and its source are not part of either target. Set
+`BOOK` to choose which C book is compiled, for example
+`make ipad-deploy BOOK=three-stars DEVICE="iPad name or UDID"`.
 
-The Mac executable is `build/book`. It reads art from the checkout and opens a
-fixed-size AppKit window. The iPad app uses UIKit and Metal, supports landscape
-orientations, and keeps progress in memory until the app closes.
+The Mac executable is `build/three-stars/book` for the default book. It reads
+art from the checkout and opens a fixed-size AppKit window. The iPad app uses
+UIKit and Metal, supports landscape orientations, and keeps progress in memory
+until the app closes.
 
 ## Headless interface
 
-`build/book --headless` prints a JSON snapshot for each page. It accepts
+`build/three-stars/book --headless` prints a JSON snapshot for each page. It accepts
 `:choose N`, `:tap X Y`, `:continue`, `:back`, and `:reload`; `N` is a zero-based
 choice index and tap coordinates are logical pixels in the 1100 × 800 viewport.
 Snapshots include explicit choice kinds and the controls used by drawing and hit
@@ -46,20 +51,26 @@ Continue label; it requires access to Metal and the window server.
 
 ## Extending the adventure
 
-`book.c` owns mutable story state and publishes a read-only `BookPage` through
-`book_page()`. A page has one kind: room, intermediate (`PAGE_BEAT`), or ending.
-Each choice has an explicit kind: object action or Continue. Consumers must use
-these kinds, rather than infer behavior from labels, command strings or flags.
+Each book is implemented by one C file in `books/`, such as
+`books/three-stars.c`. The selected source owns mutable story state and
+publishes a read-only `BookPage` through `book_page()`. It defines
+`book_name()` to match its filename. `src/book.h` declares this interface along
+with the shared engine modules. A page has one kind: room, intermediate
+(`PAGE_BEAT`), or ending. Each choice has an explicit kind: object action or
+Continue. Consumers must use these kinds, rather than infer behavior from
+labels, command strings or flags.
 
-To add an action:
+To add another book, add `books/<name>.c` and its runtime assets under
+`books/<name>/`, then build with `BOOK=<name>`. To add an action to an existing
+book:
 
 1. Register its object in `book_init()` and add its room choice in
    `add_room_choices()` using `append_choice(object_choice(...))`.
 2. Handle it in `perform()`, updating private story state and selecting the
    response prose and camera. The existing `show_beat()` call supplies Continue
    automatically. Use `finish_story()` for a terminal response.
-3. Add the matching JPEG and camera/anchor metadata. Only object anchors that
-   project into the current camera become circles.
+3. Add a reference JPEG, its finished PNG, and camera/anchor metadata. Only
+   object anchors that project into the current camera become circles.
 4. Extend `tests/test_book.py` with the route and use `continue_page()` to tap the
    actual Continue control. Run `make check`; for display changes also run
    `make check-ui` and inspect a smoke capture.
@@ -82,24 +93,27 @@ switches as errors so those sites are identified by the compiler.
 ## Source layout
 
 ```text
-src/book.c                     C adventure state, story data and actions
+books/three-stars.c            Three Stars story state, data and actions
 src/page.c                     shared page layout, control bounds and hit testing
 src/ui.c                       rendering, retained page views and transitions
 src/headless.c                 JSON snapshots for the headless interface
 src/scene.c                    camera, text-region and anchor projection
-src/renderer.c                 JPEG decoding and image cache
+src/renderer.c                 raster image decoding and image cache
 src/text.c                     font loading and text layout
 src/metal.m                    Metal drawing and screenshot readback
 src/macos.m                    AppKit application and window
 src/ipad.m                     UIKit app and touch input
 src/book.h                     shared declarations and geometry
-books/three-stars/rooms/       story JPEGs and attic camera/anchor metadata
+books/<name>.c                 one compile-time C implementation per book
+books/three-stars/rooms/       camera-reference JPEGs and attic metadata
+books/three-stars/illustrations/ finished story art and aligned star cutouts
 fonts/                         shared application assets
 vendor/                        stb image and font headers
 platform/ipad/                 direct SDK build and app packaging
 assets/                        app icon and Back button
 ```
 
-Each camera has a matching JPEG. Camera names select action frames, and named
-anchors in the `.blks` source locate the tappable objects and routes. The images
-and `.blks` metadata describe the same attic from multiple views.
+Each camera has a matching reference JPEG. Camera names select projection
+metadata, illustration names select finished PNGs, and named anchors in the
+`.blks` source locate tappable objects and routes. The images and `.blks`
+metadata describe the same attic from multiple views.

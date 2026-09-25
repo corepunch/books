@@ -25,7 +25,7 @@ enum {
 static struct {
     unsigned int inventory;
     int room;
-    filePath_t root, rooms;
+    filePath_t root, rooms, illustrations;
     struct Object objects[MAX_OBJECTS];
 } game;
 
@@ -70,14 +70,30 @@ static const char *room_text(int room)
     }
 }
 
-static void select_image(struct BookPage *page, const char *camera)
+static void select_image(struct BookPage *page, const char *camera, const char *illustration)
 {
     page->image[0] = 0;
+    page->overlay[0] = 0;
     copy(page->camera, sizeof(page->camera), camera);
     filePath_t path;
-    int length = snprintf(path, sizeof(path), "%s/%s.jpg", game.rooms, camera);
+    int length = snprintf(path, sizeof(path), "%s/%s.png", game.illustrations, illustration);
     if (length < 0 || (size_t)length >= sizeof(path)) fail("illustration path is too long");
+    if (!access(path, R_OK)) {
+        copy(page->image, sizeof(page->image), path);
+        return;
+    }
+    length = snprintf(path, sizeof(path), "%s/%s.jpg", game.rooms, illustration);
+    if (length < 0 || (size_t)length >= sizeof(path)) fail("reference image path is too long");
     if (!access(path, R_OK)) copy(page->image, sizeof(page->image), path);
+}
+
+static void select_overlay(struct BookPage *page, const char *item)
+{
+    filePath_t path;
+    int length = snprintf(path, sizeof(path), "%s/items/%s.png", game.illustrations, item);
+    if (length < 0 || (size_t)length >= sizeof(path)) fail("item layer path is too long");
+    if (access(path, R_OK)) fail("cannot read item layer: %s", path);
+    copy(page->overlay, sizeof(page->overlay), path);
 }
 
 static struct Choice object_choice(int object, const char *label, const char *command)
@@ -101,13 +117,13 @@ static void append_choice(struct Choice choice)
     draft.choices[draft.choice_count++] = choice;
 }
 
-static void begin_page(enum PageKind kind, const char *text, const char *camera)
+static void begin_page(enum PageKind kind, const char *text, const char *camera, const char *illustration)
 {
     memset(&draft, 0, sizeof(draft));
     draft.kind = kind;
     draft.room = game.room;
     copy(draft.text, sizeof(draft.text), text);
-    select_image(&draft, camera);
+    select_image(&draft, camera, illustration);
 }
 
 static void publish_page(void)
@@ -116,6 +132,7 @@ static void publish_page(void)
         fail("page has no valid room");
     if (!*draft.text || !*draft.camera) fail("page must have prose and a camera");
     if (draft.choice_count < 0 || draft.choice_count > MAX_CHOICES) fail("invalid choice count");
+    if (*draft.overlay && draft.kind != PAGE_ROOM) fail("item layers belong only to room pages");
     switch (draft.kind) {
     case PAGE_ROOM:
         if (!draft.choice_count) fail("room page has no actions");
@@ -174,12 +191,22 @@ static void add_room_choices(void)
 
 static void show_room(void)
 {
-    const char *camera = game.room == ROOM_FLOOR
-        ? ((game.inventory & STAR_BRASS) ? "floor-show-cleared-room" : "floor-show-room")
-        : game.room == ROOM_TABLE
-            ? ((game.inventory & STAR_COPPER) ? "table-show-cleared-desk" : "table-show-desk")
-            : "sill-show-window";
-    begin_page(PAGE_ROOM, room_text(game.room), camera);
+    const char *camera, *illustration, *item_layer = NULL;
+    if (game.room == ROOM_FLOOR) {
+        camera = (game.inventory & STAR_BRASS) ? "floor-show-cleared-room" : "floor-show-room";
+        illustration = "floor-show-cleared-room";
+        if (!(game.inventory & STAR_BRASS)) item_layer = "brass-star-floor-show-room";
+    } else if (game.room == ROOM_TABLE) {
+        camera = (game.inventory & STAR_COPPER) ? "table-show-cleared-desk" : "table-show-desk";
+        illustration = "table-show-cleared-desk";
+        if (!(game.inventory & STAR_COPPER)) item_layer = "copper-star-table-show-desk";
+    } else {
+        camera = "sill-show-window";
+        illustration = "sill-show-cleared-window";
+        if (!(game.inventory & STAR_PEARL)) item_layer = "pearl-star-sill-show-window";
+    }
+    begin_page(PAGE_ROOM, room_text(game.room), camera, illustration);
+    if (item_layer) select_overlay(&draft, item_layer);
     add_room_choices();
     publish_page();
 }
@@ -187,7 +214,7 @@ static void show_room(void)
 /* Story actions call this constructor; they never need to remember navigation. */
 static void show_beat(const char *text, const char *camera)
 {
-    begin_page(PAGE_BEAT, text, camera);
+    begin_page(PAGE_BEAT, text, camera, camera);
     append_choice(continue_choice());
     publish_page();
 }
@@ -196,7 +223,7 @@ static void finish_story(void)
 {
     begin_page(PAGE_ENDED,
         "Мира возвращает все три звёздочки на бумажное созвездие. Чердак снова становится тихим, а над гнездом сияет маленькая карта неба.",
-        "attic-return-stars");
+        "attic-return-stars", "attic-return-stars");
     publish_page();
 }
 
@@ -248,20 +275,26 @@ static bool perform(int object)
     default: return false;
     }
 
-    if (game.inventory == ALL_STARS) finish_story();
-    else show_beat(text, camera);
+    show_beat(text, camera);
     return true;
 }
 
-void book_init(const char *root, const char *adventure)
+const char *book_name(void)
 {
-    (void)adventure;
+    return "three-stars";
+}
+
+void book_init(const char *root)
+{
     memset(&current, 0, sizeof(current));
     memset(&draft, 0, sizeof(draft));
     memset(&game, 0, sizeof(game));
     if (!realpath(root, game.root)) fail("cannot resolve asset root: %s", root);
-    int length = snprintf(game.rooms, sizeof(game.rooms), "%s/books/three-stars/rooms", game.root);
+    int length = snprintf(game.rooms, sizeof(game.rooms), "%s/books/%s/rooms", game.root, book_name());
     if (length < 0 || (size_t)length >= sizeof(game.rooms)) fail("adventure path is too long");
+    length = snprintf(game.illustrations, sizeof(game.illustrations),
+                      "%s/books/%s/illustrations", game.root, book_name());
+    if (length < 0 || (size_t)length >= sizeof(game.illustrations)) fail("illustration path is too long");
     game.room = ROOM_FLOOR;
     set_object(ROOM_FLOOR, "attic-floor", room_name(ROOM_FLOOR), "Чердачный пол");
     set_object(ROOM_TABLE, "writing-desk", room_name(ROOM_TABLE), "Письменный стол");
@@ -316,7 +349,10 @@ bool book_action(int index)
     const struct Choice choice = current.choices[index];
     switch (choice.kind) {
     case CHOICE_OBJECT: return perform(choice.object);
-    case CHOICE_CONTINUE: show_room(); return true;
+    case CHOICE_CONTINUE:
+        if (game.inventory == ALL_STARS) finish_story();
+        else show_room();
+        return true;
     case CHOICE_INVALID: break;
     }
     fail("cannot execute choice kind %d", choice.kind);
@@ -373,7 +409,7 @@ void book_reload(void)
     if (current.kind == PAGE_ROOM) show_room();
     else {
         draft = current;
-        select_image(&draft, current.camera);
+        select_image(&draft, current.camera, current.camera);
         publish_page();
     }
 }

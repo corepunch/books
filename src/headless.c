@@ -26,6 +26,7 @@ static void dump(void)
     printf(",\"focus\":\"\""); /* Compatibility with earlier snapshots. */
     printf(",\"kind\":"); json_string(book_page_kind_name(page->kind));
     printf(",\"image\":"); json_string(page->image);
+    printf(",\"overlay\":"); json_string(page->overlay);
     printf(",\"text\":"); json_string(page->text);
     printf(",\"choices\":[");
     for (int i = 0; i < page->choice_count; ++i) {
@@ -38,7 +39,7 @@ static void dump(void)
     isize2_t image = isize2(0, 0);
     int channels = 0;
     if (*page->image && !stbi_info(page->image, &image.width, &image.height, &channels))
-        fail("cannot inspect JPEG: %s", page->image);
+        fail("cannot inspect image: %s", page->image);
     page_layout(page, image, fsize2(UI_WIDTH, UI_HEIGHT), &layout);
     printf("],\"hotspots\":[");
     for (int i = 0; i < layout.spot_count; ++i) {

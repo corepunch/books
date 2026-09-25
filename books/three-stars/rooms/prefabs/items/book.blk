@@ -1,0 +1,8 @@
+<prefab>
+  <attach name="base" pos="0 0 0" />
+  <box pos="0 2.15 0" size="36 3.7 26" material="book_pages" />
+  <box pos="0 0.15 0" size="38 0.3 28" color="0.48 0.16 0.12" tint="1" />
+  <box pos="0 4.15 0" size="38 0.3 28" color="0.48 0.16 0.12" tint="1" />
+  <box pos="-18.5 2.15 0" size="0.6 3.7 27" color="0.48 0.16 0.12" tint="1" />
+  <box pos="0 4.31 12" size="25 0.02 0.25" material="book_gilt" />
+</prefab>

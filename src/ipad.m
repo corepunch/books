@@ -43,8 +43,7 @@
         [self.page.bottomAnchor constraintEqualToAnchor:safe.bottomAnchor]
     ]];
     self.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-    NSString *adventure = [NSBundle.mainBundle objectForInfoDictionaryKey:@"BookAdventure"];
-    book_init(NSBundle.mainBundle.resourcePath.fileSystemRepresentation, adventure.UTF8String);
+    book_init(NSBundle.mainBundle.resourcePath.fileSystemRepresentation);
     if (!renderer_init((__bridge void *)self.page.layer)) fail("cannot initialize Metal");
     ui_init();
     self.initialized = YES;

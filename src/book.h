@@ -121,12 +121,14 @@ struct BookPage {
     enum PageKind kind;
     struct Choice choices[MAX_CHOICES];
     int choice_count, room;
-    filePath_t image;
+    filePath_t image, overlay;
     assetName_t camera;
     storyText_t text;
 };
 
-void book_init(const char *root, const char *adventure);
+/* Each build links one books/<name>.c implementation. */
+const char *book_name(void);
+void book_init(const char *root);
 void book_shutdown(void);
 /* Borrowed until the next accepted action/reload. Copy to retain an outgoing page. */
 const struct BookPage *book_page(void);
@@ -164,7 +166,7 @@ void renderer_reveal_end(void);
 void renderer_opacity(float opacity);
 isize2_t renderer_image_size(const char *path);
 bool renderer_image(const char *path, frect_t bounds);
-/* Drop the path cache so the next draw reloads a replaced JPEG. */
+/* Drop the path cache so the next draw reloads replaced raster artwork. */
 void renderer_invalidate_image(void);
 
 /* Shared only by the renderer and text rasterizer. */

@@ -51,7 +51,8 @@ static void navigate(int action, fvec2_t origin, float radius)
     /* Resolve and upload the new page before the animation clock starts. */
     capture_page(&current_page);
     transition_start(&transition, now(), origin, window_size(), radius,
-                     strcmp(outgoing_page.content.image, current_page.content.image) != 0);
+                     strcmp(outgoing_page.content.image, current_page.content.image) != 0 ||
+                     strcmp(outgoing_page.content.overlay, current_page.content.overlay) != 0);
     preview_time = -1;
 }
 
@@ -68,6 +69,18 @@ static void draw_image(const char *path,frect_t viewport)
         if (isize2_is_empty(image)) fail("cannot decode %s",path);
         renderer_image(path,frect_cover(isize2_to_float(image),viewport));
     } else renderer_rect(viewport,0x211C18FF);
+}
+
+static void draw_page_image(const struct PageView *view, frect_t viewport)
+{
+    draw_image(view->content.image, viewport);
+    if (!*view->content.overlay) return;
+    isize2_t image = renderer_image_size(view->content.image);
+    isize2_t overlay = renderer_image_size(view->content.overlay);
+    if (isize2_is_empty(overlay)) fail("cannot decode %s", view->content.overlay);
+    if (overlay.width != image.width || overlay.height != image.height)
+        fail("item layer canvas does not match %s", view->content.image);
+    renderer_image(view->content.overlay, frect_cover(isize2_to_float(image), viewport));
 }
 
 static void draw_continue(const struct PageControl *control, const char *label)
@@ -129,11 +142,11 @@ void ui_draw(void)
     if (frame.revealing) {
         if (outgoing_page.viewport.width!=window.width || outgoing_page.viewport.height!=window.height)
             layout_view(&outgoing_page,window);
-        draw_image(outgoing_page.content.image,viewport);
+        draw_page_image(&outgoing_page,viewport);
         draw_overlays(&outgoing_page);
         renderer_reveal_begin(frame.center,frame.radius);
     }
-    draw_image(current_page.content.image,viewport);
+    draw_page_image(&current_page,viewport);
     renderer_reveal_end();
     /* Same-art responses crossfade their overlays without an empty-text frame. */
     if (frame.active && !transition.reveal) {
