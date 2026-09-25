@@ -7,6 +7,7 @@ carries the scene, the text carries the story.
 ## Inputs
 
 - `DESIGN.md`, `work/STORY_MAP.md`, `work/ROOMS.md`, `work/SHOTS.md`
+- [CRAFT.md](CRAFT.md) §4, §6, §10, §12
 
 ## Required actions
 
@@ -32,15 +33,26 @@ carries the scene, the text carries the story.
    happens", no counts or scores. If a choice is not possible, do not offer
    it. Carried things appear in the text only when they matter ("the key she
    found in the nest fits").
-7. **Concrete and sensory.** Use one sense detail per page where it helps (the
-   cold sill, the smell of ink). Show feelings through action rather than
-   labels.
-8. **Voice and tone.** Keep the point of view from `DESIGN.md`, the vocabulary
-   of the audience, and the tonal contrast (something funny, beautiful and
-   warm early on).
-9. **Endings.** Refer back to at least two things the reader discovered or
-   chose, resolve the goal, and hint at what comes next.
-10. **Read aloud.** Read every passage aloud. Rewrite anything that trips the
+7. **Clues in words.** Every clue the story map relies on appears in the text
+   at least once, even when the picture also shows it, so a reader who misses
+   a painted detail can still reason it out. Give clues naturally, as
+   something the hero notices, never as an instruction.
+8. **Paths remembered.** On pages where branches rejoin, add a phrase that
+   reflects the path taken (from `SHOTS.md`), and on revisits after a
+   threshold, say what has changed.
+9. **Dialogue.** Keep spoken lines short, in quotation marks, and attributed
+   ("“Up there!” hoots the owl."). One speaker per page where possible.
+10. **Playful outcomes.** Funny choices get a short, warm payoff that returns
+    the hero, not a telling-off.
+11. **Concrete and sensory.** Use one sense detail per page where it helps (the
+    cold sill, the smell of ink). Show feelings through action rather than
+    labels.
+12. **Voice and tone.** Keep the point of view from `DESIGN.md`, the vocabulary
+    of the audience, and the tonal contrast (something funny, beautiful and
+    warm early on).
+13. **Endings.** Refer back to at least two things the reader discovered or
+    chose, resolve the goal, and hint at what comes next.
+14. **Read aloud.** Read every passage aloud. Rewrite anything that trips the
     tongue or needs a second reading.
 
 ## Output
@@ -52,6 +64,7 @@ labels, including every fact-dependent variant.
 
 - Every page and every fact variant has text.
 - Every room page's text names or implies each choice's anchor.
+- Every clue appears in text at least once before the choice that needs it.
 - No passage shows a mechanic, an inventory, or a failure message.
 - Passages fit their text zones and read smoothly aloud.
 - The ending recalls specific discoveries or choices.
