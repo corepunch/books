@@ -14,6 +14,14 @@ typedefs in `src/book.h` and use them for fields and locals. Use `fvec2_t` /
 Prefer value-returning geometry helpers for offsets, scaling, crops, clipping
 and hit tests; pass structs instead of separate coordinate components.
 
+## Writing a book
+
+To create a new illustrated adventure book, follow the staged guide in
+[authoring/README.md](authoring/README.md): premise, story map, room bible,
+characters, shot list, page text, 3D blockout, implementation, illustration and
+review, one stage at a time. Books have no inventory; they remember a few story
+facts that later pages check.
+
 ## Runtime
 
 - The C adventure owns all game state, text, rooms, objects and actions.

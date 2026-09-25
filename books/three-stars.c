@@ -17,13 +17,13 @@ enum {
     OBJECT_PEARL_STAR
 };
 
-#define STAR_BRASS (1u << 0)
-#define STAR_COPPER (1u << 1)
-#define STAR_PEARL (1u << 2)
-#define ALL_STARS (STAR_BRASS | STAR_COPPER | STAR_PEARL)
+#define FOUND_BRASS_STAR (1u << 0)
+#define FOUND_COPPER_STAR (1u << 1)
+#define FOUND_PEARL_STAR (1u << 2)
+#define FOUND_ALL_STARS (FOUND_BRASS_STAR | FOUND_COPPER_STAR | FOUND_PEARL_STAR)
 
 static struct {
-    unsigned int inventory;
+    unsigned int facts; /* Story facts that later pages check; there is no inventory. */
     int room;
     filePath_t root, rooms, illustrations;
     struct Object objects[MAX_OBJECTS];
@@ -55,15 +55,15 @@ static const char *room_text(int room)
 {
     switch (room) {
     case ROOM_FLOOR:
-        return (game.inventory & STAR_BRASS)
+        return (game.facts & FOUND_BRASS_STAR)
             ? "Латунная звёздочка уже у Миры. Над корзинкой ждёт бумажное созвездие, а у стола стоит бабушкин стул."
             : "Сквозняк сорвал три звёздочки с бумажного созвездия над корзинкой Миры. Одна лежит на полу, а до стола можно допрыгнуть через стул.";
     case ROOM_TABLE:
-        return (game.inventory & STAR_COPPER)
+        return (game.facts & FOUND_COPPER_STAR)
             ? "Мира уже забрала медную звёздочку. Среди писем остался карандаш, а прямо над столом — подоконник."
             : "Среди бабушкиных писем поблёскивает медная звёздочка. Вниз ведёт стул, а над столом — подоконник.";
     case ROOM_SILL:
-        return (game.inventory & STAR_PEARL)
+        return (game.facts & FOUND_PEARL_STAR)
             ? "На подоконнике больше нет звёздочки. Внизу письменный стол, а за окном лежит тихая ночь."
             : "На подоконнике, у цветочного горшка, светится последняя звёздочка. За окном тихая ночь.";
     default: return "";
@@ -178,18 +178,18 @@ static void add_room_choices(void)
 {
     switch (game.room) {
     case ROOM_FLOOR:
-        if (!(game.inventory & STAR_BRASS))
+        if (!(game.facts & FOUND_BRASS_STAR))
             append_choice(object_choice(OBJECT_BRASS_STAR, "Поднять латунную звёздочку", "take brass-star"));
         append_choice(object_choice(OBJECT_CHAIR, "Запрыгнуть на стол через стул", "go table"));
         break;
     case ROOM_TABLE:
-        if (!(game.inventory & STAR_COPPER))
+        if (!(game.facts & FOUND_COPPER_STAR))
             append_choice(object_choice(OBJECT_COPPER_STAR, "Поднять медную звёздочку", "take copper-star"));
         append_choice(object_choice(OBJECT_CHAIR, "Спрыгнуть на пол через стул", "go floor"));
         append_choice(object_choice(OBJECT_SILL_LEDGE, "Запрыгнуть на подоконник", "go sill"));
         break;
     case ROOM_SILL:
-        if (!(game.inventory & STAR_PEARL))
+        if (!(game.facts & FOUND_PEARL_STAR))
             append_choice(object_choice(OBJECT_PEARL_STAR, "Поднять светлую звёздочку", "take pearl-star"));
         append_choice(object_choice(OBJECT_SILL_LEDGE, "Спрыгнуть на стол", "go table"));
         break;
@@ -201,17 +201,17 @@ static void show_room(void)
 {
     const char *camera, *illustration, *item_layer = NULL;
     if (game.room == ROOM_FLOOR) {
-        camera = (game.inventory & STAR_BRASS) ? "floor-show-cleared-room" : "floor-show-room";
+        camera = (game.facts & FOUND_BRASS_STAR) ? "floor-show-cleared-room" : "floor-show-room";
         illustration = "floor-show-cleared-room";
-        if (!(game.inventory & STAR_BRASS)) item_layer = "brass-star-floor-show-room";
+        if (!(game.facts & FOUND_BRASS_STAR)) item_layer = "brass-star-floor-show-room";
     } else if (game.room == ROOM_TABLE) {
-        camera = (game.inventory & STAR_COPPER) ? "table-show-cleared-desk" : "table-show-desk";
+        camera = (game.facts & FOUND_COPPER_STAR) ? "table-show-cleared-desk" : "table-show-desk";
         illustration = "table-show-cleared-desk";
-        if (!(game.inventory & STAR_COPPER)) item_layer = "copper-star-table-show-desk";
+        if (!(game.facts & FOUND_COPPER_STAR)) item_layer = "copper-star-table-show-desk";
     } else {
-        camera = (game.inventory & STAR_PEARL) ? "sill-show-cleared-window" : "sill-show-window";
+        camera = (game.facts & FOUND_PEARL_STAR) ? "sill-show-cleared-window" : "sill-show-window";
         illustration = "sill-show-cleared-window";
-        if (!(game.inventory & STAR_PEARL)) item_layer = "pearl-star-sill-show-window";
+        if (!(game.facts & FOUND_PEARL_STAR)) item_layer = "pearl-star-sill-show-window";
     }
     /* Until a clean painted plate and its item layer exist, show the camera's own render. */
     assetName_t layer;
@@ -248,20 +248,20 @@ static bool perform(int object)
     const char *text, *camera;
     switch (object) {
     case OBJECT_BRASS_STAR:
-        if (game.room != ROOM_FLOOR || game.inventory & STAR_BRASS) return false;
-        game.inventory |= STAR_BRASS;
+        if (game.room != ROOM_FLOOR || game.facts & FOUND_BRASS_STAR) return false;
+        game.facts |= FOUND_BRASS_STAR;
         text = "Мира осторожно трогает лапкой латунную звёздочку и берёт её в зубки.";
         camera = "floor-take-gold-star";
         break;
     case OBJECT_COPPER_STAR:
-        if (game.room != ROOM_TABLE || game.inventory & STAR_COPPER) return false;
-        game.inventory |= STAR_COPPER;
+        if (game.room != ROOM_TABLE || game.facts & FOUND_COPPER_STAR) return false;
+        game.facts |= FOUND_COPPER_STAR;
         text = "Мира находит медную звёздочку между письмами и бережно берёт её.";
         camera = "table-take-copper-star";
         break;
     case OBJECT_PEARL_STAR:
-        if (game.room != ROOM_SILL || game.inventory & STAR_PEARL) return false;
-        game.inventory |= STAR_PEARL;
+        if (game.room != ROOM_SILL || game.facts & FOUND_PEARL_STAR) return false;
+        game.facts |= FOUND_PEARL_STAR;
         text = "Мира достаёт последнюю звёздочку у самого окна.";
         camera = "sill-take-pearl-star";
         break;
@@ -365,7 +365,7 @@ bool book_action(int index)
     switch (choice.kind) {
     case CHOICE_OBJECT: return perform(choice.object);
     case CHOICE_CONTINUE:
-        if (game.inventory == ALL_STARS) finish_story();
+        if (game.facts == FOUND_ALL_STARS) finish_story();
         else show_room();
         return true;
     case CHOICE_INVALID: break;
@@ -393,26 +393,6 @@ bool book_choose_object(const char *key)
 bool book_command(const char *input)
 {
     if (!input || !*input || current.kind == PAGE_ENDED) return false;
-    if (!strcmp(input, "inventory")) {
-        /* Diagnostic prose preserves the current page's typed actions. */
-        draft = current;
-        size_t used = (size_t)snprintf(draft.text, sizeof(draft.text), "У Миры: ");
-        if (!game.inventory) snprintf(draft.text + used, sizeof(draft.text) - used, "пока нет звёздочек.");
-        else {
-            bool first = true;
-            const struct { unsigned int bit; const char *name; } names[] = {
-                {STAR_BRASS, "латунная звёздочка"}, {STAR_COPPER, "медная звёздочка"}, {STAR_PEARL, "светлая звёздочка"}
-            };
-            for (size_t i = 0; i < sizeof(names) / sizeof(names[0]); ++i) if (game.inventory & names[i].bit) {
-                int n = snprintf(draft.text + used, sizeof(draft.text) - used,
-                                 "%s%s", first ? "" : ", ", names[i].name);
-                if (n > 0) used += (size_t)n;
-                first = false;
-            }
-        }
-        publish_page();
-        return true;
-    }
     for (int i = 0; i < current.choice_count; ++i)
         if (*current.choices[i].command && !strcmp(input, current.choices[i].command))
             return book_action(i);

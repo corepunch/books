@@ -2,7 +2,7 @@
 
 Book is a native C adventure app. Its built-in story, **Три звёздочки для карты**,
 follows Mira the kitten as she gathers three stars from the floor, desk and
-window sill of one attic. The story state, locations, inventory, choices and
+window sill of one attic. The story facts, locations, choices and
 prose all live in C. There is no ZIL or Lua runtime.
 
 The app displays finished PNG illustrations from `books/three-stars/illustrations/`
