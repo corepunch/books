@@ -11,8 +11,8 @@ Decide what book is being made before any map, model or text exists.
 ## Required actions
 
 1. **One-sentence premise.** Who the hero is, what they want, and what stands
-   in the way. "Mira the kitten must gather three stars scattered around the
-   attic before morning."
+   in the way. "Mira the kitten wants to sleep in the moonlight on the dresser,
+   but a moonbeam cannot be caught by pouncing."
 2. **High concept and reader fantasy.** One sentence on what the reader feels
    they are doing, naming what is special about this book (CRAFT §2):
    exploring a giant's house as a kitten, guiding a dragon who melts ice.
@@ -39,7 +39,7 @@ Decide what book is being made before any map, model or text exists.
    endings.
 9. **Structure.** Choose one and say why:
    - *Hub*: the hero moves between a few locations in any order, and facts
-     decide what each page offers (Three Stars).
+     decide what each page offers (`books/moon-spot`).
    - *Branch and bottleneck*: branches that rejoin at key scenes, the usual
      Zork-book shape.
    - *Gauntlet*: one main line with short side branches that end or return.
@@ -57,7 +57,7 @@ Decide what book is being made before any map, model or text exists.
 
 `books/<name>/DESIGN.md` with sections: Premise, High concept, Audience, Tone,
 Hero, Setting and time, Acts, Size and budget, Structure, Goal and endings,
-Opening page, Contrast and secrets, Exclusions. The Three Stars `DESIGN.md` is
+Opening page, Contrast and secrets, Exclusions. `books/moon-spot/DESIGN.md` is
 a working example of several of these.
 
 ## Acceptance checks
@@ -66,8 +66,8 @@ a working example of several of these.
   aloud; the concept is more than "collect the things", and the plot does not
   depend on picking up and carrying items.
 - The audience is specific enough to judge vocabulary and danger.
-- The good ending is concrete and testable ("all three stars are in the
-  basket"), not a mood.
+- The good ending is concrete and testable ("Mira is asleep in the moon-spot"),
+  not a mood.
 - Each act has a threshold and a planned change to the world.
 - The painting budget is written down and matches the planned page count.
 - Nothing in the design needs an inventory, typed commands or a mechanic the

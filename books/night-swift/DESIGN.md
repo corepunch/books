@@ -45,7 +45,7 @@ Supporting characters:
 
 ## Setting and time
 
-Grandmother's attic study (the Three Stars attic blockout), from about three
+Grandmother's attic study, from about three
 in the morning until first light. Light moves from warm lamplight and cold
 moonlight to the pale blue of dawn in the last act, so the colour script
 follows the clock.

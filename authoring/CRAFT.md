@@ -23,10 +23,9 @@ the same feeling.
 The pitch must name a fantasy of play, not just a quest: "a kitten crossing a
 giant's attic in the dark", "guiding a baby dragon who melts ice at the worst
 moments", "a detective who solves the case by noticing". Do not build the
-story around picking up and carrying things. Goals are about reaching a
-place, helping someone, finding out the truth, escaping, or deciding who to
-trust. When the hero does take something, it is one story moment that a later
-page remembers as a fact, never a collection.
+story around picking up and carrying things. The hero does not take objects
+or keep them. Goals are about reaching a place, helping someone, finding out
+the truth, escaping, or deciding who to trust.
 
 ## 3. Challenges are the memory engine
 

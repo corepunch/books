@@ -7,7 +7,8 @@ import sys
 import tempfile
 
 binary, root = map(lambda value: str(Path(value).resolve()), sys.argv[1:3])
-args = [binary, '--root', root, '--book', 'three-stars']
+book = sys.argv[3] if len(sys.argv) > 3 else 'moon-spot'
+args = [binary, '--root', root, '--book', book]
 page = json.loads(subprocess.check_output(args + ['--check'], text=True))
 origin = page['hotspots'][0]
 route = subprocess.check_output(args + ['--headless'], input=f":choose {origin['choice']}\n", text=True)

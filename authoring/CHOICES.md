@@ -56,8 +56,8 @@ So a decision page has:
 1. **Set them up in the text.** Every option's object or direction is named or
    clearly implied in the passage before it appears as a caption. End the
    passage on the dilemma, as a thought, a question from a character, or the
-   situation itself ("The chair stands right by the desk, and the star glints
-   by the basket.").
+   situation itself ("The stool stands by the table, and the moon-spot trembles
+   on the dresser.").
 2. **Two or three options.** One is not a choice; four crowds the picture.
 3. **Short questions, like Krill.** Write each caption as a short question
    about an action: "Take the dirt trail?", "Follow the owl?", "Jump onto the
@@ -103,7 +103,7 @@ Placement rules:
 
 In the book's C file:
 
-1. Register the anchor object with `set_object(OBJECT_…, "key", …)`. The key
+1. Register the anchor object with `set_object(OBJECT_…, "key")`. The key
    matches the scene's anchor group name (lowercase, `_` becomes `-`), so the
    `Chair` group is the `chair` key.
 2. On the room page, add the option with
@@ -118,7 +118,7 @@ In the book's C file:
 ## Checking options
 
 - Headless output lists each circle control with its `label` and its
-  `caption` rectangle. `tests/test_book.py` checks that captions stay on the
+  `caption` rectangle. `tests/headless_book.py` checks that captions stay on the
   page and never overlap the text, other circles or other captions.
 - Read each decision page in the app: every option's object is visible, every
   caption is readable against the art, and the reader could explain why they

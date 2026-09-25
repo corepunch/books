@@ -18,9 +18,9 @@ book through the headless interface.
 2. **Locations and objects.** Register each location and each chosen thing
    (story objects and route anchors) with `set_object()`. Object keys must
    match the anchor group names in the scene (lowercased, `_` becomes `-`).
-3. **Facts.** Keep story state as named facts (`FOUND_BRASS_STAR`), set by
+3. **Facts.** Keep story state as named facts (`MIRROR_TURNED`), set by
    the page that establishes them and checked by later pages. There is no
-   inventory structure and no inventory command.
+   inventory structure, no carried object, and no inventory command.
 4. **Pages.** Build room pages in `show_room()` with the text and camera for
    the current facts, beat pages with `show_beat()`, and endings with
    `finish_story()`. Offer only possible choices; never publish a "you can't"
@@ -31,10 +31,10 @@ book through the headless interface.
    `illustrations/<camera>.png` when it exists, otherwise the camera's render,
    so the book is readable before painting. Never draw objects on top of a
    page picture; a changed state is another camera.
-7. **Tests.** Add `tests/test_<name>.py`, modelled on `tests/test_book.py`, that
+7. **Tests.** Add `tests/test_<name>.py`, modelled on `tests/test_moon-spot.py`, that
    walks the golden path and every alternative route, taps the published
-   Continue control, and reaches every ending. Make `make check` run the test
-   for the selected `BOOK` (it currently runs the Three Stars test).
+   Continue control, and reaches every ending. `make check` runs
+   `tests/test_<name>.py` for the selected `BOOK`.
 8. **Walkthrough.** Write `WALKTHROUGH.md` with the golden path and the
    alternatives, as the reader would choose them.
 9. **Read it.** Build and read the book headless, one choice at a time:

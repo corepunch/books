@@ -1,0 +1,12 @@
+<!-- Grandmother's round dressing mirror on a swivel fork. Z up; weighted base 12 cm across at
+     z=0, glass centre at z=18, 27 cm tall. The glass faces local -Y; turn the instance to aim it. -->
+<prefab>
+  <cylinder pos="0 0 1" rot="90 0 0" radius="6" height="2" material="brass" />
+  <cylinder pos="0 0 5" rot="90 0 0" radius="0.9" height="6" material="brass" />
+  <box pos="0 0 8.5" size="22.4 1.2 1.2" material="brass" />
+  <box pos="-10.6 0 13.5" size="1.2 1.2 10" material="brass" />
+  <box pos="10.6 0 13.5" size="1.2 1.2 10" material="brass" />
+  <cylinder pos="0 0.4 18" radius="8.8" height="0.8" material="brass" />
+  <torus pos="0 -0.2 18" majorRadius="8.6" minorRadius="0.7" material="brass" />
+  <cylinder pos="0 -0.3 18" radius="8.1" height="0.4" material="mirror_glass" />
+</prefab>

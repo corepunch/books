@@ -6,7 +6,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#define MAX_RENDERER_IMAGES 5 /* Base and item layers for both sides of a page transition. */
+#define MAX_RENDERER_IMAGES 2 /* Both sides of a page transition stay resident. */
 
 struct PageImage {
     texture_t texture;

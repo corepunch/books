@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := run
 
 BUILD_DIR ?= build
-BOOK ?= three-stars
-SCENE ?= attic
+BOOK ?= moon-spot
+SCENE ?= kitchen
 SCENER ?= $(shell command -v scener 2>/dev/null || printf '%s/.local/bin/scener' "$$HOME")
 WIDTH ?= 1920
 HEIGHT ?= 1440
@@ -11,6 +11,11 @@ CFLAGS ?= -O2 -g
 BUILD_ROOT := $(abspath $(BUILD_DIR))
 BOOK_BUILD_ROOT := $(BUILD_ROOT)/$(BOOK)
 BOOK_SOURCE := books/$(BOOK).c
+# Each book is read by tests/test_<name>.py.
+BOOK_TEST := $(wildcard tests/test_$(BOOK).py)
+ifeq ($(BOOK_TEST),)
+$(error No test for BOOK='$(BOOK)' (expected tests/test_$(BOOK).py))
+endif
 ifeq ($(wildcard $(BOOK_SOURCE)),)
 $(error No C source for BOOK='$(BOOK)' (expected $(BOOK_SOURCE)))
 endif
@@ -72,9 +77,9 @@ check: $(BOOK_BUILD_ROOT)/book $(BOOK_BUILD_ROOT)/test_geometry $(BOOK_BUILD_ROO
 	"$(BOOK_BUILD_ROOT)/test_geometry"
 	"$(BOOK_BUILD_ROOT)/test_transition"
 	"$(BOOK_BUILD_ROOT)/test_hotspots"
-	python3 tests/test_book.py "$(BOOK_BUILD_ROOT)/book" "$(CURDIR)"
+	python3 "$(BOOK_TEST)" "$(BOOK_BUILD_ROOT)/book" "$(CURDIR)"
 check-ui: $(BOOK_BUILD_ROOT)/book
-	python3 tests/test_ui.py "$(BOOK_BUILD_ROOT)/book" "$(CURDIR)"
+	python3 tests/test_ui.py "$(BOOK_BUILD_ROOT)/book" "$(CURDIR)" "$(BOOK)"
 render:
 	python3 tools/render.py --book "$(BOOK)" --scene "$(SCENE)" --scener "$(SCENER)" --width $(WIDTH) --height $(HEIGHT)
 layout:

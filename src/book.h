@@ -83,30 +83,20 @@ void lower(char *s);
 #define MAX_CHOICES 512
 /* String capacities include the terminating null byte. */
 #define MAX_IDENTIFIER 128
-#define MAX_WORD 128
-#define MAX_NOUN 256
-#define MAX_DESCRIPTION 256
 #define MAX_CHOICE_LABEL 512
 #define MAX_COMMAND 512
 #define MAX_ASSET_NAME 512
 #define MAX_STORY_TEXT 32768
-#define MAX_NOUN_PHRASE (MAX_WORD + MAX_NOUN)
 
 typedef char filePath_t[PATH_MAX];
 typedef char identifier_t[MAX_IDENTIFIER];
-typedef char word_t[MAX_WORD];
-typedef char noun_t[MAX_NOUN];
-typedef char description_t[MAX_DESCRIPTION];
 typedef char choiceLabel_t[MAX_CHOICE_LABEL];
 typedef char command_t[MAX_COMMAND];
 typedef char assetName_t[MAX_ASSET_NAME];
 typedef char storyText_t[MAX_STORY_TEXT];
-typedef char nounPhrase_t[MAX_NOUN_PHRASE];
 
 struct Object {
     identifier_t key;
-    noun_t noun;
-    description_t desc;
 };
 /* Zero is deliberately invalid: missing initialization must fail at publication. */
 enum PageKind { PAGE_INVALID, PAGE_ROOM, PAGE_BEAT, PAGE_ENDED };

@@ -44,10 +44,10 @@ Paths are relative to `books/<name>/` unless they start with `books/` or
   before the choice: in a picture, in the text, in what a character said.
 - **Choices are decisions, not verbs.** "Follow the music" or "Hide under the
   table" is a choice. "Take lamp" is not.
-- **No inventory.** The book remembers a few story facts, such as "Juranda
-  found the bronze key", and later pages check them. *The Forces of Krill*
-  has 128 pages and asks about only two remembered items. Show what the hero
-  carries in the pictures and the text, never as a list.
+- **No inventory and no picking things up.** The book remembers a few story
+  facts, such as whether the mirror has been turned, and later pages check
+  them. Facts stay few and change the picture or the choices. The hero never
+  collects or carries objects.
 - **One world, many cameras.** Every page is a camera in one 3D blockout. The
   blockout fixes perspective, scale, layout and light so that paintings stay
   consistent; the paintings bring the art.

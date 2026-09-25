@@ -1,8 +1,8 @@
 # Book Engine Guide
 
 Book is a native C engine for visual interactive adventures. The built-in
-adventure is “Три звёздочки для карты”; its state, objects, rooms, prose and
-actions are implemented in C under `src/`. There is no ZIL or Lua runtime.
+adventure is “Мира и лунный зайчик”; its state, objects, rooms, prose and
+actions live in `books/moon-spot.c`. There is no ZIL or Lua runtime.
 Keep module internals private and shared declarations in the single
 `src/book.h` header. Compile stb_image in `renderer.c` and stb_truetype in
 `text.c`.
@@ -19,13 +19,14 @@ and hit tests; pass structs instead of separate coordinate components.
 To create a new illustrated adventure book, follow the staged guide in
 [authoring/README.md](authoring/README.md), starting with its `CRAFT.md`:
 premise, story map, room bible, characters, shot list, page text, 3D blockout,
-implementation, illustration, packaging and review, one stage at a time. Books have no inventory; they remember a few story
-facts that later pages check.
+implementation, illustration, packaging and review, one stage at a time. Books
+have no inventory, and nothing is picked up or carried; they remember a few
+story facts that later pages check.
 
 ## Runtime
 
 - The C adventure owns all game state, text, rooms, objects and actions.
-- Keep mutable adventure state private to `book.c`. Consumers read `book_page()`;
+- Keep mutable adventure state private to the book's C file (`books/<name>.c`). Consumers read `book_page()`;
   build new pages through the private constructors and `publish_page()`. Create
   whole choice values with explicit `ChoiceKind`; never partially overwrite a
   reused choice or infer its action from text or empty strings. `show_beat()`
@@ -36,7 +37,7 @@ facts that later pages check.
   in the published page. Tests must activate the published Continue choice or
   tap its control, so they exercise the player-facing navigation path.
 - The UI discovers tappable targets from the current C page choices. Camera
-  names select the matching illustrations in `books/three-stars/rooms/`.
+  names select the matching illustrations in `books/moon-spot/rooms/`.
 - Camera and anchor metadata live in the `.blks` scene source. Keep named
   anchors aligned with the objects and routes shown in every matching image.
 - The UI is hardcoded C over Metal with UIKit for iPad and AppKit/NSWindow for
@@ -54,7 +55,7 @@ do not introduce an Xcode project.
 
 ## Artwork
 
-`books/three-stars/rooms/` holds pre-rendered JPEGs and the matching `.blks`
+`books/moon-spot/rooms/` holds pre-rendered JPEGs and the matching `.blks`
 camera/anchor source. C reads those files for hotspot projection and per-camera
 reading regions. Keep images and metadata synchronized. Scener renders are
 spatial references for finished illustrations, not final artwork. Keep camera
@@ -89,5 +90,5 @@ Run `make check` after host changes. It builds the native application and checks
 the C adventure, inferred asset names and projection without a display. For
 display changes, run a graphical smoke capture and inspect the JPEG with its
 hotspot/UI overlays. Do not rerender unchanged artwork just to test C code.
-Use `make render BOOK=three-stars SCENE=attic` for artwork changes; render and
+Use `make render BOOK=moon-spot SCENE=kitchen` for artwork changes; render and
 inspect affected cameras, keeping source and images synchronized.

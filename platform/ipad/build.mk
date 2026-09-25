@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := app
 .DELETE_ON_ERROR:
 BUILD_DIR ?= build/ipad
-BOOK ?= three-stars
+BOOK ?= moon-spot
 SDK ?= iphoneos
 ARCH ?= $(if $(filter iphoneos,$(SDK)),arm64,$(shell uname -m))
 IOS_MIN ?= 16.0

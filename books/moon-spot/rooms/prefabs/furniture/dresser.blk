@@ -1,0 +1,35 @@
+<!-- Kitchen dresser (буфет), stocked. Z up; footprint 120 x 45 cm, 200 cm tall, baseline z=0.
+     The doors face local -Y. Lower cabinet to z=85 with two doors (door fronts at y=-24),
+     worktop 85..89, recessed hutch with open shelves at z=110, 140 and 170. -->
+<prefab>
+  <attach name="top_surface" pos="0 -8 89" />
+  <box pos="0 1 4" size="116 41 8" material="dark_wood" />
+  <box pos="0 0 46.5" size="120 45 77" material="dresser_green" />
+  <box pos="-29.5 -23.25 47" size="54 1.5 70" material="dresser_green" />
+  <box pos="29.5 -23.25 47" size="54 1.5 70" material="dresser_green" />
+  <box pos="-29.5 -24.25 47" size="44 0.5 58" material="dresser_panel" />
+  <box pos="29.5 -24.25 47" size="44 0.5 58" material="dresser_panel" />
+  <sphere pos="-7 -25.5 60" radius="1.8" material="brass" />
+  <sphere pos="7 -25.5 60" radius="1.8" material="brass" />
+  <box pos="0 -1.5 87" size="124 48 4" material="pine" />
+  <box pos="0 21.5 142" size="116 2 106" material="dresser_green" />
+  <box pos="-59 8.5 142" size="2 28 106" material="dresser_green" />
+  <box pos="59 8.5 142" size="2 28 106" material="dresser_green" />
+  <box pos="0 7 197.5" size="124 34 5" material="dresser_green" />
+  <box pos="0 9.5 109" size="116 26 2" material="pine" />
+  <box pos="0 9.5 139" size="116 26 2" material="pine" />
+  <box pos="0 9.5 169" size="116 26 2" material="pine" />
+  <!-- Plates stand in the shelf grooves leaning on the back; cups sit in front of them. -->
+  <cylinder pos="-40 17 119.5" rot="-8 0 0" radius="9" height="1" material="plate" />
+  <cylinder pos="-21 17 119.5" rot="-8 0 0" radius="9" height="1" material="plate" />
+  <cylinder pos="-2 17 119.5" rot="-8 0 0" radius="9" height="1" material="plate" />
+  <cylinder pos="30 16 121" rot="-6 0 0" radius="10.5" height="1" material="plate" />
+  <cylinder pos="-44 17 148.5" rot="-8 0 0" radius="8" height="1" material="plate" />
+  <cylinder pos="-26 17 148.5" rot="-8 0 0" radius="8" height="1" material="plate" />
+  <cylinder pos="10 0 143" rot="90 0 0" radius="4" height="8" material="plate" />
+  <cylinder pos="22 3 143" rot="90 0 0" radius="4" height="8" material="plate" />
+  <cylinder pos="37 -1 143" rot="90 0 0" radius="4" height="8" material="plate" />
+  <cylinder pos="-30 5 176" rot="90 0 0" radius="7" height="12" material="jar" />
+  <cylinder pos="-12 7 175" rot="90 0 0" radius="6" height="10" material="jar" />
+  <cylinder pos="20 6 177" rot="90 0 0" radius="7.5" height="14" material="jar" />
+</prefab>
