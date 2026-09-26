@@ -213,16 +213,14 @@ frect_t renderer_bounds(void);
 
 /* Text rendering */
 #define MAX_GLYPHS 512
-#define TEXT_SPACING_SCALE 0.67f
-#define TEXT_BASE_SIZE 36.0f
-#define TEXT_MIN_FIT_RATIO 0.8f
+#define TEXT_SPACING_SCALE 0.73f
+#define TEXT_BASE_SIZE 38.0f
 
 bool text_init(const char *font_path);
 void text_shutdown(void);
 float text_draw(const char *text, fvec2_t origin, float size, float max_width, uint32_t rgba);
 float text_height(const char *text, float size, float max_width);
 fsize2_t text_size(const char *text, float size, float max_width);
-float text_fit_size(const char *text, float preferred_size, fsize2_t bounds);
 /* Offsets from a text_draw origin for one font size: line advance, first baseline, capital height. */
 struct TextMetrics { float line, baseline, cap_height; };
 struct TextMetrics text_metrics(float size);
@@ -241,7 +239,10 @@ struct TextRegion {
     float font_size;
     bool authored;
 };
-struct TextRegion scene_text_region(isize2_t image, fsize2_t viewport);
+#define MAX_TEXT_REGIONS 2
+typedef struct TextRegion textRegionList_t[MAX_TEXT_REGIONS];
+/* Reading order; form-feed in prose begins the next authored region. */
+int scene_text_regions(isize2_t image, fsize2_t viewport, textRegionList_t regions);
 
 /* Graphical interface */
 #define HOTSPOT_DIAMETER 48.0f
@@ -258,17 +259,20 @@ struct Hotspot { fvec2_t anchor, center; int choice; };
 typedef struct Hotspot hotspotList_t[MAX_CHOICES];
 /* Returns false if the viewport cannot accommodate every marker. */
 bool hotspots_place(struct Hotspot *spots, int count, fsize2_t viewport, frect_t prose);
+bool hotspots_place_regions(struct Hotspot *spots, int count, fsize2_t viewport,
+                            const struct TextRegion *regions, int region_count);
 struct HotspotTarget { identifier_t key; int choice; };
 typedef struct HotspotTarget hotspotTargetList_t[MAX_CHOICES];
 int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct HotspotTarget *targets,
-                          int count, bool has_text, hotspotList_t spots);
+                          int count, const struct TextRegion *regions, int region_count, hotspotList_t spots);
 
 /* One layout supplies rendering, hit testing and headless inspection. */
 struct PageControl { frect_t bounds; frect_t caption; int choice; bool circle; };
+struct ProseLayout { struct TextRegion region; storyText_t text; float content_height; };
 struct PageLayout {
-    struct TextRegion region;
-    float font_size;
     int max_scroll;
+    struct ProseLayout prose[MAX_TEXT_REGIONS];
+    int prose_count;
     hotspotList_t spots;
     int spot_count;
     struct PageControl controls[MAX_CHOICES];
@@ -307,7 +311,7 @@ bool ui_animating(void);
 void ui_preview(double seconds);
 
 /* Headless interface */
-void headless_run(bool interactive);
+void headless_run(bool interactive, fsize2_t viewport);
 void headless_catalog(void);
 
 #endif

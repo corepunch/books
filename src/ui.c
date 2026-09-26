@@ -57,7 +57,9 @@ static void navigate(int action, fvec2_t origin, float radius)
 
 static float story_text(const char *text,fvec2_t origin,float size,float width)
 {
-    text_draw(text,fvec2_add(origin,fvec2(1,2)),size,width,0x120B07E6);
+    text_draw(text,fvec2_add(origin,fvec2(-1,0)),size,width,0x120B07C0);
+    text_draw(text,fvec2_add(origin,fvec2(1,0)),size,width,0x120B07C0);
+    text_draw(text,fvec2_add(origin,fvec2(0,2)),size,width,0x120B07E6);
     return text_draw(text,origin,size,width,0xF4E6CAFF);
 }
 
@@ -96,10 +98,14 @@ static void draw_overlays(const struct PageView *view)
             renderer_line(edge, spot.anchor, 0xFFFFFFB0);
         }
     }
-    frect_t prose = layout->region.bounds;
-    renderer_clip(frect_expand(prose, fsize2(2, 0)));
-    story_text(view->content.text, fvec2_add(prose.origin, fvec2(0, -view->scroll)), layout->font_size, prose.size.width);
-    renderer_unclip();
+    for (int i = 0; i < layout->prose_count; ++i) {
+        const struct ProseLayout *block = &layout->prose[i];
+        frect_t prose = block->region.bounds;
+        renderer_clip(frect_expand(prose, fsize2(4, 0)));
+        story_text(block->text, fvec2_add(prose.origin, fvec2(0, -view->scroll)),
+                   block->region.font_size, prose.size.width);
+        renderer_unclip();
+    }
     for (int i = 0; i < layout->control_count; ++i) {
         const struct PageControl *control = &layout->controls[i];
         const struct Choice *choice = &view->content.choices[control->choice];

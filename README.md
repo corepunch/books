@@ -50,7 +50,9 @@ Snapshots include explicit choice kinds and the controls used by drawing and hit
 testing. `:continue` and the legacy `:back` alias select the published Continue
 choice; `:focus KEY` selects a current object choice. They cannot bypass the page.
 `make check` exercises the adventure, shared controls and projection without
-opening a window. `make check-ui` checks the graphical reveal and visible
+opening a window. `--viewport W H` selects a headless layout size for iPad checks.
+`--smoke-route continue,continue,harbour` follows published actions before a
+graphical capture. `make check-ui` checks the graphical reveal and visible
 Continue label; it requires access to Metal and the window server.
 
 ## Extending the adventure
@@ -122,3 +124,18 @@ Each camera has a matching reference JPEG. Camera names select projection
 metadata, illustration names select finished PNGs, and named anchors in the
 `.blks` source locate tappable objects and routes. The images and `.blks`
 metadata describe the same places from multiple views.
+
+## Composing prose
+
+Camera metadata supports `textRect` / `textScale` and an optional
+`textRect2` / `textScale2`, in normalized image coordinates under the same centered
+crop as the art. A `\f` in a story's C string moves the following text into the
+second region; `\n` starts a paragraph. Both regions share one story page and
+one set of choices. Use scale 1 for body text, and a larger scale for a short
+exclamation or spoken line. Text keeps its authored size. Compose enough room
+for the entire passage and leave the lower-right Continue/retry area free.
+
+Headless snapshots expose each block in `text_regions`, including its text,
+font size, bounds and measured height. The example's tests check that all prose
+fits, and that text, circles, captions and buttons do not overlap, at the Mac
+size and three landscape iPad sizes.

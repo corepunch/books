@@ -9,10 +9,11 @@ import subprocess
 
 
 class Book:
-    def __init__(self, binary, root, name):
+    def __init__(self, binary, root, name, viewport=(1100, 800)):
+        self.width, self.height = viewport
         self.root, self.name = Path(root), name
         self.process = subprocess.Popen(
-            [str(binary), '--root', str(root), '--book', name, '--headless'],
+            [str(binary), '--root', str(root), '--book', name, '--headless', '--viewport', *map(str, viewport)],
             cwd='/tmp', stdin=subprocess.PIPE, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, text=True)
         self.view = self.read()
@@ -41,8 +42,8 @@ class Book:
         for control in controls:
             choice = choices[control['choice']]
             assert (control['kind'], control['label']) == (choice['kind'], choice['label'])
-            assert 0 <= control['x'] < control['x'] + control['width'] <= 1100
-            assert 0 <= control['y'] < control['y'] + control['height'] <= 800
+            assert 0 <= control['x'] < control['x'] + control['width'] <= self.width
+            assert 0 <= control['y'] < control['y'] + control['height'] <= self.height
             assert control['circle'] == (choice['kind'] == 'object')
         # Every circle shows its label as a caption that collides with nothing else.
         def box(r):
@@ -53,12 +54,23 @@ class Book:
 
         circles = [c for c in controls if c['circle']]
         text = view['text_region']
-        prose = box(text) if text['authored'] and view['text'] else None
+        regions = view['text_regions']
+        assert '\f'.join(r['text'] for r in regions) == view['text']
+        for i, region in enumerate(regions):
+            assert region['font_size'] + .01 >= 38 * self.height/800, region
+            assert region['content_height'] <= region['height'] + .01, (view['image'], region)
+            assert 0 <= region['x'] < region['x'] + region['width'] <= self.width
+            assert 0 <= region['y'] < region['y'] + region['height'] <= self.height
+            for other in regions[:i]:
+                assert not overlaps(box(region), box(other)), (region, other)
+            for control in controls:
+                assert not overlaps(box(region), box(control)), (view['image'], region, control)
+        prose = [box(r) for r in regions if r['authored']]
         for control in circles:
             caption = box(control['caption'])
             assert control['caption']['width'] > 0 and control['caption']['height'] > 0, control
-            assert 0 <= caption[0] and caption[2] <= 1100 and 0 <= caption[1] and caption[3] <= 800, control
-            assert prose is None or not overlaps(caption, prose), (control['label'], text)
+            assert 0 <= caption[0] and caption[2] <= self.width and 0 <= caption[1] and caption[3] <= self.height, control
+            assert all(not overlaps(caption, r) for r in prose), (control['label'], regions)
             for other in controls:
                 if other is not control:
                     assert not overlaps(caption, box(other)), (control['label'], other['label'])

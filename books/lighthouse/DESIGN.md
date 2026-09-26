@@ -76,7 +76,7 @@ Time runs from sunset to full dark; the light falls page by page.
 
 Seven locations, 34 pages (10 decision pages, 17 story pages, 7 endings) and
 three invisible fact checks; 28 pictures, because consecutive pages of one
-moment share a camera. Reading time 5–10 minutes per route.
+moment share a camera. Reading time roughly 5–10 minutes per route.
 
 ## Structure
 
@@ -122,3 +122,17 @@ bridge (dangerous). Kinder ways: the sheep track with Agafya, and the ferry.
 
 No inventory, nothing picked up or carried (the matches stay on the shelf in
 the lamp room), no timers or dice, no typed commands, no sound.
+
+## Prose and typography
+
+Visible pages use roughly 50–60 words, leaving room for the picture and larger
+type. *Forces of Krill* guides the adventure pacing and character rather than
+a word-count quota. Short paragraphs retain dialogue, clues and consequences
+without repeating what the illustration shows.
+
+Body type uses a 38-unit base at the 800-unit reference height, with camera scale
+1 rather than the former 0.72. Type never shrinks to fit. Two camera reading
+regions separate columns or upper/lower passages; the bridge break and stair
+climb open with type at 1.65 scale. Text has a cream fill and dark edge for
+contrast over the existing scene renders. Reading order is first region, then
+second; circles and captions stay outside both.

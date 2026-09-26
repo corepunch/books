@@ -128,8 +128,10 @@ A finished book has all of these:
   edge.
 - Choice circles are 48 px across on an 1100 × 800 page, need at least a
   radius of clear space, and appear on named anchors in the scene.
-- Page text sits in each camera's `textRect` at base size 36 px scaled by
-  `textScale`; the headless `text_region` reports whether it fits.
+- Page text uses a base size of 38 at viewport height 800, scaled by each
+  camera's `textScale`. `textRect2` / `textScale2` provide a second reading area;
+  `\f` in the C prose selects it. Headless `text_regions` reports each block's
+  fit. Type keeps its authored size.
 - Each page shows one whole picture: its camera's painting, or the camera's
   render until the painting exists. Nothing is layered on top of a picture.
 

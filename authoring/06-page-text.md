@@ -15,10 +15,12 @@ carries the scene, the text carries the story.
    how the hero feels, and what changed. It does not repeat what the picture
    plainly shows ("there is a desk and a chair"); it names only what the
    reader needs to understand the choices.
-2. **Length.** Decision (room) pages: 2–4 sentences, about 30–60 words.
-   Story (beat) pages carry the journey: 2–4 sentences, about 30–60 words.
-   Endings may run a little longer. Check that each passage fits
-   its text zone at its text scale.
+2. **Length.** Aim for about 50–60 words per illustrated page. Keep the action,
+   one character or sensory beat, and the clue or consequence that matters.
+   Use *Forces of Krill* for adventure pacing and character, while leaving more
+   space for the picture in this format. Vary the length naturally; do not pad
+   to a quota. Compose short paragraphs across the reading areas and keep the
+   larger authored type rather than shrinking it to fit.
 3. **Decision pages invite choices.** Mention every choice's anchor in the
    story so the choices make sense ("One trail is covered with leaves; the
    other is bare earth. A big tree with low branches stands at the fork.").
@@ -45,7 +47,8 @@ carries the scene, the text carries the story.
    reflects the path taken (from `SHOTS.md`), and on revisits after a
    threshold, say what has changed.
 9. **Dialogue.** Keep spoken lines short, in quotation marks, and attributed
-   ("“Up there!” hoots the owl."). One speaker per page where possible.
+   ("“Up there!” hoots the owl."). Exchanges can develop a stranger's character;
+   use paragraph breaks to make the speakers clear.
 10. **Playful outcomes.** Funny choices get a short, warm payoff that returns
     the hero, not a telling-off.
 11. **Concrete and sensory.** Use one sense detail per page where it helps (the
@@ -70,5 +73,9 @@ labels, including every fact-dependent variant.
 - Every room page's text names or implies each choice's anchor.
 - Every clue appears in text at least once before the choice that needs it.
 - No passage shows a mechanic, an inventory, or a failure message.
-- Passages fit their text zones and read smoothly aloud.
+- Passages fit their text zones at the authored reading size without scrolling,
+  clipping, or overlap with choices and Continue, on Mac and landscape iPad.
+- Vary the composition: separated columns, upper and lower passages, or a large
+  exclamation followed by narration. Keep a clear reading order around the art.
+- Passages read smoothly aloud.
 - The ending recalls specific discoveries or choices.

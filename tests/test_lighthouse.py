@@ -98,4 +98,11 @@ follow(book, ['continue', 'continue', 'harbour', 'continue', 'cliffs', 'continue
 assert 'Агафья велела' in book.view['text']
 book.close()
 
+# The same authored reading areas must fit the supported landscape iPad shapes.
+for viewport in ((1024, 768), (1133, 744), (1366, 1024)):
+    for route in seen.values():
+        book = HeadlessBook(binary, root, 'lighthouse', viewport)
+        follow(book, route)
+        book.close()
+
 print(f'Lighthouse: {len(seen)} page states, {len(cameras)} pictures, {len(endings)} endings and retries passed')

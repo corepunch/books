@@ -65,10 +65,12 @@ the book file is data.
    Each output line is one page as JSON (kind, ending, text, choices,
    hotspots, controls, text region). A choice's `command` is its target page
    id, so a test can type `harbour` to take the choice that leads there.
-10. **Text fits its zone.** In each page's `text_region`, `content_height` must
-    not exceed `height`, and `font_size` must equal `preferred_size`. A smaller
-    font means the text was shrunk to fit: shorten the passage or enlarge the
-    camera's `textRect`.
+10. **Text fits its zones.** In every entry of `text_regions`, `content_height`
+    must not exceed `height`. Type keeps its authored size. Compose the complete
+    passage across `textRect` and optional `textRect2`, separated by `\f` in C;
+    revise the composition or wording if it overflows. Check Mac and landscape
+    iPad sizes with `--viewport W H`, including 1133 × 744 for the wider crop.
+    Both prose regions must clear every circle, caption and Continue button.
 11. **Checks.** Run `make check BOOK=<name>`, then `make check-ui BOOK=<name>`,
     and inspect a smoke capture:
 

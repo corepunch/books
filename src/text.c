@@ -8,7 +8,6 @@
 #include <stb_truetype.h>
 
 #define FONT_PIXELS 72.0f
-#define MAX_TEXT_FIT_STEPS 12
 
 struct Glyph {
     int codepoint;
@@ -116,7 +115,7 @@ static float text_layout(const char *text, fvec2_t origin, float size, float max
         if (cp == '\r') continue;
         if (cp == '\n') {
             /* Explicit story paragraphs breathe more than wrapped lines. */
-            pen = fvec2_add(fvec2_with_x(pen, origin.x), fvec2(0, line + size * .35f));
+            pen = fvec2_add(fvec2_with_x(pen, origin.x), fvec2(0, line + size * .22f));
             continue;
         }
         float advance = advance_for(cp == '\t' ? ' ' : cp) * scale * (cp == '\t' ? 4 : 1);
@@ -179,20 +178,6 @@ fsize2_t text_size(const char *text, float size, float max_width)
     float width;
     float height = text_layout(text, fvec2(0, 0), size, max_width, 0, false, &width);
     return fsize2(width, height);
-}
-
-float text_fit_size(const char *text, float preferred_size, fsize2_t bounds)
-{
-    if (preferred_size<=0 || fsize2_is_empty(bounds)) return 0;
-    if (text_height(text,preferred_size,bounds.width)<=bounds.height) return preferred_size;
-    float low=preferred_size*TEXT_MIN_FIT_RATIO,high=preferred_size;
-    /* Preserve a readable floor; longer story states scroll within the same region. */
-    for (int i=0;i<MAX_TEXT_FIT_STEPS;++i) {
-        float middle=(low+high)/2;
-        if (text_height(text,middle,bounds.width)<=bounds.height) low=middle;
-        else high=middle;
-    }
-    return low;
 }
 
 void text_shutdown(void)

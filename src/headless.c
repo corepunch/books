@@ -19,7 +19,7 @@ static void json_string(const char *s)
 static struct PageLayout layout;
 
 /* The same immutable page, layout and dispatcher used by the native UI. */
-static void dump(void)
+static void dump(fsize2_t viewport)
 {
     const struct BookPage *page = book_page();
     printf("{\"room\":"); json_string(book_object(page->room)->key);
@@ -40,7 +40,7 @@ static void dump(void)
     int channels = 0;
     if (*page->image && !stbi_info(page->image, &image.width, &image.height, &channels))
         fail("cannot inspect image: %s", page->image);
-    page_layout(page, image, fsize2(UI_WIDTH, UI_HEIGHT), &layout);
+    page_layout(page, image, viewport, &layout);
     printf("],\"hotspots\":[");
     for (int i = 0; i < layout.spot_count; ++i) {
         const struct Hotspot *spot = &layout.spots[i];
@@ -63,12 +63,22 @@ static void dump(void)
                control->caption.origin.x, control->caption.origin.y,
                control->caption.size.width, control->caption.size.height);
     }
-    struct TextRegion region = layout.region;
+    printf("],\"text_regions\":[");
+    for (int i = 0; i < layout.prose_count; ++i) {
+        const struct ProseLayout *block = &layout.prose[i];
+        struct TextRegion r = block->region;
+        printf("%s{\"authored\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f,"
+               "\"font_size\":%.6f,\"content_height\":%.6f,\"text\":", i ? "," : "", r.authored ? "true" : "false",
+               r.bounds.origin.x, r.bounds.origin.y, r.bounds.size.width, r.bounds.size.height,
+               r.font_size, block->content_height);
+        json_string(block->text); putchar('}');
+    }
+    struct TextRegion region = layout.prose[0].region;
     printf("],\"text_region\":{\"authored\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f,"
            "\"preferred_size\":%.6f,\"font_size\":%.6f,\"content_height\":%.6f}}\n",
            region.authored ? "true" : "false", region.bounds.origin.x, region.bounds.origin.y,
-           region.bounds.size.width, region.bounds.size.height, region.font_size, layout.font_size,
-           text_height(page->text, layout.font_size, region.bounds.size.width));
+           region.bounds.size.width, region.bounds.size.height, region.font_size, region.font_size,
+           layout.prose_count ? layout.prose[0].content_height : 0);
     fflush(stdout);
 }
 
@@ -85,10 +95,10 @@ void headless_catalog(void)
     puts("]");
 }
 
-void headless_run(bool interactive)
+void headless_run(bool interactive, fsize2_t viewport)
 {
     ui_init(); /* Font metrics only; measuring text never creates GPU textures. */
-    dump();
+    dump(viewport);
     command_t line;
     while (interactive && fgets(line,sizeof(line),stdin)) {
         line[strcspn(line,"\r\n")]=0;
@@ -108,7 +118,7 @@ void headless_run(bool interactive)
         }
         else if (!strncmp(line,":focus ",7)) book_choose_object(line + 7);
         else book_command(line);
-        dump();
+        dump(viewport);
     }
     text_shutdown();
 }
