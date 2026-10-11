@@ -74,11 +74,27 @@ run: app
 
 deploy:
 	@test "$(SDK)" = iphoneos -a "$(ARCH)" = arm64 || { echo 'iPad deployment requires SDK=iphoneos ARCH=arm64'; exit 1; }
-	@test -n "$(DEVICE)" || { echo 'Set DEVICE="iPad name or UDID"; use make list-devices to find it.'; exit 1; }
-	$(MAKE) -f platform/ipad/build.mk app
-	python3 tools/sign_ipad.py "$(APP)" $(if $(TEAM),--team "$(TEAM)") $(if $(PROFILE),--profile "$(PROFILE)")
-	xcrun devicectl device install app --device "$(DEVICE)" "$(APP)"
-	xcrun devicectl device process launch --device "$(DEVICE)" --terminate-existing "$(BUNDLE_ID)"
+	@set -e; device="$(DEVICE)"; \
+	if [ -z "$$device" ]; then \
+		devices="$$(xcrun devicectl list devices)"; \
+		device="$$(printf '%s\n' "$$devices" | awk '/iPad/ && !/simulated/ { \
+			for (i = 1; i <= NF; i++) { \
+				if ($$i !~ /^([[:xdigit:]]{8}-[[:xdigit:]]{16}|[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12})$$/) continue; \
+				state = i + 1; if ($$state == "(UDID)") state++; \
+				if ($$state == "available" || $$state == "connected") print $$i; \
+			} \
+		}')"; \
+		count="$$(printf '%s\n' "$$device" | sed '/^$$/d' | wc -l | tr -d ' ')"; \
+		if [ "$$count" -ne 1 ]; then \
+			echo "Expected exactly one available physical iPad; found $$count. Use make list-devices and set DEVICE=..." >&2; \
+			exit 1; \
+		fi; \
+		echo "Auto-selected iPad $$device"; \
+	fi; \
+	$(MAKE) -f platform/ipad/build.mk app; \
+	python3 tools/sign_ipad.py "$(APP)" $(if $(TEAM),--team "$(TEAM)") $(if $(PROFILE),--profile "$(PROFILE)"); \
+	xcrun devicectl device install app --device "$$device" "$(APP)"; \
+	xcrun devicectl device process launch --device "$$device" --terminate-existing "$(BUNDLE_ID)"
 
 clean:
 	rm -rf "$(BUILD_ROOT)"

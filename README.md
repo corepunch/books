@@ -30,11 +30,14 @@ make ipad-run
 make ipad-mac
 ```
 
-`make ipad` builds an unsigned iPad app. `make ipad-deploy DEVICE="iPad name or UDID"`
-installs it on a paired device. iPad builds use the installed Xcode SDK and
+`make ipad` builds an unsigned iPad app. `make ipad-deploy` automatically selects
+the sole available physical iPad, installs the app and launches it. It ignores
+simulators, iPhones and unavailable devices. If there are zero or multiple
+eligible iPads, use `make list-devices` and set `DEVICE="iPad name or UDID"`.
+iPad builds use the installed Xcode SDK and
 `actool`; the Lua interpreter and its source are not part of either target. Set
 `BOOK` to choose which C book is compiled, for example
-`make ipad-deploy BOOK=lighthouse DEVICE="iPad name or UDID"`.
+`make ipad-deploy BOOK=lighthouse`.
 
 The Mac executable is `build/lighthouse/book` for the default book. It reads
 art from the checkout and opens a fixed-size AppKit window. The iPad app uses
