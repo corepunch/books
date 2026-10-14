@@ -4,10 +4,17 @@
 #import <QuartzCore/CAMetalLayer.h>
 
 @interface BookMetalView : UIView
-@property BOOL dirty;
+@property (nonatomic) BOOL dirty;
+@property (weak) CADisplayLink *frameLink;
 @end
 
 @implementation BookMetalView
+/* Frames run only while something changed or a transition plays. */
+- (void)setDirty:(BOOL)dirty
+{
+    _dirty = dirty;
+    if (dirty) self.frameLink.paused = NO;
+}
 + (Class)layerClass { return [CAMetalLayer class]; }
 - (void)layoutSubviews { [super layoutSubviews]; self.dirty = YES; }
 @end
@@ -54,6 +61,7 @@
     [super viewDidAppear:animated];
     if (!self.displayLink) {
         self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
+        self.page.frameLink = self.displayLink;
         [self.displayLink addToRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
     }
 }
@@ -64,9 +72,11 @@
 }
 - (void)tick:(CADisplayLink *)link
 {
-    (void)link;
     if (self.view.window.windowScene.activationState != UISceneActivationStateForegroundActive ||
-        !(self.page.dirty || ui_animating())) return;
+        !(self.page.dirty || ui_animating())) {
+        link.paused = YES;
+        return;
+    }
     CGSize size = self.page.bounds.size;
     if (!renderer_begin(fsize2_round(fsize2(size.width,size.height)), self.view.window.screen.scale)) return;
     ui_draw();

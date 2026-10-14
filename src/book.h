@@ -228,6 +228,8 @@ void renderer_reveal_end(void);
 void renderer_opacity(float opacity);
 isize2_t renderer_image_size(const char *path);
 bool renderer_image(const char *path, frect_t bounds);
+/* Draw a carried thing's icon, reduced once at load and cropped to cover bounds. */
+bool renderer_icon(const char *path, frect_t bounds);
 /* Drop the path cache so the next draw reloads replaced raster artwork. */
 void renderer_invalidate_image(void);
 

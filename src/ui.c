@@ -94,11 +94,7 @@ static void draw_item(const struct PageControl *control, const struct Choice *ch
     renderer_ring(frect_translate(disc, fvec2(0, 2)), 0x120B0780);
     renderer_reveal_begin(center, disc.size.width / 2);
     renderer_rect(disc, 0x211C18E8);
-    if (book_item_image(choice->object, icon)) {
-        isize2_t size = renderer_image_size(icon);
-        if (isize2_is_empty(size)) fail("cannot decode %s", icon);
-        renderer_image(icon, frect_cover(isize2_to_float(size), disc));
-    }
+    if (book_item_image(choice->object, icon) && !renderer_icon(icon, disc)) fail("cannot decode %s", icon);
     renderer_reveal_end();
     if (held) {
         for (float grow = 0; grow <= 6; grow += 1.5f)

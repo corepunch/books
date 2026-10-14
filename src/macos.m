@@ -1,13 +1,21 @@
 #include "book.h"
 
 #import <AppKit/AppKit.h>
+#import <QuartzCore/CADisplayLink.h>
 #import <QuartzCore/CAMetalLayer.h>
 
 @interface BookView : NSView
-@property BOOL dirty;
+@property (nonatomic) BOOL dirty;
+@property (weak) CADisplayLink *frameLink;
 @end
 
 @implementation BookView
+/* Frames run only while something changed or a transition plays. */
+- (void)setDirty:(BOOL)dirty
+{
+    _dirty = dirty;
+    if (dirty) self.frameLink.paused = NO;
+}
 - (BOOL)isFlipped { return YES; }
 - (BOOL)acceptsFirstResponder { return YES; }
 - (BOOL)acceptsFirstMouse:(NSEvent *)event { (void)event; return YES; }
@@ -40,7 +48,7 @@
 @interface BookApplication : NSObject <NSApplicationDelegate, NSWindowDelegate>
 @property NSWindow *window;
 @property BookView *view;
-@property NSTimer *timer;
+@property CADisplayLink *frameLink;
 @property BOOL smoke;
 @property NSString *screenshot;
 @property double preview;
@@ -50,7 +58,7 @@
 @implementation BookApplication
 - (void)stop
 {
-    [self.timer invalidate];
+    [self.frameLink invalidate];
     [NSApp stop:nil];
     /* Wake the event loop so closing the last window also returns from run. */
     [NSApp postEvent:[NSEvent otherEventWithType:NSEventTypeApplicationDefined location:NSZeroPoint
@@ -65,12 +73,13 @@
 - (void)windowDidChangeBackingProperties:(NSNotification *)notification { (void)notification; self.view.dirty = YES; }
 - (void)windowDidDeminiaturize:(NSNotification *)notification { (void)notification; self.view.dirty = YES; }
 - (void)windowDidChangeOcclusionState:(NSNotification *)notification { (void)notification; self.view.dirty = YES; }
-- (void)tick:(NSTimer *)timer
+- (void)tick:(CADisplayLink *)link
 {
-    (void)timer;
     @autoreleasepool {
-        if (!(self.view.dirty || self.smoke || ui_animating())) return;
-        if (self.window.miniaturized) return;
+        if (!(self.view.dirty || self.smoke || ui_animating()) || self.window.miniaturized) {
+            link.paused = YES;
+            return;
+        }
         NSSize size = self.view.bounds.size;
         if (!renderer_begin(fsize2_round(fsize2(size.width, size.height)), self.window.backingScaleFactor)) {
             if (self.smoke && ++self.missedFrames >= 3) fail("cannot acquire Metal drawable for smoke capture");
@@ -131,10 +140,11 @@ void ui_run(bool smoke, const char *screenshot, double smoke_transition)
         [app.window center];
         [app.window makeKeyAndOrderFront:nil];
         [NSApp activateIgnoringOtherApps:YES];
-        app.timer = [NSTimer timerWithTimeInterval:1.0 / 60 target:app selector:@selector(tick:) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:app.timer forMode:NSRunLoopCommonModes];
+        app.frameLink = [app.view displayLinkWithTarget:app selector:@selector(tick:)];
+        app.view.frameLink = app.frameLink;
+        [app.frameLink addToRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
         [NSApp run];
-        [app.timer invalidate];
+        [app.frameLink invalidate];
         text_shutdown();
         renderer_shutdown();
         app.window.delegate = nil;
