@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Обратный отсчёт: the cast lined up at scale, and the poses the pages use. Painters' references, not pages. -->
+<scene up="z" ambient="0.30 0.30 0.32" background="0.62 0.64 0.68">
+  <camera name="sheet-lineup" comment="The cast at scale, front three-quarter" pos="260 -760 160" look="260 0 100" fov="38" />
+  <camera name="sheet-poses" comment="Superman in the book poses" pos="300 -2600 170" look="300 -1500 100" fov="40">
+    <transform target="Clark" pos="0 0 -5000" />
+  </camera>
+  <sun dir="-0.45 0.6 -0.8" color="1 0.97 0.92" intensity="1.1" castShadows="1" />
+  <box pos="300 0 -5" size="2000 1400 10" color="0.80 0.80 0.78" />
+  <prefab source="characters/superman" name="Superman" pos="0 0 0" />
+  <prefab source="characters/clark" name="Clark" pos="80 0 0" />
+  <prefab source="characters/brainiac" name="Brainiac" pos="160 0 0" />
+  <prefab source="characters/merc" name="Merc" pos="240 0 0" />
+  <prefab source="characters/rafferty" name="Rafferty" pos="320 0 0" />
+  <prefab source="characters/technician" name="Tech" pos="400 0 0" />
+  <prefab source="characters/lana" name="Lana" pos="470 0 0" />
+  <prefab source="characters/person" name="Person" pos="540 0 0" color="0.30 0.50 0.70" />
+  <group pos="0 -1500 0">
+    <prefab source="characters/superman" name="S1" pos="-100 0 0" pose="Sit" />
+    <prefab source="characters/superman" name="S2" pos="0 0 0" pose="Lift" />
+    <prefab source="characters/superman" name="S3" pos="100 0 0" pose="Push" />
+    <prefab source="characters/superman" name="S4" pos="200 0 0" pose="Aim" />
+    <prefab source="characters/superman" name="S5" pos="300 0 0" pose="Throw" />
+    <prefab source="characters/superman" name="S6" pos="400 0 0" pose="Crouch" />
+    <prefab source="characters/superman" name="S7" pos="500 0 0" pose="Kneel" />
+    <prefab source="characters/superman" name="S8" pos="600 0 0" pose="Float" />
+    <prefab source="characters/superman" name="S9" pos="720 0 0" pose="Reveal" />
+    <prefab source="characters/superman" name="S10" pos="-220 0 120" rot="90 0 0" pose="Fly" />
+  </group>
+</scene>

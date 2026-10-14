@@ -1,0 +1,6 @@
+<!-- A .38 revolver, 24 cm long along local -Y (the muzzle), origin at the grip. -->
+<prefab>
+  <box pos="0 -9 4" size="3 18 4" material="gunmetal" />
+  <box pos="0 0 -2" size="3 5 9" rot="-15 0 0" material="gunmetal" />
+  <cylinder pos="0 -3 4" rot="90 0 0" radius="2.4" height="4" material="gunmetal" />
+</prefab>

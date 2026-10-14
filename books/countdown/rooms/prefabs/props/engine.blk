@@ -1,0 +1,23 @@
+<!-- A 1980s diesel commuter locomotive, 1500 long (local X, the front at +X), 300 wide, 420 tall,
+     standing on its bogies; origin on the rail head under the middle of the engine. -->
+<prefab>
+  <box pos="0 0 70" size="1460 290 40" material="engine_frame" />
+  <box pos="-120 0 250" size="1200 280 320" material="engine_body" />
+  <box pos="580 0 230" size="260 290 280" material="engine_body" />
+  <box pos="660 0 330" size="110 292 70" material="glass" />
+  <box pos="-120 0 412" size="1180 250 10" material="engine_frame" />
+  <box pos="-120 146 210" size="1160 4 30" material="engine_stripe" />
+  <box pos="-120 -146 210" size="1160 4 30" material="engine_stripe" />
+  <box pos="716 0 120" size="20 300 40" material="engine_frame" />
+  <cylinder pos="716 0 190" rot="0 0 90" radius="16" height="6" color="1 0.95 0.75" unlit="1" castShadow="0" />
+  <box pos="-500 0 30" size="300 220 50" material="engine_frame" />
+  <box pos="500 0 30" size="300 220 50" material="engine_frame" />
+  <cylinder pos="-580 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+  <cylinder pos="-420 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+  <cylinder pos="420 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+  <cylinder pos="580 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+  <cylinder pos="-580 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+  <cylinder pos="-420 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+  <cylinder pos="420 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+  <cylinder pos="580 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+</prefab>

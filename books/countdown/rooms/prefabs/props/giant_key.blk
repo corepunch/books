@@ -1,0 +1,8 @@
+<!-- The giant key of the Fortress, 520 cm long along local X (the bit at +X), cast in a dull alloy
+     that no ordinary person could lift. Origin at its middle. -->
+<prefab>
+  <torus pos="-200 0 0" majorRadius="70" minorRadius="20" material="key_metal" />
+  <cylinder pos="60 0 0" rot="0 0 90" radius="18" height="380" material="key_metal" />
+  <box pos="210 0 -50" size="70 30 100" material="key_metal" />
+  <box pos="250 0 -30" size="30 30 60" material="key_metal" />
+</prefab>

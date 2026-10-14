@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Обратный отсчёт: low Earth orbit, early afternoon over the Atlantic. Z up, cm, storybook scale: the
+     Earth is a 2.2 km ball whose top lies 100 m below the belt, the belt of Brainiac's meteorites rings it in a
+     decaying orbit, rocks 2-4 m across. One rock is not a meteorite at all: a lead-shelled red-sun
+     weapon that X-ray vision cannot see into. Superman is authored 50 m below the belt plane; camera
+     transforms give world positions. -->
+<scene up="z" ambient="0.10 0.10 0.14" background="0.01 0.01 0.03">
+  <camera name="orbit-show-belt" comment="Superman among the tumbling meteorites of the belt, the Earth's curve below; one dull grey rock among the brown" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Superman" pos="-300 -700 5000" rot="0 0 -30" />
+    <use-pose instance="Superman" name="Float" />
+  </camera>
+  <camera name="orbit-xray" comment="X-ray vision: the meteorites turn pale and show their purple capsules; the lead rock stays black" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Superman" pos="-300 -700 5000" rot="0 0 -30" />
+    <use-pose instance="Superman" name="Float" />
+    <transform target="Rocks" pos="0 0 -20000" />
+    <transform target="RocksXray" pos="0 0 20000" />
+  </camera>
+  <camera name="orbit-clear" comment="Superman smashes the lead rock first; the red-sun weapon inside breaks apart and the capsules burn up as streaks" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Superman" pos="580 220 5040" rot="90 0 70" />
+    <use-pose instance="Superman" name="FlyReach" />
+    <transform target="LeadRock" pos="0 0 -20000" />
+    <transform target="Shards" pos="0 0 20000" />
+    <transform target="Streaks" pos="0 0 20000" />
+    <transform target="Rocks" pos="0 0 -20000" />
+  </camera>
+  <camera name="orbit-ambush" comment="A red beam lashes out of the grey rock and strikes Superman; he tumbles" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Superman" pos="-150 -500 5100" rot="120 30 0" />
+    <use-pose instance="Superman" name="Float" />
+    <transform target="RedBeam" pos="0 0 20000" />
+  </camera>
+  <camera name="orbit-falling" comment="Ending: from high above, meteorites stream down into the atmosphere toward the cities" pos="0 -3000 5000" look="0 6000 -9000" fov="60" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Falling" pos="0 0 20000" />
+    <transform target="Superman" pos="-400 -1200 6800" rot="80 0 160" />
+    <use-pose instance="Superman" name="Float" />
+  </camera>
+  <camera name="orbit-ship-escapes" comment="Ending: Brainiac's ship sails away past the Moon, its tentacles trailing, the Earth behind it" pos="-3000 -9000 1500" look="6000 30000 2000" fov="50" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Ship" pos="0 0 20000" />
+    <transform target="Superman" pos="-2500 -7400 6400" rot="0 0 200" />
+    <use-pose instance="Superman" name="HandsOnHips" />
+  </camera>
+
+  <material id="earth_sea" color="0.12 0.30 0.62" shininess="40" />
+  <material id="earth_land" color="0.30 0.50 0.26" shininess="8" />
+  <material id="cloud" color="0.94 0.95 0.96" shininess="4" />
+  <material id="meteor" color="0.46 0.34 0.24" shininess="6" />
+  <material id="lead" color="0.34 0.35 0.38" shininess="30" />
+  <material id="xray" color="0.70 0.86 0.98" shininess="4" />
+  <material id="capsule" color="0.70 0.30 0.86" shininess="40" />
+  <material id="ship_hull" color="0.46 0.56 0.50" shininess="60" />
+  <material id="ship_rib" color="0.30 0.36 0.34" shininess="50" />
+  <material id="ship_dark" color="0.12 0.14 0.14" shininess="40" />
+  <material id="brain_net" color="0.62 0.30 0.72" shininess="90" />
+  <material id="moon" color="0.70 0.70 0.68" shininess="4" />
+
+  <!-- Sunlight from the upper left. -->
+  <sun dir="0.8 0.55 -0.18" color="1.0 0.98 0.94" intensity="1.4" castShadows="1" />
+
+  <!-- The Earth below, with a continent and cloud bands. -->
+  <sphere pos="0 20000 -120000" radius="110000" rings="64" slices="96" material="earth_sea" />
+  <sphere pos="-9721 7849 -40611" radius="30000" rings="32" slices="48" material="earth_land" />
+  <sphere pos="17335 24334 -35059" radius="24000" rings="32" slices="48" material="earth_land" />
+  <sphere pos="0 45536 -39136" radius="26000" rings="32" slices="48" material="earth_land" />
+  <sphere pos="5901 8199 -22640" radius="12000" rings="32" slices="48" material="cloud" castShadow="0" />
+  <sphere pos="-17182 34317 -27413" radius="15000" rings="32" slices="48" material="cloud" castShadow="0" />
+  <sphere pos="26000 90000 6000" radius="2400" material="moon" />
+
+  <!-- The belt of meteorites, brown and solid; the X-ray set, pale with purple capsules. -->
+  <group name="Rocks">
+    <sphere pos="-900 300 100" radius="160" scale="1.2 1 0.9" material="meteor" />
+    <sphere pos="-200 900 -50" radius="200" scale="1 1.3 0.9" material="meteor" />
+    <sphere pos="700 700 200" radius="140" scale="1.3 1 1" material="meteor" />
+    <sphere pos="1600 1200 -150" radius="220" scale="1 1 0.8" material="meteor" />
+    <sphere pos="-1800 1500 300" radius="180" material="meteor" />
+    <sphere pos="2600 2400 0" radius="200" material="meteor" />
+    <sphere pos="-2900 2600 -200" radius="210" material="meteor" />
+    <sphere pos="200 2600 400" radius="160" material="meteor" />
+  </group>
+  <group name="RocksXray" pos="0 0 -20000">
+    <sphere pos="-900 300 100" radius="160" scale="1.2 1 0.9" material="xray" unlit="1" />
+    <sphere pos="-200 900 -50" radius="200" scale="1 1.3 0.9" material="xray" unlit="1" />
+    <sphere pos="700 700 200" radius="140" scale="1.3 1 1" material="xray" unlit="1" />
+    <sphere pos="1600 1200 -150" radius="220" scale="1 1 0.8" material="xray" unlit="1" />
+    <sphere pos="-1800 1500 300" radius="180" material="xray" unlit="1" />
+    <sphere pos="2600 2400 0" radius="200" material="xray" unlit="1" />
+    <sphere pos="-2900 2600 -200" radius="210" material="xray" unlit="1" />
+    <sphere pos="200 2600 400" radius="160" material="xray" unlit="1" />
+    <capsule pos="-900 -10 100" radius="40" height="60" material="capsule" unlit="1" />
+    <capsule pos="-200 520 -50" radius="50" height="80" material="capsule" unlit="1" />
+    <capsule pos="700 450 200" radius="36" height="60" material="capsule" unlit="1" />
+    <capsule pos="1600 950 -150" radius="50" height="80" material="capsule" unlit="1" />
+  </group>
+  <!-- The lead-shelled weapon among them, its emitter turned toward the belt. -->
+  <group name="LeadRock">
+    <sphere pos="400 -150 -60" radius="190" scale="1.1 1 0.9" material="lead" />
+    <cylinder pos="400 -330 -40" rot="0 0 0" radius="30" height="60" color="0.60 0.10 0.08" />
+  </group>
+  <group name="RedBeam" pos="0 0 -20000">
+    <cylinder pos="140 -400 20" rot="0 0 -60" radius="10" height="560" color="1.0 0.15 0.08" unlit="1" castShadow="0" />
+    <sphere pos="-120 -540 120" radius="60" color="1.0 0.35 0.20" unlit="1" castShadow="0" />
+  </group>
+  <group name="Shards" pos="0 0 -20000">
+    <sphere pos="520 -80 40" radius="70" material="lead" />
+    <sphere pos="300 -260 -120" radius="55" material="lead" />
+    <sphere pos="620 120 -150" radius="40" material="lead" />
+    <sphere pos="250 60 120" radius="45" material="lead" />
+    <sphere pos="440 -140 -40" radius="90" color="1.0 0.55 0.25" unlit="1" castShadow="0" />
+  </group>
+  <group name="Streaks" pos="0 0 -20000">
+    <cylinder pos="-900 600 -700" rot="70 0 10" radius="18" height="900" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
+    <cylinder pos="200 1200 -800" rot="70 0 -10" radius="22" height="1000" color="1.0 0.60 0.25" unlit="1" castShadow="0" />
+    <cylinder pos="1500 1600 -900" rot="70 0 -20" radius="18" height="900" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
+    <cylinder pos="-2200 2200 -700" rot="70 0 20" radius="20" height="900" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
+  </group>
+  <group name="Falling" pos="0 0 -20000">
+    <cylinder pos="-1500 4000 -2500" rot="60 0 10" radius="40" height="2400" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
+    <cylinder pos="1200 6000 -3200" rot="60 0 -10" radius="50" height="2800" color="1.0 0.60 0.25" unlit="1" castShadow="0" />
+    <cylinder pos="3200 3500 -2400" rot="60 0 -20" radius="40" height="2400" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
+    <cylinder pos="-3500 7000 -3500" rot="60 0 20" radius="50" height="2800" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
+    <cylinder pos="200 9000 -4200" rot="60 0 0" radius="60" height="3000" color="1.0 0.60 0.25" unlit="1" castShadow="0" />
+  </group>
+  <group name="Ship" pos="0 0 -20000">
+    <prefab source="props/brainiac_ship" pos="4000 20000 2600" rot="0 0 150" />
+  </group>
+
+  <prefab source="characters/superman" name="Superman" pos="0 0 -5000" />
+
+  <!-- Anchors. -->
+  <group name="Belt" pos="-200 900 -50" />
+  <group name="Lead-Rock" pos="400 -150 -60" />
+  <group name="Earth" pos="1200 -1200 -1150" />
+</scene>

@@ -10,18 +10,30 @@
  * story state, publishes complete pages and navigates between them. Books are data. */
 
 #define MAX_CHECK_CHAIN MAX_STORY_PAGES
+#define ITEM_ICON_PREFIX "item-"
+
+/* Everything "try again" restores: the facts, and where every thing is. */
+struct World {
+    storyFacts_t facts;   /* story facts that later pages check */
+    storyItems_t carried; /* things the hero carries */
+    int lying[MAX_STORY_ITEMS]; /* by table index: the location object a thing lies in, or zero */
+};
 
 static const struct Story *story;
 static struct {
-    storyFacts_t facts; /* Story facts that later pages check; there is no inventory. */
-    int page, room, object_count, last_decision;
+    struct World world;
+    int page, room, object_count, last_decision, held; /* held: table index + 1 of the held thing */
     filePath_t root, rooms, illustrations;
     struct Object objects[MAX_OBJECTS];
     int object_room[MAX_OBJECTS];
-    /* Facts as they were when each decision page was shown, for "try again". */
-    storyFacts_t snapshot[MAX_STORY_PAGES];
+    int item_object[MAX_STORY_ITEMS]; /* by table index */
+    int item_slot[MAX_STORY_ITEMS];   /* by bit position: table index + 1 */
+    /* The world as it was when each decision page was shown, for "try again". */
+    struct World snapshot[MAX_STORY_PAGES];
     bool visited[MAX_STORY_PAGES];
 } game;
+/* The story choice behind each published object choice, or -1. */
+static int choice_source[MAX_CHOICES];
 
 /* Build into private scratch storage; consumers only see validated, complete pages.
  * Keep these large snapshots off the iPad main-thread stack. */
@@ -54,9 +66,35 @@ static int object_for(const char *key, int room)
     return id;
 }
 
-static bool offered(const struct StoryChoice *choice)
+/* Table index of a single-bit thing, or -1. */
+static int item_index(storyItems_t item)
 {
-    return (game.facts & choice->requires) == choice->requires && !(game.facts & choice->excludes);
+    if (!item || (item & (item - 1))) return -1;
+    int bit = 0;
+    while (!(item & (1u << bit))) ++bit;
+    return game.item_slot[bit] - 1;
+}
+
+static int valid_item(storyItems_t item, const char *page, const char *field)
+{
+    int index = item_index(item);
+    if (index < 0) fail("page %s %s names no single known thing", page, field);
+    return index;
+}
+
+static void check_items(storyItems_t items, const char *page, const char *field)
+{
+    for (int bit = 0; bit < MAX_STORY_ITEMS; ++bit)
+        if ((items & (1u << bit)) && !game.item_slot[bit]) fail("page %s %s names an unknown thing", page, field);
+}
+
+static bool offered(const struct StoryChoice *choice, const struct StoryPage *page)
+{
+    const struct World *world = &game.world;
+    if ((world->facts & choice->requires) != choice->requires || (world->facts & choice->excludes)) return false;
+    if (choice->take) return world->lying[item_index(choice->take)] == object_for(page->location, 0);
+    int with = choice->with ? item_index(choice->with) + 1 : 0;
+    return with == game.held && (!with || (world->carried & choice->with));
 }
 
 static void validate_story(void)
@@ -65,6 +103,29 @@ static void validate_story(void)
     if (story->page_count <= 0 || story->page_count > MAX_STORY_PAGES) fail("story has %d pages", story->page_count);
     if (!story->continue_label || !story->retry_label || !story->restart_label) fail("story button labels missing");
     if (find_page(story->start) < 0) fail("story start page '%s' is missing", story->start ? story->start : "");
+    if (story->item_count < 0 || story->item_count > MAX_STORY_ITEMS || (story->item_count && !story->items))
+        fail("story has %d things", story->item_count);
+    for (int i = 0; i < story->item_count; ++i) {
+        const struct StoryItem *item = &story->items[i];
+        if (!item->id || !*item->id || !item->name || !*item->name || !item->text || !*item->text)
+            fail("thing %d needs an id, a name and a text", i);
+        if (!item->item || (item->item & (item->item - 1))) fail("thing %s needs a single bit", item->id);
+        int bit = 0;
+        while (!(item->item & (1u << bit))) ++bit;
+        if (game.item_slot[bit]) fail("things %s and %s share a bit", story->items[game.item_slot[bit] - 1].id, item->id);
+        game.item_slot[bit] = i + 1;
+        if (find_page(item->id) >= 0) fail("thing %s shares its id with a page", item->id);
+        for (int j = 0; j < i; ++j)
+            if (!strcmp(story->items[j].id, item->id)) fail("duplicate thing '%s'", item->id);
+        if (item->carried && item->where) fail("thing %s cannot both lie somewhere and be carried", item->id);
+        if (item->where) {
+            bool found = false;
+            for (int p = 0; p < story->page_count; ++p)
+                found |= story->pages[p].kind != STORY_CHECK && story->pages[p].location &&
+                         !strcmp(story->pages[p].location, item->where);
+            if (!found) fail("thing %s lies in unknown location '%s'", item->id, item->where);
+        }
+    }
     for (int i = 0; i < story->page_count; ++i) {
         const struct StoryPage *page = &story->pages[i];
         if (!page->id || !*page->id) fail("story page %d has no id", i);
@@ -75,6 +136,10 @@ static void validate_story(void)
                       !page->text || !*page->text))
             fail("page %s needs a location, a camera and text", page->id);
         if (page->kind != STORY_ENDING && page->ending != ENDING_NONE) fail("page %s is not an ending", page->id);
+        check_items(page->gives, page->id, "gives");
+        check_items(page->removes, page->id, "removes");
+        if (page->gives & page->removes) fail("page %s both gives and removes a thing", page->id);
+        if (page->kind != STORY_CHECK && page->holds) fail("page %s is not a check", page->id);
         switch (page->kind) {
         case STORY_DECISION: {
             int count = 0;
@@ -84,8 +149,17 @@ static void validate_story(void)
                 if (!*choice->label || !choice->anchor || !*choice->anchor)
                     fail("page %s choice %d needs a label and an anchor", page->id, c);
                 page_index(choice->target, page->id);
+                if (choice->take && choice->with) fail("page %s choice %d both takes and uses a thing", page->id, c);
+                if (choice->take) {
+                    const struct StoryItem *item = &story->items[valid_item(choice->take, page->id, "take")];
+                    if (!item->where || strcmp(item->where, page->location))
+                        fail("page %s takes %s, which never lies in %s", page->id, item->id, page->location);
+                }
+                if (choice->with) valid_item(choice->with, page->id, "with");
+                /* Choices for different held things are never offered together. */
                 for (int d = 0; d < c; ++d)
-                    if (page->choices[d].label && !strcmp(page->choices[d].target, choice->target) &&
+                    if (page->choices[d].label && page->choices[d].with == choice->with &&
+                        !strcmp(page->choices[d].target, choice->target) &&
                         !(page->choices[d].requires & choice->excludes) && !(choice->requires & page->choices[d].excludes))
                         fail("page %s offers two choices leading to %s", page->id, choice->target);
                 ++count;
@@ -95,7 +169,8 @@ static void validate_story(void)
         }
         case STORY_PASSAGE: page_index(page->next, page->id); break;
         case STORY_CHECK:
-            if (!page->fact) fail("check %s tests no fact", page->id);
+            if (!page->fact && !page->holds) fail("check %s tests no fact or thing", page->id);
+            check_items(page->holds, page->id, "holds");
             page_index(page->next, page->id);
             page_index(page->otherwise, page->id);
             break;
@@ -119,30 +194,44 @@ static void validate_story(void)
         for (int c = 0; c < MAX_PAGE_CHOICES; ++c)
             if (page->choices[c].label) object_for(page->choices[c].anchor, object_for(page->location, 0));
     }
+    for (int i = 0; i < story->item_count; ++i) {
+        const struct StoryItem *item = &story->items[i];
+        game.item_object[i] = object_for(item->id, item->where ? object_for(item->where, 0) : 0);
+        if (!item->where) game.object_room[game.item_object[i]] = 0;
+    }
 }
 
-static void select_image(struct BookPage *page, const char *camera)
+/* A camera's painting when it exists, otherwise its render. */
+static bool find_image(const char *camera, filePath_t image)
 {
-    page->image[0] = 0;
-    copy(page->camera, sizeof(page->camera), camera);
+    image[0] = 0;
     filePath_t path;
     int length = snprintf(path, sizeof(path), "%s/%s.png", game.illustrations, camera);
     if (length < 0 || (size_t)length >= sizeof(path)) fail("illustration path is too long");
     if (!access(path, R_OK)) {
-        copy(page->image, sizeof(page->image), path);
-        return;
+        copy(image, sizeof(filePath_t), path);
+        return true;
     }
     length = snprintf(path, sizeof(path), "%s/%s.jpg", game.rooms, camera);
     if (length < 0 || (size_t)length >= sizeof(path)) fail("reference image path is too long");
-    if (!access(path, R_OK)) copy(page->image, sizeof(page->image), path);
+    if (access(path, R_OK)) return false;
+    copy(image, sizeof(filePath_t), path);
+    return true;
 }
 
-static void append_choice(enum ChoiceKind kind, const char *label, const char *command, int object)
+static void select_image(struct BookPage *page, const char *camera)
+{
+    copy(page->camera, sizeof(page->camera), camera);
+    find_image(camera, page->image);
+}
+
+static void append_choice(enum ChoiceKind kind, const char *label, const char *command, int object, int source)
 {
     if (draft.choice_count >= MAX_CHOICES) fail("too many page choices");
     struct Choice choice = {.kind = kind, .object = object};
     copy(choice.label, sizeof(choice.label), label);
     copy(choice.command, sizeof(choice.command), command ? command : "");
+    choice_source[draft.choice_count] = source;
     draft.choices[draft.choice_count++] = choice;
 }
 
@@ -184,24 +273,58 @@ static void publish_page(void)
             if (draft.kind != PAGE_ENDED || choice->object || !*choice->command)
                 fail("invalid retry choice %d", i);
             break;
+        case CHOICE_ITEM:
+            if (draft.kind != PAGE_ROOM || !*choice->command || choice->object <= 0 ||
+                choice->object >= MAX_OBJECTS || !*game.objects[choice->object].key)
+                fail("invalid thing choice %d", i);
+            break;
         case CHOICE_INVALID:
         default: fail("invalid kind for choice %d", i);
         }
     }
+    if (draft.held) {
+        bool listed = false;
+        for (int i = 0; i < draft.choice_count; ++i)
+            listed |= draft.choices[i].kind == CHOICE_ITEM && draft.choices[i].object == draft.held;
+        if (draft.kind != PAGE_ROOM || !listed) fail("the held thing must be a carried thing on a room page");
+    }
     current = draft;
+}
+
+/* Fill a room page: the choices the reader can take, or the held thing's uses, then the carried things. */
+static void build_room(void)
+{
+    const struct StoryPage *page = &story->pages[game.page];
+    draft.kind = PAGE_ROOM;
+    draft.held = game.held ? game.item_object[game.held - 1] : 0;
+    copy(draft.text, sizeof(draft.text), game.held ? story->items[game.held - 1].text : page->text);
+    for (int c = 0; c < MAX_PAGE_CHOICES; ++c) {
+        const struct StoryChoice *choice = &page->choices[c];
+        if (choice->label && offered(choice, page))
+            append_choice(CHOICE_OBJECT, choice->label, choice->target, object_for(choice->anchor, game.room), c);
+    }
+    for (int i = 0; i < story->item_count; ++i)
+        if (game.world.carried & story->items[i].item)
+            append_choice(CHOICE_ITEM, story->items[i].name, story->items[i].id, game.item_object[i], -1);
 }
 
 /* Show a page by index, following invisible checks, and publish it. */
 static void show(int index)
 {
+    struct World *world = &game.world;
     for (int steps = 0; story->pages[index].kind == STORY_CHECK; ++steps) {
         if (steps >= MAX_CHECK_CHAIN) fail("story checks loop at %s", story->pages[index].id);
         const struct StoryPage *check = &story->pages[index];
-        index = find_page((game.facts & check->fact) == check->fact ? check->next : check->otherwise);
+        bool passed = (world->facts & check->fact) == check->fact && (world->carried & check->holds) == check->holds;
+        index = find_page(passed ? check->next : check->otherwise);
     }
     const struct StoryPage *page = &story->pages[index];
-    game.facts |= page->sets;
+    world->facts |= page->sets;
+    for (int i = 0; i < story->item_count; ++i)
+        if ((page->removes | page->gives) & story->items[i].item) world->lying[i] = 0;
+    world->carried = (world->carried & ~page->removes) | page->gives;
     game.page = index;
+    game.held = 0;
     game.room = object_for(page->location, 0);
     memset(&draft, 0, sizeof(draft));
     draft.room = game.room;
@@ -210,29 +333,24 @@ static void show(int index)
     select_image(&draft, page->camera);
     switch (page->kind) {
     case STORY_DECISION:
-        draft.kind = PAGE_ROOM;
-        game.snapshot[index] = game.facts;
+        game.snapshot[index] = *world;
         game.visited[index] = true;
         game.last_decision = index;
-        for (int c = 0; c < MAX_PAGE_CHOICES; ++c) {
-            const struct StoryChoice *choice = &page->choices[c];
-            if (choice->label && offered(choice))
-                append_choice(CHOICE_OBJECT, choice->label, choice->target, object_for(choice->anchor, game.room));
-        }
+        build_room();
         break;
     case STORY_PASSAGE:
         draft.kind = PAGE_BEAT;
-        append_choice(CHOICE_CONTINUE, story->continue_label, NULL, 0);
+        append_choice(CHOICE_CONTINUE, story->continue_label, NULL, 0, -1);
         break;
     case STORY_ENDING:
         draft.kind = PAGE_ENDED;
         draft.ending = page->ending;
-        if (page->ending == ENDING_SUCCESS) append_choice(CHOICE_RETRY, story->restart_label, story->start, 0);
+        if (page->ending == ENDING_SUCCESS) append_choice(CHOICE_RETRY, story->restart_label, story->start, 0, -1);
         else {
             /* Try again from the named decision when the reader has been there, else from their last one. */
             int retry = find_page(page->retry);
             if (retry < 0 || !game.visited[retry]) retry = game.last_decision;
-            append_choice(CHOICE_RETRY, story->retry_label, story->pages[retry].id, 0);
+            append_choice(CHOICE_RETRY, story->retry_label, story->pages[retry].id, 0, -1);
         }
         break;
     case STORY_CHECK:
@@ -244,7 +362,12 @@ static void show(int index)
 
 static void restart(void)
 {
-    game.facts = 0;
+    memset(&game.world, 0, sizeof(game.world));
+    for (int i = 0; i < story->item_count; ++i) {
+        const struct StoryItem *item = &story->items[i];
+        if (item->carried) game.world.carried |= item->item;
+        if (item->where) game.world.lying[i] = object_for(item->where, 0);
+    }
     game.last_decision = 0;
     memset(game.visited, 0, sizeof(game.visited));
     show(page_index(story->start, "start"));
@@ -304,6 +427,7 @@ const char *book_choice_kind_name(enum ChoiceKind kind)
     case CHOICE_OBJECT: return "object";
     case CHOICE_CONTINUE: return "continue";
     case CHOICE_RETRY: return "retry";
+    case CHOICE_ITEM: return "item";
     case CHOICE_INVALID: break;
     }
     fail("invalid choice kind %d", kind);
@@ -326,9 +450,30 @@ bool book_action(int index)
     const struct Choice choice = current.choices[index];
     const struct StoryPage *page = &story->pages[game.page];
     switch (choice.kind) {
-    case CHOICE_OBJECT:
+    case CHOICE_OBJECT: {
+        const struct StoryChoice *source = &page->choices[choice_source[index]];
+        if (source->take) {
+            int item = item_index(source->take);
+            game.world.lying[item] = 0;
+            game.world.carried |= source->take;
+        }
         show(page_index(choice.command, page->id));
         return true;
+    }
+    case CHOICE_ITEM: {
+        /* Tapping a carried thing holds it; tapping it again puts it away. The page stays. */
+        int held = 0;
+        for (int i = 0; i < story->item_count; ++i)
+            if (game.item_object[i] == choice.object) held = i + 1;
+        if (!held) fail("unknown carried thing %s", choice.command);
+        game.held = game.held == held ? 0 : held;
+        memset(&draft, 0, sizeof(draft));
+        draft.room = game.room;
+        select_image(&draft, page->camera);
+        build_room();
+        publish_page();
+        return true;
+    }
     case CHOICE_CONTINUE:
         show(page_index(page->next, page->id));
         return true;
@@ -337,7 +482,7 @@ bool book_action(int index)
         /* Return with the facts the reader had when they last stood at that decision. */
         if (page->ending == ENDING_SUCCESS || target < 0 || !game.visited[target]) restart();
         else {
-            game.facts = game.snapshot[target];
+            game.world = game.snapshot[target];
             show(target);
         }
         return true;
@@ -368,7 +513,8 @@ bool book_command(const char *input)
 {
     if (!input || !*input) return false;
     for (int i = 0; i < current.choice_count; ++i)
-        if (current.choices[i].kind == CHOICE_OBJECT && !strcmp(input, current.choices[i].command))
+        if ((current.choices[i].kind == CHOICE_OBJECT || current.choices[i].kind == CHOICE_ITEM) &&
+            !strcmp(input, current.choices[i].command))
             return book_action(i);
     return false;
 }
@@ -383,4 +529,17 @@ void book_reload(void)
 int book_object_room(int object)
 {
     return object > 0 && object <= game.object_count ? game.object_room[object] : 0;
+}
+
+bool book_item_image(int object, filePath_t path)
+{
+    path[0] = 0;
+    for (int i = 0; i < story->item_count; ++i) {
+        if (game.item_object[i] != object) continue;
+        assetName_t camera;
+        int length = snprintf(camera, sizeof(camera), ITEM_ICON_PREFIX "%s", story->items[i].id);
+        if (length < 0 || (size_t)length >= sizeof(camera)) fail("thing icon name is too long");
+        return find_image(camera, path);
+    }
+    return false;
 }

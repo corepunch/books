@@ -1,7 +1,7 @@
 # Book Engine Guide
 
 Book is a native C engine for visual interactive adventures. The built-in
-adventure is “Огонь на маяке”, a table of pages in `books/lighthouse.c` run by
+adventure is «Обратный отсчёт», a table of pages in `books/countdown.c` run by
 the story runtime in `src/story.c`. There is no ZIL or Lua runtime.
 Keep module internals private and shared declarations in the single
 `src/book.h` header. Compile stb_image in `renderer.c` and stb_truetype in
@@ -22,8 +22,10 @@ premise, story map, room bible, characters, shot list, page text, 3D blockout,
 implementation, illustration, packaging and review, one stage at a time. A
 book is an adventure in the manner of *Zork: The Forces of Krill*: a journey
 through many distinct places with forks, strangers, dangers and several
-endings, not a puzzle solved in one room. Books have no inventory, and nothing is picked up or carried; they remember a few
-story facts that later pages check.
+endings, not a puzzle solved in one room. Books remember a few story facts
+that later pages check. A book may also have things (ZIL-style objects that lie
+in places, are taken, carried, held and used); see
+[authoring/THINGS.md](authoring/THINGS.md) and `books/countdown.c`.
 
 ## Runtime
 
@@ -94,5 +96,5 @@ Run `make check` after host changes. It builds the native application and checks
 the C adventure, inferred asset names and projection without a display. For
 display changes, run a graphical smoke capture and inspect the JPEG with its
 hotspot/UI overlays. Do not rerender unchanged artwork just to test C code.
-Use `make render BOOK=lighthouse SCENE=bay` for artwork changes; render and
+Use `make render BOOK=countdown SCENE=train` for artwork changes; render and
 inspect affected cameras, keeping source and images synchronized.

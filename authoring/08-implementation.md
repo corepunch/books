@@ -12,7 +12,7 @@ the book file is data.
 - `src/book.h` (the `StoryPage`, `StoryChoice` and `Story` types), the
   repository `README.md` and `AGENTS.md`
 - [CHOICES.md](CHOICES.md) (implementing an option)
-- The example: [books/lighthouse.c](../books/lighthouse.c)
+- The example: [books/countdown.c](../books/countdown.c)
 
 ## Required actions
 
@@ -35,8 +35,9 @@ the book file is data.
    Consecutive pages of one moment may share a camera.
 3. **Facts.** Declare facts as bit flags (`FOLLOWED_SEAL = 1u << 0`). A page
    sets them with `.sets` when shown; checks read them; a choice can be
-   limited with `.requires` and `.excludes`. There is no inventory and nothing
-   is carried. Keep facts few; the path itself is memory.
+   limited with `.requires` and `.excludes`. Keep facts few; the path itself
+   is memory. Things the hero carries are a separate table; see
+   [THINGS.md](THINGS.md).
 4. **Anchors.** Each choice's `.anchor` is the key of a named group in the
    page camera's scene (lowercased, `_` becomes `-`). The runtime registers
    anchors and locations as objects; nothing else to declare.
@@ -47,7 +48,7 @@ the book file is data.
    `illustrations/<camera>.png` when it exists, otherwise the camera's render,
    so the book is readable before painting. A changed state is another camera.
 7. **Tests.** Add `tests/test_<name>.py` using `tests/headless_book.py`, as
-   `tests/test_lighthouse.py` does: explore every choice from the start
+   `tests/test_countdown.py` does: explore every choice from the start
    (keying explored pages by the pages already seen, because hidden facts
    depend on history), check that every camera is reached and every ending
    appears, and test the fact-dependent routes and "try again" explicitly. Tap

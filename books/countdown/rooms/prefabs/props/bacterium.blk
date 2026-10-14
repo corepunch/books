@@ -1,0 +1,15 @@
+<!-- One Cybernetic Bacterium, enlarged: a skull-like dome on eight jointed legs, 100 cm across as seen
+     on the Fortress display. Origin under the dome's middle. -->
+<prefab>
+  <sphere pos="0 0 50" radius="30" scale="1 1 0.8" material="bacterium" />
+  <sphere pos="-10 -26 52" radius="6" material="bacterium_eye" />
+  <sphere pos="10 -26 52" radius="6" material="bacterium_eye" />
+  <cylinder pos="0 30 30" rot="35 0 0" radius="3" height="60" material="bacterium" />
+  <cylinder pos="0 -30 30" rot="-35 0 0" radius="3" height="60" material="bacterium" />
+  <cylinder pos="30 0 30" rot="0 -35 0" radius="3" height="60" material="bacterium" />
+  <cylinder pos="-30 0 30" rot="0 35 0" radius="3" height="60" material="bacterium" />
+  <cylinder pos="22 22 30" rot="25 -25 0" radius="3" height="60" material="bacterium" />
+  <cylinder pos="-22 22 30" rot="25 25 0" radius="3" height="60" material="bacterium" />
+  <cylinder pos="22 -22 30" rot="-25 -25 0" radius="3" height="60" material="bacterium" />
+  <cylinder pos="-22 -22 30" rot="-25 25 0" radius="3" height="60" material="bacterium" />
+</prefab>

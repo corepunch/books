@@ -53,8 +53,9 @@ as Scener bone skeletons and painted the same way on every page.
    slowly than the body (a child's head is a larger share of its height), so
    children read as children and adults as adults at thumbnail size.
    Name materials per person (`varya_coat`, `savely_beard`) and define them in
-   each scene that shows that person. The Lighthouse cast in
-   `books/lighthouse/rooms/prefabs/characters/` is a working set.
+   each scene that shows that person, or in the character prefab. The
+   Countdown cast in `books/countdown/rooms/prefabs/characters/` is a working
+   set built from Scener's CAT biped preset with a shared pose library.
 8. **Pose list.** Every pose the shot list will need, named by action (walk,
    run, balance on a plank, hang from a rope, sit, row, point, push a door),
    with which bones re-aim and which feet or hands plant with IK.

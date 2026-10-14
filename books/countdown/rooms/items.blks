@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Обратный отсчёт: icons for the inventory, one camera "item-<id>" per thing the hero can carry and per
+     power he uses like one. Each sits on its own dark stage 10 m from the next, lit from the upper left.
+     Z up, cm. These are close-ups for the round icons, not pages. -->
+<scene up="z" ambient="0.30 0.30 0.34" background="0.10 0.11 0.16">
+  <camera name="item-heat" comment="Heat vision: Superman's eyes and two red beams" pos="-38 -52 182" look="-6 -8 172" fov="34" />
+  <camera name="item-xray" comment="X-ray vision: Superman's gaze, a pale blue cone" pos="962 -52 182" look="994 -8 172" fov="34" />
+  <camera name="item-breath" comment="Super-breath: a white cone of frost from Superman's lips" pos="1962 -52 176" look="1994 -10 166" fov="34" />
+  <camera name="item-hearing" comment="Super-hearing: Superman's head in profile, rings of sound round his ear" pos="3070 -20 178" look="3000 0 174" fov="34" />
+  <camera name="item-pass" comment="Clark's press pass" pos="4000 -30 4" look="4000 0 0" fov="34" />
+  <camera name="item-cable" comment="A coil of thick computer cable" pos="5000 -110 120" look="5000 0 8" fov="40" />
+  <camera name="item-vial" comment="The spent gas grenade with its purple band" pos="6000 -26 24" look="6000 0 4" fov="40" />
+  <camera name="item-sprayer" comment="The antidote sprayer: tank, hose and gun" pos="7020 -170 80" look="7020 0 34" fov="40" />
+  <camera name="item-drone" comment="One of Brainiac's drones" pos="8000 -34 16" look="8000 0 0" fov="40" />
+  <camera name="item-canister" comment="Brainiac's Bacteria canister" pos="9000 -130 70" look="9000 0 46" fov="40" />
+
+  <material id="gunmetal" color="0.14 0.14 0.16" shininess="60" />
+  <material id="cable" color="0.10 0.10 0.12" shininess="20" />
+  <material id="tank" color="0.82 0.84 0.86" shininess="90" />
+  <material id="strap" color="0.20 0.22 0.20" shininess="5" />
+  <material id="hose" color="0.10 0.10 0.10" shininess="20" />
+  <material id="drone" color="0.56 0.60 0.62" shininess="80" />
+  <material id="canister" color="0.70 0.72 0.74" shininess="90" />
+
+  <sun dir="0.5 0.6 -0.6" color="1.0 0.97 0.92" intensity="1.2" castShadows="1" />
+
+  <prefab source="characters/superman" pos="0 0 0" />
+  <cylinder pos="-5 -42 175" rot="0 0 -3" radius="0.9" height="64" color="1.0 0.18 0.08" unlit="1" castShadow="0" />
+  <cylinder pos="5 -42 175" rot="0 0 3" radius="0.9" height="64" color="1.0 0.18 0.08" unlit="1" castShadow="0" />
+  <prefab source="characters/superman" pos="1000 0 0" />
+  <cone pos="1000 -34 175" radius="10" radiusTop="2" height="46" color="0.70 0.86 1.0" unlit="1" castShadow="0" />
+  <prefab source="characters/superman" pos="2000 0 0" />
+  <cone pos="2000 -34 169" radius="11" radiusTop="1.5" height="46" color="0.94 0.98 1.0" castShadow="0" />
+  <prefab source="characters/superman" pos="3000 0 0" />
+  <torus pos="3014 0 175" rot="0 0 90" majorRadius="7" minorRadius="0.6" color="0.98 0.86 0.30" unlit="1" castShadow="0" />
+  <torus pos="3019 0 175" rot="0 0 90" majorRadius="11" minorRadius="0.6" color="0.98 0.86 0.30" unlit="1" castShadow="0" />
+  <torus pos="3024 0 175" rot="0 0 90" majorRadius="15" minorRadius="0.6" color="0.98 0.86 0.30" unlit="1" castShadow="0" />
+  <prefab source="props/press_pass" pos="4000 0 0" />
+  <prefab source="props/cable_coil" pos="5000 0 0" />
+  <prefab source="props/grenade" pos="6000 0 0" rot="0 0 20" />
+  <prefab source="props/sprayer" pos="7000 0 0" rot="0 0 -10" />
+  <prefab source="props/drone" pos="8000 0 0" rot="20 0 -20" />
+  <prefab source="props/canister" pos="9000 0 0" />
+</scene>

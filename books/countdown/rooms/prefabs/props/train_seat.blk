@@ -1,0 +1,9 @@
+<!-- A commuter-train double seat: 100 cm wide (local X), seat top at 46 cm, backrest to 110 cm.
+     Origin on the floor under the middle of the seat front edge; the sitter faces local -Y. -->
+<prefab>
+  <box pos="0 20 22" size="96 40 44" material="seat_frame" />
+  <box pos="0 20 46" size="100 46 10" material="seat_cloth" />
+  <box pos="0 44 80" size="100 10 66" rot="-8 0 0" material="seat_cloth" />
+  <box pos="0 46 114" size="100 12 8" material="seat_frame" />
+  <box pos="-49 22 62" size="4 40 6" material="seat_frame" />
+</prefab>

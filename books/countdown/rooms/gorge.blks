@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Обратный отсчёт: the disused branch line north of Rielly's Field, where the switching station sent the
+     runaway 8:00 train. Z up, cm; the rail head on the near (west) rim is z=0 and the track runs east
+     along y=0. The bridge over the gorge washed out years ago: a 1600 cm gap between the stub of the
+     steel trestle (west rim, x=0) and the stone pier (east rim, x=1600), 2400 cm above a shallow river.
+     The old bridge timbers lie stacked on the west rim where the railway left them. Superman is
+     authored at the origin, 50 m below ground, so camera transforms read as world positions. -->
+<scene up="z" ambient="0.30 0.32 0.36" background="0.56 0.72 0.90">
+  <camera name="gorge-xray-bridge" comment="From the cab: the rails run out to the broken trestle, the gap and the river; the timber pile on the rim" pos="-1010 40 410" look="1300 -40 150" fov="52" textRect="0.04 0.035 0.92 0.33" textScale="1">
+    <transform target="Train" pos="0 0 -3000" />
+  </camera>
+  <camera name="gorge-show-train" comment="The runaway train racing for the gap, Superman flying beside the engine; the timber pile on the rim" pos="900 -1900 1050" look="-1100 150 60" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Superman" pos="-1250 -400 5440" rot="90 0 90" />
+    <use-pose instance="Superman" name="Fly" />
+  </camera>
+  <camera name="gorge-lift-coupling" comment="Superman lifts the train over the rim; the coupling behind the first car has snapped and the rear cars sag" pos="1300 -1650 1250" look="-1000 0 820" fov="58" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Train" pos="2600 0 700" />
+    <transform target="RearCars" rot="0 -9 0" pos="-40 0 -30" />
+    <transform target="Superman" pos="20 0 5520" rot="0 0 -90" />
+    <use-pose instance="Superman" name="Lift" />
+  </camera>
+  <camera name="gorge-weld" comment="Superman's heat vision welds the coupling; the rear cars come level again" pos="1300 -1650 1250" look="-1000 0 420" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Train" pos="2600 0 700" />
+    <transform target="Superman" pos="-1510 -270 5620" rot="0 0 180" />
+    <use-pose instance="Superman" name="Hold" />
+    <transform target="HeatBeams" pos="0 0 5000" />
+  </camera>
+  <camera name="gorge-hold-span" comment="Seen from the riverbed: Superman holds up a span of old timbers while the engine rolls across it" pos="900 -1600 -1150" look="800 0 -120" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Span" pos="0 0 5000" />
+    <transform target="Timbers" pos="0 0 -5000" />
+    <transform target="Train" pos="2600 0 0" />
+    <transform target="Superman" pos="800 0 4750" />
+    <use-pose instance="Superman" name="Lift" />
+  </camera>
+  <camera name="gorge-breath" comment="Superman blows against the engine; the train stops with its front wheels at the brink" pos="950 -1000 560" look="-500 0 220" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Train" pos="1030 0 0" />
+    <transform target="Superman" pos="120 0 5150" rot="0 0 -90" />
+    <use-pose instance="Superman" name="Blow" />
+    <transform target="Breath" pos="0 0 5000" />
+  </camera>
+  <camera name="gorge-headon" comment="Ending: Superman has stopped the train with his body; the engine's nose is crushed and the cars have jumped the rails" pos="950 -1000 560" look="-500 0 220" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Train" pos="1050 0 0" />
+    <transform target="EngineNose" pos="0 0 5000" />
+    <transform target="Car1" rot="0 0 7" pos="0 -60 -20" />
+    <transform target="RearCars" rot="0 0 -9" pos="0 120 -40" />
+    <transform target="Superman" pos="70 -40 5000" rot="0 0 -80" />
+    <use-pose instance="Superman" name="Kneel" />
+  </camera>
+  <camera name="gorge-saved" comment="Across the gorge: the train stands safe on the far rim, Superman lands beside the engine and waves" pos="2000 -1500 520" look="3900 300 160" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Train" pos="5600 0 0" />
+    <transform target="Superman" pos="3950 -330 5000" rot="0 0 -49" />
+    <use-pose instance="Superman" name="Wave" />
+    <transform target="Span" pos="0 0 5000" />
+    <transform target="Timbers" pos="0 0 -5000" />
+  </camera>
+
+  <material id="engine_body" color="0.78 0.20 0.16" shininess="20" />
+  <material id="engine_frame" color="0.16 0.16 0.18" shininess="30" />
+  <material id="engine_stripe" color="0.95 0.86 0.40" shininess="20" />
+  <material id="car_body" color="0.72 0.74 0.76" shininess="40" />
+  <material id="car_roof" color="0.42 0.44 0.46" shininess="30" />
+  <material id="glass" color="0.40 0.52 0.62" shininess="90" />
+  <material id="ballast" color="0.46 0.43 0.40" shininess="2" />
+  <material id="sleeper" color="0.34 0.25 0.18" shininess="2" />
+  <material id="rail" color="0.50 0.48 0.46" shininess="60" />
+  <material id="timber" color="0.46 0.34 0.22" shininess="4" />
+  <material id="grass" color="0.46 0.58 0.28" shininess="2" />
+  <material id="rock" color="0.52 0.46 0.40" shininess="4" />
+  <material id="rock_dark" color="0.38 0.34 0.30" shininess="4" />
+  <material id="water" color="0.26 0.42 0.50" shininess="90" />
+  <material id="steel" color="0.30 0.32 0.34" shininess="30" />
+  <material id="masonry" color="0.62 0.58 0.52" shininess="4" />
+  <material id="leaf" color="0.24 0.40 0.20" shininess="2" />
+  <material id="bark" color="0.36 0.26 0.18" shininess="2" />
+
+  <!-- Mid-morning sun from the south-east. -->
+  <sun dir="-0.45 0.6 -0.75" color="1.0 0.95 0.84" intensity="1.15" castShadows="1" />
+
+  <!-- The ground: west and east plateaus, the gorge walls, its floor and the river. -->
+  <box pos="-4000 0 -1545" size="8000 9000 3090" material="grass" />
+  <box pos="5600 0 -1545" size="8000 9000 3090" material="grass" />
+  <box pos="-30 0 -1210" size="64 9000 2420" material="rock" />
+  <box pos="1630 0 -1210" size="64 9000 2420" material="rock" />
+  <box pos="-40 0 -900" rot="0 -12 0" size="100 9000 600" material="rock_dark" />
+  <box pos="1640 0 -1500" rot="0 10 0" size="110 9000 700" material="rock_dark" />
+  <box pos="800 0 -2450" size="1700 9000 100" material="rock_dark" />
+  <box pos="800 0 -2392" size="700 9000 20" material="water" />
+  <sphere pos="300 -500 -2340" radius="120" material="rock" />
+  <sphere pos="1250 400 -2350" radius="140" material="rock" />
+  <sphere pos="1100 -1300 -2360" radius="100" material="rock" />
+
+  <!-- The line: track on both rims, the steel trestle stub on the west, the stone pier on the east. -->
+  <prefab source="props/rails" pos="-500 0 0" />
+  <prefab source="props/rails" pos="-1500 0 0" />
+  <prefab source="props/rails" pos="-2500 0 0" />
+  <prefab source="props/rails" pos="-3500 0 0" />
+  <prefab source="props/rails" pos="-4500 0 0" />
+  <prefab source="props/rails" pos="-5500 0 0" />
+  <prefab source="props/rails" pos="-6500 0 0" />
+  <prefab source="props/rails" pos="-7500 0 0" />
+  <prefab source="props/rails" pos="2100 0 0" />
+  <prefab source="props/rails" pos="3100 0 0" />
+  <prefab source="props/rails" pos="4100 0 0" />
+  <prefab source="props/rails" pos="5100 0 0" />
+  <prefab source="props/rails" pos="6100 0 0" />
+  <!-- The trestle stub: a deck girder over the brink on a steel tower that stands on the gorge floor. -->
+  <group name="TrestleStub">
+    <box pos="130 0 -40" size="260 320 30" material="steel" />
+    <box pos="130 160 -130" size="260 12 180" material="steel" />
+    <box pos="130 -160 -130" size="260 12 180" material="steel" />
+    <box pos="130 160 -130" size="250 10 10" rot="0 40 0" material="steel" />
+    <box pos="130 -160 -130" size="250 10 10" rot="0 40 0" material="steel" />
+    <box pos="200 140 -1300" size="24 24 2200" material="steel" />
+    <box pos="200 -140 -1300" size="24 24 2200" material="steel" />
+    <box pos="200 0 -900" size="14 280 14" material="steel" />
+    <box pos="200 0 -1700" size="14 280 14" material="steel" />
+    <box pos="240 0 -10" size="200 160 10" rot="0 -14 0" material="sleeper" />
+  </group>
+  <group name="Pier">
+    <box pos="1520 0 -1220" size="180 380 2440" material="masonry" />
+    <box pos="1520 0 -30" size="240 340 30" material="masonry" />
+  </group>
+  <!-- The old warning sign the engine smashes through, still standing on its post here. -->
+  <group name="Sign" pos="-700 -230 0">
+    <cylinder pos="0 0 120" rot="90 0 0" radius="6" height="240" material="sleeper" />
+    <box pos="0 0 220" size="160 6 70" color="0.94 0.92 0.86" />
+    <box pos="0 -4 220" size="140 2 12" color="0.72 0.10 0.10" />
+  </group>
+  <!-- The timbers of the old bridge, stacked on the west rim by the railway years ago. -->
+  <group name="Timbers" pos="-420 430 0">
+    <prefab source="props/timber" pos="0 0 15" rot="0 0 4" />
+    <prefab source="props/timber" pos="10 34 15" rot="0 0 -2" />
+    <prefab source="props/timber" pos="-14 68 15" rot="0 0 3" />
+    <prefab source="props/timber" pos="20 102 15" rot="0 0 -5" />
+    <prefab source="props/timber" pos="6 18 45" rot="0 0 -3" />
+    <prefab source="props/timber" pos="-8 52 45" rot="0 0 6" />
+    <prefab source="props/timber" pos="14 86 45" rot="0 0 -1" />
+    <prefab source="props/timber" pos="0 40 75" rot="0 0 2" />
+  </group>
+  <!-- The span Superman builds from those timbers across the gap; shown only once it exists. -->
+  <group name="Span" pos="0 0 -5000">
+    <box pos="800 72 -24" size="1760 30 30" material="timber" />
+    <box pos="800 -72 -24" size="1760 30 30" material="timber" />
+    <box pos="800 110 -24" size="1760 30 30" material="timber" />
+    <box pos="800 -110 -24" size="1760 30 30" material="timber" />
+    <box pos="800 72 -4" size="1760 7 10" material="rail" />
+    <box pos="800 -72 -4" size="1760 7 10" material="rail" />
+  </group>
+
+  <!-- The train: the engine and the first car, then the two rear cars behind the coupling. -->
+  <group name="Train">
+    <group name="Locomotive" pos="-1800 0 0">
+      <prefab source="props/engine" />
+      <group name="EngineNose" pos="0 0 -5000"><box pos="690 0 200" size="80 300 260" rot="0 18 0" material="engine_frame" /></group>
+    </group>
+    <group name="Car1" pos="-3360 0 0"><prefab source="props/railcar" /></group>
+    <group name="RearCars" pos="-4140 0 90" pivotOffset="0 0 0">
+      <prefab source="props/railcar" pos="-780 0 -90" />
+      <prefab source="props/railcar" pos="-2340 0 -90" />
+    </group>
+  </group>
+  <!-- Heat vision on the coupling and Superman's breath, shown only in their cameras. -->
+  <group name="HeatBeams" pos="0 0 -5000">
+    <cylinder pos="-1506 -130 792" radius="2.2" height="250" color="1.0 0.20 0.08" unlit="1" castShadow="0" />
+    <cylinder pos="-1514 -130 792" radius="2.2" height="250" color="1.0 0.20 0.08" unlit="1" castShadow="0" />
+    <sphere pos="-1510 0 790" radius="20" color="1.0 0.70 0.30" unlit="1" castShadow="0" />
+  </group>
+  <group name="Breath" pos="0 0 -5000">
+    <cone pos="30 0 305" rot="0 0 -90" radius="110" radiusTop="12" height="150" color="0.90 0.95 1.0" castShadow="0" />
+  </group>
+
+  <!-- Trees on both plateaus and hills beyond. -->
+  <group pos="-2400 1900 0">
+    <cylinder pos="0 0 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="0 0 420" radius="220" material="leaf" />
+    <cylinder pos="600 500 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="600 500 400" radius="200" material="leaf" />
+    <cylinder pos="-900 300 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="-900 300 430" radius="240" material="leaf" />
+  </group>
+  <group pos="3400 1600 0">
+    <cylinder pos="0 0 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="0 0 420" radius="220" material="leaf" />
+    <cylinder pos="900 -300 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="900 -300 400" radius="200" material="leaf" />
+  </group>
+  <sphere pos="-6000 9000 -2600" radius="4200" material="leaf" />
+  <sphere pos="4000 10000 -3000" radius="4800" material="leaf" />
+
+  <prefab source="characters/superman" name="Superman" pos="0 0 -5000" />
+
+  <!-- Anchors. -->
+  <group name="Engine" pos="-1700 0 300" />
+  <group name="Cars" pos="-2700 -150 140" />
+  <group name="Timber-Pile" pos="-410 480 60" />
+  <group name="Coupling" pos="-1510 0 790" />
+  <group name="Rear-Cars" pos="-2350 0 760" />
+</scene>

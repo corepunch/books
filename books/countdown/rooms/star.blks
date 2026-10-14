@@ -1,0 +1,290 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Обратный отсчёт: the S.T.A.R. Computer Complex upstate, 9:00 to 10:00 A.M. Z up, cm, X east, Y north.
+     The Star 7 room on the third floor (after the module's 5-ft grid map): 2300 x 1400, ceiling 380, a
+     raised floor of 120 cm panels over a 60 cm crawlspace full of cables. The chrome Star 7 core stands
+     in the middle facing south, two console banks splay out before it, diagnostic banks line the north
+     wall, the operations table with the log book is in the north-east corner, tape cabinets line the
+     west wall, the double door and the ventilation grille are in the south wall, windows look east.
+     Brock's men crawl in from a maintenance tunnel to the east and come up through three panels south
+     of the core. The building's entrance with its two guards is modelled 80 m south (the gate group).
+     Clark and Superman are authored 30 m below the floor; camera transforms give world positions. -->
+<scene up="z" ambient="0.30 0.30 0.34" background="0.56 0.72 0.90">
+  <camera name="star-show-gate" comment="The S.T.A.R. entrance: two armed guards stop Clark and his crew at the glass doors" pos="-700 -9300 260" look="150 -8100 260" fov="56" textRect="0.04 0.035 0.92 0.32" textScale="1">
+    <transform target="Clark" pos="-120 -8380 3000" rot="0 0 165" />
+    <use-pose instance="Clark" name="Stand" />
+  </camera>
+  <camera name="star-show-room" comment="The Star 7 room: the chrome core and its consoles, technicians at work, Rafferty showing the WGBS crew round" pos="1000 -620 330" look="-150 150 130" fov="64" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Clark" pos="-220 -470 3000" rot="0 0 200" />
+  </camera>
+  <camera name="star-show-vent" comment="The interview: Rafferty talks into Wirth's camera, Clark beside the ventilation grille where a purple wisp curls out" pos="-420 -500 260" look="400 -400 60" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Clark" pos="260 -470 3000" rot="0 0 -128" />
+    <transform target="Wisps" pos="0 0 3000" />
+  </camera>
+  <camera name="star-xray-floor" comment="X-ray view: under the floor panels three masked men crawl through the cables toward the room" pos="-420 -500 260" look="400 -400 60" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Clark" pos="260 -470 3000" rot="0 0 -128" />
+    <transform target="Floor" pos="0 0 -3000" />
+    <transform target="Crawlers" pos="0 0 3000" />
+  </camera>
+  <camera name="star-gas" comment="Purple gas fills the room; everyone sleeps; three floor panels rise and masked heads come up" pos="900 -560 300" look="-100 -300 60" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Gas" pos="0 0 3000" />
+    <transform target="Clark" pos="-380 -560 3008" rot="88 0 -20" />
+    <transform target="Rafferty" pos="-60 30 4" rot="88 0 140" />
+    <use-pose instance="Tech1" name="Sleep" />
+    <use-pose instance="Tech2" name="Sleep" />
+    <transform target="Wirth" pos="0 0 6" rot="88 0 0" />
+    <transform target="WirthCamera" pos="0 0 -146" />
+    <transform target="Panels" pos="0 0 3000" />
+    <transform target="PanelsUp" pos="0 0 3000" />
+    <transform target="Rising" pos="0 0 3000" />
+  </camera>
+  <camera name="star-blowback" comment="Clark, coughing into his hand, blows the gas back into the grille; the technicians splutter" pos="-420 -500 260" look="400 -400 60" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Clark" pos="300 -520 3000" rot="0 0 40" />
+    <use-pose instance="Clark" name="Blow" />
+    <transform target="Wisps" pos="0 0 3000" />
+    <transform target="BlowBack" pos="0 0 3000" />
+  </camera>
+  <camera name="star-show-mercs" comment="Brock and his men stand over the open panels, pistols out over the sleepers; Superman faces them; a coil of cable lies by the hole" pos="-640 -140 250" look="100 -430 100" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Superman" pos="-260 -200 3000" rot="0 0 -110" />
+    <use-pose instance="Superman" name="HandsOnHips" />
+    <transform target="Rafferty" pos="-60 30 4" rot="88 0 140" />
+    <use-pose instance="Tech1" name="Sleep" />
+    <use-pose instance="Tech2" name="Sleep" />
+    <transform target="Wirth" pos="0 0 6" rot="88 0 0" />
+    <transform target="WirthCamera" pos="0 0 -146" />
+    <transform target="Panels" pos="0 0 3000" />
+    <transform target="PanelsUp" pos="0 0 3000" />
+    <transform target="Mercs" pos="0 0 3000" />
+    <transform target="Coil" pos="0 0 3000" />
+  </camera>
+  <camera name="star-caught" comment="The three mercenaries sit bound in a loop of cable, their pistols in a heap; Superman stands guard" pos="-640 -140 250" look="100 -430 100" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Superman" pos="-180 -280 3000" rot="0 0 -110" />
+    <use-pose instance="Superman" name="HandsOnHips" />
+    <transform target="Rafferty" pos="-60 30 4" rot="88 0 140" />
+    <use-pose instance="Tech1" name="Sleep" />
+    <use-pose instance="Tech2" name="Sleep" />
+    <transform target="Wirth" pos="0 0 6" rot="88 0 0" />
+    <transform target="WirthCamera" pos="0 0 -146" />
+    <transform target="Panels" pos="0 0 3000" />
+    <transform target="PanelsUp" pos="0 0 3000" />
+    <transform target="Bound" pos="0 0 3000" />
+  </camera>
+  <camera name="star-show-sample" comment="Afterwards: everyone awake, Rafferty waving the worthless log book, the Star 7's screens glitching red; a spent gas grenade by the grille" pos="-620 -320 240" look="320 -520 100" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Clark" pos="-80 -520 3000" rot="0 0 -60" />
+    <transform target="Rafferty" pos="-120 -160 0" rot="0 0 60" />
+    <use-pose instance="Rafferty" name="Panic" />
+    <transform target="Glitch" pos="0 0 3000" />
+    <transform target="Grenade" pos="0 0 3000" />
+  </camera>
+  <camera name="star-leave-crew" comment="Ending: Clark follows his crew out of the double door while every screen in the room flickers red behind them" pos="380 -230 255" look="-500 -690 110" fov="60" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="Rafferty" pos="160 -689 0" />
+    <transform target="Clark" pos="-460 -620 3000" rot="0 0 0" />
+    <transform target="CrewGroup" pos="-200 -60 0" />
+    <transform target="Glitch" pos="0 0 3000" />
+  </camera>
+
+  <material id="chrome" color="0.80 0.82 0.86" shininess="120" />
+  <material id="dark_metal" color="0.24 0.26 0.30" shininess="40" />
+  <material id="screen_glow" color="0.55 0.90 0.80" shininess="5" />
+  <material id="lamp_red" color="1.0 0.25 0.20" shininess="5" />
+  <material id="chair_cloth" color="0.20 0.22 0.30" shininess="5" />
+  <material id="cabinet" color="0.84 0.84 0.80" shininess="20" />
+  <material id="wood" color="0.52 0.36 0.22" shininess="12" />
+  <material id="gunmetal" color="0.14 0.14 0.16" shininess="60" />
+  <material id="cable" color="0.10 0.10 0.12" shininess="20" />
+  <material id="room_wall" color="0.86 0.88 0.90" shininess="6" />
+  <material id="panel" color="0.62 0.64 0.66" shininess="20" />
+  <material id="subfloor" color="0.22 0.22 0.24" shininess="4" />
+  <material id="gas" color="0.66 0.40 0.82" shininess="2" />
+  <material id="glass" color="0.62 0.78 0.88" shininess="90" />
+  <material id="camera_body" color="0.12 0.12 0.13" shininess="40" />
+  <material id="camera_lens" color="0.05 0.05 0.06" shininess="90" />
+  <material id="concrete" color="0.74 0.72 0.68" shininess="4" />
+  <material id="grass" color="0.44 0.58 0.28" shininess="2" />
+
+  <!-- Morning sun from the south-east; inside, the fluorescent panels in the ceiling. -->
+  <sun dir="-0.4 0.65 -0.65" color="1.0 0.96 0.86" intensity="1.1" castShadows="1" />
+  <light pos="-500 -300 360" color="0.92 0.96 1.0" intensity="0.55" radius="900" castShadows="1" />
+  <light pos="500 -300 360" color="0.92 0.96 1.0" intensity="0.55" radius="900" castShadows="0" />
+  <light pos="0 350 360" color="0.92 0.96 1.0" intensity="0.5" radius="900" castShadows="0" />
+  <box pos="-500 -300 377" size="240 60 4" color="0.96 0.98 1.0" unlit="1" castShadow="0" />
+  <box pos="500 -300 377" size="240 60 4" color="0.96 0.98 1.0" unlit="1" castShadow="0" />
+  <box pos="0 350 377" size="240 60 4" color="0.96 0.98 1.0" unlit="1" castShadow="0" />
+
+  <!-- Shell. -->
+  <box pos="0 0 384" size="2320 1420 8" material="room_wall" />
+  <box pos="0 0 -66" size="2320 1420 8" material="subfloor" />
+  <wall pos="0 704 -70" rot="90 0 0" length="2316" height="450" thickness="8" upperMaterial="room_wall" />
+  <wall pos="0 -704 -70" rot="90 0 0" length="2316" height="450" thickness="8" upperMaterial="room_wall" />
+  <wall pos="-1154 0 -70" rot="90 0 90" length="1400" height="450" thickness="8" upperMaterial="room_wall" />
+  <wall pos="1154 0 -70" rot="90 0 90" length="1400" height="450" thickness="8" upperMaterial="room_wall" />
+  <door name="MainDoor" pos="-560 -704 110" rot="90 0 0" width="90" height="220" frameMaterial="dark_metal" leafMaterial="cabinet" />
+  <door name="MainDoor2" pos="-470 -704 110" rot="90 0 0" width="90" height="220" hinge="right" frameMaterial="dark_metal" leafMaterial="cabinet" />
+  <window preset="cottage" pos="1154 -350 200" rot="90 0 90" width="220" height="160" sill="0" frameMaterial="dark_metal" />
+  <window preset="cottage" pos="1154 100 200" rot="90 0 90" width="220" height="160" sill="0" frameMaterial="dark_metal" />
+  <window preset="cottage" pos="1154 450 200" rot="90 0 90" width="220" height="160" sill="0" frameMaterial="dark_metal" />
+  <!-- The ventilation grille low in the south wall. -->
+  <group name="Grille" pos="450 -699 60">
+    <box size="90 4 56" material="dark_metal" />
+    <box pos="0 -2 0" size="84 2 4" material="chrome"><array count="6" translation="0 0 9" /></box>
+  </group>
+
+  <!-- The raised floor: panels over the crawlspace, with the three that Brock's men lift as their own group. -->
+  <group name="Floor">
+    <box pos="0 -570 -2" size="2300 260 4" material="panel" />
+    <box pos="0 190 -2" size="2300 1020 4" material="panel" />
+    <box pos="-665 -380 -2" size="970 120 4" material="panel" />
+    <box pos="665 -380 -2" size="970 120 4" material="panel" />
+    <box pos="0 -680 0.3" size="2300 1.5 0.6" material="dark_metal"><array count="12" translation="0 120 0" /></box>
+    <box pos="-1140 0 0.3" size="1.5 1400 0.6" material="dark_metal"><array count="20" translation="120 0 0" /></box>
+  </group>
+  <group name="Panels">
+    <box pos="-120 -380 -2" size="118 118 4" material="panel" />
+    <box pos="0 -380 -2" size="118 118 4" material="panel" />
+    <box pos="120 -380 -2" size="118 118 4" material="panel" />
+  </group>
+  <group name="PanelsUp" pos="0 0 -3000">
+    <box pos="-150 -470 2" rot="0 0 18" size="118 118 4" material="panel" />
+    <box pos="10 -490 5" rot="0 0 -8" size="118 118 4" material="panel" />
+    <box pos="160 -455 8" rot="0 0 25" size="118 118 4" material="panel" />
+  </group>
+  <!-- Under the floor: cable runs and the tunnel mouth in the east. -->
+  <cylinder pos="0 -300 -50" rot="0 0 90" radius="6" height="2200" material="cable" />
+  <cylinder pos="0 -460 -48" rot="0 0 90" radius="5" height="2200" material="cable" />
+  <cylinder pos="0 200 -50" rot="0 0 90" radius="6" height="2200" material="cable" />
+  <box pos="1100 -380 -32" size="100 120 64" color="0.05 0.05 0.06" />
+
+  <!-- Equipment. -->
+  <prefab source="props/star7" pos="0 150 0" />
+  <prefab source="props/console" pos="-470 -60 0" rot="0 0 25" />
+  <prefab source="props/console" pos="470 -60 0" rot="0 0 -25" />
+  <prefab source="props/office_chair" pos="-500 -150 0" rot="0 0 25" />
+  <prefab source="props/office_chair" pos="500 -150 0" rot="0 0 -25" />
+  <prefab source="props/console" pos="-330 600 0" rot="0 0 180" />
+  <prefab source="props/console" pos="330 600 0" rot="0 0 180" />
+  <prefab source="props/office_chair" pos="-330 500 0" rot="0 0 180" />
+  <cylinder pos="-1010 560 110" rot="90 0 0" radius="80" height="220" material="chrome" />
+  <prefab source="props/cabinet" pos="-1110 -380 0" rot="0 0 90" />
+  <prefab source="props/cabinet" pos="-1110 -250 0" rot="0 0 90" />
+  <prefab source="props/cabinet" pos="-1110 -120 0" rot="0 0 90" />
+  <prefab source="props/cabinet" pos="-1110 10 0" rot="0 0 90" />
+  <prefab source="props/cabinet" pos="-1110 140 0" rot="0 0 90" />
+  <prefab source="props/ops_table" pos="860 450 0" />
+  <box name="LogBook" pos="840 440 82" rot="0 0 12" size="34 26 5" color="0.12 0.20 0.42" />
+  <!-- The Star 7's screens fail red after the gas: a red layer over each screen, shown per camera. -->
+  <group name="Glitch" pos="0 0 -3000">
+    <box pos="0 18 210" size="360 4 120" color="1.0 0.22 0.18" unlit="1" castShadow="0" />
+    <box pos="-430 -28 145" rot="0 0 25" size="300 4 64" color="1.0 0.22 0.18" unlit="1" castShadow="0" />
+    <box pos="430 -28 145" rot="0 0 -25" size="300 4 64" color="1.0 0.22 0.18" unlit="1" castShadow="0" />
+  </group>
+
+  <!-- People of the room. -->
+  <prefab source="characters/rafferty" name="Rafferty" pos="80 -330 0" rot="0 0 140" pose="Point" />
+  <prefab source="characters/technician" name="Tech1" pos="-500 -150 0" rot="0 0 25" pose="Sit" />
+  <prefab source="characters/technician" name="Tech2" pos="500 -150 0" rot="0 0 -25" pose="Sit" />
+  <prefab source="characters/technician" name="Tech3" pos="-330 470 0" rot="0 0 180" pose="Point" />
+  <group name="CrewGroup">
+    <prefab source="characters/person" name="Wirth" pos="-220 -610 0" rot="0 0 -125" pose="Aim" color="0.38 0.30 0.52" />
+    <prefab source="props/tv_camera" name="WirthCamera" pos="-180 -585 150" rot="0 0 -125" />
+    <prefab source="characters/person" name="Chiang" pos="-330 -560 0" rot="0 0 -115" color="0.86 0.52 0.20" />
+  </group>
+  <prefab source="characters/clark" name="Clark" pos="0 0 -3000" />
+  <prefab source="characters/superman" name="Superman" pos="0 0 -3000" />
+
+  <!-- Purple wisps from the grille, and the gas filling the room. -->
+  <group name="Wisps" pos="0 0 -3000">
+    <sphere pos="450 -670 70" radius="16" scale="1.6 1 0.8" material="gas" castShadow="0" />
+    <sphere pos="440 -640 95" radius="12" scale="1.6 1 0.8" material="gas" castShadow="0" />
+    <sphere pos="470 -615 118" radius="9" scale="1.6 1 0.8" material="gas" castShadow="0" />
+  </group>
+  <group name="BlowBack" pos="0 0 -3000">
+    <cone pos="380 -610 120" rot="0 0 140" radius="40" radiusTop="6" height="120" color="0.90 0.95 1.0" castShadow="0" />
+  </group>
+  <group name="Gas" pos="0 0 -3000">
+    <sphere pos="-317 -484 7" radius="116" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="65 -248 11" radius="74" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-833 -173 7" radius="75" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-136 260 8" radius="79" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="229 392 10" radius="110" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="857 -599 9" radius="130" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-640 -520 14" radius="92" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-575 -10 10" radius="115" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="86 -581 8" radius="74" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="325 -180 12" radius="92" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-84 -320 13" radius="126" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-461 -18 15" radius="107" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="413 -333 7" radius="139" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-147 183 11" radius="81" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-829 85 12" radius="124" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="676 -305 12" radius="119" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="144 -148 15" radius="129" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-47 81 13" radius="74" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="265 442 9" radius="128" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-206 86 11" radius="72" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-598 -521 14" radius="74" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-667 -378 15" radius="97" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-755 -156 15" radius="108" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="575 300 10" radius="89" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-254 323 8" radius="137" scale="1.5 1 0.16" material="gas" castShadow="0" />
+    <sphere pos="-583 -395 11" radius="86" scale="1.5 1 0.16" material="gas" castShadow="0" />
+  </group>
+  <!-- Brock's men: crawling under the floor, rising through it, standing over the hole, and bound. -->
+  <group name="Crawlers" pos="0 0 -3000">
+    <prefab source="characters/merc" name="Crawler1" pos="420 -395 -52" rot="90 0 -90" />
+    <prefab source="characters/merc" name="Crawler2" pos="700 -360 -52" rot="90 0 -90" />
+    <prefab source="characters/merc" name="Crawler3" pos="960 -400 -52" rot="90 0 -90" />
+  </group>
+  <group name="Rising" pos="0 0 -3000">
+    <prefab source="characters/merc" name="Rising1" pos="-120 -380 -110" rot="0 0 150" />
+    <prefab source="characters/merc" name="Rising2" pos="0 -380 -95" rot="0 0 200" />
+    <prefab source="characters/merc" name="Rising3" pos="120 -380 -120" rot="0 0 120" />
+  </group>
+  <group name="Mercs" pos="0 0 -3000">
+    <prefab source="characters/merc" name="Brock" pos="-60 -470 0" rot="0 0 70" pose="Aim" />
+    <prefab source="props/pistol" pos="-102 -486 128" rot="0 0 70" />
+    <prefab source="characters/merc" name="Merc2" pos="80 -520 0" rot="0 0 100" pose="Aim" />
+    <prefab source="props/pistol" pos="38 -528 128" rot="0 0 100" />
+    <prefab source="characters/merc" name="Merc3" pos="200 -300 0" rot="0 0 120" pose="Aim" />
+    <prefab source="props/pistol" pos="160 -288 128" rot="0 0 120" />
+  </group>
+  <group name="Coil" pos="0 0 -3000"><prefab source="props/cable_coil" pos="-40 -260 0" /></group>
+  <group name="Bound" pos="0 0 -3000">
+    <prefab source="characters/merc" name="Bound1" pos="20 -470 0" rot="0 0 60" pose="Sit" />
+    <prefab source="characters/merc" name="Bound2" pos="80 -400 0" rot="0 0 150" pose="Sit" />
+    <prefab source="characters/merc" name="Bound3" pos="-40 -400 0" rot="0 0 -30" pose="Sit" />
+    <torus pos="20 -425 70" rot="90 0 0" majorRadius="70" minorRadius="5" material="cable" />
+    <torus pos="20 -425 92" rot="90 0 0" majorRadius="68" minorRadius="5" material="cable" />
+    <prefab source="props/pistol" pos="-200 -330 2" rot="90 0 30" />
+    <prefab source="props/pistol" pos="-215 -320 4" rot="90 0 80" />
+    <prefab source="props/pistol" pos="-190 -312 6" rot="90 0 140" />
+  </group>
+  <group name="Grenade" pos="0 0 -3000"><prefab source="props/grenade" pos="400 -660 0" rot="0 0 30" /></group>
+
+  <!-- The building's entrance, 80 m south: a five-storey glass front, the doors, two guards. -->
+  <group name="Gate" pos="0 -8000 0">
+    <box pos="0 400 800" size="3600 800 1600" material="concrete" />
+    <box pos="0 -2 520" size="3400 4 120" material="glass"><array count="4" translation="0 0 300" /></box>
+    <box pos="0 -2 130" size="420 6 250" material="glass" />
+    <box pos="0 -60 270" size="600 120 20" material="concrete" />
+    <box pos="0 -1600 -10" size="8000 3200 20" material="grass" />
+    <box pos="-200 -1200 -4" size="300 2400 10" material="concrete" />
+    <prefab source="characters/person" name="Guard1" pos="-170 -120 0" rot="0 0 -20" pose="HandsOnHips" color="0.14 0.16 0.24" />
+    <prefab source="characters/person" name="Guard2" pos="170 -110 0" rot="0 0 25" color="0.14 0.16 0.24" />
+    <prefab source="characters/person" name="GateWirth" pos="-260 -470 0" rot="0 0 170" color="0.38 0.30 0.52" />
+    <prefab source="props/tv_camera" pos="-262 -440 0" rot="0 0 80" />
+    <prefab source="characters/person" name="GateChiang" pos="40 -500 0" rot="0 0 190" color="0.86 0.52 0.20" />
+  </group>
+
+  <!-- Anchors. -->
+  <group name="Guard" pos="-170 -8120 150" />
+  <group name="Gate-Door" pos="60 -8000 130" />
+  <group name="Vent" pos="450 -699 40" />
+  <group name="Floor-Panels" pos="0 -380 0" />
+  <group name="Clark-Spot" pos="260 -470 185" />
+  <group name="Rafferty-Spot" pos="80 -330 170" />
+  <group name="Mercs-Group" pos="60 -470 140" />
+  <group name="Cable" pos="-40 -260 10" />
+  <group name="Panel-Hole" pos="0 -380 0" />
+  <group name="Vial" pos="400 -660 10" />
+  <group name="East-Window" pos="1154 -350 200" />
+  <group name="Crew" pos="-220 -610 150" />
+</scene>

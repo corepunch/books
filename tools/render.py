@@ -8,8 +8,8 @@ import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parents[1]
 p = argparse.ArgumentParser(description=__doc__)
-p.add_argument('--book', default='lighthouse')
-p.add_argument('--scene', default='kitchen')
+p.add_argument('--book', default='countdown')
+p.add_argument('--scene', default='train')
 p.add_argument('--scener', default=str(Path.home() / '.local/bin/scener'))
 p.add_argument('--width', type=int, default=1920)
 p.add_argument('--height', type=int, default=1440)

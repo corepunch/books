@@ -1,0 +1,7 @@
+<!-- A loose coil of thick computer cable lying on the floor, 70 across; origin on the floor at its middle. -->
+<prefab>
+  <torus pos="0 0 4" rot="90 0 0" majorRadius="30" minorRadius="4" material="cable" />
+  <torus pos="4 2 11" rot="90 0 0" majorRadius="27" minorRadius="4" material="cable" />
+  <torus pos="-2 3 18" rot="90 0 8" majorRadius="28" minorRadius="4" material="cable" />
+  <box pos="40 -20 4" size="50 8 8" rot="0 0 -30" material="cable" />
+</prefab>

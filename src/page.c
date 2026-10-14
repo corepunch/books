@@ -10,11 +10,51 @@
 #define CAPTION_SEARCH_STEP 12.0f
 #define MAX_CAPTION_SEARCH_ANGLES 96
 
-static void add_control(struct PageLayout *layout, frect_t bounds, int choice, bool circle)
+static struct PageControl *add_control(struct PageLayout *layout, frect_t bounds, int choice, bool circle)
 {
     if (layout->control_count >= MAX_CHOICES) fail("too many page controls");
-    layout->controls[layout->control_count++] = (struct PageControl){bounds, frect(fvec2(0, 0), fsize2(0, 0)),
-                                                                     choice, circle};
+    struct PageControl *control = &layout->controls[layout->control_count++];
+    *control = (struct PageControl){bounds, frect(fvec2(0, 0), fsize2(0, 0)), choice, circle, false};
+    return control;
+}
+
+static frect_t frect_union(frect_t a, frect_t b)
+{
+    if (fsize2_is_empty(a.size)) return b;
+    fvec2_t low = fvec2(fminf(a.origin.x, b.origin.x), fminf(a.origin.y, b.origin.y));
+    fvec2_t high = fvec2(fmaxf(frect_bottom_right(a).x, frect_bottom_right(b).x),
+                         fmaxf(frect_bottom_right(a).y, frect_bottom_right(b).y));
+    return frect(low, fsize2(high.x - low.x, high.y - low.y));
+}
+
+/* Carried things line up from the bottom-left corner: a disc with its name underneath. Returns
+   the row's bounds, which prose and scene circles keep clear of. */
+static frect_t layout_items(struct PageLayout *layout, const struct BookPage *page, fsize2_t viewport, float margin)
+{
+    frect_t row = frect_from_size(fsize2(0, 0));
+    float x = margin, caption_height = 0;
+    fvec2_t padding = fvec2(CAPTION_PADDING, CAPTION_PADDING / 2);
+    for (int i = 0; i < page->choice_count; ++i)
+        if (page->choices[i].kind == CHOICE_ITEM)
+            caption_height = fmaxf(caption_height, text_label_box(page->choices[i].label, ITEM_CAPTION_TEXT_SIZE,
+                                                                  ITEM_CAPTION_MAX_WIDTH, padding).size.height);
+    /* Discs share one row; each name hangs from the top of the caption band below them. */
+    float caption_top = viewport.height - margin - caption_height;
+    for (int i = 0; i < page->choice_count; ++i) {
+        const struct Choice *choice = &page->choices[i];
+        if (choice->kind != CHOICE_ITEM) continue;
+        fsize2_t caption = text_label_box(choice->label, ITEM_CAPTION_TEXT_SIZE, ITEM_CAPTION_MAX_WIDTH, padding).size;
+        float width = fmaxf(ITEM_DIAMETER, caption.width);
+        fvec2_t center = fvec2(x + width / 2, caption_top - CAPTION_GAP / 2 - ITEM_DIAMETER / 2);
+        struct PageControl *control = add_control(layout,
+            frect_center_at(frect_from_size(fsize2(ITEM_DIAMETER, ITEM_DIAMETER)), center), i, false);
+        control->item = true;
+        control->caption = frect(fvec2(center.x - caption.width / 2, caption_top), caption);
+        row = frect_union(row, frect_union(control->bounds, control->caption));
+        x += width + ITEM_GAP;
+    }
+    if (x - ITEM_GAP > viewport.width - margin) fail("too many carried things for the inventory row");
+    return row;
 }
 
 static bool caption_fits(const struct PageLayout *layout, int index, frect_t caption, frect_t safe)
@@ -27,7 +67,7 @@ static bool caption_fits(const struct PageLayout *layout, int index, frect_t cap
     for (int i = 0; i < layout->control_count; ++i) {
         const struct PageControl *other = &layout->controls[i];
         if (i != index && frect_overlaps(caption, other->bounds)) return false;
-        if (i < index && other->circle && frect_overlaps(caption, other->caption)) return false;
+        if ((other->item || (i < index && other->circle)) && frect_overlaps(caption, other->caption)) return false;
     }
     return true;
 }
@@ -63,6 +103,7 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
     scene_load(book_rooms(), page->camera);
     textRegionList_t regions;
     int count = scene_text_regions(image, viewport, regions);
+
     const char *cursor = page->text;
     for (int i = 0; i < count && *cursor; ++i) {
         struct ProseLayout *block = &layout->prose[layout->prose_count++];
@@ -103,23 +144,30 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
             add_control(layout, bounds, i, false);
             break;
         }
+        case CHOICE_ITEM: break;
         case CHOICE_INVALID: fail("cannot lay out an uninitialized choice");
         }
     }
+    frect_t items = layout_items(layout, page, viewport, margin);
     /* Wide iPads crop more of the image vertically. Keep the reading block
        above the fixed-size Continue control without changing its type size. */
     for (int i = 0; i < layout->prose_count; ++i) {
         frect_t *bounds = &layout->prose[i].region.bounds;
         for (int j = 0; j < layout->control_count; ++j) {
             const struct PageControl *control = &layout->controls[j];
-            if (!control->circle && frect_overlaps(*bounds, control->bounds))
-                *bounds = frect_translate(*bounds, fvec2(0, control->bounds.origin.y - HOTSPOT_TEXT_GAP
+            frect_t keep = control->item ? items : control->bounds;
+            if (!control->circle && frect_overlaps(*bounds, keep))
+                *bounds = frect_translate(*bounds, fvec2(0, keep.origin.y - HOTSPOT_TEXT_GAP
                                                         - frect_bottom_right(*bounds).y));
         }
     }
-    for (int i = 0; i < layout->prose_count; ++i) regions[i] = layout->prose[i].region;
+    /* Scene circles keep clear of the prose and of the inventory row. */
+    struct TextRegion avoid[MAX_TEXT_REGIONS + 1];
+    int avoid_count = 0;
+    for (int i = 0; i < layout->prose_count; ++i) avoid[avoid_count++] = layout->prose[i].region;
+    if (!fsize2_is_empty(items.size)) avoid[avoid_count++] = (struct TextRegion){items, 0, true};
     layout->spot_count = scene_layout_hotspots(image, viewport, targets, target_count,
-                                               regions, layout->prose_count, layout->spots);
+                                               avoid, avoid_count, layout->spots);
     for (int i = 0; i < layout->spot_count; ++i) {
         const struct Hotspot *spot = &layout->spots[i];
         frect_t bounds = frect_center_at(frect_from_size(fsize2(HOTSPOT_DIAMETER, HOTSPOT_DIAMETER)), spot->center);
@@ -169,9 +217,10 @@ const struct PageControl *page_hit_test(const struct PageLayout *layout, fvec2_t
 {
     for (int i = layout->control_count - 1; i >= 0; --i) {
         const struct PageControl *control = &layout->controls[i];
-        if (control->circle && frect_contains_point(control->caption, point)) return control;
+        bool round = control->circle || control->item;
+        if (round && frect_contains_point(control->caption, point)) return control;
         if (!frect_contains_point(control->bounds, point)) continue;
-        if (control->circle && !frect_ellipse_contains_point(control->bounds, point)) continue;
+        if (round && !frect_ellipse_contains_point(control->bounds, point)) continue;
         return control;
     }
     return NULL;

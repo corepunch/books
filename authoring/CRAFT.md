@@ -50,8 +50,9 @@ book:
   along the way — the knight, the old man, the hermit, the frog, the gnome —
   give advice, lie, help or trick.
 
-Do not build the story around picking up and carrying things; in these
-books the hero never takes or keeps objects. What the book remembers is what
+Do not build the story around collecting things. When the hero does carry
+things ([THINGS.md](THINGS.md)), they are tools for decisions on the road, not
+a shopping list. Most of what the book remembers is what
 happened: a warning heard, a stranger befriended, a shortcut seen from the
 tree. Krill's bronze key becomes, here, "the songbird showed Juranda the hidden
 latch".

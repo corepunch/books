@@ -1,0 +1,14 @@
+<!-- Brainiac's command chair: a high-backed metal throne with control slots in its arm ends, cables
+     running into the floor; the sitter faces local -Y. Origin on the floor under the seat. -->
+<prefab>
+  <box pos="0 0 22" size="90 80 44" material="ship_dark" />
+  <box pos="0 0 48" size="80 70 8" material="ship_rib" />
+  <box pos="0 38 140" size="90 14 190" material="ship_dark" />
+  <sphere pos="0 40 230" radius="50" scale="1 0.3 0.6" material="brain_net" />
+  <box pos="-50 -10 74" size="14 70 10" material="ship_rib" />
+  <box pos="50 -10 74" size="14 70 10" material="ship_rib" />
+  <box pos="-50 -44 78" size="16 10 8" color="0.40 1.0 0.80" unlit="1" />
+  <box pos="50 -44 78" size="16 10 8" color="0.40 1.0 0.80" unlit="1" />
+  <cylinder pos="-30 50 10" rot="0 0 0" radius="5" height="80" material="gunmetal" />
+  <cylinder pos="30 50 10" rot="0 0 0" radius="5" height="80" material="gunmetal" />
+</prefab>

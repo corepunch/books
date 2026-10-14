@@ -1,0 +1,10 @@
+<!-- A computer console bank: 300 long (local X), 90 deep, a sloped desk at 80 cm with screens behind;
+     the operator sits on the local -Y side. Origin on the floor under the middle of the front edge. -->
+<prefab>
+  <box pos="0 45 40" size="300 90 80" material="dark_metal" />
+  <box pos="0 30 84" size="300 64 8" rot="-12 0 0" material="chrome" />
+  <box pos="0 82 140" size="300 16 110" material="dark_metal" />
+  <box pos="-90 73 145" size="90 2 60" material="screen_glow" />
+  <box pos="20 73 145" size="90 2 60" material="screen_glow" />
+  <box pos="120 73 150" size="40 2 30" material="lamp_red" />
+</prefab>

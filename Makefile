@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := run
 
 BUILD_DIR ?= build
-BOOK ?= lighthouse
-SCENE ?= kitchen
+BOOK ?= countdown
+SCENE ?= train
 SCENER ?= $(shell command -v scener 2>/dev/null || printf '%s/.local/bin/scener' "$$HOME")
 WIDTH ?= 1920
 HEIGHT ?= 1440

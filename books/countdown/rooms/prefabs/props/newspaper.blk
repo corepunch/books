@@ -1,0 +1,6 @@
+<!-- The Daily Planet held open: two 38 x 56 cm pages, origin at the fold's lower end; pages face local -Y. -->
+<prefab>
+  <box pos="-19 0 28" size="38 0.6 56" rot="0 0 -10" color="0.90 0.88 0.80" />
+  <box pos="19 0 28" size="38 0.6 56" rot="0 0 10" color="0.88 0.86 0.78" />
+  <box pos="-19 -0.5 50" size="30 0.4 6" rot="0 0 -10" color="0.25 0.25 0.28" />
+</prefab>

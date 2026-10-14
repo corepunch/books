@@ -100,8 +100,9 @@ Picture states, Failure and danger, Secrets and alternatives, Golden path.
 - Every choice is a decision with a distinct outcome, not a verb or a
   duplicate.
 - Every fact is set once and checked on at least one later page.
-- Nothing is picked up, carried, or tracked as an inventory list. Facts are
-  story conditions, shown in pictures and text.
+- Facts are story conditions, shown in pictures and text. A book with things
+  lists each thing, where it starts, where it is taken and every use
+  ([THINGS.md](THINGS.md)).
 - The route has six or more locations in order, the golden path ends far from
   where it starts, and no location holds more than a quarter of the pages.
 - There are about two story pages for each decision page, and most choices

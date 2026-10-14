@@ -4,14 +4,14 @@ These stages turn a premise into a finished illustrated gamebook for this
 engine: a picture book where the reader chooses what happens next, in the
 tradition of the Zork books (*The Forces of Krill*) and Choose Your Own
 Adventure. It is not a parser game. The reader never types, never sees a
-transcript, and never manages an inventory. Each page is one illustration, one
+transcript, and manages at most a short row of things (see [THINGS.md](THINGS.md)). Each page is one illustration, one
 short passage of story text, and either two or three choices or a Continue
 button.
 
 Read [CRAFT.md](CRAFT.md) first: it explains what makes these books
-interesting. [books/lighthouse](../books/lighthouse/) («Огонь на маяке») is a
-complete worked example of every stage: design, story map, room bible, cast,
-shots, text, three Scener scenes, the story table, tests, packaging and review. Then run the stages in order, one at a time. Each stage file lists
+interesting. [books/countdown](../books/countdown/) («Обратный отсчёт») is the
+worked example: its design and walkthrough, seven Scener scenes with a shared
+cast and inventory icons, the story table with things, and its test. Then run the stages in order, one at a time. Each stage file lists
 its inputs, required actions, outputs and acceptance checks. Do not start a
 stage until the previous stage's acceptance checks pass. When a later stage
 exposes a problem in an earlier artifact, fix that artifact first and record
@@ -52,10 +52,12 @@ Paths are relative to `books/<name>/` unless they start with `books/` or
   what a character said.
 - **Choices are decisions, not verbs.** "Follow the music" or "Hide under the
   table" is a choice. "Take lamp" is not.
-- **No inventory and no picking things up.** The book remembers a few story
-  facts, such as whether the heroes heard the old man's warning, and later
-  pages check them. Facts stay few and change the picture or the choices. The hero never
-  collects or carries objects.
+- **Facts first; things only when they are the fantasy.** The book remembers
+  a few story facts, such as whether the heroes heard the old man's warning,
+  and later pages check them. Facts stay few and change the picture or the
+  choices. A book whose fantasy is handling tools (Superman's powers, a
+  detective's kit) may give the hero things to take, carry and use; see
+  [THINGS.md](THINGS.md).
 - **Many places, one consistent world.** Every page is a camera in a 3D
   blockout, one Scener scene per location or cluster of rooms. The blockout
   fixes perspective, scale, layout and light so that paintings stay

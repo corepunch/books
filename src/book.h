@@ -100,8 +100,9 @@ struct Object {
 };
 /* Zero is deliberately invalid: missing initialization must fail at publication. */
 enum PageKind { PAGE_INVALID, PAGE_ROOM, PAGE_BEAT, PAGE_ENDED };
-/* An ending page offers one RETRY choice: back to a decision page, or to the start. */
-enum ChoiceKind { CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE, CHOICE_RETRY };
+/* An ending page offers one RETRY choice: back to a decision page, or to the start.
+ * A room page lists every carried thing as an ITEM choice: tapping it holds or releases it. */
+enum ChoiceKind { CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE, CHOICE_RETRY, CHOICE_ITEM };
 /* How an ending resolves the quest; only ending pages carry one. */
 enum EndingKind { ENDING_NONE, ENDING_SUCCESS, ENDING_PARTIAL, ENDING_FAILURE };
 struct Choice {
@@ -114,6 +115,7 @@ struct BookPage {
     enum PageKind kind;
     struct Choice choices[MAX_CHOICES];
     int choice_count, room;
+    int held; /* object of the carried thing the reader is holding, or zero */
     enum EndingKind ending;
     filePath_t image;
     assetName_t camera;
@@ -123,18 +125,35 @@ struct BookPage {
 /* Story definition. Each books/<name>.c is data: a table of pages that src/story.c
  * validates, publishes and navigates. Page IDs are unique; targets name page IDs. */
 #define MAX_STORY_PAGES 512
-#define MAX_PAGE_CHOICES 3
+#define MAX_PAGE_CHOICES 6
+/* Facts and things are bit sets; one bit names one fact or one thing. */
+#define MAX_STORY_ITEMS 32
 typedef unsigned int storyFacts_t;
+typedef uint32_t storyItems_t;
 enum StoryNode {
     STORY_INVALID,
-    STORY_DECISION, /* a room page: 1..3 choices, each a circle on its scene anchor */
+    STORY_DECISION, /* a room page: choices, each a circle on its scene anchor, and the carried things */
     STORY_PASSAGE,  /* a beat page: text, picture and Continue to .next */
-    STORY_CHECK,    /* invisible: goes to .next when .fact is set, else to .otherwise */
+    STORY_CHECK,    /* invisible: goes to .next when .fact is set and .holds are carried, else .otherwise */
     STORY_ENDING    /* success, partial or failure, with a retry target */
+};
+/* A thing in the world, after ZIL's objects: at any moment it lies in one location, is carried by
+ * the hero, or is gone. A decision choice with .take picks it up where it lies; one with .with is
+ * offered only while the reader holds that carried thing, so tapping a thing in the inventory shows
+ * what it is (.text) and where it can be used. Pages hand things over with .gives and use them up
+ * with .removes. A thing's id is its scene anchor where it lies, and its icon is the picture for
+ * camera "item-<id>". */
+struct StoryItem {
+    storyItems_t item;  /* its single bit */
+    const char *id, *name, *text;
+    const char *where;  /* location it lies in at the start; NULL until a page gives it */
+    bool carried;       /* the hero starts with it */
 };
 struct StoryChoice {
     const char *label, *anchor, *target;
     storyFacts_t requires, excludes; /* offered only when all requires and no excludes are set */
+    storyItems_t take;  /* pick up this thing; offered only while it lies in the page's location */
+    storyItems_t with;  /* use this carried thing; offered only while the reader holds it */
 };
 struct StoryPage {
     const char *id;
@@ -143,9 +162,12 @@ struct StoryPage {
     const char *camera;   /* consecutive pages of one moment may share a camera */
     const char *text;
     struct StoryChoice choices[MAX_PAGE_CHOICES];
-    const char *next;      /* passage: Continue target; check: target when .fact is set */
+    const char *next;      /* passage: Continue target; check: target when the test passes */
     storyFacts_t sets;     /* facts set when the page is shown */
-    storyFacts_t fact;     /* check only */
+    storyItems_t gives;    /* things handed to the hero when the page is shown */
+    storyItems_t removes;  /* things used up or lost when the page is shown */
+    storyFacts_t fact;     /* check only: facts that must all be set */
+    storyItems_t holds;    /* check only: things that must all be carried */
     const char *otherwise; /* check only */
     enum EndingKind ending;
     const char *retry;     /* failure or partial ending: an earlier decision page to try again
@@ -156,6 +178,8 @@ struct Story {
     const char *continue_label, *retry_label, *restart_label;
     const struct StoryPage *pages;
     int page_count;
+    const struct StoryItem *items; /* optional */
+    int item_count;
 };
 /* The one story compiled into this build, defined by books/<name>.c. */
 const struct Story *book_story(void);
@@ -179,6 +203,8 @@ bool book_choose_object(const char *key);
 void book_reload(void);
 /* Return the object's room, or zero when it has none. */
 int book_object_room(int object);
+/* The icon for a carried thing's object: its painting, else its render; false when neither exists. */
+bool book_item_image(int object, filePath_t path);
 
 /* Rendering */
 /* Native layer and texture handles keep Objective-C out of the C modules. */
@@ -255,6 +281,11 @@ int scene_text_regions(isize2_t image, fsize2_t viewport, textRegionList_t regio
 #define CAPTION_GAP 6.0f
 #define CAPTION_CORNER_RADIUS 8.0f
 #define BUTTON_CORNER_RADIUS 14.0f
+/* Carried things sit in a row of round icons along the bottom-left edge of a room page. */
+#define ITEM_DIAMETER 64.0f
+#define ITEM_GAP 22.0f
+#define ITEM_CAPTION_TEXT_SIZE 18.0f
+#define ITEM_CAPTION_MAX_WIDTH 120.0f
 struct Hotspot { fvec2_t anchor, center; int choice; };
 typedef struct Hotspot hotspotList_t[MAX_CHOICES];
 /* Returns false if the viewport cannot accommodate every marker. */
@@ -267,7 +298,8 @@ int scene_layout_hotspots(isize2_t image, fsize2_t viewport, const struct Hotspo
                           int count, const struct TextRegion *regions, int region_count, hotspotList_t spots);
 
 /* One layout supplies rendering, hit testing and headless inspection. */
-struct PageControl { frect_t bounds; frect_t caption; int choice; bool circle; };
+/* circle: a scene hotspot; item: a carried thing in the inventory row. Both hit on the disc or caption. */
+struct PageControl { frect_t bounds; frect_t caption; int choice; bool circle, item; };
 struct ProseLayout { struct TextRegion region; storyText_t text; float content_height; };
 struct PageLayout {
     int max_scroll;

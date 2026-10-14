@@ -85,6 +85,30 @@ static void draw_continue(const struct PageControl *control, const char *label)
     text_draw_centered(label, button, 36, 0xF4E6CAFF);
 }
 
+/* A carried thing: its icon in a disc, ringed in gold while held, with its name underneath. */
+static void draw_item(const struct PageControl *control, const struct Choice *choice, bool held)
+{
+    frect_t disc = control->bounds;
+    fvec2_t center = frect_center(disc);
+    filePath_t icon;
+    renderer_ring(frect_translate(disc, fvec2(0, 2)), 0x120B0780);
+    renderer_reveal_begin(center, disc.size.width / 2);
+    renderer_rect(disc, 0x211C18E8);
+    if (book_item_image(choice->object, icon)) {
+        isize2_t size = renderer_image_size(icon);
+        if (isize2_is_empty(size)) fail("cannot decode %s", icon);
+        renderer_image(icon, frect_cover(isize2_to_float(size), disc));
+    }
+    renderer_reveal_end();
+    if (held) {
+        for (float grow = 0; grow <= 6; grow += 1.5f)
+            renderer_ring(frect_expand(frect_translate(disc, fvec2(-grow / 2, -grow / 2)), fsize2(grow, grow)),
+                          0xF2C14EFF);
+    } else renderer_ring(disc, 0xF4E6CAFF);
+    renderer_round_rect(control->caption, CAPTION_CORNER_RADIUS, 0, held ? 0x5A4310E8 : 0x211C18C8);
+    text_draw_centered(choice->label, control->caption, ITEM_CAPTION_TEXT_SIZE, 0xF4E6CAFF);
+}
+
 static void draw_overlays(const struct PageView *view)
 {
     const struct PageLayout *layout = &view->layout;
@@ -118,6 +142,7 @@ static void draw_overlays(const struct PageView *view)
             break;
         case CHOICE_CONTINUE:
         case CHOICE_RETRY: draw_continue(control, choice->label); break;
+        case CHOICE_ITEM: draw_item(control, choice, choice->object == view->content.held); break;
         case CHOICE_INVALID: fail("cannot draw an uninitialized choice");
         }
     }
@@ -170,8 +195,9 @@ void ui_click(fvec2_t point)
 {
     if (!page_ready || transition.active) return;
     const struct PageControl *control = page_hit_test(&current_page.layout, point);
-    if (control) navigate(control->choice, control->circle ? frect_center(control->bounds) : point,
-                          control->circle ? fminf(control->bounds.size.width, control->bounds.size.height) / 2 : 0);
+    bool round = control && (control->circle || control->item);
+    if (control) navigate(control->choice, round ? frect_center(control->bounds) : point,
+                          round ? fminf(control->bounds.size.width, control->bounds.size.height) / 2 : 0);
 }
 
 void ui_scroll(float delta)
@@ -187,7 +213,7 @@ void ui_preview(double seconds)
     for (int pass = 0; pass < 2; ++pass)
         for (int i = 0; i < current_page.layout.control_count; ++i) {
             const struct PageControl control = current_page.layout.controls[i];
-            if (control.circle != (pass == 0)) continue;
+            if (control.circle != (pass == 0) || control.item) continue;
             ui_click(frect_center(control.bounds));
             preview_time = seconds;
             return;

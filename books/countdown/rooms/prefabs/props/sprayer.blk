@@ -1,0 +1,11 @@
+<!-- The antidote sprayer: a 60 cm steel backpack tank on shoulder straps, a hose and a spray gun.
+     Origin on the floor under the tank standing upright; the gun lies to local +X. -->
+<prefab>
+  <capsule pos="0 0 34" rot="90 0 0" radius="16" height="36" material="tank" />
+  <cylinder pos="0 0 66" rot="90 0 0" radius="6" height="8" material="gunmetal" />
+  <box pos="0 14 40" size="26 4 50" material="strap" />
+  <torus pos="30 -6 10" rot="90 0 0" majorRadius="16" minorRadius="2.2" material="hose" />
+  <box pos="58 -4 6" size="34 6 6" material="gunmetal" />
+  <box pos="48 -4 0" size="6 6 12" material="gunmetal" />
+  <box pos="0 -16 34" size="18 2 14" color="0.20 0.62 0.36" />
+</prefab>

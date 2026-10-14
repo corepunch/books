@@ -1,0 +1,10 @@
+<!-- Brainiac's Bacteria canister: a 70 cm steel cylinder with a valve, a nozzle and a coiled hose, standing
+     on its base. Origin on the floor under its middle. -->
+<prefab>
+  <capsule pos="0 0 40" rot="90 0 0" radius="14" height="50" material="canister" />
+  <cylinder pos="0 0 76" rot="90 0 0" radius="5" height="10" material="gunmetal" />
+  <box pos="0 -6 82" size="4 14 4" material="gunmetal" />
+  <cylinder pos="0 -14 82" rot="0 0 0" radius="2" height="8" color="0.70 0.30 0.86" />
+  <torus pos="18 0 30" rot="0 0 90" majorRadius="10" minorRadius="2" material="gunmetal" />
+  <box pos="0 -15 40" size="20 2 24" color="0.70 0.30 0.86" />
+</prefab>

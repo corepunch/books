@@ -1,0 +1,8 @@
+<!-- A swivel operator chair: seat 46 cm, back to 95 cm; the sitter faces local -Y. Origin on the floor
+     under the seat's middle. -->
+<prefab>
+  <cylinder pos="0 0 3" rot="90 0 0" radius="28" height="6" material="dark_metal" />
+  <cylinder pos="0 0 24" rot="90 0 0" radius="3" height="40" material="chrome" />
+  <box pos="0 0 46" size="46 46 8" material="chair_cloth" />
+  <box pos="0 22 74" size="44 6 46" material="chair_cloth" />
+</prefab>

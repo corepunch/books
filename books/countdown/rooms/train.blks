@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Обратный отсчёт: car 3 of the 8:00 commuter train from Metropolis to the S.T.A.R. Computer Complex, a
+     hot July morning. Z up, cm; the car floor is z=0, its axis on y=0 and the front of the train is +X.
+     The car is 2000 long and 300 wide: double seats either side of a 96 cm aisle, windows every 190 cm.
+     At the front end, the restroom cubicle stands in the north corner beside the door to the vestibule
+     and the next car. Clark sits facing the rear with his WGBS crew, Wirth (camera) and Chiang (sound),
+     at a window table on the south side. Scale sheet: Clark/Superman 190 cm; seats 46 cm. -->
+<scene up="z" ambient="0.30 0.30 0.32" background="0.66 0.78 0.90">
+  <camera name="train-show-clark" comment="Clark reads the Daily Planet facing his crew; the lights flicker; the restroom and the vestibule door at the front end" pos="330 112 172" look="760 -60 128" fov="64" textRect="0.04 0.035 0.92 0.34" textScale="1">
+    <use-pose instance="Clark" name="Read" />
+  </camera>
+  <camera name="train-show-panic" comment="The runaway car: passengers on their feet, the conductor running for the cab, Clark in the middle, the front-end doors" pos="290 125 238" look="820 -50 128" fov="66" textRect="0.04 0.035 0.92 0.34" textScale="1">
+    <use-pose instance="Clark" name="Sit" />
+    <transform target="Conductor" pos="-10 60 0" rot="0 0 180" />
+    <use-pose instance="Standing1" name="Panic" />
+    <transform target="Standing1" pos="0 0 800" />
+    <transform target="Standing2" pos="0 0 800" />
+    <use-pose instance="Standing2" name="Panic" />
+    <transform target="Paper" pos="0 0 -500" />
+  </camera>
+  <camera name="train-restroom-change" comment="Inside the restroom: Clark tears open his shirt on the S-shield in front of the sealed window" pos="842 44 196" look="955 115 128" fov="76" textRect="0.03 0.035 0.40 0.60" textScale="1">
+    <transform target="Clark" pos="-185 335 0" rot="0 0 32" />
+    <transform target="ClarkShield" pos="0 0 1000" />
+    <use-pose instance="Clark" name="Reveal" />
+    <transform target="Superman" pos="0 0 -800" />
+  </camera>
+  <camera name="train-exposed" comment="Ending: Superman bursts up in the aisle; Chiang films him with Clark's shirt still on the seat" pos="250 70 172" look="640 -30 120" fov="62" textRect="0.04 0.035 0.92 0.32" textScale="1">
+    <transform target="Superman" pos="0 0 800" />
+    <transform target="Clark" pos="0 0 -800" />
+    <use-pose instance="Chiang" name="Aim" />
+    <transform target="ChiangCamera" pos="-6 65 66" />
+    <use-pose instance="Wirth" name="Panic" />
+    <transform target="Paper" pos="0 0 -500" />
+  </camera>
+
+  <material id="car_wall" color="0.80 0.76 0.64" shininess="8" />
+  <material id="car_floor" color="0.30 0.28 0.26" shininess="6" />
+  <material id="car_ceiling" color="0.86 0.84 0.78" shininess="4" />
+  <material id="seat_cloth" color="0.30 0.42 0.58" shininess="4" />
+  <material id="seat_frame" color="0.46 0.46 0.48" shininess="40" />
+  <material id="metal" color="0.62 0.62 0.64" shininess="60" />
+  <material id="glass" color="0.70 0.84 0.92" shininess="90" />
+  <material id="door" color="0.55 0.56 0.58" shininess="40" />
+  <material id="table" color="0.48 0.34 0.22" shininess="12" />
+  <material id="camera_body" color="0.12 0.12 0.13" shininess="40" />
+  <material id="camera_lens" color="0.05 0.05 0.06" shininess="90" />
+  <material id="grass" color="0.42 0.56 0.28" shininess="2" />
+  <material id="leaf" color="0.24 0.42 0.20" shininess="2" />
+  <material id="bark" color="0.36 0.26 0.18" shininess="2" />
+
+  <!-- Hot July morning sun from the south-east through the south windows. -->
+  <sun dir="-0.35 0.72 -0.6" color="1.0 0.94 0.80" intensity="1.15" castShadows="1" />
+  <!-- The ceiling lights; the panic camera drops the warm set (LightsOn) as the power fails. -->
+  <group name="LightsOn">
+    <light pos="-500 0 228" color="1.0 0.92 0.78" intensity="0.45" radius="520" castShadows="0" />
+    <light pos="300 0 228" color="1.0 0.92 0.78" intensity="0.45" radius="520" castShadows="0" />
+  </group>
+  <box pos="-500 0 241" size="300 14 3" color="1.0 0.96 0.86" unlit="1" castShadow="0" />
+  <box pos="300 0 241" size="300 14 3" color="1.0 0.96 0.86" unlit="1" castShadow="0" />
+
+  <!-- Shell: floor, ceiling, two windowed side walls, the rear and the front end walls. -->
+  <box pos="0 0 -4" size="2000 300 8" material="car_floor" />
+  <box pos="0 0 250" size="2000 300 8" material="car_ceiling" />
+  <wall pos="0 154 0" rot="90 0 0" length="2000" height="246" thickness="8" lowerHeight="80" lowerColor="0.52 0.50 0.46" upperMaterial="car_wall" />
+  <wall pos="0 -154 0" rot="90 0 0" length="2000" height="246" thickness="8" lowerHeight="80" lowerColor="0.52 0.50 0.46" upperMaterial="car_wall" />
+  <window preset="cottage" pos="-855 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-665 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-475 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-285 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-95 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="95 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="285 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="475 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="665 154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-855 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-665 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-475 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-285 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="-95 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="95 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="285 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="475 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <window preset="cottage" pos="665 -154 125" rot="90 0 0" width="110" height="74" sill="0" frameMaterial="metal" pane="0" />
+  <wall pos="-1004 0 0" rot="90 0 90" length="300" height="246" thickness="8" upperMaterial="car_wall" />
+  <wall pos="1004 0 0" rot="90 0 90" length="300" height="246" thickness="8" upperMaterial="car_wall" />
+  <door name="VestibuleDoor" pos="1004 -20 105" rot="90 0 90" width="90" height="210" frameMaterial="metal" leafMaterial="door" window="rectangular" windowWidth="50" windowHeight="60" windowCenter="150" windowPane="0" />
+
+  <!-- The restroom cubicle in the north front corner, 180 x 110, its door facing the aisle (-X). -->
+  <wall pos="830 96 0" rot="90 0 90" length="116" height="246" thickness="6" upperMaterial="car_wall" />
+  <wall pos="915 38 0" rot="90 0 0" length="176" height="246" thickness="6" upperMaterial="car_wall" />
+  <door name="RestroomDoor" pos="830 96 102" rot="90 0 90" width="70" height="200" frameMaterial="metal" leafMaterial="door" />
+  <box pos="870 128 26" size="40 34 52" color="0.92 0.92 0.92" shininess="60" />
+  <box pos="970 70 80" size="40 36 8" color="0.92 0.92 0.92" shininess="60" />
+  <box pos="998 70 150" size="4 50 60" material="glass" />
+  <light pos="915 95 236" color="1.0 0.95 0.85" intensity="0.6" radius="200" castShadows="0" />
+  <!-- The S-shield under Clark's opened shirt, shown only while he changes. -->
+  <group name="ClarkShield" pos="0 0 -1000">
+    <sphere pos="936 101 146" radius="9" scale="1 1 0.9" color="0.78 0.10 0.10" />
+    <sphere pos="933 99 146" radius="5.5" scale="1 1 0.8" color="0.95 0.78 0.18" />
+  </group>
+  <window name="RestroomWindow" preset="cottage" pos="915 154 140" rot="90 0 0" width="56" height="44" sill="0" frameMaterial="metal" glassMaterial="glass" />
+
+  <!-- Seats: double seats facing the front, except Clark's table bay where two pairs face each other. -->
+  <prefab source="props/train_seat" pos="-860 -98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-860 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-670 -98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-670 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-480 -98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-480 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-290 -98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-290 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-100 -98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="-100 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="90 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="280 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="470 98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="660 98 0" rot="0 0 90" />
+  <!-- Clark's bay on the south side: Wirth faces the front, Clark and Chiang face the rear. -->
+  <prefab source="props/train_seat" pos="420 -98 0" rot="0 0 90" />
+  <prefab source="props/train_seat" pos="600 -98 0" rot="0 0 -90" />
+  <box pos="510 -128 72" size="60 40 4" material="table" />
+  <box pos="510 -146 52" size="10 6 40" material="metal" />
+
+  <!-- People. -->
+  <prefab source="characters/clark" name="Clark" pos="615 -75 0" rot="0 0 -90" pose="Read" />
+  <prefab source="props/newspaper" name="Paper" pos="573 -75 80" rot="0 0 -90" />
+  <prefab source="characters/person" name="Chiang" pos="615 -122 0" rot="0 0 -90" pose="Sit" color="0.86 0.52 0.20" />
+  <prefab source="characters/person" name="Wirth" pos="405 -75 0" rot="0 0 90" pose="Sit" color="0.38 0.30 0.52" />
+  <prefab source="props/tv_camera" name="ChiangCamera" pos="510 -128 74" rot="0 0 -90" />
+  <prefab source="characters/person" name="Passenger1" pos="-115 75 0" rot="0 0 90" pose="Read" color="0.70 0.30 0.28" />
+  <prefab source="characters/person" name="Passenger2" pos="-305 -122 0" rot="0 0 90" pose="Sleep" color="0.36 0.52 0.40" />
+  <prefab source="characters/person" name="Passenger3" pos="265 122 0" rot="0 0 90" pose="Sit" color="0.82 0.78 0.52" />
+  <prefab source="characters/lana" name="Passenger4" pos="455 75 0" rot="0 0 90" pose="Sit" />
+  <prefab source="characters/person" name="Standing1" pos="880 -25 -800" rot="0 0 -100" color="0.52 0.32 0.30" />
+  <prefab source="characters/lana" name="Standing2" pos="700 50 -800" rot="0 0 120" color="0.28 0.40 0.56" />
+  <prefab source="characters/person" name="Conductor" pos="760 0 0" rot="0 0 -90" color="0.14 0.18 0.32" />
+  <!-- Superman stands in the aisle only in the exposure ending; elsewhere he is stored below the car. -->
+  <prefab source="characters/superman" name="Superman" pos="560 -10 -800" rot="0 0 -100" pose="HandsOnHips" />
+
+  <!-- Outside: the July countryside rushing by below the line. -->
+  <box pos="0 0 -134" size="30000 30000 10" material="grass" />
+  <box pos="0 0 -126" size="30000 300 8" color="0.48 0.44 0.40" />
+  <group pos="0 900 -130">
+    <cylinder pos="-800 0 120" rot="90 0 0" radius="18" height="240" material="bark" />
+    <sphere pos="-800 0 330" radius="160" material="leaf" />
+    <cylinder pos="300 300 120" rot="90 0 0" radius="18" height="240" material="bark" />
+    <sphere pos="300 300 330" radius="180" material="leaf" />
+    <cylinder pos="1300 -100 120" rot="90 0 0" radius="18" height="240" material="bark" />
+    <sphere pos="1300 -100 330" radius="150" material="leaf" />
+  </group>
+  <group pos="0 -1100 -130">
+    <cylinder pos="-300 0 120" rot="90 0 0" radius="18" height="240" material="bark" />
+    <sphere pos="-300 0 330" radius="170" material="leaf" />
+    <cylinder pos="900 -200 120" rot="90 0 0" radius="18" height="240" material="bark" />
+    <sphere pos="900 -200 330" radius="160" material="leaf" />
+  </group>
+
+  <!-- Anchors. -->
+  <group name="Restroom-Door" pos="830 96 110" />
+  <group name="Vestibule" pos="1004 -20 120" />
+  <group name="Newspaper" pos="572 -75 100" />
+  <group name="Aisle-Clark" pos="600 -75 120" />
+</scene>

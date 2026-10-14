@@ -78,7 +78,7 @@ Decide what book is being made before any map, model or text exists.
 `books/<name>/DESIGN.md` with sections: Premise, High concept, Journey line,
 Audience, Tone, Hero, Setting, route and time, Acts, Size and budget,
 Structure, Goal and endings, Opening, Contrast and secrets, Exclusions.
-`books/lighthouse/DESIGN.md` is a worked example.
+`books/countdown/DESIGN.md` is a worked example.
 
 ## Acceptance checks
 
@@ -95,5 +95,5 @@ Structure, Goal and endings, Opening, Contrast and secrets, Exclusions.
   safe one.
 - Each act has a threshold and a planned change to the world.
 - The painting budget is written down and matches the planned page count.
-- Nothing in the design needs an inventory, typed commands or a mechanic the
-  engine lacks.
+- Nothing in the design needs typed commands or a mechanic the engine lacks;
+  an inventory only as the engine's things ([THINGS.md](THINGS.md)).

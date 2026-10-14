@@ -1,0 +1,7 @@
+<!-- A 1980s shoulder TV camera, 50 cm long along local -Y (the lens end), origin under its middle. -->
+<prefab>
+  <box pos="0 0 10" size="14 34 18" material="camera_body" />
+  <cylinder pos="0 -24 12" rot="90 0 0" radius="6" height="16" material="camera_lens" />
+  <box pos="0 6 22" size="6 14 6" material="camera_body" />
+  <box pos="0 16 8" size="12 10 14" color="0.24 0.24 0.26" />
+</prefab>

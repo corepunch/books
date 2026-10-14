@@ -1,0 +1,10 @@
+<!-- 1000 cm of standard-gauge track along local X: sleepers on ballast and two rails; origin at the
+     middle, the rail head at z=0 and the ballast below it. -->
+<prefab>
+  <box pos="0 0 -30" size="1000 320 24" material="ballast" />
+  <box pos="-480 0 -14" size="24 260 14" material="sleeper">
+    <array count="17" translation="60 0 0" />
+  </box>
+  <box pos="0 72 -4" size="1000 7 10" material="rail" />
+  <box pos="0 -72 -4" size="1000 7 10" material="rail" />
+</prefab>

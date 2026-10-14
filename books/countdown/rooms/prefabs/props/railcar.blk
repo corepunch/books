@@ -1,0 +1,23 @@
+<!-- A commuter passenger car seen from outside: 1500 long (local X), 300 wide, 380 tall, a band of
+     windows each side and a coupler at each end; origin on the rail head under the middle of the car. -->
+<prefab>
+  <box pos="0 0 70" size="1460 280 40" material="engine_frame" />
+  <box pos="0 0 230" size="1480 300 280" material="car_body" />
+  <box pos="0 0 378" size="1440 260 16" material="car_roof" />
+  <box pos="0 151 255" size="1300 4 70" material="glass" />
+  <box pos="0 -151 255" size="1300 4 70" material="glass" />
+  <box pos="0 151 175" size="1480 4 18" material="engine_stripe" />
+  <box pos="0 -151 175" size="1480 4 18" material="engine_stripe" />
+  <box pos="-560 0 30" size="260 220 50" material="engine_frame" />
+  <box pos="560 0 30" size="260 220 50" material="engine_frame" />
+  <cylinder pos="-620 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <cylinder pos="-500 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <cylinder pos="500 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <cylinder pos="620 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <cylinder pos="-620 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <cylinder pos="-500 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <cylinder pos="500 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <cylinder pos="620 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
+  <box pos="760 0 90" size="40 40 30" material="engine_frame" />
+  <box pos="-760 0 90" size="40 40 30" material="engine_frame" />
+</prefab>

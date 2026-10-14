@@ -24,6 +24,7 @@ static void dump(fsize2_t viewport)
     const struct BookPage *page = book_page();
     printf("{\"room\":"); json_string(book_object(page->room)->key);
     printf(",\"focus\":\"\""); /* Compatibility with earlier snapshots. */
+    printf(",\"held\":"); json_string(page->held ? book_object(page->held)->key : "");
     printf(",\"kind\":"); json_string(book_page_kind_name(page->kind));
     printf(",\"ending\":"); json_string(book_ending_kind_name(page->ending));
     printf(",\"image\":"); json_string(page->image);
@@ -34,7 +35,13 @@ static void dump(fsize2_t viewport)
         printf("%s{\"kind\":", i ? "," : ""); json_string(book_choice_kind_name(choice->kind));
         printf(",\"label\":"); json_string(choice->label);
         printf(",\"command\":"); json_string(choice->command);
-        printf(",\"object\":"); json_string(book_object(choice->object)->key); printf("}");
+        printf(",\"object\":"); json_string(book_object(choice->object)->key);
+        if (choice->kind == CHOICE_ITEM) {
+            filePath_t icon;
+            book_item_image(choice->object, icon);
+            printf(",\"icon\":"); json_string(icon);
+        }
+        printf("}");
     }
     isize2_t image = isize2(0, 0);
     int channels = 0;
@@ -56,8 +63,8 @@ static void dump(fsize2_t viewport)
         printf("%s{\"choice\":%d,\"kind\":", i ? "," : "", control->choice);
         json_string(book_choice_kind_name(choice->kind));
         printf(",\"label\":"); json_string(choice->label);
-        printf(",\"circle\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f",
-               control->circle ? "true" : "false", control->bounds.origin.x, control->bounds.origin.y,
+        printf(",\"circle\":%s,\"item\":%s,\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f",
+               control->circle ? "true" : "false", control->item ? "true" : "false", control->bounds.origin.x, control->bounds.origin.y,
                control->bounds.size.width, control->bounds.size.height);
         printf(",\"caption\":{\"x\":%.6f,\"y\":%.6f,\"width\":%.6f,\"height\":%.6f}}",
                control->caption.origin.x, control->caption.origin.y,
@@ -117,6 +124,7 @@ void headless_run(bool interactive, fsize2_t viewport)
             }
         }
         else if (!strncmp(line,":focus ",7)) book_choose_object(line + 7);
+        else if (!strncmp(line,":hold ",6)) book_command(line + 6);
         else book_command(line);
         dump(viewport);
     }

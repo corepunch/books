@@ -45,6 +45,7 @@ class Book:
             assert 0 <= control['x'] < control['x'] + control['width'] <= self.width
             assert 0 <= control['y'] < control['y'] + control['height'] <= self.height
             assert control['circle'] == (choice['kind'] == 'object')
+            assert control['item'] == (choice['kind'] == 'item')
         # Every circle shows its label as a caption that collides with nothing else.
         def box(r):
             return (r['x'], r['y'], r['x'] + r['width'], r['y'] + r['height'])
@@ -52,7 +53,7 @@ class Book:
         def overlaps(a, b):
             return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
 
-        circles = [c for c in controls if c['circle']]
+        circles = [c for c in controls if c['circle'] or c['item']]
         text = view['text_region']
         regions = view['text_regions']
         assert '\f'.join(r['text'] for r in regions) == view['text']
@@ -74,13 +75,18 @@ class Book:
             for other in controls:
                 if other is not control:
                     assert not overlaps(caption, box(other)), (control['label'], other['label'])
-                    if other['circle']:
+                    if other['circle'] or other['item']:
                         assert not overlaps(caption, box(other['caption'])), (control['label'], other['label'])
         if view['kind'] == 'room':
             assert choices
-            # Art determines which object anchors project into this camera.
-            assert sorted(indices) == sorted(h['choice'] for h in view['hotspots'])
-            assert all(c['kind'] == 'object' and c['object'] and c['command'] for c in choices)
+            # Art determines which object anchors project into this camera; carried things sit in a row.
+            objects = [i for i in indices if choices[i]['kind'] == 'object']
+            assert sorted(objects) == sorted(h['choice'] for h in view['hotspots'])
+            assert all(c['kind'] in ('object', 'item') and c['object'] and c['command'] for c in choices)
+            items = [c for c in choices if c['kind'] == 'item']
+            assert all(Path(c['icon']).is_file() for c in items), items
+            assert view['held'] in [''] + [c['object'] for c in items], view['held']
+            assert len(objects) + len(items) == len(choices), (view['image'], view['held'], choices, indices)
         elif view['kind'] == 'beat':
             assert choices == [{'kind': 'continue', 'label': 'Дальше', 'command': '', 'object': ''}]
             assert not view['hotspots'] and len(controls) == 1
@@ -90,6 +96,7 @@ class Book:
             assert len(choices) == 1 and choices[0]['kind'] == 'retry' and choices[0]['command'], choices
             assert not view['hotspots'] and len(controls) == 1 and not controls[0]['circle']
         assert (view['ending'] != '') == (view['kind'] == 'ended'), view
+        assert view['held'] == '' or view['kind'] == 'room', view
 
     def send(self, command):
         self.process.stdin.write(command + '\n')
@@ -104,6 +111,12 @@ class Book:
     def tap_choice(self, index):
         control = next(c for c in self.view['controls'] if c['choice'] == index)
         return self.send(f":tap {control['x'] + control['width'] / 2} {control['y'] + control['height'] / 2}")
+
+    def hold(self, item):
+        """Tap a carried thing in the inventory row, as the reader would."""
+        index = next(i for i, choice in enumerate(self.view['choices'])
+                     if choice['kind'] == 'item' and choice['command'] == item)
+        return self.tap_choice(index)
 
     def continue_page(self):
         assert self.view['kind'] == 'beat'

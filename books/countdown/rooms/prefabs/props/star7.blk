@@ -1,0 +1,12 @@
+<!-- The Star 7 learning computer: a chrome core 420 wide (local X), 260 deep, 300 tall, with a
+     semicircular operator station on its front (local -Y). Origin on the floor under the core's middle. -->
+<prefab>
+  <box pos="0 0 150" size="420 260 300" material="chrome" />
+  <box pos="0 -131 210" size="360 4 120" material="screen_glow" />
+  <box pos="0 0 306" size="440 280 12" material="dark_metal" />
+  <box pos="-150 -132 80" size="40 4 120" material="dark_metal" />
+  <box pos="150 -132 80" size="40 4 120" material="dark_metal" />
+  <cylinder pos="0 -200 40" rot="90 0 0" radius="110" height="80" material="dark_metal" />
+  <cylinder pos="0 -200 84" rot="90 0 0" radius="114" height="8" material="chrome" />
+  <box pos="0 -230 100" size="140 30 30" rot="20 0 0" material="screen_glow" />
+</prefab>

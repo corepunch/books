@@ -1,0 +1,56 @@
+<!-- Brainiac's starship: a 40 m sphere of ribbed metal with a glass dome on top (the Brain Net), a skull
+     face on its front (local -Y) with glowing eye sensors and a row of laser barrels above it, and eight
+     segmented tentacles hanging from its underside round the red airlock. Origin at the hull's centre.
+     The airlock group is named so cameras can swap its closed and glowing states. -->
+<prefab>
+  <sphere radius="2000" rings="28" slices="40" material="ship_hull" />
+  <torus pos="0 0 600" rot="90 0 0" majorRadius="1900" minorRadius="70" material="ship_rib" />
+  <torus pos="0 0 -200" rot="90 0 0" majorRadius="1990" minorRadius="70" material="ship_rib" />
+  <torus pos="0 0 -1000" rot="90 0 0" majorRadius="1730" minorRadius="70" material="ship_rib" />
+  <sphere pos="0 0 1500" radius="1200" scale="1 1 0.7" material="brain_net" />
+  <sphere pos="-560 -1720 380" radius="280" scale="1 0.6 1" material="ship_dark" />
+  <sphere pos="560 -1720 380" radius="280" scale="1 0.6 1" material="ship_dark" />
+  <sphere pos="-560 -1860 380" radius="130" color="1.0 0.22 0.12" unlit="1" castShadow="0" />
+  <sphere pos="560 -1860 380" radius="130" color="1.0 0.22 0.12" unlit="1" castShadow="0" />
+  <box pos="0 -1830 -360" size="1000 300 260" material="ship_dark" />
+  <box pos="0 -1900 -360" size="900 120 30" material="ship_rib"><array count="5" translation="0 0 -40" /></box>
+  <cylinder pos="-500 -1700 1000" rot="-70 0 0" radius="50" height="700" material="ship_dark" />
+  <cylinder pos="0 -1750 1050" rot="-70 0 0" radius="50" height="700" material="ship_dark" />
+  <cylinder pos="500 -1700 1000" rot="-70 0 0" radius="50" height="700" material="ship_dark" />
+  <cylinder pos="0 0 -1980" rot="90 0 0" radius="420" height="40" material="ship_rib" />
+  <group name="AirlockGlow" pos="0 0 -2010">
+    <cylinder rot="90 0 0" radius="360" height="20" color="1.0 0.18 0.10" unlit="1" castShadow="0" />
+  </group>
+  <group rot="0 0 0">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+  <group rot="0 0 45">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+  <group rot="0 0 90">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+  <group rot="0 0 135">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+  <group rot="0 0 180">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+  <group rot="0 0 225">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+  <group rot="0 0 270">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+  <group rot="0 0 315">
+    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
+    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  </group>
+</prefab>

@@ -1,0 +1,4 @@
+<!-- One squared timber from the old bridge, 600 x 30 x 30, along local X; origin at its middle. -->
+<prefab>
+  <box size="600 30 30" material="timber" />
+</prefab>

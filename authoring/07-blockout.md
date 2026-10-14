@@ -23,9 +23,9 @@ over.
    locations can be simple: ground, a few large masses, the landmark, the
    light and a background colour.
    For an outdoor journey, one scene can hold every exterior location in one
-   coordinate system (the Lighthouse `bay.blks` holds the village, flats,
-   cliffs, channel and island), so landmarks such as a lighthouse on the
-   horizon stay in the same place on every page. Compress distances the way a
+   coordinate system (Countdown's `gorge.blks` holds the line, the gorge and
+   the far rim; `sky.blks` holds the observatory hill, the city and the ship),
+   so landmarks on the horizon stay in the same place on every page. Compress distances the way a
    storybook map does: tens of metres, not kilometres. Keep interiors in
    their own scenes.
 2. **Shell first.** For interiors: floor, walls, ceiling, doors and windows

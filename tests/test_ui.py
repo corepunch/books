@@ -7,7 +7,7 @@ import sys
 import tempfile
 
 binary, root = map(lambda value: str(Path(value).resolve()), sys.argv[1:3])
-book = sys.argv[3] if len(sys.argv) > 3 else 'lighthouse'
+book = sys.argv[3] if len(sys.argv) > 3 else 'countdown'
 args = [binary, '--root', root, '--book', book]
 page = json.loads(subprocess.check_output(args + ['--check'], text=True))
 # The smoke transition presses the first circle, or the button when the page has none.
