@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The folding window table of a facing seat bay: a woodgrain laminate top with a rounded aisle edge on a
+     steel wall rail, standing on one chrome pedestal leg near the aisle edge (between the
+     knees of the two facing sitters). Footprint 60 x 42 cm, top at 72 cm.
+     Origin on the floor at the wall face, under the middle of the table's wall edge. Front -Y: the table
+     projects from the wall (y=0) into the car along local -Y. Attach: top_surface is the middle of the top.
+     Materials from the scene: table_top, car_trim, seat_frame. -->
+<prefab up="z" front="-y">
+  <let name="TL" value="60" />
+  <let name="TD" value="42" />
+  <let name="TOP" value="72" />
+  <let name="TT" value="3" />
+  <let name="LY" value="TD - 14" />  <!-- leg distance from the wall -->
+  <attach name="top_surface" pos="0 {-TD/2} {TOP}" />
+  <rounded-rect size="{TL} {TD}" radius="7" pos="0 {-TD/2} {TOP - TT/2}" material="table_top">
+    <extrude amount="{TT}" />
+    <bevel amount="0.8" bevelSegments="2" />
+  </rounded-rect>
+  <box pos="0 -1.25 {TOP - TT - 3}" size="{TL - 4} 2.5 6" material="car_trim" />
+  <cylinder pos="0 {-LY} 0.75" rot="90 0 0" radius="7" height="1.5" material="car_trim" />
+  <cylinder pos="0 {-LY} {(1.5 + TOP - TT)/2}" rot="90 0 0" radius="2.4" height="{TOP - TT - 1.5}" material="seat_frame" />
+</prefab>

@@ -1,0 +1,10 @@
+<!-- An energy-cannon housing in the Red Sun Room ceiling: a 140 cm collar and the shallow dome of its
+     closed hatch, hanging 51 cm. Origin at the ceiling contact (top centre); it hangs down -z. The
+     extended ship/cannon hangs from the dome's lowest point (attach "turret"). Scene materials: sh_dark,
+     sh_rib, sh_trim. -->
+<prefab up="z" front="-y">
+  <attach name="turret" pos="0 0 -51.2" />
+  <cylinder pos="0 0 -15" rot="90 0 0" radius="70" height="30" sides="32" material="sh_dark" />
+  <torus pos="0 0 -30" rot="90 0 0" majorRadius="66" minorRadius="3" majorSegments="40" material="sh_trim" />
+  <sphere pos="0 0 -26" radius="56" scale="1 1 0.45" material="sh_rib" />
+</prefab>

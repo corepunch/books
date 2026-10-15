@@ -1,12 +1,111 @@
-<!-- The Star 7 learning computer: a chrome core 420 wide (local X), 260 deep, 300 tall, with a
-     semicircular operator station on its front (local -Y). Origin on the floor under the core's middle. -->
-<prefab>
-  <box pos="0 0 150" size="420 260 300" material="chrome" />
-  <box pos="0 -131 210" size="360 4 120" material="screen_glow" />
-  <box pos="0 0 306" size="440 280 12" material="dark_metal" />
-  <box pos="-150 -132 80" size="40 4 120" material="dark_metal" />
-  <box pos="150 -132 80" size="40 4 120" material="dark_metal" />
-  <cylinder pos="0 -200 40" rot="90 0 0" radius="110" height="80" material="dark_metal" />
-  <cylinder pos="0 -200 84" rot="90 0 0" radius="114" height="8" material="chrome" />
-  <box pos="0 -230 100" size="140 30 30" rot="20 0 0" material="screen_glow" />
+<!-- The Star 7 learning computer, S.T.A.R. Labs 1986: a chrome C-ring of thirteen processor columns around a
+     dark inner core (after the Cray supercomputers), an orange padded bench round its foot, a black crown with a
+     chrome lip, and in the open front of the C its face: a big green CRT, a keyboard shelf, the S.T.A.R. star
+     and a "7". Footprint a circle of radius 175 (the bench), 278 tall. Baseline z=0 at the floor under the ring
+     centre; the face looks local -Y. Bench seats are 46 cm high on radius 155; the opening spans -60..60 degrees
+     around -Y. Materials come from the scene (s7_chrome, s7_dark, s7_vinyl, s7_lamp_*, screen_glow, beige). -->
+<prefab up="z" front="-y">
+  <let name="R" value="120" />    <!-- column-centre radius -->
+  <let name="CW" value="38" />    <!-- column width (tangential) -->
+  <let name="CD" value="30" />    <!-- column depth (radial) -->
+  <let name="CH" value="250" />   <!-- column height -->
+  <let name="RB" value="R + CD/2 + 20" />  <!-- bench-centre radius -->
+  <let name="BW" value="2*(RB + 20)*sin(rad(10)) + 1" />  <!-- cushion width at its outer edge -->
+  <let name="PW" value="2*(RB - 20)*sin(rad(10)) - 1" />  <!-- plinth width at its inner edge, so plinths never overlap -->
+  <let name="SEAT" value="46" />
+  <let name="RI" value="105" />   <!-- inner core radius -->
+  <let name="FY" value="-RI - 24" />  <!-- front face of the face housing -->
+
+  <attach name="screen" pos="0 {FY - 1} 150" />
+  <attach name="keyboard" pos="0 {FY - 20} 89" />
+  <attach name="bench_e" pos="{RB} 0 {SEAT}" />
+  <attach name="bench_w" pos="{-RB} 0 {SEAT}" />
+
+  <!-- Inner core, visible through the open front of the C. -->
+  <cylinder pos="0 0 {CH/2 + 0.5}" rot="90 0 0" radius="{RI}" height="{CH - 1}" material="s7_dark" />
+
+  <!-- Thirteen chrome columns at 60..300 degrees from the front, each facing outward. -->
+  <group name="columns">
+    <box pos="{R*sin(rad(60))} {-R*cos(rad(60))} {CH/2}" rot="0 0 60" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(80))} {-R*cos(rad(80))} {CH/2}" rot="0 0 80" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(100))} {-R*cos(rad(100))} {CH/2}" rot="0 0 100" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(120))} {-R*cos(rad(120))} {CH/2}" rot="0 0 120" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(140))} {-R*cos(rad(140))} {CH/2}" rot="0 0 140" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(160))} {-R*cos(rad(160))} {CH/2}" rot="0 0 160" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(180))} {-R*cos(rad(180))} {CH/2}" rot="0 0 180" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(200))} {-R*cos(rad(200))} {CH/2}" rot="0 0 200" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(220))} {-R*cos(rad(220))} {CH/2}" rot="0 0 220" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(240))} {-R*cos(rad(240))} {CH/2}" rot="0 0 240" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(260))} {-R*cos(rad(260))} {CH/2}" rot="0 0 260" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(280))} {-R*cos(rad(280))} {CH/2}" rot="0 0 280" size="{CW} {CD} {CH}" material="s7_chrome" />
+    <box pos="{R*sin(rad(300))} {-R*cos(rad(300))} {CH/2}" rot="0 0 300" size="{CW} {CD} {CH}" material="s7_chrome" />
+  </group>
+
+  <!-- Indicator lamps: a column of five on every processor's outer face, colours alternating. -->
+  <group name="lamps">
+    <let name="RL" value="R + CD/2 + 0.5" />
+    <box pos="{RL*sin(rad(60))} {-RL*cos(rad(60))} 150" rot="0 0 60" size="7 1 6" material="s7_lamp_amber" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(80))} {-RL*cos(rad(80))} 158" rot="0 0 80" size="7 1 6" material="s7_lamp_green" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(100))} {-RL*cos(rad(100))} 142" rot="0 0 100" size="7 1 6" material="s7_lamp_red" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(120))} {-RL*cos(rad(120))} 150" rot="0 0 120" size="7 1 6" material="s7_lamp_amber" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(140))} {-RL*cos(rad(140))} 158" rot="0 0 140" size="7 1 6" material="s7_lamp_green" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(160))} {-RL*cos(rad(160))} 142" rot="0 0 160" size="7 1 6" material="s7_lamp_amber" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(180))} {-RL*cos(rad(180))} 150" rot="0 0 180" size="7 1 6" material="s7_lamp_red" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(200))} {-RL*cos(rad(200))} 158" rot="0 0 200" size="7 1 6" material="s7_lamp_green" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(220))} {-RL*cos(rad(220))} 142" rot="0 0 220" size="7 1 6" material="s7_lamp_amber" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(240))} {-RL*cos(rad(240))} 150" rot="0 0 240" size="7 1 6" material="s7_lamp_green" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(260))} {-RL*cos(rad(260))} 158" rot="0 0 260" size="7 1 6" material="s7_lamp_red" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(280))} {-RL*cos(rad(280))} 142" rot="0 0 280" size="7 1 6" material="s7_lamp_amber" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+    <box pos="{RL*sin(rad(300))} {-RL*cos(rad(300))} 150" rot="0 0 300" size="7 1 6" material="s7_lamp_green" unlit="1" castShadow="0"><array count="5" translation="0 0 16" /></box>
+  </group>
+
+  <!-- The padded bench round the foot of the columns: a dark plinth and an orange vinyl cushion per column. -->
+  <group name="bench">
+    <let name="BD" value="40" />
+    <box pos="{RB*sin(rad(60))} {-RB*cos(rad(60))} {(SEAT - 8)/2}" rot="0 0 60" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(80))} {-RB*cos(rad(80))} {(SEAT - 8)/2}" rot="0 0 80" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(100))} {-RB*cos(rad(100))} {(SEAT - 8)/2}" rot="0 0 100" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(120))} {-RB*cos(rad(120))} {(SEAT - 8)/2}" rot="0 0 120" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(140))} {-RB*cos(rad(140))} {(SEAT - 8)/2}" rot="0 0 140" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(160))} {-RB*cos(rad(160))} {(SEAT - 8)/2}" rot="0 0 160" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(180))} {-RB*cos(rad(180))} {(SEAT - 8)/2}" rot="0 0 180" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(200))} {-RB*cos(rad(200))} {(SEAT - 8)/2}" rot="0 0 200" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(220))} {-RB*cos(rad(220))} {(SEAT - 8)/2}" rot="0 0 220" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(240))} {-RB*cos(rad(240))} {(SEAT - 8)/2}" rot="0 0 240" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(260))} {-RB*cos(rad(260))} {(SEAT - 8)/2}" rot="0 0 260" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(280))} {-RB*cos(rad(280))} {(SEAT - 8)/2}" rot="0 0 280" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(300))} {-RB*cos(rad(300))} {(SEAT - 8)/2}" rot="0 0 300" size="{PW} {BD} {SEAT - 8}" material="s7_dark" />
+    <box pos="{RB*sin(rad(60))} {-RB*cos(rad(60))} {SEAT - 4}" rot="0 0 60" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(80))} {-RB*cos(rad(80))} {SEAT - 3.6}" rot="0 0 80" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(100))} {-RB*cos(rad(100))} {SEAT - 4}" rot="0 0 100" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(120))} {-RB*cos(rad(120))} {SEAT - 3.6}" rot="0 0 120" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(140))} {-RB*cos(rad(140))} {SEAT - 4}" rot="0 0 140" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(160))} {-RB*cos(rad(160))} {SEAT - 3.6}" rot="0 0 160" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(180))} {-RB*cos(rad(180))} {SEAT - 4}" rot="0 0 180" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(200))} {-RB*cos(rad(200))} {SEAT - 3.6}" rot="0 0 200" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(220))} {-RB*cos(rad(220))} {SEAT - 4}" rot="0 0 220" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(240))} {-RB*cos(rad(240))} {SEAT - 3.6}" rot="0 0 240" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(260))} {-RB*cos(rad(260))} {SEAT - 4}" rot="0 0 260" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(280))} {-RB*cos(rad(280))} {SEAT - 3.6}" rot="0 0 280" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+    <box pos="{RB*sin(rad(300))} {-RB*cos(rad(300))} {SEAT - 4}" rot="0 0 300" size="{BW - 2} {BD + 2} 8" material="s7_vinyl" />
+  </group>
+
+  <!-- Crown: a black cap over the whole ring with a chrome lip and a slim lamp band. -->
+  <cylinder pos="0 0 {CH + 12}" rot="90 0 0" radius="{R + CD/2 + 6}" height="24" material="s7_dark" />
+  <torus pos="0 0 {CH + 24}" rot="90 0 0" majorRadius="{R + CD/2 + 2}" minorRadius="4" material="s7_chrome" />
+  <cylinder pos="0 0 {CH + 26}" rot="90 0 0" radius="{R - 10}" height="4" material="s7_chrome" />
+
+  <!-- The face in the open front of the C: housing, CRT, keyboard shelf on two brackets, star and seven. -->
+  <group name="face">
+    <box pos="0 {-RI - 12} 160" size="190 24 180" material="s7_dark" />
+    <rounded-rect pos="0 {FY - 1} 150" rot="90 0 0" size="150 92" radius="8" material="beige"><extrude amount="2" /></rounded-rect>
+    <box pos="0 {FY - 20} 86" size="160 40 6" material="s7_chrome" />
+    <box pos="-60 {FY - 12} 72" size="6 24 22" material="s7_dark" />
+    <box pos="60 {FY - 12} 72" size="6 24 22" material="s7_dark" />
+    <box pos="0 {FY - 24} 90.5" size="70 22 3" material="beige" />
+    <star pos="-26 {FY - 2} 222" rot="90 0 0" outerRadius="20" innerRadius="8" points="5" material="s7_chrome"><extrude amount="4" /></star>
+    <box pos="12 {FY - 2} 234" size="22 4 6" material="s7_chrome" />
+    <box pos="16 {FY - 2.2} 218" rot="0 -62 0" size="30 3 6" material="s7_chrome" />
+  </group>
+  <rounded-rect pos="0 {FY - 2} 150" rot="90 0 0" size="140 84" radius="6" material="screen_glow" unlit="1" castShadow="0"><extrude amount="1" /></rounded-rect>
 </prefab>

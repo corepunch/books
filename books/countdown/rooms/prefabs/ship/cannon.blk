@@ -1,0 +1,12 @@
+<!-- An extended energy cannon: an 80 cm ball turret and a 150 cm barrel along local -Y ending in a
+     white-hot muzzle. Origin at the ball centre, so aiming it rotates about the ball; its top touches
+     the housing dome when placed 40 cm under ship/cannon_housing's "turret" attach. Attach: muzzle.
+     Scene materials: sh_dark, gunmetal. -->
+<prefab up="z" front="-y">
+  <attach name="muzzle" pos="0 -192 0" />
+  <sphere radius="40" material="sh_dark" />
+  <cylinder pos="0 -105 0" radius="13" height="150" material="gunmetal" />
+  <torus pos="0 -170 0" majorRadius="16" minorRadius="4" material="sh_dark" />
+  <cone pos="0 -186 0" rot="0 0 180" radius="15" radiusTop="9" height="12" material="gunmetal" />
+  <cylinder pos="0 -192.5 0" radius="8" height="1" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
+</prefab>

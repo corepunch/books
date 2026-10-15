@@ -1,8 +1,29 @@
-<!-- A tall tape-drive cabinet, 120 wide (local X), 70 deep, 210 tall; doors face local -Y. Origin on
-     the floor under the middle of the front. -->
-<prefab>
-  <box pos="0 35 105" size="120 70 210" material="cabinet" />
-  <cylinder pos="-28 -1 150" rot="90 0 0" radius="18" height="2" material="dark_metal" />
-  <cylinder pos="28 -1 150" rot="90 0 0" radius="18" height="2" material="dark_metal" />
-  <box pos="0 -1 70" size="100 2 60" material="dark_metal" />
+<!-- A 1980s reel-to-reel tape drive (after the IBM 3420): a beige cabinet 80 wide x 70 deep x 180 tall with a
+     recessed window holding two tape reels on their hubs, a lamp-and-button strip, a smoked panel over the
+     vacuum columns and a dark kick plate. Baseline z=0; origin on the floor under the middle of the front face;
+     the front faces local -Y and the cabinet runs back to y=70. Materials: beige, beige_dark, dark_metal,
+     tape_reel, lamp_amber, lamp_green. -->
+<prefab up="z" front="-y">
+  <let name="W" value="80" />
+  <let name="D" value="70" />
+  <let name="H" value="180" />
+  <let name="RZ" value="104" />   <!-- bottom of the reel window -->
+  <let name="RT" value="168" />   <!-- top of the reel window -->
+  <let name="RD" value="12" />    <!-- recess depth -->
+  <box pos="0 {D/2} {RZ/2}" size="{W} {D} {RZ}" material="beige" />
+  <box pos="{-(W/2 - 4)} {D/2} {(RZ + RT)/2}" size="8 {D} {RT - RZ}" material="beige" />
+  <box pos="{W/2 - 4} {D/2} {(RZ + RT)/2}" size="8 {D} {RT - RZ}" material="beige" />
+  <box pos="0 {D/2} {(RT + H)/2}" size="{W} {D} {H - RT}" material="beige" />
+  <box pos="0 {(D + RD)/2} {(RZ + RT)/2}" size="{W - 16} {D - RD} {RT - RZ}" material="dark_metal" />
+  <!-- Reels: hub spindles from the back of the recess, then the reel flanges. -->
+  <cylinder pos="-17 {RD - 3} {(RZ + RT)/2 + 2}" radius="3" height="6" material="chrome" />
+  <cylinder pos="17 {RD - 3} {(RZ + RT)/2 + 2}" radius="3" height="6" material="chrome" />
+  <cylinder pos="-17 {RD - 7} {(RZ + RT)/2 + 2}" radius="14" height="2.5" material="tape_reel" />
+  <cylinder pos="17 {RD - 7} {(RZ + RT)/2 + 2}" radius="11" height="2.5" material="tape_reel" />
+  <!-- Front of the lower body: lamp strip, smoked column panel, kick plate. -->
+  <box pos="0 -0.5 {RZ - 9}" size="{W - 16} 1 8" material="dark_metal" />
+  <box pos="-26 -1.2 {RZ - 9}" size="4 0.4 3" material="lamp_amber" unlit="1" castShadow="0"><array count="4" translation="9 0 0" /></box>
+  <box pos="14 -1.2 {RZ - 9}" size="4 0.4 3" material="lamp_green" unlit="1" castShadow="0"><array count="3" translation="8 0 0" /></box>
+  <box pos="0 -0.5 52" size="{W - 16} 1 52" material="smoked" />
+  <box pos="0 -0.5 5" size="{W - 4} 1 8" material="dark_metal" />
 </prefab>

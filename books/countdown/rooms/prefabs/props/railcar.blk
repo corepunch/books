@@ -1,23 +1,58 @@
-<!-- A commuter passenger car seen from outside: 1500 long (local X), 300 wide, 380 tall, a band of
-     windows each side and a coupler at each end; origin on the rail head under the middle of the car. -->
-<prefab>
-  <box pos="0 0 70" size="1460 280 40" material="engine_frame" />
-  <box pos="0 0 230" size="1480 300 280" material="car_body" />
-  <box pos="0 0 378" size="1440 260 16" material="car_roof" />
-  <box pos="0 151 255" size="1300 4 70" material="glass" />
-  <box pos="0 -151 255" size="1300 4 70" material="glass" />
-  <box pos="0 151 175" size="1480 4 18" material="engine_stripe" />
-  <box pos="0 -151 175" size="1480 4 18" material="engine_stripe" />
-  <box pos="-560 0 30" size="260 220 50" material="engine_frame" />
-  <box pos="560 0 30" size="260 220 50" material="engine_frame" />
-  <cylinder pos="-620 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <cylinder pos="-500 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <cylinder pos="500 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <cylinder pos="620 120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <cylinder pos="-620 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <cylinder pos="-500 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <cylinder pos="500 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <cylinder pos="620 -120 30" rot="90 0 0" radius="28" height="10" material="engine_frame" />
-  <box pos="760 0 90" size="40 40 30" material="engine_frame" />
-  <box pos="-760 0 90" size="40 40 30" material="engine_frame" />
+<!-- A stainless commuter passenger car seen from outside, front +x (symmetric end to end): a ribbed
+     body with ten windows a side, a door near each end, a rounded roof, end diaphragms and couplers,
+     two trucks. Footprint 1560 x 304 (couplers and diaphragms included), 418 tall.
+     Baseline: wheel treads on the rail head at z=0, wheels over the rails at y=±72.
+     Origin: the rail head under the middle of the car. Couplers and diaphragms end at x=±780, so cars
+     on a 1560 cm pitch touch knuckle to knuckle. Materials from the scene: car_body, car_roof,
+     car_door, engine_frame, engine_stripe, glass, steel. -->
+<prefab up="z" front="+x">
+  <let name="TRUCK" value="560" />
+  <attach name="front_coupler" pos="780 0 90" />
+  <attach name="rear_coupler" pos="-780 0 90" />
+  <attach name="roof" pos="0 0 418" />
+  <group name="front_truck" pos="{TRUCK} 0 0">
+    <cylinder pos="-95 72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="95 72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="-95 -72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="95 -72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="-95 0 42" radius="8" height="132" material="steel" />
+    <cylinder pos="95 0 42" radius="8" height="132" material="steel" />
+    <box pos="0 96 52" size="320 14 44" material="engine_frame" />
+    <box pos="0 -96 52" size="320 14 44" material="engine_frame" />
+    <box pos="0 0 88" size="80 206 26" material="engine_frame" />
+  </group>
+  <group name="rear_truck" pos="{-TRUCK} 0 0">
+    <cylinder pos="-95 72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="95 72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="-95 -72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="95 -72 42" radius="42" height="12" material="engine_frame" />
+    <cylinder pos="-95 0 42" radius="8" height="132" material="steel" />
+    <cylinder pos="95 0 42" radius="8" height="132" material="steel" />
+    <box pos="0 96 52" size="320 14 44" material="engine_frame" />
+    <box pos="0 -96 52" size="320 14 44" material="engine_frame" />
+    <box pos="0 0 88" size="80 206 26" material="engine_frame" />
+  </group>
+  <!-- Underframe with equipment boxes, couplers at both ends. -->
+  <box pos="0 0 117" size="1460 290 30" material="engine_frame" />
+  <box pos="-180 0 85" size="360 220 34" material="engine_frame" />
+  <box pos="240 0 85" size="220 200 34" material="engine_frame" />
+  <box pos="765 0 90" size="30 30 24" material="steel" />
+  <box pos="-765 0 90" size="30 30 24" material="steel" />
+  <!-- Body, rounded roof and the rubber end diaphragms. -->
+  <box pos="0 0 258" size="1500 300 246" material="car_body" />
+  <cylinder pos="0 0 381" rot="0 0 90" scale="1 1 0.24" radius="148" height="1480" material="car_roof" />
+  <box pos="765 0 262" size="30 200 230" material="engine_frame" />
+  <box pos="-765 0 262" size="30 200 230" material="engine_frame" />
+  <!-- Window band, belt stripe and the side doors (both sides). -->
+  <box pos="-562.5 151 285" size="92 4 72" material="glass">
+    <array count="10" translation="125 0 0" />
+  </box>
+  <box pos="-562.5 -151 285" size="92 4 72" material="glass">
+    <array count="10" translation="125 0 0" />
+  </box>
+  <box pos="0 0 232" size="1496 304 14" material="engine_stripe" />
+  <box pos="680 0 238" size="80 306 200" material="car_door" />
+  <box pos="-680 0 238" size="80 306 200" material="car_door" />
+  <box pos="680 0 290" size="44 308 60" material="glass" />
+  <box pos="-680 0 290" size="44 308 60" material="glass" />
 </prefab>

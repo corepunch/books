@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A park lamp post strung up for the Star Watch: a cast-iron base and fluted post, a frosted globe and its
+     cap. The globe is the unlit emitter and holds the point light, below the shadow-casting cap.
+     Footprint 32 cm round; baseline z=0 on the grass; globe centre 352 cm, cap top 392 cm. Origin at the foot
+     of the post. No front (round). Materials from the scene: bench_iron. -->
+<prefab up="z">
+  <let name="BASE" value="34" />
+  <let name="POST" value="290" />
+  <let name="GR" value="19" />           <!-- globe radius -->
+  <let name="GZ" value="BASE + POST + 8 + GR" />
+  <cylinder pos="0 0 {BASE/2}" rot="90 0 0" radius="16" height="{BASE}" material="bench_iron"><taper amount="-0.3" /></cylinder>
+  <cylinder pos="0 0 {BASE + POST/2}" rot="90 0 0" radius="5.5" height="{POST}" sides="12" material="bench_iron"><taper amount="-0.15" /></cylinder>
+  <cylinder pos="0 0 {BASE + POST + 4}" rot="90 0 0" radius="9" height="8" material="bench_iron" />
+  <sphere pos="0 0 {GZ}" radius="{GR}" color="1.0 0.90 0.66" unlit="1" castShadow="0" />
+  <cone pos="0 0 {GZ + GR + 9}" rot="90 0 0" radius="20" radiusTop="4" height="18" material="bench_iron" />
+  <light pos="0 0 {GZ - 4}" color="1.0 0.80 0.52" intensity="0.9" radius="700" castShadows="1" />
+</prefab>

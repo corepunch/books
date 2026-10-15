@@ -1,0 +1,8 @@
+<!-- A round institutional wall clock, 36 cm across, standing 5 cm off the wall. Origin on the wall face at the
+     clock's centre; the dial faces local -Y. Materials: dark_metal, clock_face. -->
+<prefab up="z" front="-y">
+  <cylinder pos="0 -2.5 0" radius="18" height="5" material="dark_metal" />
+  <cylinder pos="0 -5.2 0" radius="16" height="0.4" material="clock_face" />
+  <box pos="0 -5.6 4" rot="0 -30 0" size="1.4 0.4 10" material="dark_metal" />
+  <box pos="4 -5.9 0" rot="0 70 0" size="1 0.4 13" material="dark_metal" />
+</prefab>

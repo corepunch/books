@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A 2000 cm run of split-rail field fence: nine posts 250 cm apart with two rails nailed to their -Y face.
+     Footprint 2014 x 16 cm, 120 cm tall. Origin on the ground at the middle of the run; the run follows
+     local X, the rails are on the -Y side (front -Y). Material from the scene: pole_wood. -->
+<prefab up="z" front="-y">
+  <box pos="-1000 0 60" size="12 12 120" material="pole_wood">
+    <array count="9" translation="250 0 0" />
+  </box>
+  <box pos="0 -8 95" size="2014 4 10" material="pole_wood" />
+  <box pos="0 -8 50" size="2014 4 10" material="pole_wood" />
+</prefab>

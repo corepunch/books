@@ -1,10 +1,57 @@
-<!-- A computer console bank: 300 long (local X), 90 deep, a sloped desk at 80 cm with screens behind;
-     the operator sits on the local -Y side. Origin on the floor under the middle of the front edge. -->
-<prefab>
-  <box pos="0 45 40" size="300 90 80" material="dark_metal" />
-  <box pos="0 30 84" size="300 64 8" rot="-12 0 0" material="chrome" />
-  <box pos="0 82 140" size="300 16 110" material="dark_metal" />
-  <box pos="-90 73 145" size="90 2 60" material="screen_glow" />
-  <box pos="20 73 145" size="90 2 60" material="screen_glow" />
-  <box pos="120 73 150" size="40 2 30" material="lamp_red" />
+<!-- A 1986 operator console: two beige pedestals carry a laminate desk 240 x 80 with its top at 74 cm, a
+     modesty panel between them, an instrument hood along the back edge with a lamp strip, two CRT monitors on
+     the hood and a keyboard in front of each. The operator sits on the local -Y side (front edge at y=0, the
+     desk runs back to y=80). Baseline z=0; origin on the floor under the middle of the front edge.
+     Attach: "top_surface" (desk centre), "screen_l" / "screen_r" (front face centre of each CRT glass),
+     "seat" (where the operator's chair stands). Materials: beige, laminate, dark_metal, screen_glow, lamp_*. -->
+<prefab up="z" front="-y">
+  <let name="L" value="240" />    <!-- desk length -->
+  <let name="DD" value="80" />    <!-- desk depth -->
+  <let name="DH" value="74" />    <!-- desk top height -->
+  <let name="PW" value="50" />    <!-- pedestal width -->
+  <let name="HD" value="30" />    <!-- hood depth -->
+  <let name="HH" value="28" />    <!-- hood height -->
+  <let name="MX" value="58" />    <!-- monitor centre offset from the middle -->
+  <let name="MW" value="46" />
+  <let name="MH" value="40" />
+  <let name="MD" value="38" />
+  <let name="MZ" value="DH + HH + MH/2" />
+  <let name="MY" value="DD - MD/2" />
+  <let name="SY" value="DD - MD - 0.9" />  <!-- glass centre; its front face is at SY - 0.5 -->
+
+  <attach name="top_surface" pos="0 {DD/2} {DH}" />
+  <attach name="screen_l" pos="{-MX} {SY - 0.5} {MZ}" />
+  <attach name="screen_r" pos="{MX} {SY - 0.5} {MZ}" />
+  <attach name="seat" pos="0 -42 0" />
+
+  <!-- Desk: pedestals with drawer fronts, modesty panel, top. -->
+  <box pos="{-(L/2 - PW/2)} {DD/2} {(DH - 4)/2}" size="{PW} {DD} {DH - 4}" material="beige" />
+  <box pos="{L/2 - PW/2} {DD/2} {(DH - 4)/2}" size="{PW} {DD} {DH - 4}" material="beige" />
+  <box pos="{-(L/2 - PW/2)} -0.5 52" size="{PW - 8} 1 28" material="beige_dark"><array count="2" translation="0 0 -32" /></box>
+  <box pos="{L/2 - PW/2} -0.5 52" size="{PW - 8} 1 28" material="beige_dark"><array count="2" translation="0 0 -32" /></box>
+  <box pos="0 {DD - 2} 45" size="{L - 2*PW} 4 50" material="beige" />
+  <box pos="0 {DD/2} {DH - 2}" size="{L + 4} {DD + 2} 4" material="laminate" />
+
+  <!-- Instrument hood with its lamp strip. -->
+  <box pos="0 {DD - HD/2} {DH + HH/2}" size="{L} {HD} {HH}" material="beige" />
+  <box pos="0 {DD - HD - 0.5} {DH + HH/2}" size="{L - 20} 1 {HH - 10}" material="dark_metal" />
+  <box pos="-100 {DD - HD - 1.2} {DH + HH/2 + 4}" size="5 0.4 4" material="lamp_red" unlit="1" castShadow="0"><array count="9" translation="25 0 0" /></box>
+  <box pos="-88 {DD - HD - 1.2} {DH + HH/2 - 4}" size="5 0.4 4" material="lamp_green" unlit="1" castShadow="0"><array count="8" translation="25 0 0" /></box>
+
+  <!-- Two CRT monitors standing on the hood: case, recessed bezel, glass. -->
+  <group name="monitors">
+    <box pos="{-MX} {MY} {MZ}" size="{MW} {MD} {MH}" material="beige" />
+    <box pos="{MX} {MY} {MZ}" size="{MW} {MD} {MH}" material="beige" />
+    <box pos="{-MX} {MY + MD/2 + 7} {MZ + 2}" size="{MW - 12} 14 {MH - 10}" material="beige" />
+    <box pos="{MX} {MY + MD/2 + 7} {MZ + 2}" size="{MW - 12} 14 {MH - 10}" material="beige" />
+    <box pos="{-MX} {DD - MD - 0.5} {MZ}" size="{MW - 8} 1 {MH - 8}" material="dark_metal" />
+    <box pos="{MX} {DD - MD - 0.5} {MZ}" size="{MW - 8} 1 {MH - 8}" material="dark_metal" />
+  </group>
+  <box pos="{-MX} {SY} {MZ}" size="{MW - 12} 1 {MH - 12}" material="screen_glow" unlit="1" castShadow="0" />
+  <box pos="{MX} {SY} {MZ}" size="{MW - 12} 1 {MH - 12}" material="screen_glow" unlit="1" castShadow="0" />
+
+  <!-- Keyboards on the desk in front of each monitor, and a printout beside the right one. -->
+  <box pos="{-MX} 24 {DH + 1.5}" rot="0 0 3" size="48 18 3" material="beige_dark" />
+  <box pos="{MX} 22 {DH + 1.5}" rot="0 0 -4" size="48 18 3" material="beige_dark" />
+  <box pos="0 30 {DH + 0.6}" rot="0 0 8" size="28 38 1.2" material="paper" />
 </prefab>

@@ -1,0 +1,8 @@
+<!-- A forecourt lamp post: a dark steel pole 420 tall on a round base with a cylindrical luminaire on top
+     (off in daylight). Baseline z=0; origin at the foot. Materials: dark_metal, troffer_frame. -->
+<prefab up="z">
+  <cylinder pos="0 0 6" rot="90 0 0" radius="18" height="12" material="dark_metal" />
+  <cylinder pos="0 0 {12 + 200}" rot="90 0 0" radius="5" height="400" material="dark_metal" />
+  <cylinder pos="0 0 {412 + 18}" rot="90 0 0" radius="20" height="36" material="troffer_frame" />
+  <cylinder pos="0 0 {448 + 3}" rot="90 0 0" radius="24" height="6" material="dark_metal" />
+</prefab>

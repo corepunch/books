@@ -1,0 +1,32 @@
+<!-- The Super Computer's great screen, hung on the hall's north wall: a dark display 1400 wide and
+     800 tall in a frame of crystal bars, with pointed crystal finials rising from its top corners.
+     Origin at the bottom middle of the back face, which is flat against the wall. Front (the display
+     face, at local Y -40) is -Y. Self-contained materials (the hall's own override them). -->
+<prefab up="z" front="-y">
+  <material id="fortress_crystal" color="0.80 0.93 0.98" shininess="140" />
+  <material id="fortress_metal" color="0.24 0.30 0.38" shininess="70" />
+  <material id="fortress_screen" color="0.05 0.09 0.13" shininess="12" />
+  <let name="W" value="1400" />
+  <let name="H" value="800" />
+  <let name="D" value="40" />
+  <let name="B" value="60" />
+  <attach name="face" pos="0 {-D} {B + H/2}" />
+  <!-- The display panel, set into the frame. -->
+  <box pos="0 {-D/2} {B + H/2}" size="{W} {D} {H}" material="fortress_screen" />
+  <!-- Frame: bars standing 30 proud of the display face. -->
+  <group name="frame">
+    <box pos="0 -35 {B/2}" size="{W + 2*B} 70 {B}" material="fortress_metal" />
+    <box pos="0 -35 {B + H + B/2}" size="{W + 2*B} 70 {B}" material="fortress_metal" />
+    <box pos="{-W/2 - B/2} -35 {B + H/2}" size="{B} 70 {H}" material="fortress_metal" />
+    <box pos="{W/2 + B/2} -35 {B + H/2}" size="{B} 70 {H}" material="fortress_metal" />
+  </group>
+  <!-- Crystal finials on the frame's top corners and a crest over its middle. -->
+  <group name="finials">
+    <prism pos="{-W/2 - B/2} -35 {H + 2*B + 120}" rot="90 0 0" radius="34" height="240" sides="6" material="fortress_crystal" />
+    <cone pos="{-W/2 - B/2} -35 {H + 2*B + 290}" rot="90 0 0" radius="34" height="100" sides="6" material="fortress_crystal" />
+    <prism pos="{W/2 + B/2} -35 {H + 2*B + 120}" rot="90 0 0" radius="34" height="240" sides="6" material="fortress_crystal" />
+    <cone pos="{W/2 + B/2} -35 {H + 2*B + 290}" rot="90 0 0" radius="34" height="100" sides="6" material="fortress_crystal" />
+    <prism pos="0 -35 {H + 2*B + 60}" rot="90 0 0" radius="30" height="120" sides="6" material="fortress_crystal" />
+    <cone pos="0 -35 {H + 2*B + 160}" rot="90 0 0" radius="30" height="80" sides="6" material="fortress_crystal" />
+  </group>
+</prefab>

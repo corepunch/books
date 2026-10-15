@@ -1,124 +1,230 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Обратный отсчёт: the Fortress of Solitude in the Arctic, around noon. Z up, cm, X east, Y north.
-     Inside (y 0..2600): a crystal hall 3000 wide and 1500 high, Superman's trophies on pedestals along
-     the walls, and at the north end the Super Computer: a console under a great screen, with a hatch
-     beside it where the machine hands out what it makes. Its projector shows images in the air in front
-     of the screen. Outside: the ice crag over the hall rising from the sea ice, the door in its south face, and the
-     giant key that only Superman can lift. Superman is authored 50 m below
-     the ice; camera transforms give world positions. The hall stands inside the crag. -->
-<scene up="z" ambient="0.34 0.38 0.44" background="0.72 0.82 0.92">
-  <camera name="fortress-show-door" comment="The Arctic: Superman lifts the giant key to the door high in the ice crag" pos="-1300 -3300 420" look="0 -1200 900" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-150 -1500 5000" rot="0 0 200" />
-    <use-pose instance="Superman" name="Lift" />
+     Resident story: Superman built this hall inside an ice crag where no one can follow; the door is
+     high in the crag's sheer south face and only the giant golden key, too heavy for anyone else,
+     opens it. Inside, a crystal hall (3200 x 2600 x 1500, floor 10 m above the sea ice) keeps his
+     trophies on pedestals between faceted ice pillars, lit by the sun crystal hanging from the roof.
+     At the north end the Super Computer: a console under the great screen, its projector throwing
+     images into the air, and a delivery pedestal beside it where the machine hands out what it makes.
+     Every state is authored where it happens: Superman at the console, the world map on the screen,
+     the bacterium hologram over the projector and the sprayer on the pedestal (analysis), the red
+     alarm and the projected Earth (alarm), the key in the keyhole. Each camera moves away what its
+     moment lacks, under the sea ice (PARK), and moves Superman's place group (to the door in
+     show-door, where he flies holding the key). -->
+<scene up="z" ambient="0.20 0.24 0.30" background="0.60 0.74 0.88">
+  <!-- Must match prefabs/fortress/crag.blk, which owns the landform and hall shell. -->
+  <let name="FZ" value="1000" />
+  <let name="HW" value="3200" />
+  <let name="HD" value="2600" />
+  <let name="HH" value="1500" />
+  <let name="T" value="160" />
+  <let name="HC" value="FZ + HH" />
+  <!-- Door (prefabs/fortress/door.blk): 130 thick, outside face 10 behind the wall face; the key's
+       deepest ward rests on the keyhole slot floor and its tip stops inside the slab. -->
+  <let name="DOORY" value="-T + 10 + 65" />
+  <let name="KEYY" value="DOORY - 65 - 145" />
+  <let name="KEYZ" value="FZ + 420" />
+  <!-- The Super Computer. -->
+  <let name="CY" value="HD - 600" />
+  <let name="PX" value="540" />
+  <!-- Superman's authored place: at the console, turned toward the screen. -->
+  <let name="SMX" value="-200" />
+  <let name="SMY" value="CY - 230" />
+  <let name="PARK" value="-8000" />
+
+  <!-- Camera pos/look and the anchor groups stay literal numbers: the book engine reads them
+       straight from this file without evaluating {expressions} (hall floor FZ = 1000). -->
+  <camera name="fortress-show-door" comment="The Arctic: Superman flies the giant golden key into the keyhole of the door high in the sheer face of the ice crag" pos="1250 -2400 800" look="-120 -450 1380" fov="52" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="SupermanPlace" pos="{-SMX} {KEYY - 333 - SMY} {KEYZ - 135 - FZ}" rot="0 0 20" />
+    <use-pose instance="Superman" name="Hold" />
+    <transform target="Sprayer" pos="0 0 {PARK}" />
+    <transform target="Hologram" pos="0 0 {PARK}" />
+    <transform target="Globe" pos="0 0 {PARK}" />
+    <transform target="Alarm" pos="0 0 {PARK}" />
   </camera>
-  <camera name="fortress-show-computer" comment="The Super Computer: Superman at the console under the great screen, trophies down the crystal hall, the hatch beside the console" pos="-560 1180 330" look="150 2250 380" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-100 1720 5000" rot="0 0 165" />
+  <camera name="fortress-show-computer" comment="The Super Computer: Superman at the console under the great screen with its world map, ice pillars and trophies down the crystal hall, the delivery pedestal beside the console" pos="950 150 1650" look="-200 2100 1480" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
     <use-pose instance="Superman" name="Stand" />
+    <transform target="Sprayer" pos="0 0 {PARK}" />
+    <transform target="Hologram" pos="0 0 {PARK}" />
+    <transform target="Globe" pos="0 0 {PARK}" />
+    <transform target="Alarm" pos="0 0 {PARK}" />
   </camera>
-  <camera name="fortress-analysis" comment="The projector shows one Cybernetic Bacterium, a skull on spider legs; the antidote sprayer stands in the opened hatch" pos="-560 1180 330" look="150 2250 380" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-160 1700 5000" rot="0 0 150" />
+  <camera name="fortress-analysis" comment="The projector shows one Cybernetic Bacterium, a skull on spider legs, in the air over the console; the antidote sprayer stands on the delivery pedestal; the great screen is dark" pos="420 1100 1300" look="20 2040 1360" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="SupermanPlace" pos="-120 80 0" rot="0 0 -46" />
     <use-pose instance="Superman" name="HandsOnHips" />
-    <transform target="Hologram" pos="0 0 5000" />
-    <transform target="Sprayer" pos="0 0 5000" />
-    <transform target="Hatch" pos="0 0 -5000" />
+    <transform target="MapDisplay" pos="0 0 {PARK}" />
+    <transform target="Globe" pos="0 0 {PARK}" />
+    <transform target="Alarm" pos="0 0 {PARK}" />
   </camera>
-  <camera name="fortress-alarm" comment="The screen flashes: a projected Earth ringed by a belt of meteorites, one of them already falling" pos="-560 1180 330" look="150 2250 380" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-160 1700 5000" rot="0 0 150" />
-    <use-pose instance="Superman" name="Point" />
-    <transform target="Globe" pos="0 0 5000" />
-    <transform target="Alarm" pos="0 0 5000" />
+  <camera name="fortress-alarm" comment="The screen flashes red: a projected Earth ringed by a belt of meteorites, one of them already falling; Superman points at it" pos="850 900 1180" look="-50 2300 1720" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="SupermanPlace" pos="350 -170 0" rot="0 0 35" />
+    <use-pose instance="Superman" name="PointUp" />
+    <transform target="Sprayer" pos="0 0 {PARK}" />
+    <transform target="Hologram" pos="0 0 {PARK}" />
   </camera>
 
-  <material id="ice" color="0.82 0.90 0.96" shininess="80" />
-  <material id="ice_dark" color="0.56 0.70 0.82" shininess="80" />
-  <material id="crystal" color="0.76 0.92 0.96" shininess="120" />
-  <material id="snow" color="0.94 0.96 0.98" shininess="4" />
-  <material id="sea" color="0.10 0.18 0.26" shininess="90" />
-  <material id="console" color="0.30 0.36 0.44" shininess="60" />
-  <material id="screen" color="0.10 0.16 0.22" shininess="40" />
-  <material id="screen_glow" color="0.55 0.90 0.80" shininess="5" />
-  <material id="key_metal" color="0.48 0.46 0.42" shininess="40" />
-  <material id="tank" color="0.82 0.84 0.86" shininess="90" />
-  <material id="gunmetal" color="0.14 0.14 0.16" shininess="60" />
-  <material id="strap" color="0.20 0.22 0.20" shininess="5" />
-  <material id="hose" color="0.10 0.10 0.10" shininess="20" />
-  <material id="bacterium" color="0.58 0.30 0.70" shininess="60" />
-  <material id="bacterium_eye" color="1.0 0.30 0.20" shininess="5" />
-  <material id="trophy" color="0.70 0.56 0.30" shininess="80" />
-  <material id="earth" color="0.20 0.40 0.70" shininess="40" />
-  <material id="land" color="0.30 0.56 0.30" shininess="10" />
-  <material id="rock" color="0.40 0.36 0.32" shininess="8" />
+  <!-- Superman points up at the projected Earth over the screen (a scene pose; the shared
+       character file stays untouched). -->
+  <pose name="PointUp">
+    <ik limb="right_arm" offset="8 -32 94" bend="-150 -30" />
+    <joint target="head" rot="-24 0 -8" />
+  </pose>
 
-  <!-- Low Arctic sun from the south; inside, light through the crystal and the screen's glow. -->
-  <sun dir="0.3 0.8 -0.5" color="1.0 0.95 0.88" intensity="1.1" castShadows="1" />
-  <light pos="0 1200 1300" color="0.80 0.92 1.0" intensity="0.8" radius="2600" castShadows="1" />
-  <light pos="0 2150 500" color="0.50 0.95 0.90" intensity="0.6" radius="900" castShadows="0" />
+  <!-- The hall's palette (prefabs carry the same ids as fallbacks; these win). -->
+  <material id="fortress_ice" color="0.74 0.86 0.94" shininess="100" />
+  <material id="fortress_ice_deep" color="0.46 0.62 0.78" shininess="90" />
+  <material id="fortress_crystal" color="0.80 0.93 0.98" shininess="140" />
+  <material id="fortress_floor" color="0.36 0.50 0.66" shininess="120" />
+  <material id="fortress_metal" color="0.24 0.30 0.38" shininess="70" />
+  <material id="fortress_glow" color="0.55 0.95 1.0" shininess="5" />
+  <material id="fortress_screen" color="0.05 0.09 0.13" shininess="12" />
+  <material id="map_land" color="0.36 0.86 0.62" shininess="5" />
+  <material id="map_alert" color="1.0 0.28 0.18" shininess="5" />
+  <material id="alarm_red" color="0.62 0.07 0.06" shininess="5" />
+  <material id="earth_sea" color="0.18 0.40 0.78" shininess="40" />
+  <material id="earth_land" color="0.30 0.62 0.34" shininess="10" />
+  <material id="meteor_rock" color="0.48 0.36 0.26" shininess="8" />
 
-  <!-- The hall: floor, crystal walls of leaning prisms, a roof of ice. -->
-  <box pos="0 1300 -20" size="3200 2800 40" material="ice_dark" />
-  <box pos="0 1300 1520" size="3200 2800 40" material="ice" />
-  <box pos="0 2620 750" size="3200 40 1500" material="ice" />
-  <box pos="0 -40 750" size="3200 40 1500" material="ice" />
-  <box pos="-1620 1300 750" size="40 2800 1500" material="ice" />
-  <box pos="1620 1300 750" size="40 2800 1500" material="ice" />
-  <prism pos="-1450 400 700" rot="90 0 0" radius="90" height="1400" sides="6" material="crystal" />
-  <prism pos="-1450 1200 700" rot="90 0 0" radius="110" height="1400" sides="6" material="crystal" />
-  <prism pos="-1450 2000 700" rot="90 0 0" radius="90" height="1400" sides="6" material="crystal" />
-  <prism pos="1450 400 700" rot="90 0 0" radius="90" height="1400" sides="6" material="crystal" />
-  <prism pos="1450 1200 700" rot="90 0 0" radius="110" height="1400" sides="6" material="crystal" />
-  <prism pos="1450 2000 700" rot="90 0 0" radius="90" height="1400" sides="6" material="crystal" />
-  <!-- Trophies on pedestals: a robot's head, a captured alien gun, a meteor fragment. -->
-  <cylinder pos="-1150 800 50" rot="90 0 0" radius="70" height="100" material="crystal" />
-  <sphere pos="-1150 800 160" radius="55" material="trophy" />
-  <sphere pos="-1170 770 170" radius="10" color="1 0.2 0.2" unlit="1" />
-  <sphere pos="-1130 770 170" radius="10" color="1 0.2 0.2" unlit="1" />
-  <cylinder pos="-1150 1500 50" rot="90 0 0" radius="70" height="100" material="crystal" />
-  <box pos="-1150 1500 140" rot="0 0 30" size="160 30 40" material="console" />
-  <cylinder pos="1150 900 50" rot="90 0 0" radius="70" height="100" material="crystal" />
-  <sphere pos="1150 900 150" radius="45" material="rock" />
-  <!-- The Super Computer: console, the great screen, the hatch, the projector lens. -->
-  <box pos="0 1960 45" size="600 160 90" material="console" />
-  <box pos="0 1990 98" size="600 100 12" rot="-14 0 0" material="screen_glow" />
-  <box pos="0 2560 620" size="1400 30 820" material="screen" />
-  <box pos="0 2542 620" size="1340 4 760" material="screen_glow" />
-  <group name="Hatch"><box pos="520 2000 100" size="160 120 200" material="console" /></group>
-  <box pos="520 2040 100" size="170 40 210" material="console" />
-  <cylinder pos="0 1980 160" rot="90 0 0" radius="18" height="30" material="crystal" />
-  <prefab name="Sprayer" source="props/sprayer" pos="500 1990 -5000" rot="0 0 200" />
-  <!-- The projector's images in the air: one bacterium, or the Earth and its belt of meteorites. -->
-  <group name="Hologram" pos="0 0 -5000"><prefab source="props/bacterium" pos="0 2150 260" scale="3 3 3" rot="0 0 200" /></group>
-  <group name="Globe" pos="0 0 -5000">
-    <sphere pos="0 2150 520" radius="200" material="earth" />
-    <sphere pos="-60 2020 600" radius="90" scale="1.4 1 1" material="land" />
-    <torus pos="0 2150 520" rot="72 0 20" majorRadius="300" minorRadius="5" color="0.8 0.6 0.4" />
-    <sphere pos="290 2120 560" radius="16" material="rock" />
-    <sphere pos="-230 2050 430" radius="14" material="rock" />
-    <sphere pos="120 1880 620" radius="15" material="rock" />
-    <sphere pos="-280 2260 610" radius="13" material="rock" />
-    <sphere pos="200 2000 300" radius="18" color="1 0.5 0.2" unlit="1" />
+  <!-- Low Arctic sun from the south-east: it rakes the crag's south faces and leaves the west faces in
+       cold shadow. Inside, the sealed hall gets none of it. -->
+  <sun dir="-0.35 0.80 -0.50" color="1.0 0.95 0.86" intensity="1.25" castShadows="1" />
+
+  <!-- The crag, the sea ice and the hall shell: one landform. -->
+  <prefab name="Crag" source="fortress/crag" />
+  <prefab name="Door" source="fortress/door" pos="0 {DOORY} {FZ}" />
+  <prefab name="Key" source="props/giant_key" pos="0 {KEYY} {KEYZ}" rot="0 0 90" />
+
+  <!-- Inside: three pairs of ice pillars down the hall, roof to floor. -->
+  <group name="pillars">
+    <prefab source="fortress/crystal_pillar" pos="-1150 500 {FZ}" rot="0 0 10" />
+    <prefab source="fortress/crystal_pillar" pos="-1150 1300 {FZ}" rot="0 0 35" scale="1.15 1.15 1" />
+    <prefab source="fortress/crystal_pillar" pos="-1150 2100 {FZ}" rot="0 0 20" />
+    <prefab source="fortress/crystal_pillar" pos="1150 500 {FZ}" rot="0 0 25" />
+    <prefab source="fortress/crystal_pillar" pos="1150 1300 {FZ}" rot="0 0 0" scale="1.15 1.15 1" />
+    <prefab source="fortress/crystal_pillar" pos="1150 2100 {FZ}" rot="0 0 40" />
   </group>
-  <group name="Alarm" pos="0 0 -5000"><light pos="0 2400 900" color="1 0.25 0.2" intensity="0.8" radius="1600" castShadows="0" /></group>
-
-  <!-- Outside: the hall lies inside the crag. Sea ice, open water, the crag over the hall, the portal
-       block in its south face with the door, and the key resting on the ice before it. -->
-  <group name="Exterior">
-    <box pos="0 -2600 -20" size="14000 3000 40" material="snow" />
-    <box pos="0 -7000 -60" size="40000 6000 40" material="sea" />
-    <box pos="0 1300 2000" size="5600 4600 4000" material="ice" castShadow="0"><taper amount="0.6" axis="z" /></box>
-    <pyramid pos="300 1500 3900" rot="90 0 10" radius="1500" height="2600" material="ice" castShadow="0" />
-    <pyramid pos="-3300 1800 0" rot="90 0 15" radius="2000" height="4200" material="ice_dark" />
-    <pyramid pos="3200 2000 0" rot="90 0 -10" radius="2200" height="4600" material="ice" />
-    <box pos="0 -1000 700" size="900 400 1400" material="ice_dark" castShadow="0" />
-    <box pos="0 -1202 640" size="520 6 900" color="0.30 0.34 0.40" />
-    <box pos="0 -1206 1240" size="220 6 220" color="0.86 0.12 0.12" />
-    <box pos="0 -1210 1240" size="120 6 120" color="0.98 0.82 0.20" />
+  <!-- Crystals grown from the floor in the corners and between pillars. -->
+  <group name="floor_crystals">
+    <prefab source="fortress/crystal_cluster" pos="-1330 {HD - 170} {FZ}" rot="0 0 200" />
+    <prefab source="fortress/crystal_cluster" pos="1290 {HD - 230} {FZ}" rot="0 0 -30" scale="1.1 1.1 1.1" />
+    <prefab source="fortress/crystal_cluster" pos="1330 1720 {FZ}" rot="0 0 75" scale="0.85 0.85 0.85" />
+    <prefab source="fortress/crystal_cluster" pos="1300 230 {FZ}" rot="0 0 140" />
   </group>
-  <prefab source="props/giant_key" name="Key" pos="-150 -1500 236" rot="0 0 15" />
+  <!-- A hexagonal ring of clear crystal set into the floor round the computer's end of the hall. -->
+  <group name="floor_ring">
+    <let name="RC" value="850" />
+    <let name="RA" value="RC*cos(rad(30))" />
+    <let name="RW" value="24" />
+    <let name="RY" value="CY - 200" />
+    <box pos="{RA*cos(rad(30))} {RY + RA*sin(rad(30))} {FZ + 0.5}" rot="0 0 120" size="{RC - RW*0.6} {RW} 1.0" material="fortress_crystal" />
+    <box pos="{RA*cos(rad(90))} {RY + RA*sin(rad(90))} {FZ + 0.6}" rot="0 0 180" size="{RC - RW*0.6} {RW} 1.2" material="fortress_crystal" />
+    <box pos="{RA*cos(rad(150))} {RY + RA*sin(rad(150))} {FZ + 0.7}" rot="0 0 240" size="{RC - RW*0.6} {RW} 1.4" material="fortress_crystal" />
+    <box pos="{RA*cos(rad(210))} {RY + RA*sin(rad(210))} {FZ + 0.8}" rot="0 0 300" size="{RC - RW*0.6} {RW} 1.6" material="fortress_crystal" />
+    <box pos="{RA*cos(rad(270))} {RY + RA*sin(rad(270))} {FZ + 0.9}" rot="0 0 360" size="{RC - RW*0.6} {RW} 1.8" material="fortress_crystal" />
+    <box pos="{RA*cos(rad(330))} {RY + RA*sin(rad(330))} {FZ + 1.0}" rot="0 0 420" size="{RC - RW*0.6} {RW} 2.0" material="fortress_crystal" />
+  </group>
+  <!-- Ice points hanging from the roof, and the sun crystal that lights the hall. -->
+  <group name="icicles">
+    <prefab source="fortress/icicles" pos="-700 650 {HC}" rot="0 0 20" />
+    <prefab source="fortress/icicles" pos="650 850 {HC}" rot="0 0 75" scale="1.2 1.2 1.3" />
+    <prefab source="fortress/icicles" pos="850 1850 {HC}" rot="0 0 140" />
+    <prefab source="fortress/icicles" pos="-850 1950 {HC}" rot="0 0 200" scale="1.1 1.1 1.2" />
+    <prefab source="fortress/icicles" pos="150 350 {HC}" rot="0 0 260" scale="0.9 0.9 0.9" />
+  </group>
+  <prefab name="SunCrystal" source="fortress/heart_crystal" pos="-420 1050 {HC}" />
 
-  <prefab source="characters/superman" name="Superman" pos="0 0 -5000" />
+  <!-- Trophies on pedestals along the walls: a giant robot's head, an alien rifle, a meteor. -->
+  <group name="trophies">
+    <prefab name="PedestalRobot" source="fortress/pedestal" pos="-1350 900 {FZ}" />
+    <prefab source="fortress/trophies/robot_head" attach="PedestalRobot:top_surface" rot="0 0 -70" />
+    <prefab name="PedestalGun" source="fortress/pedestal" pos="1350 900 {FZ}" />
+    <prefab source="fortress/trophies/alien_gun" attach="PedestalGun:top_surface" rot="0 0 60" />
+    <prefab name="PedestalMeteor" source="fortress/pedestal" pos="-1350 1700 {FZ}" />
+    <prefab source="fortress/trophies/meteor" attach="PedestalMeteor:top_surface" rot="0 0 30" />
+  </group>
+
+  <!-- The Super Computer: the great screen on the north wall, the console, the delivery pedestal. -->
+  <prefab name="GreatScreen" source="fortress/screen" pos="0 {HD} {FZ + 240}" />
+  <prefab name="Console" source="fortress/console" pos="0 {CY} {FZ}" />
+  <prefab name="Delivery" source="fortress/delivery_pedestal" pos="{PX} {CY + 40} {FZ}" />
+  <prefab name="Sprayer" source="props/sprayer" attach="Delivery:top_surface" pos="-30 0 0" rot="0 0 -20" />
+
+  <!-- The screen's world map: continents and today's three meteorite falls (Riley's field, Tokyo,
+       Saudi Arabia), drawn on the display face; the screen's cyan glow fills the north end. -->
+  <group name="MapDisplay">
+    <!-- Continents as flat ellipses on the display face (equirectangular: x = 640*lon/180,
+         z = 360*lat/90 about the display centre MZ); each stands 0.4 further off the face than the last so no two faces share a plane. -->
+    <let name="YF" value="HD - 40" />
+    <let name="MZ" value="FZ + 240 + 60 + 400" />
+    <!-- North America -->
+    <cylinder pos="{640*-100/180} {YF - 0.0 - 0.5} {MZ + 360*47/90}" radius="1" height="1" scale="175 1 110" material="map_land" unlit="1" castShadow="0" />
+    <cylinder pos="{640*-82/180} {YF - 0.4 - 0.5} {MZ + 360*27/90}" radius="1" height="1" scale="70 1 60" material="map_land" unlit="1" castShadow="0" />
+    <cylinder pos="{640*-92/180} {YF - 0.8 - 0.5} {MZ + 360*14/90}" radius="1" height="1" scale="38 1 48" material="map_land" unlit="1" castShadow="0" />
+    <!-- Greenland -->
+    <cylinder pos="{640*-42/180} {YF - 1.2 - 0.5} {MZ + 360*72/90}" radius="1" height="1" scale="60 1 38" material="map_land" unlit="1" castShadow="0" />
+    <!-- South America -->
+    <cylinder pos="{640*-60/180} {YF - 1.6 - 0.5} {MZ + 360*-12/90}" radius="1" height="1" scale="85 1 120" material="map_land" unlit="1" castShadow="0" />
+    <cylinder pos="{640*-67/180} {YF - 2.0 - 0.5} {MZ + 360*-38/90}" radius="1" height="1" scale="45 1 80" material="map_land" unlit="1" castShadow="0" />
+    <!-- Europe -->
+    <cylinder pos="{640*15/180} {YF - 2.4 - 0.5} {MZ + 360*52/90}" radius="1" height="1" scale="80 1 42" material="map_land" unlit="1" castShadow="0" />
+    <!-- Africa -->
+    <cylinder pos="{640*20/180} {YF - 2.8 - 0.5} {MZ + 360*4/90}" radius="1" height="1" scale="105 1 140" material="map_land" unlit="1" castShadow="0" />
+    <cylinder pos="{640*38/180} {YF - 3.2 - 0.5} {MZ + 360*22/90}" radius="1" height="1" scale="60 1 45" material="map_land" unlit="1" castShadow="0" />
+    <!-- Asia -->
+    <cylinder pos="{640*95/180} {YF - 3.6 - 0.5} {MZ + 360*52/90}" radius="1" height="1" scale="250 1 100" material="map_land" unlit="1" castShadow="0" />
+    <cylinder pos="{640*100/180} {YF - 4.0 - 0.5} {MZ + 360*24/90}" radius="1" height="1" scale="110 1 60" material="map_land" unlit="1" castShadow="0" />
+    <!-- Australia -->
+    <cylinder pos="{640*134/180} {YF - 4.4 - 0.5} {MZ + 360*-25/90}" radius="1" height="1" scale="85 1 52" material="map_land" unlit="1" castShadow="0" />
+    <!-- Japan -->
+    <cylinder pos="{640*139/180} {YF - 4.8 - 0.5} {MZ + 360*37/90}" radius="1" height="1" scale="14 1 34" material="map_land" unlit="1" castShadow="0" />
+    <!-- Today's falls: Riley's field, Saudi Arabia, Tokyo. -->
+    <cylinder pos="{640*-98/180} {YF - 8} {MZ + 360*38/90}" radius="16" height="4" material="map_alert" unlit="1" castShadow="0" />
+    <cylinder pos="{640*45/180} {YF - 8} {MZ + 360*24/90}" radius="16" height="4" material="map_alert" unlit="1" castShadow="0" />
+    <cylinder pos="{640*140/180} {YF - 8} {MZ + 360*36/90}" radius="16" height="4" material="map_alert" unlit="1" castShadow="0" />
+    <light pos="0 {HD - 300} {MZ}" color="0.50 0.90 1.0" intensity="0.55" radius="1300" castShadows="0" />
+  </group>
+
+  <!-- Analysis: the projector throws one Cybernetic Bacterium into the air over the console. -->
+  <group name="Hologram">
+    <!-- A projected image is light, not a body: nothing holds it up. -->
+    <prefab source="props/bacterium" sanityIgnore="1" pos="0 {CY + 52} {FZ + 175}" rot="0 0 25" scale="3.2 3.2 3.2" />
+    <cylinder sanityIgnore="1" pos="0 {CY + 52} {FZ + 168}" rot="90 0 0" radius="150" height="2" material="fortress_glow" unlit="1" castShadow="0" />
+  </group>
+
+  <!-- Alarm: the display flashes red over the map, the frame's edge glows red, red light floods the
+       north end, and the projector throws the Earth and Brainiac's belt of meteorites into the air. -->
+  <group name="Alarm">
+    <box pos="0 {HD - 40 - 11} {FZ + 240 + 60 + 400}" size="1398 2 798" material="alarm_red" unlit="1" castShadow="0" />
+    <light pos="0 {HD - 500} {FZ + 900}" color="1.0 0.25 0.18" intensity="1.0" radius="1500" castShadows="0" />
+  </group>
+  <group name="Globe" sanityIgnore="1">
+    <!-- A projected image is light, not a body: nothing holds it up. -->
+    <let name="GY" value="CY + 160" />
+    <let name="GZ" value="FZ + 720" />
+    <sphere pos="0 {GY} {GZ}" radius="170" material="earth_sea" />
+    <sphere pos="-70 {GY - 110} {GZ + 60}" radius="80" scale="1.3 0.7 1" material="earth_land" />
+    <sphere pos="80 {GY - 120} {GZ - 50}" radius="60" scale="1 0.6 1.3" material="earth_land" />
+    <torus pos="0 {GY} {GZ}" rot="70 0 25" majorRadius="290" minorRadius="5" color="0.9 0.6 0.4" unlit="1" castShadow="0" />
+    <sphere pos="{290*cos(rad(10))} {GY - 40} {GZ + 60}" radius="16" material="meteor_rock" />
+    <sphere pos="{-290*cos(rad(25))} {GY + 60} {GZ - 100}" radius="14" material="meteor_rock" />
+    <sphere pos="120 {GY - 250} {GZ + 110}" radius="15" material="meteor_rock" />
+    <sphere pos="-150 {GY + 230} {GZ + 70}" radius="13" material="meteor_rock" />
+    <sphere pos="-200 {GY - 190} {GZ - 40}" radius="15" material="meteor_rock" />
+    <!-- The one already falling, toward England, with its burning trail. -->
+    <sphere pos="-40 {GY - 210} {GZ + 160}" radius="18" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
+    <cone pos="-25 {GY - 235} {GZ + 215}" rot="-30 0 15" radius="14" height="90" color="1.0 0.80 0.40" unlit="1" castShadow="0" />
+  </group>
+
+  <!-- Superman, at the console (cameras move him). -->
+  <!-- The unrotated place group takes the cameras' world-axis moves and turns; the instance inside
+       carries the authored facing (toward the screen) and the per-camera poses. -->
+  <group name="SupermanPlace" pos="{SMX} {SMY} {FZ}">
+    <!-- sanityIgnore: in fortress-show-door Superman flies at the door holding the key, 13 m over the
+         sea ice; the checker evaluates that shot. In every hall shot he stands on the floor. -->
+    <prefab name="Superman" source="characters/superman" rot="0 0 160" sanityIgnore="1" />
+  </group>
 
   <!-- Anchors. -->
-  <group name="Computer" pos="0 1980 130" />
-  <group name="Screen" pos="520 2540 330" />
-  <group name="Hatch-Door" pos="520 1940 120" />
+  <group name="Computer" pos="150 1970 1105" />
+  <group name="Screen" pos="380 2555 1420" />
 </scene>

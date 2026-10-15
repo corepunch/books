@@ -1,0 +1,68 @@
+<!-- What the flood left of the steel trestle on one rim: two plate girders on their bearings with the
+     last timber ties and rails, torn off over the gap (the north girder longer, a loose rail hanging
+     from it), and the first trestle bent - a cap, two battered legs, X-bracing - still standing on a
+     rock shelf below. Front +x points out over the gorge.
+     Footprint x -200..300, y -225..225. Baselines: the bearings stand on the abutment's bridge seat
+     at z=0 (x -190..-120); the bent's footings stand DROP=600 lower on the shelf (x 145..215).
+     The rail head on the ties is z=181. Origin: the front edge of the bridge seat on the track centre
+     line. Materials from the scene: steel, rust, sleeper, rail, concrete. -->
+<prefab up="z" front="+x">
+  <let name="TOP" value="150" />
+  <let name="BOT" value="10" />
+  <let name="GY" value="90" />
+  <let name="DROP" value="600" />
+  <let name="BX" value="180" />
+  <attach name="seat" pos="-155 0 0" />
+  <attach name="rail_end" pos="40 0 181" />
+  <attach name="girder_end" pos="270 {GY} {TOP}" />
+  <attach name="shelf" pos="{BX} 0 {-DROP}" />
+  <!-- Bearings on the seat. -->
+  <box pos="-155 {GY} 5" size="70 50 10" material="steel" />
+  <box pos="-155 {-GY} 5" size="70 50 10" material="steel" />
+  <!-- North girder, torn at x=270: the web ripped on a slant, a strip of bottom flange bent down. -->
+  <group name="girder_n" pos="0 {GY} 0">
+    <box pos="40 0 {TOP - 3}" size="460 44 6" material="steel" />
+    <box pos="20 0 {BOT + 3}" size="420 44 6" material="steel" />
+    <box pos="20 0 80" size="416 3 134" material="steel" />
+    <box pos="250 1 106" size="40 3 76" material="steel" />
+    <box pos="-60 0 80" size="6 40 126" material="steel" />
+    <box pos="100 0 80" size="6 40 126" material="steel" />
+    <box pos="252 0 -22" size="90 40 5" rot="0 62 0" material="rust" />
+  </group>
+  <!-- South girder, snapped at x=190; its top flange tears upward. -->
+  <group name="girder_s" pos="0 {-GY} 0">
+    <box pos="0 0 {TOP - 3}" size="380 44 6" material="steel" />
+    <box pos="0 0 {BOT + 3}" size="380 44 6" material="steel" />
+    <box pos="0 0 80" size="376 3 134" material="steel" />
+    <box pos="-60 0 80" size="6 40 126" material="steel" />
+    <box pos="100 0 80" size="6 40 126" material="steel" />
+    <box pos="214 0 160" size="60 40 5" rot="0 -24 0" material="rust" />
+  </group>
+  <!-- Cross frames between the girders. -->
+  <box pos="-65 0 80" size="8 {2*GY - 4} 8" rot="35 0 0" material="steel" />
+  <box pos="-55 0 80" size="8 {2*GY - 4} 8" rot="-35 0 0" material="steel" />
+  <box pos="95 0 80" size="8 {2*GY - 4} 8" rot="35 0 0" material="steel" />
+  <box pos="105 0 80" size="8 {2*GY - 4} 8" rot="-35 0 0" material="steel" />
+  <!-- The deck over the seat: ties on the top flanges and the last rails; beyond x=40 the ties
+       washed out and a loose rail hangs from the north girder's torn end by its fishplate. -->
+  <box pos="-180 0 {TOP + 8}" size="24 260 16" material="sleeper">
+    <array count="4" translation="50 0 0" />
+  </box>
+  <box pos="22 0 {TOP + 8}" size="24 240 16" rot="0 0 7" material="sleeper" />
+  <box pos="-80 72 {TOP + 23.5}" size="240 7 15" material="rail" />
+  <box pos="-80 -72 {TOP + 23.5}" size="240 7 15" material="rail" />
+  <box pos="282 112 34" size="7 15 250" rot="0 -16 0" material="rail" />
+  <!-- The first bent at x=BX: cap under the girders, two legs battered out to y=±205, bracing. -->
+  <group name="bent" pos="{BX} 0 0">
+    <box pos="0 0 {BOT - 12}" size="40 290 24" material="steel" />
+    <box pos="0 {(130 + 205)/2} {(-24 + BOT - DROP + 12)/2}" rot="{deg(atan(75/(DROP - 12 - 24 + BOT)))} 0 0" size="30 30 {hypot(75, DROP - 12 - 24 + BOT)}" material="steel" />
+    <box pos="0 {-(130 + 205)/2} {(-24 + BOT - DROP + 12)/2}" rot="{-deg(atan(75/(DROP - 12 - 24 + BOT)))} 0 0" size="30 30 {hypot(75, DROP - 12 - 24 + BOT)}" material="steel" />
+    <box pos="0 0 -300" size="12 335 12" material="steel" />
+    <box pos="-6 18 -157" size="10 404 10" rot="-42.65 0 0" material="steel" />
+    <box pos="6 -18 -157" size="10 404 10" rot="42.65 0 0" material="steel" />
+    <box pos="-6 18 -444" size="10 463 10" rot="-36.54 0 0" material="steel" />
+    <box pos="6 -18 -444" size="10 463 10" rot="36.54 0 0" material="steel" />
+    <box pos="0 205 {-DROP + 6}" size="70 70 12" material="concrete" />
+    <box pos="0 -205 {-DROP + 6}" size="70 70 12" material="concrete" />
+  </group>
+</prefab>

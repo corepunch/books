@@ -23,8 +23,9 @@
     <prefab source="characters/superman" name="S5" pos="300 0 0" pose="Throw" />
     <prefab source="characters/superman" name="S6" pos="400 0 0" pose="Crouch" />
     <prefab source="characters/superman" name="S7" pos="500 0 0" pose="Kneel" />
-    <prefab source="characters/superman" name="S8" pos="600 0 0" pose="Float" />
+    <!-- Float and Fly are airborne by design: sanityIgnore keeps them out of the floating check. -->
+    <prefab source="characters/superman" name="S8" pos="600 0 0" pose="Float" sanityIgnore="1" />
     <prefab source="characters/superman" name="S9" pos="720 0 0" pose="Reveal" />
-    <prefab source="characters/superman" name="S10" pos="-220 0 120" rot="90 0 0" pose="Fly" />
+    <prefab source="characters/superman" name="S10" pos="-220 0 120" rot="90 0 0" pose="Fly" sanityIgnore="1" />
   </group>
 </scene>

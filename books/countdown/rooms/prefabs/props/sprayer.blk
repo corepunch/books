@@ -1,11 +1,33 @@
 <!-- The antidote sprayer: a 60 cm steel backpack tank on shoulder straps, a hose and a spray gun.
-     Origin on the floor under the tank standing upright; the gun lies to local +X. -->
-<prefab>
-  <capsule pos="0 0 34" rot="90 0 0" radius="16" height="36" material="tank" />
-  <cylinder pos="0 0 66" rot="90 0 0" radius="6" height="8" material="gunmetal" />
-  <box pos="0 14 40" size="26 4 50" material="strap" />
-  <torus pos="30 -6 10" rot="90 0 0" majorRadius="16" minorRadius="2.2" material="hose" />
-  <box pos="58 -4 6" size="34 6 6" material="gunmetal" />
-  <box pos="48 -4 0" size="6 6 12" material="gunmetal" />
-  <box pos="0 -16 34" size="18 2 14" color="0.20 0.62 0.36" />
+     Origin on the floor under the tank standing upright; the gun lies to local +X.
+     Footprint about 95 x 40 cm (x -18..77, y -18..20), 70 cm tall. Z up. Front (the green
+     antidote gauge) faces -Y; the straps are on the +Y back. Self-contained: it defines its own
+     materials so every scene that places it (fortress, ship, items) renders it the same. -->
+<prefab up="z" front="-y">
+  <material id="sprayer_steel" color="0.80 0.83 0.86" shininess="90" />
+  <material id="sprayer_gunmetal" color="0.16 0.17 0.19" shininess="60" />
+  <material id="sprayer_strap" color="0.22 0.24 0.22" shininess="5" />
+  <material id="sprayer_hose" color="0.10 0.10 0.11" shininess="20" />
+  <material id="sprayer_gauge" color="0.22 0.70 0.40" shininess="40" />
+  <let name="R" value="16" />
+  <let name="FOOT" value="4" />
+  <let name="TANK" value="60" />
+  <attach name="top" pos="0 0 {FOOT + TANK + 6}" />
+  <!-- Tank: a foot ring it stands on, the capsule body, the valve on top. -->
+  <cylinder pos="0 0 {FOOT/2}" rot="90 0 0" radius="{R - 2}" height="{FOOT}" material="sprayer_gunmetal" />
+  <capsule pos="0 0 {FOOT + TANK/2}" rot="90 0 0" radius="{R}" height="{TANK - 2*R}" material="sprayer_steel" />
+  <cylinder pos="0 0 {FOOT + TANK + 2}" rot="90 0 0" radius="6" height="8" material="sprayer_gunmetal" />
+  <cylinder pos="0 0 {FOOT + TANK + 6}" rot="0 0 90" radius="2" height="18" material="sprayer_gunmetal" />
+  <!-- Two shoulder straps hugging the back. -->
+  <box pos="-7 {R + 1} {FOOT + TANK/2}" size="5 3 {TANK - 12}" material="sprayer_strap" />
+  <box pos="7 {R + 1} {FOOT + TANK/2}" size="5 3 {TANK - 12}" material="sprayer_strap" />
+  <!-- The antidote gauge on the front. -->
+  <box pos="0 {-R + 1} {FOOT + TANK/2 + 4}" size="14 4 18" material="sprayer_gauge" />
+  <!-- Hose: out of the tank's foot and coiled on the floor beside it. -->
+  <cylinder pos="{R + 5} 0 6" rot="0 0 90" radius="2.2" height="12" material="sprayer_hose" />
+  <torus pos="{R + 24} 0 2.2" rot="90 0 0" majorRadius="14" minorRadius="2.2" material="sprayer_hose" />
+  <!-- The spray gun lying on its side at the end of the hose. -->
+  <cylinder pos="{R + 46} 0 2.6" rot="0 0 90" radius="2.6" height="34" material="sprayer_gunmetal" />
+  <cylinder pos="{R + 64} 0 3.6" rot="0 0 90" radius="3.6" height="4" material="sprayer_steel" />
+  <box pos="{R + 36} -8 2" size="7 14 4" material="sprayer_gunmetal" />
 </prefab>

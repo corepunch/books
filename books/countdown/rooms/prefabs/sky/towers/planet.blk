@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The Daily Planet building: an eighteen-storey tower with lit newsroom windows, a crown and the famous globe (560 cm radius) with its tilted ring on a pedestal. Footprint 1800 x 1800 cm, baseline z=0 on the street, roof 6300 cm, globe top 7580 cm. Origin on the street at the centre of the footprint. Front -Y (all faces alike). Materials from the scene: tower_facade, tower_band, glass_dark, window_lit, roof_dark, beacon_red, planet_globe, planet_ring. -->
+<prefab up="z" front="-y">
+  <let name="W" value="1800" />
+  <let name="D" value="1800" />
+  <let name="Z" value="0" />
+  <let name="H" value="6300" />
+  <box pos="0 0 {Z + H/2}" size="{W} {D} {H}" material="tower_facade" />
+  <group rot="0 0 0">
+    <box pos="0 {-D/2 - 4} {Z + 350}" size="{W - 40} 4 40" material="tower_band"><array count="17" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-D/2 - 4.8} {Z + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="8" translation="0 0 700" /></box>
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 2*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-D/2 - 4.8} {Z + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 1400" /></box>
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-D/2 - 4.8} {Z + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="14" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-D/2 - 4.8} {Z + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 1400" /></box>
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-D/2 - 4.8} {Z + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="5" translation="0 0 700" /></box>
+  </group>
+  <group rot="0 0 90">
+    <box pos="0 {-W/2 - 4} {Z + 350}" size="{D - 40} 4 40" material="tower_band"><array count="17" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-W/2 - 4.8} {Z + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="8" translation="0 0 700" /></box>
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 2*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-W/2 - 4.8} {Z + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="5" translation="0 0 1050" /></box>
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-W/2 - 4.8} {Z + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="16" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-W/2 - 4.8} {Z + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 1050" /></box>
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-W/2 - 4.8} {Z + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="5" translation="0 0 1050" /></box>
+  </group>
+  <group rot="0 0 180">
+    <box pos="0 {-D/2 - 4} {Z + 350}" size="{W - 40} 4 40" material="tower_band"><array count="17" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-D/2 - 4.8} {Z + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 700" /></box>
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-D/2 - 4.8} {Z + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 1400" /></box>
+    <box pos="{-(8 - 1)*200/2 + 2*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-D/2 - 4.8} {Z + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 700" /></box>
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-D/2 - 4.8} {Z + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="5" translation="0 0 700" /></box>
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-D/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-D/2 - 4.8} {Z + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="7" translation="0 0 700" /></box>
+  </group>
+  <group rot="0 0 -90">
+    <box pos="0 {-W/2 - 4} {Z + 350}" size="{D - 40} 4 40" material="tower_band"><array count="17" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-W/2 - 4.8} {Z + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 1050" /></box>
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-W/2 - 4.8} {Z + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 1050" /></box>
+    <box pos="{-(8 - 1)*200/2 + 2*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-W/2 - 4.8} {Z + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 1050" /></box>
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-W/2 - 4.8} {Z + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 1400" /></box>
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-W/2 - 4.8} {Z + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="5" translation="0 0 700" /></box>
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-W/2 - 2} {Z + H/2}" size="110 3 {H - 120}" material="glass_dark" />
+  </group>
+  <box pos="0 0 {Z + H + 60}" size="{W + 60} {D + 60} 120" material="tower_band" />
+  <box pos="0 0 {Z + H + 120 + 150}" size="{W - 400} {D - 400} 300" material="tower_facade" />
+  <cylinder pos="0 0 {Z + H + 420 + 150}" rot="90 0 0" radius="90" height="300" material="roof_dark" />
+  <!-- The globe: a brass sphere ringed by its band, standing on the pedestal. -->
+  <sphere pos="0 0 {Z + H + 720 + 560}" radius="560" rings="20" slices="28" material="planet_globe" />
+  <torus pos="0 0 {Z + H + 720 + 560}" rot="90 -23 0" majorRadius="640" minorRadius="34" majorSegments="40" material="planet_ring" />
+  <torus pos="0 0 {Z + H + 720 + 560}" rot="0 0 30" majorRadius="566" minorRadius="12" majorSegments="40" material="planet_ring" />
+</prefab>

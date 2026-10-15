@@ -1,0 +1,15 @@
+<!-- A top-loading disk-pack drive of the 1970s-80s ("washing machine"): a beige cabinet 86 x 76 x 92 with a
+     smoked dome lid over the disk pack, a lamp row and a dark kick plate. Baseline z=0; origin on the floor
+     under the middle of the front face; front faces local -Y, the cabinet runs back to y=76.
+     Materials: beige, smoked, dark_metal, lamp_green, lamp_amber. -->
+<prefab up="z" front="-y">
+  <let name="W" value="86" />
+  <let name="D" value="76" />
+  <let name="H" value="92" />
+  <box pos="0 {D/2} {H/2}" size="{W} {D} {H}" material="beige" />
+  <sphere pos="0 {D/2} {H}" radius="30" scale="1 1 0.45" material="smoked" />
+  <box pos="0 -0.5 {H - 14}" size="{W - 20} 1 10" material="dark_metal" />
+  <box pos="-24 -1.2 {H - 14}" size="4 0.4 3" material="lamp_green" unlit="1" castShadow="0"><array count="3" translation="9 0 0" /></box>
+  <box pos="16 -1.2 {H - 14}" size="4 0.4 3" material="lamp_amber" unlit="1" castShadow="0" />
+  <box pos="0 -0.5 5" size="{W - 6} 1 8" material="dark_metal" />
+</prefab>

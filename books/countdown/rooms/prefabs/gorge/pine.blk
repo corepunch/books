@@ -1,0 +1,10 @@
+<!-- A pine of the rim woods, about 1100 cm tall: a straight trunk and four stacked whorls of needles.
+     Footprint 380 across the lowest whorl. Not directional.
+     Baseline: the trunk stands on the ground at z=0. Origin: the trunk's foot. Materials: bark, pine. -->
+<prefab up="z" front="+x">
+  <cylinder pos="0 0 300" rot="90 0 0" radius="18" height="600" material="bark"><taper amount="-0.4" /></cylinder>
+  <cone pos="0 0 420" rot="90 0 0" radius="190" radiusTop="40" height="300" sides="9" material="pine" />
+  <cone pos="0 0 640" rot="90 0 17" radius="160" radiusTop="30" height="280" sides="9" material="pine" />
+  <cone pos="0 0 840" rot="90 0 33" radius="120" radiusTop="20" height="250" sides="8" material="pine" />
+  <cone pos="0 0 1010" rot="90 0 8" radius="80" height="200" sides="8" material="pine" />
+</prefab>

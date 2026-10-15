@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Half of Brainiac's lead-shelled "meteorite": a faceted dome of dull lead (stacked frustums) cast solid, 300 x 270 cm
+     across and 150 cm deep, whose rim carries a short hollow collar. The collar's open mouth is the
+     rim at local z=0; the dome's flat floor lies HC below it, so two halves face to face (rotate one
+     180 deg about X for the lid) close round a cavity 2*HC high and 2*(R - T) wide where the emitter
+     (orbit/red_sun_emitter) hides. Opens toward +Z (front +z). Three cast knobs roughen the outside so
+     it passes for a stone. Every part is tint="1" (an instance colour turns the whole shell, e.g. black
+     under X-ray). No lathe: a lathe whose <shape> lives in a prefab vanishes in cameras that carry a <transform>.
+     Materials from the scene: lead, lead_dark. -->
+<prefab up="z" front="+z">
+  <let name="R" value="150"/>
+  <let name="T" value="16"/>
+  <let name="HC" value="45"/>
+  <!-- The dome below the cavity floor, three nine-sided frustums narrowing to a blunt keel, each
+       reaching into the one above so no two caps share a plane. -->
+  <cone pos="0 0 {-HC - (R - HC)*0.17}" rot="90 0 0" radius="{R*0.9}" radiusTop="{R}" height="{(R - HC)*0.34}" sides="9" scale="1 1 0.9" material="lead" tint="1"/>
+  <cone pos="0 0 {-HC - (R - HC)*0.55 + 1}" rot="90 0 0" radius="{R*0.62}" radiusTop="{R*0.91}" height="{(R - HC)*0.42 + 2}" sides="9" scale="1 1 0.9" material="lead" tint="1"/>
+  <cone pos="0 0 {-HC - (R - HC)*0.88 + 1}" rot="90 0 0" radius="{R*0.2}" radiusTop="{R*0.63}" height="{(R - HC)*0.24 + 2}" sides="9" scale="1 1 0.9" material="lead" tint="1"/>
+  <!-- The collar: an open tube from 1 cm inside the dome up to the rim, flush with the dome's edge. -->
+  <cylinder pos="0 0 {-HC/2 - 0.5}" rot="90 0 0" radius="{R}" height="{HC + 1}" tube="{T}" sides="9" scale="1 1 0.9" material="lead" tint="1"/>
+  <!-- The flange where the two halves meet: a dark seam ring round the rim. -->
+  <torus pos="0 0 {-T*0.45}" rot="90 0 0" scale="1 1 0.9" majorRadius="{R + T*0.1}" minorRadius="{T*0.45}" majorSegments="18" minorSegments="6" material="lead_dark" tint="1"/>
+  <sphere pos="{R*0.42} {-R*0.42} {-R*0.62}" radius="{R*0.3}" rings="4" slices="6" scale="1 1 0.6" material="lead" tint="1"/>
+  <sphere pos="{-R*0.66} {R*0.2} {-R*0.5}" radius="{R*0.26}" rings="4" slices="6" scale="1 0.8 0.6" material="lead" tint="1"/>
+  <sphere pos="{-R*0.1} {R*0.36} {-R*0.86}" radius="{R*0.24}" rings="4" slices="5" scale="1 1 0.55" material="lead" tint="1"/>
+</prefab>

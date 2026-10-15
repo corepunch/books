@@ -1,8 +1,23 @@
-<!-- One of Brainiac's scanning drones: a card-pack-sized flying box, 18 x 12 x 6, with a scanning lens on
-     its front (local -Y) and two thruster rings. Origin at its centre. -->
-<prefab>
-  <box size="18 12 6" material="drone" />
-  <cylinder pos="0 -6.5 0" rot="0 0 0" radius="2.4" height="2" color="0.40 1.0 0.80" unlit="1" castShadow="0" />
-  <torus pos="-9 0 0" rot="0 0 90" majorRadius="3" minorRadius="0.8" material="drone" />
-  <torus pos="9 0 0" rot="0 0 90" majorRadius="3" minorRadius="0.8" material="drone" />
+<!-- One of Brainiac's scanning drones, "the size of a pack of cards": a flat hexagonal shell 16 cm across
+     and 5 cm thick, a cyan scanning lens on its front (local -Y), and two thruster pods at its sides whose
+     jets glow underneath. Overall 25 x 16 x 6 cm. Drones hover on those jets, so a scene that shows them
+     in the air marks them as a deliberate floating exception. Origin at the body centre; up z, front -y. -->
+<prefab up="z" front="-y">
+  <material id="drn_shell" color="0.66 0.70 0.72" shininess="90" />
+  <material id="drn_dark" color="0.15 0.16 0.18" shininess="50" />
+  <!-- Shell: a hexagonal puck with a darker top plate. -->
+  <prism rot="90 0 0" radius="8" height="5" sides="6" material="drn_shell" />
+  <prism pos="0 0 2.8" rot="90 0 0" radius="5.4" height="0.8" sides="6" material="drn_dark" />
+  <!-- The lens in its bezel on the front. -->
+  <box pos="0 -7.4 0" size="5 2 3.6" material="drn_dark" />
+  <sphere pos="0 -8.5 0" radius="1.6" color="0.40 1.0 0.85" unlit="1" castShadow="0" />
+  <!-- Thruster pods on short struts, with their jets. -->
+  <box pos="-8.6 0 0" size="3.2 2.2 1.6" material="drn_shell" />
+  <box pos="8.6 0 0" size="3.2 2.2 1.6" material="drn_shell" />
+  <cylinder pos="-10.4 0 0" rot="90 0 0" radius="2.4" height="5.6" material="drn_dark" />
+  <cylinder pos="10.4 0 0" rot="90 0 0" radius="2.4" height="5.6" material="drn_dark" />
+  <cylinder pos="-10.4 0 -2.95" rot="90 0 0" radius="1.8" height="0.5" color="0.55 0.90 1.0" unlit="1" castShadow="0" />
+  <cylinder pos="10.4 0 -2.95" rot="90 0 0" radius="1.8" height="0.5" color="0.55 0.90 1.0" unlit="1" castShadow="0" />
+  <!-- A whip antenna at the back. -->
+  <cylinder pos="0 5 4.2" rot="90 0 0" radius="0.3" height="4" material="drn_dark" />
 </prefab>

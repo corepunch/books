@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A red Midwestern barn with a tall silo beside it: board walls, a steep grey roof, a white-trimmed
+     double door on the long side and a domed concrete silo. Footprint 1700 x 820 cm, ridge at 900 cm,
+     silo to 1320 cm. Origin on the ground at the barn's centre. Front -Y: the big door faces local -Y.
+     Materials from the scene: barn_red, roof_grey, trim_white, silo. -->
+<prefab up="z" front="-y">
+  <let name="BL" value="1200" />
+  <let name="BD" value="800" />
+  <let name="WH" value="500" />
+  <box pos="0 0 {WH/2}" size="{BL} {BD} {WH}" material="barn_red" />
+  <!-- Roof: a square beam turned 45 degrees, its lower half buried in the walls; eaves overhang 10 cm. -->
+  <box pos="0 0 {WH}" rot="45 0 0" size="{BL + 40} {(BD/2 + 10)*sqrt(2)} {(BD/2 + 10)*sqrt(2)}" material="roof_grey" />
+  <box pos="0 {-BD/2 - 2} 190" size="290 4 380" color="0.36 0.10 0.08" />
+  <box pos="0 {-BD/2 - 5.6 + 3.2} 380" size="320 6.4 14" material="trim_white" />
+  <box pos="-155 {-BD/2 - 5} 190" size="14 6 380" material="trim_white" />
+  <box pos="155 {-BD/2 - 5} 190" size="14 6 380" material="trim_white" />
+  <box pos="0 {-BD/2 - 4} 190" rot="0 {deg(atan2(380, 296))} 0" size="{hypot(296, 380) - 12} 3 12" material="trim_white" />
+  <cylinder pos="{BL/2 + 260} 0 550" rot="90 0 0" radius="220" height="1100" material="silo" />
+  <sphere pos="{BL/2 + 260} 0 1100" radius="220" material="silo" />
+</prefab>

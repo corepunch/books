@@ -1,0 +1,23 @@
+<!-- The ventilation grille low in the Star 7 room's south wall, as a wall insert in the wall's own frame:
+     local X along the wall, Y up, Z through the wall with the front (+Z) facing into the room; origin at the
+     opening centre on the wall's mid-plane. It owns its cutter (90 x 56 through a 20 cm wall), a 5 cm metal
+     frame proud of the wall face by 3 cm, six slanted louvres in the opening and the duct box behind the wall.
+     Materials: dark_metal, grille_metal, duct. -->
+<prefab up="y" front="+z">
+  <let name="W" value="90" />
+  <let name="H" value="56" />
+  <let name="T" value="20" />   <!-- wall thickness -->
+  <let name="F" value="5" />    <!-- frame width -->
+  <bool-negative-box size="{W} {H} {T + 10}" />
+  <box pos="{-(W/2 + F/2)} 0 {T/2 + 1.5}" size="{F} {H + 2*F} 3" material="grille_metal" />
+  <box pos="{W/2 + F/2} 0 {T/2 + 1.5}" size="{F} {H + 2*F} 3" material="grille_metal" />
+  <box pos="0 {H/2 + F/2} {T/2 + 1.5}" size="{W} {F} 3" material="grille_metal" />
+  <box pos="0 {-(H/2 + F/2)} {T/2 + 1.5}" size="{W} {F} 3" material="grille_metal" />
+  <box pos="0 {-H/2 + 5.0} {T/2 - 4}" rot="-40 0 0" size="{W} 1.2 9" material="grille_metal" />
+  <box pos="0 {-H/2 + 14.2} {T/2 - 4}" rot="-40 0 0" size="{W} 1.2 9" material="grille_metal" />
+  <box pos="0 {-H/2 + 23.4} {T/2 - 4}" rot="-40 0 0" size="{W} 1.2 9" material="grille_metal" />
+  <box pos="0 {-H/2 + 32.6} {T/2 - 4}" rot="-40 0 0" size="{W} 1.2 9" material="grille_metal" />
+  <box pos="0 {-H/2 + 41.8} {T/2 - 4}" rot="-40 0 0" size="{W} 1.2 9" material="grille_metal" />
+  <box pos="0 {-H/2 + 51.0} {T/2 - 4}" rot="-40 0 0" size="{W} 1.2 9" material="grille_metal" />
+  <box pos="0 0 {-T/2 - 20}" size="{W + 20} {H + 20} 40" material="duct" />
+</prefab>

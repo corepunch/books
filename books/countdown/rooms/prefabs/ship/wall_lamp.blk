@@ -1,0 +1,10 @@
+<!-- An emergency lamp: a 56 x 16 x 26 cm housing with a dark lens on its face (local -Y); its back
+     (local +Y, y = 0) mounts flat on a wall. Unlit while the red sun burns; the scene adds the lit lens
+     and its light as camera state (attach "lens" is the lens face centre). Origin at the back centre.
+     Scene materials: sh_dark, sh_trim. -->
+<prefab up="z" front="-y">
+  <attach name="lens" pos="0 -16 0" />
+  <box pos="0 -6 0" size="56 12 26" material="sh_dark" />
+  <box pos="0 -14 0" size="46 4 16" color="0.22 0.24 0.28" shininess="90" />
+  <box pos="0 -7 15" size="60 14 4" material="sh_trim" />
+</prefab>

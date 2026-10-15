@@ -1,0 +1,10 @@
+<!-- A red fire extinguisher hanging on its wall bracket. Origin on the wall face at the bracket hook,
+     110 cm above the floor when placed at z=110; the extinguisher stands out from the wall along local -Y.
+     Footprint 20 x 22; it reaches 52 cm below and 14 cm above the hook. Materials: extinguisher_red, dark_metal. -->
+<prefab up="z" front="-y">
+  <box pos="0 -2 0" size="10 4 16" material="dark_metal" />
+  <cylinder pos="0 -12 -24" rot="90 0 0" radius="8" height="52" material="extinguisher_red" />
+  <cylinder pos="0 -12 5" rot="90 0 0" radius="2.5" height="6" material="dark_metal" />
+  <box pos="0 -12 10" size="12 3 3" material="dark_metal" />
+  <cylinder pos="6 -20 -10" rot="20 0 0" radius="1.2" height="34" material="cable" />
+</prefab>

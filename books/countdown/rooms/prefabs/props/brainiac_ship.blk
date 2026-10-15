@@ -1,56 +1,348 @@
-<!-- Brainiac's starship: a 40 m sphere of ribbed metal with a glass dome on top (the Brain Net), a skull
-     face on its front (local -Y) with glowing eye sensors and a row of laser barrels above it, and eight
-     segmented tentacles hanging from its underside round the red airlock. Origin at the hull's centre.
-     The airlock group is named so cameras can swap its closed and glowing states. -->
-<prefab>
-  <sphere radius="2000" rings="28" slices="40" material="ship_hull" />
-  <torus pos="0 0 600" rot="90 0 0" majorRadius="1900" minorRadius="70" material="ship_rib" />
-  <torus pos="0 0 -200" rot="90 0 0" majorRadius="1990" minorRadius="70" material="ship_rib" />
-  <torus pos="0 0 -1000" rot="90 0 0" majorRadius="1730" minorRadius="70" material="ship_rib" />
-  <sphere pos="0 0 1500" radius="1200" scale="1 1 0.7" material="brain_net" />
-  <sphere pos="-560 -1720 380" radius="280" scale="1 0.6 1" material="ship_dark" />
-  <sphere pos="560 -1720 380" radius="280" scale="1 0.6 1" material="ship_dark" />
-  <sphere pos="-560 -1860 380" radius="130" color="1.0 0.22 0.12" unlit="1" castShadow="0" />
-  <sphere pos="560 -1860 380" radius="130" color="1.0 0.22 0.12" unlit="1" castShadow="0" />
-  <box pos="0 -1830 -360" size="1000 300 260" material="ship_dark" />
-  <box pos="0 -1900 -360" size="900 120 30" material="ship_rib"><array count="5" translation="0 0 -40" /></box>
-  <cylinder pos="-500 -1700 1000" rot="-70 0 0" radius="50" height="700" material="ship_dark" />
-  <cylinder pos="0 -1750 1050" rot="-70 0 0" radius="50" height="700" material="ship_dark" />
-  <cylinder pos="500 -1700 1000" rot="-70 0 0" radius="50" height="700" material="ship_dark" />
-  <cylinder pos="0 0 -1980" rot="90 0 0" radius="420" height="40" material="ship_rib" />
-  <group name="AirlockGlow" pos="0 0 -2010">
-    <cylinder rot="90 0 0" radius="360" height="20" color="1.0 0.18 0.10" unlit="1" castShadow="0" />
-  </group>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Brainiac's starship: a 40 m sphere of plated green metal (R = 2000 cm). Latitude bands and meridian ribs
+     divide the hull into panels with hatches; an equatorial belt carries a ring of lit ports. The front (local -Y)
+     is a skull: brow ridges over dark eye sockets with red sensor eyes, a nose cavity and a mouth of
+     metal teeth; three starbolt guns stand on the brow. On top a purple glass dome, the Brain Net, under a net
+     of ribs. Underneath, a plated collar holds the red-sun airlock: a closed iris with a red-glowing seam and a
+     red light below it. Eight segmented tentacles (bones tentacle_1..8, links _2.._9, 22 m long) hang from ball
+     sockets round the lower hull; tentacle_1 hangs below the face on its local -X side, the rest follow
+     counter-clockwise seen from above.
+     Origin at the hull's centre; the ship hovers, so it has no ground baseline. Front -Y (the skull face);
+     rot="0 0 180" faces +Y. The airlock centre is at (0 0 -2080), the eyes at (+-580 -1880 300).
+     Materials are defined here (bs_*) so every scene that places the ship gets the same look. -->
+<prefab up="z" front="-y">
+  <material id="bs_hull" color="0.40 0.52 0.46" shininess="50" />
+  <material id="bs_plate" color="0.54 0.64 0.58" shininess="60" />
+  <material id="bs_rib" color="0.24 0.30 0.28" shininess="60" />
+  <material id="bs_dark" color="0.07 0.08 0.08" shininess="30" />
+  <material id="bs_net" color="0.58 0.30 0.74" shininess="90" />
+  <material id="bs_tent" color="0.30 0.36 0.33" shininess="45" />
+  <material id="bs_glow" color="1.0 0.20 0.10" shininess="1" />
+  <material id="bs_port" color="0.70 1.0 0.78" shininess="1" />
+  <let name="R" value="2000" />        <!-- hull radius -->
+  <let name="BAND" value="36" />       <!-- latitude band tube radius -->
+  <let name="BELT" value="R + 40" />   <!-- equatorial belt radius -->
+  <let name="BELT_H" value="360" />
+  <let name="NET" value="1150" />      <!-- Brain Net dome radius -->
+  <let name="NET_Z" value="1450" />    <!-- Brain Net centre -->
+  <let name="NET_S" value="0.75" />    <!-- Brain Net vertical squash -->
+  <let name="LOCK" value="620" />      <!-- airlock collar radius -->
+  <let name="SOCK_EL" value="-50" />   <!-- tentacle socket latitude -->
+  <let name="TL" value="2200" />       <!-- tentacle length -->
+  <attach name="airlock" pos="0 0 -2080" />
+  <attach name="brain_net" pos="0 0 {NET_Z + NET*NET_S}" />
+
+  <sphere radius="{R}" rings="40" slices="56" material="bs_hull" />
+
+  <!-- Latitude bands. -->
+  <torus pos="0 0 {R*sin(rad(-64))}" rot="90 0 0" majorRadius="{R*cos(rad(-64))}" minorRadius="{BAND}" majorSegments="64" minorSegments="10" material="bs_rib" />
+  <torus pos="0 0 {R*sin(rad(-40))}" rot="90 0 0" majorRadius="{R*cos(rad(-40))}" minorRadius="{BAND}" majorSegments="64" minorSegments="10" material="bs_rib" />
+  <torus pos="0 0 {R*sin(rad(-17))}" rot="90 0 0" majorRadius="{R*cos(rad(-17))}" minorRadius="{BAND}" majorSegments="64" minorSegments="10" material="bs_rib" />
+  <torus pos="0 0 {R*sin(rad(17))}" rot="90 0 0" majorRadius="{R*cos(rad(17))}" minorRadius="{BAND}" majorSegments="64" minorSegments="10" material="bs_rib" />
+  <torus pos="0 0 {R*sin(rad(40))}" rot="90 0 0" majorRadius="{R*cos(rad(40))}" minorRadius="{BAND}" majorSegments="64" minorSegments="10" material="bs_rib" />
+  <!-- Equatorial belt with its edge rails and the ring of lit ports (none across the face). -->
+  <cylinder rot="90 0 0" radius="{BELT}" height="{BELT_H}" sides="64" material="bs_plate" />
+  <torus pos="0 0 {BELT_H/2}" rot="90 0 0" majorRadius="{BELT}" minorRadius="22" majorSegments="64" material="bs_rib" />
+  <torus pos="0 0 {-BELT_H/2}" rot="90 0 0" majorRadius="{BELT}" minorRadius="22" majorSegments="64" material="bs_rib" />
+  <box pos="{(BELT + 4)*cos(rad(0))} {(BELT + 4)*sin(rad(0))} 0" rot="0 0 0" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(10))} {(BELT + 4)*sin(rad(10))} 0" rot="0 0 10" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(20))} {(BELT + 4)*sin(rad(20))} 0" rot="0 0 20" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(30))} {(BELT + 4)*sin(rad(30))} 0" rot="0 0 30" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(40))} {(BELT + 4)*sin(rad(40))} 0" rot="0 0 40" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(50))} {(BELT + 4)*sin(rad(50))} 0" rot="0 0 50" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(60))} {(BELT + 4)*sin(rad(60))} 0" rot="0 0 60" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(70))} {(BELT + 4)*sin(rad(70))} 0" rot="0 0 70" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(80))} {(BELT + 4)*sin(rad(80))} 0" rot="0 0 80" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(90))} {(BELT + 4)*sin(rad(90))} 0" rot="0 0 90" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(100))} {(BELT + 4)*sin(rad(100))} 0" rot="0 0 100" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(110))} {(BELT + 4)*sin(rad(110))} 0" rot="0 0 110" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(120))} {(BELT + 4)*sin(rad(120))} 0" rot="0 0 120" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(130))} {(BELT + 4)*sin(rad(130))} 0" rot="0 0 130" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(140))} {(BELT + 4)*sin(rad(140))} 0" rot="0 0 140" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(150))} {(BELT + 4)*sin(rad(150))} 0" rot="0 0 150" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(160))} {(BELT + 4)*sin(rad(160))} 0" rot="0 0 160" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(170))} {(BELT + 4)*sin(rad(170))} 0" rot="0 0 170" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(180))} {(BELT + 4)*sin(rad(180))} 0" rot="0 0 180" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(190))} {(BELT + 4)*sin(rad(190))} 0" rot="0 0 190" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(200))} {(BELT + 4)*sin(rad(200))} 0" rot="0 0 200" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(210))} {(BELT + 4)*sin(rad(210))} 0" rot="0 0 210" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(220))} {(BELT + 4)*sin(rad(220))} 0" rot="0 0 220" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(320))} {(BELT + 4)*sin(rad(320))} 0" rot="0 0 320" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(330))} {(BELT + 4)*sin(rad(330))} 0" rot="0 0 330" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(340))} {(BELT + 4)*sin(rad(340))} 0" rot="0 0 340" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <box pos="{(BELT + 4)*cos(rad(350))} {(BELT + 4)*sin(rad(350))} 0" rot="0 0 350" size="12 90 150" material="bs_port" unlit="1" castShadow="0" />
+  <!-- Meridian ribs from the lowest band up to the Brain Net collar, clear of the face: each rib is a chain of
+       straight 8-degree plates laid on the hull. -->
   <group rot="0 0 0">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+    <box pos="{(R + 8)*cos(rad(-60))} 0 {(R + 8)*sin(rad(-60))}" rot="0 60 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-52))} 0 {(R + 8)*sin(rad(-52))}" rot="0 52 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-44))} 0 {(R + 8)*sin(rad(-44))}" rot="0 44 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-36))} 0 {(R + 8)*sin(rad(-36))}" rot="0 36 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-28))} 0 {(R + 8)*sin(rad(-28))}" rot="0 28 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-20))} 0 {(R + 8)*sin(rad(-20))}" rot="0 20 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-12))} 0 {(R + 8)*sin(rad(-12))}" rot="0 12 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-4))} 0 {(R + 8)*sin(rad(-4))}" rot="0 4 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(4))} 0 {(R + 8)*sin(rad(4))}" rot="0 -4 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(12))} 0 {(R + 8)*sin(rad(12))}" rot="0 -12 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(20))} 0 {(R + 8)*sin(rad(20))}" rot="0 -20 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(28))} 0 {(R + 8)*sin(rad(28))}" rot="0 -28 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(36))} 0 {(R + 8)*sin(rad(36))}" rot="0 -36 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(44))} 0 {(R + 8)*sin(rad(44))}" rot="0 -44 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(52))} 0 {(R + 8)*sin(rad(52))}" rot="0 -52 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
   </group>
-  <group rot="0 0 45">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  <group rot="0 0 40">
+    <box pos="{(R + 8)*cos(rad(-60))} 0 {(R + 8)*sin(rad(-60))}" rot="0 60 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-52))} 0 {(R + 8)*sin(rad(-52))}" rot="0 52 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-44))} 0 {(R + 8)*sin(rad(-44))}" rot="0 44 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-36))} 0 {(R + 8)*sin(rad(-36))}" rot="0 36 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-28))} 0 {(R + 8)*sin(rad(-28))}" rot="0 28 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-20))} 0 {(R + 8)*sin(rad(-20))}" rot="0 20 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-12))} 0 {(R + 8)*sin(rad(-12))}" rot="0 12 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-4))} 0 {(R + 8)*sin(rad(-4))}" rot="0 4 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(4))} 0 {(R + 8)*sin(rad(4))}" rot="0 -4 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(12))} 0 {(R + 8)*sin(rad(12))}" rot="0 -12 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(20))} 0 {(R + 8)*sin(rad(20))}" rot="0 -20 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(28))} 0 {(R + 8)*sin(rad(28))}" rot="0 -28 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(36))} 0 {(R + 8)*sin(rad(36))}" rot="0 -36 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(44))} 0 {(R + 8)*sin(rad(44))}" rot="0 -44 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(52))} 0 {(R + 8)*sin(rad(52))}" rot="0 -52 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
   </group>
-  <group rot="0 0 90">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  <group rot="0 0 80">
+    <box pos="{(R + 8)*cos(rad(-60))} 0 {(R + 8)*sin(rad(-60))}" rot="0 60 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-52))} 0 {(R + 8)*sin(rad(-52))}" rot="0 52 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-44))} 0 {(R + 8)*sin(rad(-44))}" rot="0 44 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-36))} 0 {(R + 8)*sin(rad(-36))}" rot="0 36 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-28))} 0 {(R + 8)*sin(rad(-28))}" rot="0 28 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-20))} 0 {(R + 8)*sin(rad(-20))}" rot="0 20 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-12))} 0 {(R + 8)*sin(rad(-12))}" rot="0 12 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-4))} 0 {(R + 8)*sin(rad(-4))}" rot="0 4 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(4))} 0 {(R + 8)*sin(rad(4))}" rot="0 -4 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(12))} 0 {(R + 8)*sin(rad(12))}" rot="0 -12 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(20))} 0 {(R + 8)*sin(rad(20))}" rot="0 -20 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(28))} 0 {(R + 8)*sin(rad(28))}" rot="0 -28 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(36))} 0 {(R + 8)*sin(rad(36))}" rot="0 -36 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(44))} 0 {(R + 8)*sin(rad(44))}" rot="0 -44 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(52))} 0 {(R + 8)*sin(rad(52))}" rot="0 -52 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
   </group>
-  <group rot="0 0 135">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  <group rot="0 0 120">
+    <box pos="{(R + 8)*cos(rad(-60))} 0 {(R + 8)*sin(rad(-60))}" rot="0 60 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-52))} 0 {(R + 8)*sin(rad(-52))}" rot="0 52 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-44))} 0 {(R + 8)*sin(rad(-44))}" rot="0 44 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-36))} 0 {(R + 8)*sin(rad(-36))}" rot="0 36 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-28))} 0 {(R + 8)*sin(rad(-28))}" rot="0 28 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-20))} 0 {(R + 8)*sin(rad(-20))}" rot="0 20 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-12))} 0 {(R + 8)*sin(rad(-12))}" rot="0 12 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-4))} 0 {(R + 8)*sin(rad(-4))}" rot="0 4 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(4))} 0 {(R + 8)*sin(rad(4))}" rot="0 -4 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(12))} 0 {(R + 8)*sin(rad(12))}" rot="0 -12 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(20))} 0 {(R + 8)*sin(rad(20))}" rot="0 -20 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(28))} 0 {(R + 8)*sin(rad(28))}" rot="0 -28 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(36))} 0 {(R + 8)*sin(rad(36))}" rot="0 -36 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(44))} 0 {(R + 8)*sin(rad(44))}" rot="0 -44 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(52))} 0 {(R + 8)*sin(rad(52))}" rot="0 -52 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
   </group>
-  <group rot="0 0 180">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  <group rot="0 0 160">
+    <box pos="{(R + 8)*cos(rad(-60))} 0 {(R + 8)*sin(rad(-60))}" rot="0 60 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-52))} 0 {(R + 8)*sin(rad(-52))}" rot="0 52 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-44))} 0 {(R + 8)*sin(rad(-44))}" rot="0 44 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-36))} 0 {(R + 8)*sin(rad(-36))}" rot="0 36 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-28))} 0 {(R + 8)*sin(rad(-28))}" rot="0 28 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-20))} 0 {(R + 8)*sin(rad(-20))}" rot="0 20 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-12))} 0 {(R + 8)*sin(rad(-12))}" rot="0 12 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-4))} 0 {(R + 8)*sin(rad(-4))}" rot="0 4 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(4))} 0 {(R + 8)*sin(rad(4))}" rot="0 -4 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(12))} 0 {(R + 8)*sin(rad(12))}" rot="0 -12 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(20))} 0 {(R + 8)*sin(rad(20))}" rot="0 -20 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(28))} 0 {(R + 8)*sin(rad(28))}" rot="0 -28 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(36))} 0 {(R + 8)*sin(rad(36))}" rot="0 -36 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(44))} 0 {(R + 8)*sin(rad(44))}" rot="0 -44 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(52))} 0 {(R + 8)*sin(rad(52))}" rot="0 -52 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
   </group>
-  <group rot="0 0 225">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  <group rot="0 0 200">
+    <box pos="{(R + 8)*cos(rad(-60))} 0 {(R + 8)*sin(rad(-60))}" rot="0 60 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-52))} 0 {(R + 8)*sin(rad(-52))}" rot="0 52 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-44))} 0 {(R + 8)*sin(rad(-44))}" rot="0 44 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-36))} 0 {(R + 8)*sin(rad(-36))}" rot="0 36 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-28))} 0 {(R + 8)*sin(rad(-28))}" rot="0 28 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-20))} 0 {(R + 8)*sin(rad(-20))}" rot="0 20 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-12))} 0 {(R + 8)*sin(rad(-12))}" rot="0 12 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-4))} 0 {(R + 8)*sin(rad(-4))}" rot="0 4 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(4))} 0 {(R + 8)*sin(rad(4))}" rot="0 -4 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(12))} 0 {(R + 8)*sin(rad(12))}" rot="0 -12 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(20))} 0 {(R + 8)*sin(rad(20))}" rot="0 -20 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(28))} 0 {(R + 8)*sin(rad(28))}" rot="0 -28 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(36))} 0 {(R + 8)*sin(rad(36))}" rot="0 -36 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(44))} 0 {(R + 8)*sin(rad(44))}" rot="0 -44 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(52))} 0 {(R + 8)*sin(rad(52))}" rot="0 -52 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
   </group>
-  <group rot="0 0 270">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  <group rot="0 0 320">
+    <box pos="{(R + 8)*cos(rad(-60))} 0 {(R + 8)*sin(rad(-60))}" rot="0 60 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-52))} 0 {(R + 8)*sin(rad(-52))}" rot="0 52 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-44))} 0 {(R + 8)*sin(rad(-44))}" rot="0 44 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-36))} 0 {(R + 8)*sin(rad(-36))}" rot="0 36 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-28))} 0 {(R + 8)*sin(rad(-28))}" rot="0 28 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-20))} 0 {(R + 8)*sin(rad(-20))}" rot="0 20 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-12))} 0 {(R + 8)*sin(rad(-12))}" rot="0 12 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(-4))} 0 {(R + 8)*sin(rad(-4))}" rot="0 4 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(4))} 0 {(R + 8)*sin(rad(4))}" rot="0 -4 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(12))} 0 {(R + 8)*sin(rad(12))}" rot="0 -12 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(20))} 0 {(R + 8)*sin(rad(20))}" rot="0 -20 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(28))} 0 {(R + 8)*sin(rad(28))}" rot="0 -28 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(36))} 0 {(R + 8)*sin(rad(36))}" rot="0 -36 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(44))} 0 {(R + 8)*sin(rad(44))}" rot="0 -44 0" size="44 68 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
+    <box pos="{(R + 8)*cos(rad(52))} 0 {(R + 8)*sin(rad(52))}" rot="0 -52 0" size="48 62 {2*(R + 8)*tan(rad(4)) + 4}" material="bs_rib" />
   </group>
-  <group rot="0 0 315">
-    <sphere pos="1250 0 -1880" radius="190" material="ship_rib" />
-    <cylinder pos="1330 0 -2760" rot="-90 -10 0" radius="30" height="1800" material="ship_rib"><taper amount="-2.4" /></cylinder>
+  <!-- Hatches and access plates on the panels (azimuth, latitude); each is a plate laid on the hull. -->
+  <group rot="0 0 15"><group rot="0 -28 0"><box pos="{R + 4} 0 0" size="24 300 200" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 240 20" material="bs_rib" /></group></group>
+  <group rot="0 0 60"><group rot="0 -52 0"><box pos="{R + 4} 0 0" size="24 300 200" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 240 20" material="bs_rib" /></group></group>
+  <group rot="0 0 100"><group rot="0 -28 0"><box pos="{R + 4} 0 0" size="24 300 240" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 240 20" material="bs_rib" /></group></group>
+  <group rot="0 0 140"><group rot="0 -50 0"><box pos="{R + 4} 0 0" size="24 300 240" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 240 20" material="bs_rib" /></group></group>
+  <group rot="0 0 185"><group rot="0 -30 0"><box pos="{R + 4} 0 0" size="24 220 200" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 230"><group rot="0 -52 0"><box pos="{R + 4} 0 0" size="24 220 240" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 345"><group rot="0 -30 0"><box pos="{R + 4} 0 0" size="24 220 160" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 20"><group rot="0 30 0"><box pos="{R + 4} 0 0" size="24 220 200" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 70"><group rot="0 28 0"><box pos="{R + 4} 0 0" size="24 260 160" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 200 20" material="bs_rib" /></group></group>
+  <group rot="0 0 110"><group rot="0 52 0"><box pos="{R + 4} 0 0" size="24 260 240" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 200 20" material="bs_rib" /></group></group>
+  <group rot="0 0 150"><group rot="0 30 0"><box pos="{R + 4} 0 0" size="24 220 240" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 200"><group rot="0 28 0"><box pos="{R + 4} 0 0" size="24 220 160" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 300"><group rot="0 50 0"><box pos="{R + 4} 0 0" size="24 300 160" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 240 20" material="bs_rib" /></group></group>
+  <group rot="0 0 335"><group rot="0 28 0"><box pos="{R + 4} 0 0" size="24 260 200" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 200 20" material="bs_rib" /></group></group>
+  <group rot="0 0 0"><group rot="0 52 0"><box pos="{R + 4} 0 0" size="24 220 200" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 175"><group rot="0 52 0"><box pos="{R + 4} 0 0" size="24 220 160" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <group rot="0 0 40"><group rot="0 52 0"><box pos="{R + 4} 0 0" size="24 220 240" material="bs_plate" /><box pos="{R + 18} 0 0" size="8 160 20" material="bs_rib" /></group></group>
+  <!-- The Brain Net: a purple glass dome under a net of ribs, its collar and a sensor spire. -->
+  <sphere pos="0 0 {NET_Z}" radius="{NET}" scale="1 1 {NET_S}" rings="24" slices="40" material="bs_net" />
+  <torus pos="0 0 1650" rot="90 0 0" majorRadius="1135" minorRadius="70" majorSegments="56" material="bs_plate" />
+  <torus pos="0 0 1880" rot="90 0 0" majorRadius="{NET*sqrt(1 - pow((1880 - NET_Z)/(NET*NET_S), 2)) + 4}" minorRadius="14" majorSegments="48" material="bs_rib" />
+  <torus pos="0 0 2100" rot="90 0 0" majorRadius="{NET*sqrt(1 - pow((2100 - NET_Z)/(NET*NET_S), 2)) + 4}" minorRadius="14" majorSegments="48" material="bs_rib" />
+  <torus pos="0 0 {NET_Z}" rot="0 0 0" scale="1 1 {NET_S}" majorRadius="{NET + 6}" minorRadius="14" majorSegments="64" material="bs_rib" />
+  <torus pos="0 0 {NET_Z}" rot="0 0 45" scale="1 1 {NET_S}" majorRadius="{NET + 6}" minorRadius="14" majorSegments="64" material="bs_rib" />
+  <torus pos="0 0 {NET_Z}" rot="0 0 90" scale="1 1 {NET_S}" majorRadius="{NET + 6}" minorRadius="14" majorSegments="64" material="bs_rib" />
+  <torus pos="0 0 {NET_Z}" rot="0 0 135" scale="1 1 {NET_S}" majorRadius="{NET + 6}" minorRadius="14" majorSegments="64" material="bs_rib" />
+  <cylinder pos="0 0 {NET_Z + NET*NET_S + 140}" rot="90 0 0" radius="20" height="320" sides="8" material="bs_rib" />
+  <sphere pos="0 0 {NET_Z + NET*NET_S + 310}" radius="42" material="bs_glow" unlit="1" castShadow="0" />
+
+  <!-- The skull face: brow ridges over deep eye sockets with red sensor eyes, a nose cavity, and a jaw of
+       metal teeth under the mouth slot. -->
+  <group name="skull">
+    <ellipsoid pos="-560 -1700 690" rot="-20 0 -12" radii="520 230 150" material="bs_plate" />
+    <ellipsoid pos="560 -1700 690" rot="-20 0 12" radii="520 230 150" material="bs_plate" />
+    <ellipsoid pos="-580 -1760 300" radii="360 220 300" material="bs_dark" />
+    <ellipsoid pos="580 -1760 300" radii="360 220 300" material="bs_dark" />
+    <sphere pos="-580 -1880 300" radius="140" material="bs_glow" unlit="1" castShadow="0" />
+    <sphere pos="580 -1880 300" radius="140" material="bs_glow" unlit="1" castShadow="0" />
+    <prism pos="0 -1930 -60" rot="0 30 0" radius="170" height="240" sides="3" scale="0.8 1 1.2" material="bs_dark" />
+    <box pos="0 -1790 -560" rot="-18 0 0" size="1080 320 260" material="bs_dark" />
+    <box pos="-400 -1930 -500" rot="-18 0 0" size="76 70 110" material="bs_plate"><array count="9" translation="100 0 0" /></box>
+    <box pos="-400 -1870 -660" rot="-24 0 0" size="76 70 100" material="bs_plate"><array count="9" translation="100 0 0" /></box>
+    <ellipsoid pos="0 -1660 -900" rot="-28 0 0" radii="640 260 170" material="bs_rib" />
+  </group>
+
+  <!-- Three starbolt guns on the brow, raised 12 degrees, muzzles ringed and charged. -->
+  <group pos="-560 {-sqrt(R*R - -560*-560 - 1180*1180) + 40} 1180">
+    <sphere radius="190" material="bs_rib" />
+    <group rot="-12 0 0">
+      <cylinder pos="0 -480 0" radius="60" height="820" sides="16" material="bs_rib"><taper amount="-0.15" /></cylinder>
+      <torus pos="0 -870 0" majorRadius="66" minorRadius="22" material="bs_plate" />
+      <cylinder pos="0 -892 0" radius="36" height="6" color="0.70 0.92 1.0" unlit="1" castShadow="0" />
+    </group>
+  </group>
+  <group pos="0 {-sqrt(R*R - 0*0 - 1260*1260) + 40} 1260">
+    <sphere radius="190" material="bs_rib" />
+    <group rot="-12 0 0">
+      <cylinder pos="0 -480 0" radius="60" height="820" sides="16" material="bs_rib"><taper amount="-0.15" /></cylinder>
+      <torus pos="0 -870 0" majorRadius="66" minorRadius="22" material="bs_plate" />
+      <cylinder pos="0 -892 0" radius="36" height="6" color="0.70 0.92 1.0" unlit="1" castShadow="0" />
+    </group>
+  </group>
+  <group pos="560 {-sqrt(R*R - 560*560 - 1180*1180) + 40} 1180">
+    <sphere radius="190" material="bs_rib" />
+    <group rot="-12 0 0">
+      <cylinder pos="0 -480 0" radius="60" height="820" sides="16" material="bs_rib"><taper amount="-0.15" /></cylinder>
+      <torus pos="0 -870 0" majorRadius="66" minorRadius="22" material="bs_plate" />
+      <cylinder pos="0 -892 0" radius="36" height="6" color="0.70 0.92 1.0" unlit="1" castShadow="0" />
+    </group>
+  </group>
+
+  <!-- The airlock: a plated collar, its rail, the closed iris with petal seams and the red-glowing seam ring.
+       A red light below it stains the tentacles. -->
+  <cylinder pos="0 0 -1950" rot="90 0 0" radius="{LOCK}" height="220" sides="48" material="bs_plate" />
+  <torus pos="0 0 -2060" rot="90 0 0" majorRadius="{LOCK - 20}" minorRadius="40" majorSegments="48" material="bs_rib" />
+  <group name="airlock_iris">
+    <cylinder pos="0 0 -2066" rot="90 0 0" radius="{LOCK - 70}" height="12" sides="48" material="bs_dark" />
+    <group rot="0 0 0"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 30"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 60"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 90"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 120"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 150"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 180"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 210"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 240"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 270"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 300"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+    <group rot="0 0 330"><box pos="{(LOCK - 90 + 60)/2} 0 -2074" rot="0 0 14" size="{LOCK - 90 - 60} 10 6" material="bs_rib" /></group>
+  </group>
+  <torus pos="0 0 -2068" rot="90 0 0" majorRadius="{LOCK - 66}" minorRadius="10" majorSegments="48" material="bs_glow" unlit="1" castShadow="0" />
+  <sphere pos="0 0 -2066" radius="70" material="bs_glow" unlit="1" castShadow="0" />
+  <light pos="0 0 -2400" color="1.0 0.24 0.14" intensity="1.4" radius="1800" castShadows="0" />
+
+  <!-- Tentacle sockets on the lower hull: a collar ring and a ball joint, each facing out along the hull
+       normal at latitude SOCK_EL; the tentacle bone grows from the ball. -->
+  <group rot="0 0 247.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(247.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(247.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_1" ground="0" aim="-22.5 -40" aimEnd="-22.5 -82" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
+  </group>
+  <group rot="0 0 292.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(292.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(292.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_2" ground="0" aim="22.5 -40" aimEnd="22.5 -60" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
+  </group>
+  <group rot="0 0 337.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(337.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(337.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_3" ground="0" aim="67.5 -40" aimEnd="67.5 -88" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
+  </group>
+  <group rot="0 0 22.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(382.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(382.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_4" ground="0" aim="112.5 -40" aimEnd="112.5 -35" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
+  </group>
+  <group rot="0 0 67.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(427.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(427.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_5" ground="0" aim="157.5 -40" aimEnd="157.5 -80" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
+  </group>
+  <group rot="0 0 112.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(472.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(472.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_6" ground="0" aim="-157.5 -40" aimEnd="-157.5 -55" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
+  </group>
+  <group rot="0 0 157.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(517.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(517.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_7" ground="0" aim="-112.5 -40" aimEnd="-112.5 -86" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
+  </group>
+  <group rot="0 0 202.5"><group rot="0 {-SOCK_EL} 0">
+    <torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="46" material="bs_plate" />
+    <sphere pos="{R + 40} 0 0" radius="150" material="bs_rib" />
+  </group></group>
+  <group pos="{(R + 150)*cos(rad(SOCK_EL))*cos(rad(562.5))} {(R + 150)*cos(rad(SOCK_EL))*sin(rad(562.5))} {(R + 150)*sin(rad(SOCK_EL))}">
+    <bone name="tentacle_8" ground="0" aim="-67.5 -40" aimEnd="-67.5 -40" segments="9" length="{TL}" radius="95" taper="0.28" material="bs_tent" />
   </group>
 </prefab>

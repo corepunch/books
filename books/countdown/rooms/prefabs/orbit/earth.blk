@@ -1,0 +1,490 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- The Earth at storybook scale, authored as a unit globe of radius 1000 round its centre (origin); the
+     scene scales it up. Local +Z (front +z) is the point under Brainiac's belt, mid-Atlantic: blue ocean
+     with a strung island chain, a desert-and-green coast to the east, another continent past the far
+     horizon, white cloud fields and one cyclone. Land rises a little above the sea, clouds float a
+     little higher so the sun throws their shadows on the water. Materials from the scene: earth_sea,
+     earth_land, earth_desert, cloud. -->
+<prefab up="z" front="+z">
+  <let name="RE" value="1000"/>
+  <let name="LAND" value="1.6"/>   <!-- land relief above the sea -->
+  <let name="CLOUD" value="1.4"/>  <!-- cloud deck above the sea -->
+  <let name="CT" value="0.5"/>    <!-- cloud half-thickness -->
+  <sphere radius="{RE}" rings="160" slices="256" material="earth_sea"/>
+  <!-- Land: lens ellipsoids sunk so their rims dip under the curved sea and only a low relief shows. -->
+  <group rot="0 17 40"><let name="T" value="LAND + 150*150/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 60" radii="150 70 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 21 58"><let name="T" value="LAND + 170*170/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 20" radii="170 95 {T}" rings="10" slices="28" material="earth_desert"/></group>
+  <group rot="0 25 30"><let name="T" value="LAND + 160*160/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 80" radii="160 90 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 14 62"><let name="T" value="LAND + 70*70/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 35" radii="70 40 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 24 75"><let name="T" value="LAND + 120*120/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 10" radii="120 80 {T}" rings="10" slices="28" material="earth_desert"/></group>
+  <group rot="0 9 170"><let name="T" value="LAND + 26*26/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 30" radii="26 14 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 11 182"><let name="T" value="LAND + 18*18/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 70" radii="18 10 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 12.5 192"><let name="T" value="LAND + 12*12/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 10" radii="12 8 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 24 230"><let name="T" value="LAND + 180*180/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 50" radii="180 90 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 20 250"><let name="T" value="LAND + 90*90/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 75" radii="90 45 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 60 0"><let name="T" value="LAND + 300*300/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 20" radii="300 160 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 75 120"><let name="T" value="LAND + 260*260/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 70" radii="260 200 {T}" rings="10" slices="28" material="earth_desert"/></group>
+  <group rot="0 100 220"><let name="T" value="LAND + 320*320/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 10" radii="320 180 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 130 300"><let name="T" value="LAND + 240*240/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 40" radii="240 140 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 55 160"><let name="T" value="LAND + 200*200/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 0" radii="200 120 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <group rot="0 90 60"><let name="T" value="LAND + 180*180/(2*RE) + 2"/><ellipsoid pos="0 0 {RE + LAND - T}" rot="0 0 30" radii="180 110 {T}" rings="10" slices="28" material="earth_land"/></group>
+  <!-- Cloud fields: clusters of small flat puffs a little above the sea, each puff turned and bent
+     differently (puff j of a field sits j golden angles round its centre, and 0.45 higher than puff j-1 so overlapping
+     puffs never share a plane). -->
+  <group rot="0 3.15 0.0">
+    <ellipsoid pos="{3.2} {0.0} {RE + CLOUD + 0.00}" rot="0 0 0" radii="7.2 3.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-30" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.1} {3.7} {RE + CLOUD + 0.45}" rot="0 0 61" radii="8.5 5.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.6} {-7.1} {RE + CLOUD + 0.90}" rot="0 0 122" radii="11.5 8.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.1} {6.7} {RE + CLOUD + 1.35}" rot="0 0 3" radii="7.0 6.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.4} {-1.7} {RE + CLOUD + 1.80}" rot="0 0 64" radii="10.0 5.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.9} {-5.7} {RE + CLOUD + 2.25}" rot="0 0 125" radii="5.5 3.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-25" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 5.46 137.5">
+    <ellipsoid pos="{3.0} {2.6} {RE + CLOUD + 0.00}" rot="0 0 17" radii="12.7 7.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-6.9} {0.2} {RE + CLOUD + 0.45}" rot="0 0 78" radii="14.0 10.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.5} {-6.2} {RE + CLOUD + 0.90}" rot="0 0 139" radii="7.7 6.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-0.7} {10.6} {RE + CLOUD + 1.35}" rot="0 0 20" radii="11.9 6.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.6} {-9.4} {RE + CLOUD + 1.80}" rot="0 0 81" radii="16.1 10.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{13.1} {2.0} {RE + CLOUD + 2.25}" rot="0 0 142" radii="9.8 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-12.0} {8.1} {RE + CLOUD + 2.70}" rot="0 0 23" radii="14.0 12.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="23" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 7.05 275.0">
+    <ellipsoid pos="{0.7} {5.0} {RE + CLOUD + 0.00}" rot="0 0 34" radii="19.9 14.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-6.7} {-5.5} {RE + CLOUD + 0.45}" rot="0 0 95" radii="20.7 17.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{11.2} {-0.6} {RE + CLOUD + 0.90}" rot="0 0 156" radii="12.6 6.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.3} {9.4} {RE + CLOUD + 1.35}" rot="0 0 37" radii="18.0 11.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.5} {-15.0} {RE + CLOUD + 1.80}" rot="0 0 98" radii="9.9 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.8} {12.6} {RE + CLOUD + 2.25}" rot="0 0 159" radii="15.3 13.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-17.9} {-2.2} {RE + CLOUD + 2.70}" rot="0 0 40" radii="20.7 10.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{15.8} {-11.2} {RE + CLOUD + 3.15}" rot="0 0 101" radii="12.6 7.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="11" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 8.34 52.5">
+    <ellipsoid pos="{-3.8} {5.8} {RE + CLOUD + 0.00}" rot="0 0 51" radii="28.6 24.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-2.0} {-11.8} {RE + CLOUD + 0.45}" rot="0 0 112" radii="12.1 6.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{12.2} {9.5} {RE + CLOUD + 0.90}" rot="0 0 173" radii="18.7 11.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-18.3} {1.4} {RE + CLOUD + 1.35}" rot="0 0 54" radii="25.3 18.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{14.2} {-15.2} {RE + CLOUD + 1.80}" rot="0 0 115" radii="15.4 13.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-0.2} {23.0} {RE + CLOUD + 2.25}" rot="0 0 176" radii="22.0 11.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="8" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 9.46 190.0">
+    <ellipsoid pos="{-7.5} {2.1} {RE + CLOUD + 0.00}" rot="0 0 68" radii="38.9 19.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{7.0} {-11.4} {RE + CLOUD + 0.45}" rot="0 0 129" radii="18.2 11.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.3} {17.0} {RE + CLOUD + 0.90}" rot="0 0 10" radii="26.0 19.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-16.5} {-12.2} {RE + CLOUD + 1.35}" rot="0 0 71" radii="14.3 12.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{23.1} {-2.4} {RE + CLOUD + 1.80}" rot="0 0 132" radii="22.1 11.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-17.0} {19.2} {RE + CLOUD + 2.25}" rot="0 0 13" radii="29.9 18.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-0.5} {-27.9} {RE + CLOUD + 2.70}" rot="0 0 74" radii="18.2 13.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-4" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 10.46 327.5">
+    <ellipsoid pos="{-2.5} {-1.2} {RE + CLOUD + 0.00}" rot="0 0 85" radii="7.2 4.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{4.5} {-1.4} {RE + CLOUD + 0.45}" rot="0 0 146" radii="8.5 6.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-3.1} {5.3} {RE + CLOUD + 0.90}" rot="0 0 27" radii="11.5 9.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-1.6} {-7.1} {RE + CLOUD + 1.35}" rot="0 0 88" radii="7.0 3.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.8} {4.7} {RE + CLOUD + 1.80}" rot="0 0 149" radii="10.0 6.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.0} {1.2} {RE + CLOUD + 2.25}" rot="0 0 30" radii="5.5 4.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-30" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.4} {-7.6} {RE + CLOUD + 2.70}" rot="0 0 91" radii="8.5 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.5} {10.6} {RE + CLOUD + 3.15}" rot="0 0 152" radii="11.5 5.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-16" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 11.37 105.0">
+    <ellipsoid pos="{-1.8} {-4.0} {RE + CLOUD + 0.00}" rot="0 0 102" radii="12.7 9.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.9} {3.0} {RE + CLOUD + 0.45}" rot="0 0 163" radii="14.0 12.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.2} {3.1} {RE + CLOUD + 0.90}" rot="0 0 44" radii="7.7 3.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.5} {-10.1} {RE + CLOUD + 1.35}" rot="0 0 105" radii="11.9 7.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.1} {12.6} {RE + CLOUD + 1.80}" rot="0 0 166" radii="16.1 11.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-12.0} {-7.9} {RE + CLOUD + 2.25}" rot="0 0 47" radii="9.8 8.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-19" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 12.21 242.6">
+    <ellipsoid pos="{1.6} {-5.1} {RE + CLOUD + 0.00}" rot="0 0 119" radii="19.9 17.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{4.0} {8.4} {RE + CLOUD + 0.45}" rot="0 0 0" radii="20.7 10.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-11.1} {-4.5} {RE + CLOUD + 0.90}" rot="0 0 61" radii="12.6 7.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{13.2} {-4.9} {RE + CLOUD + 1.35}" rot="0 0 122" radii="18.0 13.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.3} {14.3} {RE + CLOUD + 1.80}" rot="0 0 3" radii="9.9 8.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.7} {-17.1} {RE + CLOUD + 2.25}" rot="0 0 64" radii="15.3 7.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{16.3} {10.2} {RE + CLOUD + 2.70}" rot="0 0 125" radii="20.7 12.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="29" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 13.0 20.1">
+    <ellipsoid pos="{5.1} {-3.2} {RE + CLOUD + 0.00}" rot="0 0 136" radii="28.6 14.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-2.8} {10.0} {RE + CLOUD + 0.45}" rot="0 0 17" radii="12.1 7.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-6.1} {-12.0} {RE + CLOUD + 0.90}" rot="0 0 78" radii="18.7 13.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{14.9} {5.6} {RE + CLOUD + 1.35}" rot="0 0 139" radii="25.3 21.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-16.7} {6.7} {RE + CLOUD + 1.80}" rot="0 0 20" radii="15.4 7.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.6} {-18.0} {RE + CLOUD + 2.25}" rot="0 0 81" radii="22.0 13.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.3} {20.7} {RE + CLOUD + 2.70}" rot="0 0 142" radii="12.1 9.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-20.0} {-11.8} {RE + CLOUD + 3.15}" rot="0 0 23" radii="18.7 16.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="17" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 13.74 157.6">
+    <ellipsoid pos="{8.3} {1.3} {RE + CLOUD + 0.00}" rot="0 0 153" radii="38.9 24.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-12.1} {8.0} {RE + CLOUD + 0.45}" rot="0 0 34" radii="18.2 13.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{4.5} {-18.2} {RE + CLOUD + 0.90}" rot="0 0 95" radii="26.0 22.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.6} {19.5} {RE + CLOUD + 1.35}" rot="0 0 156" radii="14.3 7.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="0" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-23.7} {-8.2} {RE + CLOUD + 1.80}" rot="0 0 37" radii="22.1 13.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{25.5} {-11.1} {RE + CLOUD + 2.25}" rot="0 0 98" radii="29.9 22.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="14" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 14.45 295.1">
+    <ellipsoid pos="{1.9} {2.3} {RE + CLOUD + 0.00}" rot="0 0 170" radii="7.2 5.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-5.0} {-0.7} {RE + CLOUD + 0.45}" rot="0 0 51" radii="8.5 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.4} {-3.8} {RE + CLOUD + 0.90}" rot="0 0 112" radii="11.5 5.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-1.7} {7.6} {RE + CLOUD + 1.35}" rot="0 0 173" radii="7.0 4.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.4} {-7.6} {RE + CLOUD + 1.80}" rot="0 0 54" radii="10.0 7.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{9.3} {2.9} {RE + CLOUD + 2.25}" rot="0 0 115" radii="5.5 4.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.6} {4.5} {RE + CLOUD + 2.70}" rot="0 0 176" radii="8.5 4.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="2" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 15.12 72.6">
+    <ellipsoid pos="{-0.1} {3.7} {RE + CLOUD + 0.00}" rot="0 0 7" radii="12.7 11.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.3} {-4.9} {RE + CLOUD + 0.45}" rot="0 0 68" radii="14.0 7.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.3} {0.9} {RE + CLOUD + 0.90}" rot="0 0 129" radii="7.7 4.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-8.0} {5.9} {RE + CLOUD + 1.35}" rot="0 0 10" radii="11.9 8.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{2.2} {-11.0} {RE + CLOUD + 1.80}" rot="0 0 71" radii="16.1 13.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.5} {10.6} {RE + CLOUD + 2.25}" rot="0 0 132" radii="9.8 4.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-13.0} {-3.7} {RE + CLOUD + 2.70}" rot="0 0 13" radii="14.0 8.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{13.0} {-6.5} {RE + CLOUD + 3.15}" rot="0 0 74" radii="7.7 5.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-10" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 15.76 210.1">
+    <ellipsoid pos="{-3.9} {4.3} {RE + CLOUD + 0.00}" rot="0 0 24" radii="19.9 9.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-0.1} {-10.0} {RE + CLOUD + 0.45}" rot="0 0 85" radii="20.7 12.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.8} {9.4} {RE + CLOUD + 0.90}" rot="0 0 146" radii="12.6 9.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.2} {-1.2} {RE + CLOUD + 1.35}" rot="0 0 27" radii="18.0 15.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{13.7} {-10.7} {RE + CLOUD + 1.80}" rot="0 0 88" radii="9.9 5.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-3.2} {18.9} {RE + CLOUD + 2.25}" rot="0 0 149" radii="15.3 9.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-13" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 16.38 347.6">
+    <ellipsoid pos="{-6.4} {0.8} {RE + CLOUD + 0.00}" rot="0 0 41" radii="28.6 17.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{7.2} {-8.4} {RE + CLOUD + 0.45}" rot="0 0 102" radii="12.1 9.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-30" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.5} {14.3} {RE + CLOUD + 0.90}" rot="0 0 163" radii="18.7 16.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-11.9} {-12.1} {RE + CLOUD + 1.35}" rot="0 0 44" radii="25.3 12.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{19.2} {1.0} {RE + CLOUD + 1.80}" rot="0 0 105" radii="15.4 9.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-16.4} {13.5} {RE + CLOUD + 2.25}" rot="0 0 166" radii="22.0 16.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.2} {-22.9} {RE + CLOUD + 2.70}" rot="0 0 47" radii="12.1 10.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-25" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 16.98 125.1">
+    <ellipsoid pos="{-6.0} {-4.1} {RE + CLOUD + 0.00}" rot="0 0 58" radii="38.9 28.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{12.4} {-1.9} {RE + CLOUD + 0.45}" rot="0 0 119" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-10.2} {12.6} {RE + CLOUD + 0.90}" rot="0 0 0" radii="26.0 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-1.2} {-19.1} {RE + CLOUD + 1.35}" rot="0 0 61" radii="14.3 8.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{15.6} {15.1} {RE + CLOUD + 1.80}" rot="0 0 122" radii="22.1 16.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-24.0} {-0.6} {RE + CLOUD + 2.25}" rot="0 0 3" radii="29.9 25.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{19.7} {-17.1} {RE + CLOUD + 2.70}" rot="0 0 64" radii="18.2 9.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-3.2} {27.9} {RE + CLOUD + 3.15}" rot="0 0 125" radii="26.0 16.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="23" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 17.55 262.6">
+    <ellipsoid pos="{-0.8} {-3.1} {RE + CLOUD + 0.00}" rot="0 0 75" radii="7.2 6.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{4.6} {3.0} {RE + CLOUD + 0.45}" rot="0 0 136" radii="8.5 4.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.0} {1.2} {RE + CLOUD + 0.90}" rot="0 0 17" radii="11.5 7.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.1} {-6.7} {RE + CLOUD + 1.35}" rot="0 0 78" radii="7.0 5.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.8} {9.5} {RE + CLOUD + 1.80}" rot="0 0 139" radii="10.0 8.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.8} {-7.1} {RE + CLOUD + 2.25}" rot="0 0 20" radii="5.5 2.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="20" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 18.11 40.1">
+    <ellipsoid pos="{1.8} {-3.6} {RE + CLOUD + 0.00}" rot="0 0 92" radii="12.7 6.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{2.0} {6.7} {RE + CLOUD + 0.45}" rot="0 0 153" radii="14.0 8.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.7} {-4.6} {RE + CLOUD + 0.90}" rot="0 0 34" radii="7.7 5.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.4} {-2.1} {RE + CLOUD + 1.35}" rot="0 0 95" radii="11.9 10.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.1} {9.7} {RE + CLOUD + 1.80}" rot="0 0 156" radii="16.1 8.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-1.5} {-13.2} {RE + CLOUD + 2.25}" rot="0 0 37" radii="9.8 6.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.9} {9.5} {RE + CLOUD + 2.70}" rot="0 0 98" radii="14.0 10.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="8" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 18.65 177.6">
+    <ellipsoid pos="{4.6} {-2.0} {RE + CLOUD + 0.00}" rot="0 0 109" radii="19.9 12.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-3.6} {7.9} {RE + CLOUD + 0.45}" rot="0 0 170" radii="20.7 15.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-3.5} {-10.6} {RE + CLOUD + 0.90}" rot="0 0 51" radii="12.6 10.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{11.5} {6.5} {RE + CLOUD + 1.35}" rot="0 0 112" radii="18.0 9.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-14.6} {3.4} {RE + CLOUD + 1.80}" rot="0 0 173" radii="9.9 6.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{9.4} {-13.7} {RE + CLOUD + 2.25}" rot="0 0 54" radii="15.3 11.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{2.5} {17.9} {RE + CLOUD + 2.70}" rot="0 0 115" radii="20.7 17.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-14.9} {-12.3} {RE + CLOUD + 3.15}" rot="0 0 176" radii="12.6 6.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-4" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 19.18 315.1">
+    <ellipsoid pos="{6.6} {2.1} {RE + CLOUD + 0.00}" rot="0 0 126" radii="28.6 21.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-10.9} {5.0} {RE + CLOUD + 0.45}" rot="0 0 7" radii="12.1 10.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.1} {-14.3} {RE + CLOUD + 0.90}" rot="0 0 68" radii="18.7 9.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.1} {17.3} {RE + CLOUD + 1.35}" rot="0 0 129" radii="25.3 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-18.3} {-9.8} {RE + CLOUD + 1.80}" rot="0 0 10" radii="15.4 11.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{22.3} {-5.7} {RE + CLOUD + 2.25}" rot="0 0 71" radii="22.0 18.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-7" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 19.69 92.7">
+    <ellipsoid pos="{4.0} {6.6} {RE + CLOUD + 0.00}" rot="0 0 143" radii="38.9 33.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-12.9} {-3.8} {RE + CLOUD + 0.45}" rot="0 0 24" radii="18.2 9.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{15.6} {-7.6} {RE + CLOUD + 0.90}" rot="0 0 85" radii="26.0 16.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.5} {19.1} {RE + CLOUD + 1.35}" rot="0 0 146" radii="14.3 10.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-8.3} {-21.7} {RE + CLOUD + 1.80}" rot="0 0 27" radii="22.1 19.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{23.0} {11.5} {RE + CLOUD + 2.25}" rot="0 0 88" radii="29.9 14.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-26.9} {7.7} {RE + CLOUD + 2.70}" rot="0 0 149" radii="18.2 11.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-19" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 20.19 230.2">
+    <ellipsoid pos="{-0.5} {2.7} {RE + CLOUD + 0.00}" rot="0 0 160" radii="7.2 3.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-2.6} {-4.0} {RE + CLOUD + 0.45}" rot="0 0 41" radii="8.5 5.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.9} {1.6} {RE + CLOUD + 0.90}" rot="0 0 102" radii="11.5 8.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-6.5} {3.4} {RE + CLOUD + 1.35}" rot="0 0 163" radii="7.0 6.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{2.8} {-7.8} {RE + CLOUD + 1.80}" rot="0 0 44" radii="10.0 5.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.5} {8.4} {RE + CLOUD + 2.25}" rot="0 0 105" radii="5.5 3.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.0} {-4.2} {RE + CLOUD + 2.70}" rot="0 0 166" radii="8.5 6.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.2} {-3.2} {RE + CLOUD + 3.15}" rot="0 0 47" radii="11.5 9.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="29" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 20.68 7.7">
+    <ellipsoid pos="{-3.4} {2.7} {RE + CLOUD + 0.00}" rot="0 0 177" radii="12.7 7.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{1.1} {-7.4} {RE + CLOUD + 0.45}" rot="0 0 58" radii="14.0 10.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.4} {8.0} {RE + CLOUD + 0.90}" rot="0 0 119" radii="7.7 6.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-11.1} {-2.7} {RE + CLOUD + 1.35}" rot="0 0 0" radii="11.9 6.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{11.4} {-6.3} {RE + CLOUD + 1.80}" rot="0 0 61" radii="16.1 10.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.6} {13.6} {RE + CLOUD + 2.25}" rot="0 0 122" radii="9.8 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="26" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 21.15 145.2">
+    <ellipsoid pos="{-5.3} {-0.2} {RE + CLOUD + 0.00}" rot="0 0 14" radii="19.9 14.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{7.0} {-6.0} {RE + CLOUD + 0.45}" rot="0 0 75" radii="20.7 17.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-1.5} {11.9} {RE + CLOUD + 0.90}" rot="0 0 136" radii="12.6 6.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-8.2} {-11.5} {RE + CLOUD + 1.35}" rot="0 0 17" radii="18.0 11.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{15.7} {3.3} {RE + CLOUD + 1.80}" rot="0 0 78" radii="9.9 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="0" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.3} {9.0} {RE + CLOUD + 2.25}" rot="0 0 139" radii="15.3 13.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.7} {-18.4} {RE + CLOUD + 2.70}" rot="0 0 20" radii="20.7 10.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="14" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 21.62 282.7">
+    <ellipsoid pos="{-4.4} {-4.1} {RE + CLOUD + 0.00}" rot="0 0 31" radii="28.6 24.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.4} {0.1} {RE + CLOUD + 0.45}" rot="0 0 92" radii="12.1 6.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-10.0} {9.0} {RE + CLOUD + 0.90}" rot="0 0 153" radii="18.7 11.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{1.5} {-15.8} {RE + CLOUD + 1.35}" rot="0 0 34" radii="25.3 18.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.8} {14.4} {RE + CLOUD + 1.80}" rot="0 0 95" radii="15.4 13.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-19.6} {-3.6} {RE + CLOUD + 2.25}" rot="0 0 156" radii="22.0 11.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{18.4} {-11.4} {RE + CLOUD + 2.70}" rot="0 0 37" radii="12.1 7.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-6.2} {22.4} {RE + CLOUD + 3.15}" rot="0 0 98" radii="18.7 13.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="2" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 22.07 60.2">
+    <ellipsoid pos="{-0.9} {-8.3} {RE + CLOUD + 0.00}" rot="0 0 48" radii="38.9 19.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.9} {9.6} {RE + CLOUD + 0.45}" rot="0 0 109" radii="18.2 11.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-18.7} {0.3} {RE + CLOUD + 0.90}" rot="0 0 170" radii="26.0 19.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{16.1} {-15.2} {RE + CLOUD + 1.35}" rot="0 0 51" radii="14.3 12.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-1.8} {25.1} {RE + CLOUD + 1.80}" rot="0 0 112" radii="22.1 11.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-17.3} {-21.7} {RE + CLOUD + 2.25}" rot="0 0 173" radii="29.9 18.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-1" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 22.52 197.7">
+    <ellipsoid pos="{1.7} {-2.4} {RE + CLOUD + 0.00}" rot="0 0 65" radii="7.2 4.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.7} {5.0} {RE + CLOUD + 0.45}" rot="0 0 126" radii="8.5 6.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-5.0} {-4.2} {RE + CLOUD + 0.90}" rot="0 0 7" radii="11.5 9.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{7.8} {-0.3} {RE + CLOUD + 1.35}" rot="0 0 68" radii="7.0 3.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-6.2} {6.2} {RE + CLOUD + 1.80}" rot="0 0 129" radii="10.0 6.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.4} {-9.7} {RE + CLOUD + 2.25}" rot="0 0 10" radii="5.5 4.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.8} {8.1} {RE + CLOUD + 2.70}" rot="0 0 71" radii="8.5 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-13" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 22.95 335.2">
+    <ellipsoid pos="{3.6} {-0.9} {RE + CLOUD + 0.00}" rot="0 0 82" radii="12.7 9.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-3.6} {5.4} {RE + CLOUD + 0.45}" rot="0 0 143" radii="14.0 12.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-1.3} {-8.3} {RE + CLOUD + 0.90}" rot="0 0 24" radii="7.7 3.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-30" axis="x"/></ellipsoid>
+    <ellipsoid pos="{7.8} {6.2} {RE + CLOUD + 1.35}" rot="0 0 85" radii="11.9 7.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-11.2} {0.8} {RE + CLOUD + 1.80}" rot="0 0 146" radii="16.1 11.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.6} {-9.0} {RE + CLOUD + 2.25}" rot="0 0 27" radii="9.8 8.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-0.2} {13.5} {RE + CLOUD + 2.70}" rot="0 0 88" radii="14.0 7.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.6} {-10.9} {RE + CLOUD + 3.15}" rot="0 0 149" radii="7.7 4.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-25" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 23.38 112.7">
+    <ellipsoid pos="{5.1} {2.6} {RE + CLOUD + 0.00}" rot="0 0 99" radii="19.9 17.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.6} {2.7} {RE + CLOUD + 0.45}" rot="0 0 160" radii="20.7 10.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.8} {-10.9} {RE + CLOUD + 0.90}" rot="0 0 41" radii="12.6 7.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{2.8} {15.0} {RE + CLOUD + 1.35}" rot="0 0 102" radii="18.0 13.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-13.8} {-10.4} {RE + CLOUD + 1.80}" rot="0 0 163" radii="9.9 8.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{19.1} {-1.8} {RE + CLOUD + 2.25}" rot="0 0 44" radii="15.3 7.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-28" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 23.8 250.2">
+    <ellipsoid pos="{2.4} {5.9} {RE + CLOUD + 0.00}" rot="0 0 116" radii="28.6 14.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-10.0} {-4.8} {RE + CLOUD + 0.45}" rot="0 0 177" radii="12.1 7.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{13.7} {-4.2} {RE + CLOUD + 0.90}" rot="0 0 58" radii="18.7 13.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-8.6} {14.6} {RE + CLOUD + 1.35}" rot="0 0 119" radii="25.3 21.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.0} {-18.8} {RE + CLOUD + 1.80}" rot="0 0 0" radii="15.4 7.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{17.3} {12.4} {RE + CLOUD + 2.25}" rot="0 0 61" radii="22.0 13.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-23.0} {2.8} {RE + CLOUD + 2.70}" rot="0 0 122" radii="12.1 9.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="20" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 24.22 27.7">
+    <ellipsoid pos="{-2.4} {6.9} {RE + CLOUD + 0.00}" rot="0 0 133" radii="38.9 24.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-5.0} {-11.5} {RE + CLOUD + 0.45}" rot="0 0 14" radii="18.2 13.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{14.8} {6.6} {RE + CLOUD + 0.90}" rot="0 0 75" radii="26.0 22.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-18.2} {6.1} {RE + CLOUD + 1.35}" rot="0 0 136" radii="14.3 7.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="-20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.6} {-19.0} {RE + CLOUD + 1.80}" rot="0 0 17" radii="22.1 13.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.6} {23.4} {RE + CLOUD + 2.25}" rot="0 0 78" radii="29.9 22.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-21.7} {-14.6} {RE + CLOUD + 2.70}" rot="0 0 139" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{27.8} {-4.1} {RE + CLOUD + 3.15}" rot="0 0 20" radii="26.0 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="8" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 24.63 165.2">
+    <ellipsoid pos="{-2.8} {1.6} {RE + CLOUD + 0.00}" rot="0 0 150" radii="7.2 5.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="0" axis="x"/></ellipsoid>
+    <ellipsoid pos="{1.7} {-5.2} {RE + CLOUD + 0.45}" rot="0 0 31" radii="8.5 7.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.0} {6.4} {RE + CLOUD + 0.90}" rot="0 0 92" radii="11.5 5.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-7.8} {-3.2} {RE + CLOUD + 1.35}" rot="0 0 153" radii="7.0 4.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{9.0} {-3.3} {RE + CLOUD + 1.80}" rot="0 0 34" radii="10.0 7.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.9} {9.3} {RE + CLOUD + 2.25}" rot="0 0 95" radii="5.5 4.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="5" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 25.03 302.7">
+    <ellipsoid pos="{-3.9} {-0.8} {RE + CLOUD + 0.00}" rot="0 0 167" radii="12.7 11.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{5.9} {-3.6} {RE + CLOUD + 0.45}" rot="0 0 48" radii="14.0 7.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-2.5} {8.6} {RE + CLOUD + 0.90}" rot="0 0 109" radii="7.7 4.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.7} {-9.5} {RE + CLOUD + 1.35}" rot="0 0 170" radii="11.9 8.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{11.2} {4.3} {RE + CLOUD + 1.80}" rot="0 0 51" radii="16.1 13.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-12.4} {4.9} {RE + CLOUD + 2.25}" rot="0 0 112" radii="9.8 4.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{6.3} {-13.0} {RE + CLOUD + 2.70}" rot="0 0 173" radii="14.0 8.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-7" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 25.42 80.3">
+    <ellipsoid pos="{-3.1} {-3.9} {RE + CLOUD + 0.00}" rot="0 0 4" radii="19.9 9.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.5} {1.4} {RE + CLOUD + 0.45}" rot="0 0 65" radii="20.7 12.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-9.4} {6.1} {RE + CLOUD + 0.90}" rot="0 0 126" radii="12.6 9.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.3} {-12.8} {RE + CLOUD + 1.35}" rot="0 0 7" radii="18.0 15.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{7.0} {13.2} {RE + CLOUD + 1.80}" rot="0 0 68" radii="9.9 5.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.6} {-5.5} {RE + CLOUD + 2.25}" rot="0 0 129" radii="15.3 9.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{16.6} {-7.0} {RE + CLOUD + 2.70}" rot="0 0 10" radii="20.7 15.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-8.0} {17.6} {RE + CLOUD + 3.15}" rot="0 0 71" radii="12.6 10.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-19" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 25.81 217.8">
+    <ellipsoid pos="{0.4} {-6.9} {RE + CLOUD + 0.00}" rot="0 0 21" radii="28.6 17.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{7.6} {9.3} {RE + CLOUD + 0.45}" rot="0 0 82" radii="12.1 9.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.3} {-2.2} {RE + CLOUD + 0.90}" rot="0 0 143" radii="18.7 16.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{15.1} {-10.4} {RE + CLOUD + 1.35}" rot="0 0 24" radii="25.3 12.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.7} {20.2} {RE + CLOUD + 1.80}" rot="0 0 85" radii="15.4 9.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-11.3} {-20.0} {RE + CLOUD + 2.25}" rot="0 0 146" radii="22.0 16.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-22" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 40 0">
+    <ellipsoid pos="{9.3} {-9.6} {RE + CLOUD + 0.00}" rot="0 0 38" radii="38.9 28.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-0.6} {23.1} {RE + CLOUD + 0.45}" rot="0 0 99" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-19.6} {-22.6} {RE + CLOUD + 0.90}" rot="0 0 160" radii="26.0 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{35.1} {4.0} {RE + CLOUD + 1.35}" rot="0 0 41" radii="14.3 8.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-32.4} {23.5} {RE + CLOUD + 1.80}" rot="0 0 102" radii="22.1 16.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.9} {-43.4} {RE + CLOUD + 2.25}" rot="0 0 163" radii="29.9 25.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{24.8} {41.3} {RE + CLOUD + 2.70}" rot="0 0 44" radii="18.2 9.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="26" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 63 97">
+    <ellipsoid pos="{13.3} {-1.2} {RE + CLOUD + 0.00}" rot="0 0 55" radii="22.9 19.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.6} {17.1} {RE + CLOUD + 0.45}" rot="0 0 116" radii="27.2 13.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.0} {-29.9} {RE + CLOUD + 0.90}" rot="0 0 177" radii="36.8 22.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{23.9} {26.1} {RE + CLOUD + 1.35}" rot="0 0 58" radii="22.4 16.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-39.9} {-3.5} {RE + CLOUD + 1.80}" rot="0 0 119" radii="32.0 27.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{35.2} {-27.0} {RE + CLOUD + 2.25}" rot="0 0 0" radii="17.6 8.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="0" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-8.4} {47.4} {RE + CLOUD + 2.70}" rot="0 0 61" radii="27.2 16.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-23" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 86 194">
+    <ellipsoid pos="{10.8} {7.9} {RE + CLOUD + 0.00}" rot="0 0 72" radii="34.6 17.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-23.0} {2.6} {RE + CLOUD + 0.45}" rot="0 0 133" radii="38.0 23.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{19.6} {-22.5} {RE + CLOUD + 0.90}" rot="0 0 14" radii="20.9 15.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{0.9} {35.3} {RE + CLOUD + 1.35}" rot="0 0 75" radii="32.3 27.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-27.8} {-28.9} {RE + CLOUD + 1.80}" rot="0 0 136" radii="43.7 21.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{44.2} {2.7} {RE + CLOUD + 2.25}" rot="0 0 17" radii="26.6 16.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-37.5} {30.3} {RE + CLOUD + 2.70}" rot="0 0 78" radii="38.0 28.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-12" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 109 291">
+    <ellipsoid pos="{3.0} {13.0} {RE + CLOUD + 0.00}" rot="0 0 89" radii="28.7 17.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-19.1} {-13.1} {RE + CLOUD + 0.45}" rot="0 0 150" radii="29.9 22.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{29.6} {-4.2} {RE + CLOUD + 0.90}" rot="0 0 31" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-22.5} {27.3} {RE + CLOUD + 1.35}" rot="0 0 92" radii="26.0 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-2.1} {-40.0} {RE + CLOUD + 1.80}" rot="0 0 153" radii="14.3 8.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{31.6} {31.1} {RE + CLOUD + 2.25}" rot="0 0 34" radii="22.1 16.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-48.2} {-1.7} {RE + CLOUD + 2.70}" rot="0 0 95" radii="29.9 25.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-1" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 132 28">
+    <ellipsoid pos="{-6.3} {11.8} {RE + CLOUD + 0.00}" rot="0 0 106" radii="41.6 30.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-5.8} {-22.4} {RE + CLOUD + 0.45}" rot="0 0 167" radii="17.6 15.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{25.1} {16.3} {RE + CLOUD + 0.90}" rot="0 0 48" radii="27.2 13.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-34.9} {5.8} {RE + CLOUD + 1.35}" rot="0 0 109" radii="36.8 22.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{24.7} {-31.6} {RE + CLOUD + 1.80}" rot="0 0 170" radii="22.4 16.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.4} {44.2} {RE + CLOUD + 2.25}" rot="0 0 51" radii="32.0 27.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-35.2} {-32.9} {RE + CLOUD + 2.70}" rot="0 0 112" radii="17.6 8.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="10" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 155 125">
+    <ellipsoid pos="{-12.5} {4.8} {RE + CLOUD + 0.00}" rot="0 0 123" radii="56.8 48.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{10.3} {-20.7} {RE + CLOUD + 0.45}" rot="0 0 4" radii="26.6 13.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{8.2} {28.7} {RE + CLOUD + 0.90}" rot="0 0 65" radii="38.0 23.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-30.1} {-18.5} {RE + CLOUD + 1.35}" rot="0 0 126" radii="20.9 15.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-30" axis="x"/></ellipsoid>
+    <ellipsoid pos="{39.4} {-7.6} {RE + CLOUD + 1.80}" rot="0 0 7" radii="32.3 27.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-26.4} {35.6} {RE + CLOUD + 2.25}" rot="0 0 68" radii="43.7 21.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-5.0} {-47.9} {RE + CLOUD + 2.70}" rot="0 0 129" radii="26.6 16.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="21" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 58 222">
+    <ellipsoid pos="{-12.6} {-4.6} {RE + CLOUD + 0.00}" rot="0 0 140" radii="18.6 9.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{21.4} {-8.9} {RE + CLOUD + 0.45}" rot="0 0 21" radii="22.1 13.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-12.6} {27.1} {RE + CLOUD + 0.90}" rot="0 0 82" radii="29.9 22.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-10.6} {-33.7} {RE + CLOUD + 1.35}" rot="0 0 143" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-19" axis="x"/></ellipsoid>
+    <ellipsoid pos="{34.7} {20.1} {RE + CLOUD + 1.80}" rot="0 0 24" radii="26.0 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-43.3} {9.6} {RE + CLOUD + 2.25}" rot="0 0 85" radii="14.3 8.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{27.7} {-39.4} {RE + CLOUD + 2.70}" rot="0 0 146" radii="22.1 16.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-28" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 81 319">
+    <ellipsoid pos="{-6.5} {-11.7} {RE + CLOUD + 0.00}" rot="0 0 157" radii="29.1 18.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{21.9} {7.3} {RE + CLOUD + 0.45}" rot="0 0 38" radii="32.0 23.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-27.3} {12.1} {RE + CLOUD + 0.90}" rot="0 0 99" radii="17.6 15.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{14.1} {-32.4} {RE + CLOUD + 1.35}" rot="0 0 160" radii="27.2 13.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-8" axis="x"/></ellipsoid>
+    <ellipsoid pos="{13.0} {37.9} {RE + CLOUD + 1.80}" rot="0 0 41" radii="36.8 22.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-38.9} {-21.2} {RE + CLOUD + 2.25}" rot="0 0 102" radii="22.4 16.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{46.8} {-11.6} {RE + CLOUD + 2.70}" rot="0 0 163" radii="32.0 27.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-17" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 104 56">
+    <ellipsoid pos="{2.8} {-13.1} {RE + CLOUD + 0.00}" rot="0 0 174" radii="42.0 31.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{11.7} {19.9} {RE + CLOUD + 0.45}" rot="0 0 55" radii="43.7 37.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-28.6} {-8.7} {RE + CLOUD + 0.90}" rot="0 0 116" radii="26.6 13.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{31.9} {-15.2} {RE + CLOUD + 1.35}" rot="0 0 177" radii="38.0 23.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.0} {37.2} {RE + CLOUD + 1.80}" rot="0 0 58" radii="20.9 15.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.5} {-41.5} {RE + CLOUD + 2.25}" rot="0 0 119" radii="32.3 27.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{42.9} {21.9} {RE + CLOUD + 2.70}" rot="0 0 0" radii="43.7 21.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-6" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 127 153">
+    <ellipsoid pos="{10.7} {-8.0} {RE + CLOUD + 0.00}" rot="0 0 11" radii="33.8 29.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.2} {22.8} {RE + CLOUD + 0.45}" rot="0 0 72" radii="14.3 7.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="0" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.8} {-25.3} {RE + CLOUD + 0.90}" rot="0 0 133" radii="22.1 13.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{34.1} {9.5} {RE + CLOUD + 1.35}" rot="0 0 14" radii="29.9 22.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-35.7} {18.2} {RE + CLOUD + 1.80}" rot="0 0 75" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{15.6} {-41.5} {RE + CLOUD + 2.25}" rot="0 0 136" radii="26.0 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{18.0} {44.7} {RE + CLOUD + 2.70}" rot="0 0 17" radii="14.3 8.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="5" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 150 250">
+    <ellipsoid pos="{13.3} {0.9} {RE + CLOUD + 0.00}" rot="0 0 28" radii="47.8 23.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-18.1} {14.4} {RE + CLOUD + 0.45}" rot="0 0 89" radii="22.4 13.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="11" axis="x"/></ellipsoid>
+    <ellipsoid pos="{4.7} {-29.5} {RE + CLOUD + 0.90}" rot="0 0 150" radii="32.0 23.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{19.5} {29.5} {RE + CLOUD + 1.35}" rot="0 0 31" radii="17.6 15.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-38.9} {-9.7} {RE + CLOUD + 1.80}" rot="0 0 92" radii="27.2 13.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{39.0} {-21.1} {RE + CLOUD + 2.25}" rot="0 0 153" radii="36.8 22.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-15.7} {45.5} {RE + CLOUD + 2.70}" rot="0 0 34" radii="22.4 16.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="16" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 53 347">
+    <ellipsoid pos="{9.4} {9.4} {RE + CLOUD + 0.00}" rot="0 0 45" radii="27.2 16.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-15" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-23.1} {-1.0} {RE + CLOUD + 0.45}" rot="0 0 106" radii="32.3 23.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="22" axis="x"/></ellipsoid>
+    <ellipsoid pos="{22.9} {-19.2} {RE + CLOUD + 0.90}" rot="0 0 167" radii="43.7 37.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="-1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-4.6} {35.1} {RE + CLOUD + 1.35}" rot="0 0 48" radii="26.6 13.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-23.0} {-32.9} {RE + CLOUD + 1.80}" rot="0 0 109" radii="38.0 23.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{43.3} {9.6} {RE + CLOUD + 2.25}" rot="0 0 170" radii="20.9 15.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-41.7} {24.1} {RE + CLOUD + 2.70}" rot="0 0 51" radii="32.3 27.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="27" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 76 84">
+    <ellipsoid pos="{0.9} {13.3} {RE + CLOUD + 0.00}" rot="0 0 62" radii="23.7 17.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="-4" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-16.8} {-15.9} {RE + CLOUD + 0.45}" rot="0 0 123" radii="26.0 22.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-27" axis="x"/></ellipsoid>
+    <ellipsoid pos="{29.9} {0.5} {RE + CLOUD + 0.90}" rot="0 0 4" radii="14.3 7.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="10" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-26.5} {23.4} {RE + CLOUD + 1.35}" rot="0 0 65" radii="22.1 13.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-13" axis="x"/></ellipsoid>
+    <ellipsoid pos="{4.2} {-39.9} {RE + CLOUD + 1.80}" rot="0 0 126" radii="29.9 22.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="24" axis="x"/></ellipsoid>
+    <ellipsoid pos="{26.3} {35.6} {RE + CLOUD + 2.25}" rot="0 0 7" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="1" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-47.3} {-9.2} {RE + CLOUD + 2.70}" rot="0 0 68" radii="26.0 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-22" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 99 181">
+    <ellipsoid pos="{-8.0} {10.7} {RE + CLOUD + 0.00}" rot="0 0 79" radii="35.4 30.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="7" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-2.2} {-23.0} {RE + CLOUD + 0.45}" rot="0 0 140" radii="36.8 18.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-16" axis="x"/></ellipsoid>
+    <ellipsoid pos="{22.2} {20.0} {RE + CLOUD + 0.90}" rot="0 0 21" radii="22.4 13.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="21" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-35.4} {0.3} {RE + CLOUD + 1.35}" rot="0 0 82" radii="32.0 23.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-2" axis="x"/></ellipsoid>
+    <ellipsoid pos="{29.3} {-27.3} {RE + CLOUD + 1.80}" rot="0 0 143" radii="17.6 15.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-25" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-3.5} {44.2} {RE + CLOUD + 2.25}" rot="0 0 24" radii="27.2 13.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="12" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-29.6} {-38.0} {RE + CLOUD + 2.70}" rot="0 0 85" radii="36.8 22.8 {CT}" rings="6" slices="22" material="cloud"><bend angle="-11" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 122 278">
+    <ellipsoid pos="{-13.1} {2.8} {RE + CLOUD + 0.00}" rot="0 0 96" radii="49.4 24.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="18" axis="x"/></ellipsoid>
+    <ellipsoid pos="{13.4} {-18.8} {RE + CLOUD + 0.45}" rot="0 0 157" radii="20.9 13.0 {CT}" rings="6" slices="22" material="cloud"><bend angle="-5" axis="x"/></ellipsoid>
+    <ellipsoid pos="{3.6} {29.7} {RE + CLOUD + 0.90}" rot="0 0 38" radii="32.3 23.9 {CT}" rings="6" slices="22" material="cloud"><bend angle="-28" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-26.9} {-23.0} {RE + CLOUD + 1.35}" rot="0 0 99" radii="43.7 37.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="9" axis="x"/></ellipsoid>
+    <ellipsoid pos="{40.1} {-1.4} {RE + CLOUD + 1.80}" rot="0 0 160" radii="26.6 13.3 {CT}" rings="6" slices="22" material="cloud"><bend angle="-14" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-31.6} {31.0} {RE + CLOUD + 2.25}" rot="0 0 41" radii="38.0 23.6 {CT}" rings="6" slices="22" material="cloud"><bend angle="23" axis="x"/></ellipsoid>
+    <ellipsoid pos="{2.6} {-48.1} {RE + CLOUD + 2.70}" rot="0 0 102" radii="20.9 15.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="0" axis="x"/></ellipsoid>
+  </group>
+  <group rot="0 145 15">
+    <ellipsoid pos="{-11.7} {-6.5} {RE + CLOUD + 0.00}" rot="0 0 113" radii="38.9 24.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="29" axis="x"/></ellipsoid>
+    <ellipsoid pos="{22.5} {-5.4} {RE + CLOUD + 0.45}" rot="0 0 174" radii="18.2 13.5 {CT}" rings="6" slices="22" material="cloud"><bend angle="6" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-16.7} {24.8} {RE + CLOUD + 0.90}" rot="0 0 55" radii="26.0 22.4 {CT}" rings="6" slices="22" material="cloud"><bend angle="-17" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-5.2} {-35.0} {RE + CLOUD + 1.35}" rot="0 0 116" radii="14.3 7.2 {CT}" rings="6" slices="22" material="cloud"><bend angle="20" axis="x"/></ellipsoid>
+    <ellipsoid pos="{31.1} {25.2} {RE + CLOUD + 1.80}" rot="0 0 177" radii="22.1 13.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="-3" axis="x"/></ellipsoid>
+    <ellipsoid pos="{-44.2} {2.7} {RE + CLOUD + 2.25}" rot="0 0 58" radii="29.9 22.1 {CT}" rings="6" slices="22" material="cloud"><bend angle="-26" axis="x"/></ellipsoid>
+    <ellipsoid pos="{33.5} {-34.6} {RE + CLOUD + 2.70}" rot="0 0 119" radii="18.2 15.7 {CT}" rings="6" slices="22" material="cloud"><bend angle="11" axis="x"/></ellipsoid>
+  </group>
+  <!-- A cyclone south-west of the belt: a white eye ring and three curling arms. -->
+  <group rot="0 11 255">
+    <torus pos="0 0 {RE + CLOUD}" majorRadius="14" minorRadius="5" majorSegments="20" minorSegments="6" rot="90 0 0" scale="1 1 0.3" material="cloud"/>
+    <ellipsoid pos="{30*cos(rad(0))} {30*sin(rad(0))} {RE + CLOUD}" rot="0 0 90" radii="44 9 {CT}" rings="6" slices="24" material="cloud"><bend angle="90" axis="x"/></ellipsoid>
+    <ellipsoid pos="{30*cos(rad(120))} {30*sin(rad(120))} {RE + CLOUD}" rot="0 0 210" radii="44 9 {CT}" rings="6" slices="24" material="cloud"><bend angle="90" axis="x"/></ellipsoid>
+    <ellipsoid pos="{30*cos(rad(240))} {30*sin(rad(240))} {RE + CLOUD}" rot="0 0 330" radii="44 9 {CT}" rings="6" slices="24" material="cloud"><bend angle="90" axis="x"/></ellipsoid>
+  </group>
+</prefab>

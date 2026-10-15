@@ -1,0 +1,148 @@
+<!-- The ice crag of the Fortress of Solitude, rising from the Arctic sea ice, with the crystal hall
+     sealed inside it. One landform, so its parts interlock freely:
+     - the sea ice, a plain whose top is the ground plane Z 0;
+     - the plinth, the crag's body under the hall, its sheer south face dropping 10 m from the door;
+     - the hall shell: floor top at FZ 1000, interior x -1600..1600, y 0..2600, z 1000..2500 (the
+       scale sheet's 3200 x 2600 x 1500), walls 160 thick with half-buried hexagonal ice columns
+       that facet the inside faces, a roof 150 thick, and the 600 x 900 doorway in the south wall at
+       x 0 (fortress/door fills it);
+     - hexagonal ice spires leaning out of the sea ice round the hall and out of its roof, none of
+       them reaching into the hall's interior.
+     Origin on the sea ice under the middle of the hall's south interior face (world 0 0 0).
+     Front (the door face) is -Y. Z up. The scene's lets FZ/HW/HD/HH/T/DW/DH must match these. -->
+<prefab up="z" front="-y">
+  <material id="crag_ice" color="0.82 0.90 0.96" shininess="8" />
+  <material id="crag_ice_blue" color="0.60 0.76 0.89" shininess="10" />
+  <material id="snow" color="0.93 0.95 0.98" shininess="6" />
+  <material id="fortress_ice" color="0.74 0.86 0.94" shininess="100" />
+  <material id="fortress_floor" color="0.36 0.50 0.66" shininess="120" />
+  <material id="fortress_ice_deep" color="0.46 0.62 0.78" shininess="90" />
+  <let name="FZ" value="1000" />
+  <let name="HW" value="3200" />
+  <let name="HD" value="2600" />
+  <let name="HH" value="1500" />
+  <let name="T" value="160" />
+  <let name="RT" value="150" />
+  <let name="FT" value="20" />
+  <let name="DW" value="600" />
+  <let name="DH" value="900" />
+  <let name="HC" value="FZ + HH" />
+  <let name="ROOF" value="HC + RT" />
+  <let name="X0" value="HW/2" />
+  <let name="X1" value="HW/2 + T" />
+  <let name="FY" value="-T - 140" />
+  <attach name="hall_floor" pos="0 0 {FZ}" />
+  <attach name="door_sill" pos="0 {-T/2} {FZ}" />
+  <attach name="ceiling" pos="0 {HD/2} {HC}" />
+
+  <!-- Sea ice. -->
+  <box pos="0 0 -20" size="30000 30000 40" material="snow" />
+
+  <!-- Plinth: the crag's body under the hall, its south face 40 in front of the wall (a sill lip). -->
+  <box pos="0 {(-T - 40 + HD + 300)/2} {(FZ - FT)/2}" size="{2*X1 + 280} {HD + 300 + T + 40} {FZ - FT}" material="crag_ice_blue" />
+
+  <!-- The hall shell. -->
+  <group name="hall_shell">
+    <box pos="0 {HD/2} {FZ - FT/2}" size="{HW} {HD} {FT}" material="fortress_floor" />
+    <box pos="0 {-T/2} {FZ - FT/2}" size="{DW} {T} {FT}" material="fortress_floor" />
+    <box pos="{-X0 - T/2} {HD/2} {FZ - FT + (HH + FT)/2}" size="{T} {HD + 2*T} {HH + FT}" material="fortress_ice" />
+    <box pos="{X0 + T/2} {HD/2} {FZ - FT + (HH + FT)/2}" size="{T} {HD + 2*T} {HH + FT}" material="fortress_ice" />
+    <box pos="0 {HD + T/2} {FZ - FT + (HH + FT)/2}" size="{HW} {T} {HH + FT}" material="fortress_ice" />
+    <box pos="{-(X0 + DW/2)/2} {-T/2} {FZ - FT + (HH + FT)/2}" size="{X0 - DW/2} {T} {HH + FT}" material="fortress_ice" />
+    <box pos="{(X0 + DW/2)/2} {-T/2} {FZ - FT + (HH + FT)/2}" size="{X0 - DW/2} {T} {HH + FT}" material="fortress_ice" />
+    <box pos="0 {-T/2} {FZ + DH + (HH - DH)/2}" size="{DW} {T} {HH - DH}" material="fortress_ice" />
+    <box pos="0 {HD/2} {HC + RT/2}" size="{2*X1} {HD + 2*T} {RT}" material="fortress_ice" />
+  </group>
+  <!-- Half-buried hexagonal ice columns that facet the inside faces of the walls, floor to ceiling. -->
+  <group name="wall_columns">
+    <prism pos="{-X0 - 110} 900 {FZ - FT/2 + (HH + FT/2 + RT/2)/2}" rot="90 0 12" radius="200" height="{HH + FT/2 + RT/2}" sides="6" material="fortress_ice_deep" />
+    <prism pos="{-X0 - 110} 1700 {FZ - FT/2 + (HH + FT/2 + RT/2)/2}" rot="90 0 38" radius="200" height="{HH + FT/2 + RT/2}" sides="6" material="fortress_ice_deep" />
+    <prism pos="{X0 + 110} 900 {FZ - FT/2 + (HH + FT/2 + RT/2)/2}" rot="90 0 25" radius="200" height="{HH + FT/2 + RT/2}" sides="6" material="fortress_ice_deep" />
+    <prism pos="{X0 + 110} 1700 {FZ - FT/2 + (HH + FT/2 + RT/2)/2}" rot="90 0 5" radius="200" height="{HH + FT/2 + RT/2}" sides="6" material="fortress_ice_deep" />
+    <prism pos="-1150 {HD + 110} {FZ - FT/2 + (HH + FT/2 + RT/2)/2}" rot="90 0 20" radius="200" height="{HH + FT/2 + RT/2}" sides="6" material="fortress_ice_deep" />
+    <prism pos="1150 {HD + 110} {FZ - FT/2 + (HH + FT/2 + RT/2)/2}" rot="90 0 32" radius="200" height="{HH + FT/2 + RT/2}" sides="6" material="fortress_ice_deep" />
+  </group>
+
+  <!-- Spires out of the sea ice. Each group stands at its base, turned so local +Y is its lean
+       direction; the cone leans A degrees and its base edge dips into the ice. -->
+  <group name="spires">
+    <!-- west spires -->
+    <group pos="-2350 300 0" rot="0 0 110"><let name="H" value="3800" /><let name="A" value="7" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="600" radiusTop="60" height="{H}" sides="6" material="crag_ice"/></group>
+    <group pos="-2500 1400 0" rot="0 0 80"><let name="H" value="4600" /><let name="A" value="6" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="800" radiusTop="70" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <group pos="-2250 2500 0" rot="0 0 50"><let name="H" value="3400" /><let name="A" value="9" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="650" radiusTop="50" height="{H}" sides="6" material="crag_ice"/></group>
+    <!-- east spires -->
+    <group pos="2350 250 0" rot="0 0 -110"><let name="H" value="3600" /><let name="A" value="8" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="650" radiusTop="60" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <group pos="2550 1400 0" rot="0 0 -80"><let name="H" value="5000" /><let name="A" value="5" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="850" radiusTop="80" height="{H}" sides="6" material="crag_ice"/></group>
+    <group pos="2250 2550 0" rot="0 0 -50"><let name="H" value="3800" /><let name="A" value="9" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="700" radiusTop="60" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <!-- north spires behind the hall -->
+    <group pos="-700 3500 0" rot="0 0 10"><let name="H" value="5400" /><let name="A" value="5" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="950" radiusTop="90" height="{H}" sides="6" material="crag_ice"/></group>
+    <group pos="900 3450 0" rot="0 0 -20"><let name="H" value="4600" /><let name="A" value="7" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="850" radiusTop="70" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <group pos="0 4300 0" rot="0 0 0"><let name="H" value="6200" /><let name="A" value="3" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="900" radiusTop="60" height="{H}" sides="6" material="crag_ice"/></group>
+    <!-- the two spires that flank the door, standing on the sea ice in front of the face -->
+    <group pos="-1000 -650 0" rot="0 0 135"><let name="H" value="2700" /><let name="A" value="10" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="420" radiusTop="40" height="{H}" sides="6" material="crag_ice"/></group>
+    <group pos="1500 -650 0" rot="0 0 -135"><let name="H" value="3200" /><let name="A" value="8" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="480" radiusTop="40" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <!-- The south face: hexagonal ice columns half-buried in the plinth and wall, pointed at the top,
+         leaving a slot for the door and the sheer drop beneath it. Column axes stand at y = FY;
+         their feet are sunk into the sea ice by different depths. -->
+    <group pos="-1650 {FY} -10" rot="0 0 10"><let name="H" value="2900" /><let name="R" value="190" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice" /></group>
+    <group pos="-1250 {FY} -14" rot="0 0 35"><let name="H" value="3500" /><let name="R" value="230" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice_blue" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice_blue" /></group>
+    <group pos="-870 {FY} -18" rot="0 0 5"><let name="H" value="2400" /><let name="R" value="200" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice" /></group>
+    <group pos="-560 {FY} -22" rot="0 0 25"><let name="H" value="2050" /><let name="R" value="200" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice_blue" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice_blue" /></group>
+    <group pos="560 {FY} -26" rot="0 0 40"><let name="H" value="2250" /><let name="R" value="200" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice" /></group>
+    <group pos="880 {FY} -30" rot="0 0 15"><let name="H" value="3200" /><let name="R" value="200" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice_blue" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice_blue" /></group>
+    <group pos="1270 {FY} -34" rot="0 0 30"><let name="H" value="2700" /><let name="R" value="230" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice" /></group>
+    <group pos="1660 {FY} -38" rot="0 0 0"><let name="H" value="3800" /><let name="R" value="200" />
+      <prism pos="0 0 {(H - 1.5*R)/2}" rot="90 0 0" radius="{R}" height="{H - 1.5*R}" sides="6" material="crag_ice_blue" />
+      <cone pos="0 0 {H - 0.75*R}" rot="90 0 0" radius="{R}" height="{1.5*R}" sides="6" material="crag_ice_blue" /></group>
+    <!-- talus crystals at the foot of the face, leaving the drop under the door sheer -->
+    <group pos="-1450 -430 0" rot="0 0 160"><let name="H" value="1300" /><let name="A" value="12" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="500" radiusTop="60" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <group pos="1500 -420 0" rot="0 0 -160"><let name="H" value="1100" /><let name="A" value="10" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="520" radiusTop="50" height="{H}" sides="6" material="crag_ice"/></group>
+    <!-- floes out on the sea ice -->
+    <group pos="-1750 -1150 0" rot="0 0 120"><let name="H" value="700" /><let name="A" value="14" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="260" radiusTop="20" height="{H}" sides="6" material="crag_ice"/></group>
+    <group pos="1650 -1350 0" rot="0 0 -150"><let name="H" value="500" /><let name="A" value="18" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="220" radiusTop="20" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <group pos="-500 -1600 0" rot="0 0 160"><let name="H" value="300" /><let name="A" value="20" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="160" radiusTop="10" height="{H}" sides="6" material="crag_ice"/></group>
+  </group>
+  <!-- Spires out of the roof; their lean dips stay inside the roof slab. -->
+  <group name="roof_spires">
+    <group pos="-650 1500 {ROOF}" rot="0 0 70"><let name="H" value="2800" /><let name="A" value="4" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="650" radiusTop="50" height="{H}" sides="6" material="crag_ice"/></group>
+    <group pos="550 1000 {ROOF}" rot="0 0 -70"><let name="H" value="3400" /><let name="A" value="5" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="550" radiusTop="40" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <group pos="150 2100 {ROOF}" rot="0 0 -10"><let name="H" value="3900" /><let name="A" value="3" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="750" radiusTop="60" height="{H}" sides="6" material="crag_ice"/></group>
+    <group pos="-1100 500 {ROOF}" rot="0 0 140"><let name="H" value="1700" /><let name="A" value="8" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="420" radiusTop="30" height="{H}" sides="6" material="crag_ice_blue"/></group>
+    <group pos="1150 2300 {ROOF}" rot="0 0 -60"><let name="H" value="2300" /><let name="A" value="6" />
+      <cone pos="0 {H/2*sin(rad(A))} {H/2*cos(rad(A))}" rot="{90 - A} 0 0" radius="450" radiusTop="40" height="{H}" sides="6" material="crag_ice"/></group>
+  </group>
+</prefab>

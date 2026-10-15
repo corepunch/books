@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A lineside telegraph pole: a tapered creosoted pole, a crossarm with four glass insulators.
+     Footprint 180 x 29 cm, 760 cm tall. Origin on the ground at the pole's foot. The crossarm runs
+     across local Y; the wires run along local X (front +X). Attach: wire_1..wire_4 are the insulator
+     tops where the scene's wires rest. Materials from the scene: pole_wood, insulator. -->
+<prefab up="z" front="+x">
+  <let name="PH" value="760" />
+  <let name="AZ" value="720" />   <!-- crossarm centre height -->
+  <attach name="wire_1" pos="0 -75 {AZ + 17}" />
+  <attach name="wire_2" pos="0 -30 {AZ + 17}" />
+  <attach name="wire_3" pos="0 30 {AZ + 17}" />
+  <attach name="wire_4" pos="0 75 {AZ + 17}" />
+  <cylinder pos="0 0 {PH/2}" rot="90 0 0" radius="11" height="{PH}" material="pole_wood">
+    <taper amount="-0.3" />
+  </cylinder>
+  <box pos="0 0 {AZ}" size="12 180 10" material="pole_wood" />
+  <cylinder pos="0 -75 {AZ + 11}" rot="90 0 0" radius="3" height="12" material="insulator" />
+  <cylinder pos="0 -30 {AZ + 11}" rot="90 0 0" radius="3" height="12" material="insulator" />
+  <cylinder pos="0 30 {AZ + 11}" rot="90 0 0" radius="3" height="12" material="insulator" />
+  <cylinder pos="0 75 {AZ + 11}" rot="90 0 0" radius="3" height="12" material="insulator" />
+</prefab>

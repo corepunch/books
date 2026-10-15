@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A hard suitcase lying flat: rounded shell, a lid seam band, two latches and a carry handle on the long
+     side. Footprint 56 x 32 cm, 16 cm high. Origin on its underside at the middle. Front -Y: the handle
+     and latches face local -Y. Instances tint the shell (tint="1"); the band and fittings are fixed. -->
+<prefab up="z" front="-y">
+  <let name="SL" value="56" />
+  <let name="SD" value="27" />
+  <let name="SH" value="16" />
+  <rounded-rect size="{SL} {SD}" radius="3.5" pos="0 0 {SH/2}" color="0.42 0.26 0.16" tint="1">
+    <extrude amount="{SH}" />
+    <bevel amount="1.5" bevelSegments="3" />
+  </rounded-rect>
+  <box pos="0 0 {SH*0.62}" size="{SL + 0.6} {SD + 0.6} 1.2" color="0.20 0.18 0.16" />
+  <box pos="-12 {-SD/2 - 0.6} {SH*0.62}" size="3 1.2 3" color="0.72 0.70 0.66" shininess="60" />
+  <box pos="12 {-SD/2 - 0.6} {SH*0.62}" size="3 1.2 3" color="0.72 0.70 0.66" shininess="60" />
+  <box pos="-5 {-SD/2 - 0.9} {SH*0.62 + 3}" size="1.8 1.8 1.8" color="0.14 0.12 0.10" />
+  <box pos="5 {-SD/2 - 0.9} {SH*0.62 + 3}" size="1.8 1.8 1.8" color="0.14 0.12 0.10" />
+  <box pos="0 {-SD/2 - 1.8} {SH*0.62 + 3}" size="12 1.8 1.8" color="0.14 0.12 0.10" />
+</prefab>

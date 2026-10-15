@@ -1,0 +1,27 @@
+<!-- A steel tape cart: two shelves of 10-inch tape reels in their cases on four casters. 70 x 45, top shelf at
+     80 cm. Baseline z=0; origin on the floor under its middle; the handle is on the +X end.
+     Materials: tray, cable, tape_case. -->
+<prefab up="z" front="-y">
+  <let name="W" value="70" />
+  <let name="D" value="45" />
+  <box pos="0 0 30" size="{W - 0.6} {D - 0.6} 2" material="tray" />
+  <box pos="0 0 79" size="{W - 0.6} {D - 0.6} 2" material="tray" />
+  <box pos="{-W/2 + 1.5} {-D/2 + 1.5} 46" size="3 3 70" material="tray" />
+  <box pos="{W/2 - 1.5} {-D/2 + 1.5} 46" size="3 3 70" material="tray" />
+  <box pos="{-W/2 + 1.5} {D/2 - 1.5} 46" size="3 3 70" material="tray" />
+  <box pos="{W/2 - 1.5} {D/2 - 1.5} 46" size="3 3 70" material="tray" />
+  <sphere pos="{-W/2 + 1.5} {-D/2 + 1.5} 5.5" radius="5.5" material="cable" />
+  <sphere pos="{W/2 - 1.5} {-D/2 + 1.5} 5.5" radius="5.5" material="cable" />
+  <sphere pos="{-W/2 + 1.5} {D/2 - 1.5} 5.5" radius="5.5" material="cable" />
+  <sphere pos="{W/2 - 1.5} {D/2 - 1.5} 5.5" radius="5.5" material="cable" />
+  <box pos="{W/2 + 4} 0 92" size="2 30 2" material="tray" />
+  <box pos="{W/2 + 1.5} -14 86" size="3 2 12" material="tray" />
+  <box pos="{W/2 + 1.5} 14 86" size="3 2 12" material="tray" />
+  <!-- Reels standing in their cases, leaning slightly in a row; one lies flat on top. -->
+  <box pos="-22 0 {80 + 14}" rot="0 4 0" size="3 30 28" material="tape_case" />
+  <box pos="-16 0 {80 + 14}" rot="0 4 0" size="3 30 28" material="tape_case" />
+  <box pos="-10 1 {80 + 14}" rot="0 3 0" size="3 30 28" material="tape_case" />
+  <box pos="-4 0 {80 + 14}" rot="0 2 0" size="3 30 28" material="tape_case" />
+  <box pos="18 0 81.5" rot="0 0 8" size="28 30 3" material="tape_case" />
+  <box pos="-20 0 {31 + 14}" size="3 30 28" material="tape_case"><array count="5" translation="7 0 0" /></box>
+</prefab>

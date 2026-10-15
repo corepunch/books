@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A Metropolis setback skyscraper in three tiers (2000 x 1800, 1400 x 1200 and 800 x 700 cm) with lit windows on every face and a spire with a red beacon. Baseline z=0 on the street; tier roofs at 4260, 7820 and 9300 cm, spire tip 10580 cm. Origin on the street at the centre of the footprint. Front -Y (all faces alike). Materials from the scene: tower_facade, tower_band, glass_dark, window_lit, roof_dark, beacon_red. -->
+<prefab up="z" front="-y">
+  <let name="AW" value="2000" />
+  <let name="AD" value="1800" />
+  <let name="AZ" value="0" />
+  <let name="AH" value="4200" />
+  <box pos="0 0 {AZ + AH/2}" size="{AW} {AD} {AH}" material="tower_facade" />
+  <group rot="0 0 0">
+    <box pos="0 {-AD/2 - 4} {AZ + 350}" size="{AW - 40} 4 40" material="tower_band"><array count="11" translation="0 0 350" /></box>
+    <box pos="{-(9 - 1)*200/2 + 0*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 1*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 1*200} {-AD/2 - 4.8} {AZ + 4*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="1" translation="0 0 1050" /></box>
+    <box pos="{-(9 - 1)*200/2 + 2*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 3*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 3*200} {-AD/2 - 4.8} {AZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 1050" /></box>
+    <box pos="{-(9 - 1)*200/2 + 4*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 4*200} {-AD/2 - 4.8} {AZ + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="5" translation="0 0 700" /></box>
+    <box pos="{-(9 - 1)*200/2 + 5*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 5*200} {-AD/2 - 4.8} {AZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="9" translation="0 0 350" /></box>
+    <box pos="{-(9 - 1)*200/2 + 6*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 6*200} {-AD/2 - 4.8} {AZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="5" translation="0 0 700" /></box>
+    <box pos="{-(9 - 1)*200/2 + 7*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 8*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+  </group>
+  <group rot="0 0 90">
+    <box pos="0 {-AW/2 - 4} {AZ + 350}" size="{AD - 40} 4 40" material="tower_band"><array count="11" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 2*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 2*200} {-AW/2 - 4.8} {AZ + 4*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="1" translation="0 0 1050" /></box>
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-AW/2 - 4.8} {AZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="6" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-AW/2 - 4.8} {AZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 1050" /></box>
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-AW/2 - 4.8} {AZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 1050" /></box>
+  </group>
+  <group rot="0 0 180">
+    <box pos="0 {-AD/2 - 4} {AZ + 350}" size="{AW - 40} 4 40" material="tower_band"><array count="11" translation="0 0 350" /></box>
+    <box pos="{-(9 - 1)*200/2 + 0*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 1*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 2*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 2*200} {-AD/2 - 4.8} {AZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 1400" /></box>
+    <box pos="{-(9 - 1)*200/2 + 3*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 3*200} {-AD/2 - 4.8} {AZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 1400" /></box>
+    <box pos="{-(9 - 1)*200/2 + 4*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 4*200} {-AD/2 - 4.8} {AZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="6" translation="0 0 700" /></box>
+    <box pos="{-(9 - 1)*200/2 + 5*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 5*200} {-AD/2 - 4.8} {AZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="6" translation="0 0 700" /></box>
+    <box pos="{-(9 - 1)*200/2 + 6*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 6*200} {-AD/2 - 4.8} {AZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 1050" /></box>
+    <box pos="{-(9 - 1)*200/2 + 7*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 8*200} {-AD/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(9 - 1)*200/2 + 8*200} {-AD/2 - 4.8} {AZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 1400" /></box>
+  </group>
+  <group rot="0 0 -90">
+    <box pos="0 {-AW/2 - 4} {AZ + 350}" size="{AD - 40} 4 40" material="tower_band"><array count="11" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 0*200} {-AW/2 - 4.8} {AZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="6" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 1*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 2*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 3*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 4*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 5*200} {-AW/2 - 4.8} {AZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="6" translation="0 0 350" /></box>
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 6*200} {-AW/2 - 4.8} {AZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 700" /></box>
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-AW/2 - 2} {AZ + AH/2}" size="110 3 {AH - 120}" material="glass_dark" />
+    <box pos="{-(8 - 1)*200/2 + 7*200} {-AW/2 - 4.8} {AZ + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 700" /></box>
+  </group>
+  <box pos="0 0 {AZ + AH + 30}" size="{AW + 20} {AD + 20} 60" material="roof_dark" />
+  <let name="BW" value="1400" />
+  <let name="BD" value="1200" />
+  <let name="BZ" value="4260" />
+  <let name="BH" value="3500" />
+  <box pos="0 0 {BZ + BH/2}" size="{BW} {BD} {BH}" material="tower_facade" />
+  <group rot="0 0 0">
+    <box pos="0 {-BD/2 - 4} {BZ + 350}" size="{BW - 40} 4 40" material="tower_band"><array count="9" translation="0 0 350" /></box>
+    <box pos="{-(6 - 1)*200/2 + 0*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 0*200} {-BD/2 - 4.8} {BZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 350" /></box>
+    <box pos="{-(6 - 1)*200/2 + 1*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 1*200} {-BD/2 - 4.8} {BZ + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 700" /></box>
+    <box pos="{-(6 - 1)*200/2 + 2*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 2*200} {-BD/2 - 4.8} {BZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 700" /></box>
+    <box pos="{-(6 - 1)*200/2 + 3*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 3*200} {-BD/2 - 4.8} {BZ + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="4" translation="0 0 700" /></box>
+    <box pos="{-(6 - 1)*200/2 + 4*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 5*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 5*200} {-BD/2 - 4.8} {BZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 1050" /></box>
+  </group>
+  <group rot="0 0 90">
+    <box pos="0 {-BW/2 - 4} {BZ + 350}" size="{BD - 40} 4 40" material="tower_band"><array count="9" translation="0 0 350" /></box>
+    <box pos="{-(5 - 1)*200/2 + 0*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 0*200} {-BW/2 - 4.8} {BZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="3" translation="0 0 1050" /></box>
+    <box pos="{-(5 - 1)*200/2 + 1*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 2*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 2*200} {-BW/2 - 4.8} {BZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="8" translation="0 0 350" /></box>
+    <box pos="{-(5 - 1)*200/2 + 3*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 4*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 4*200} {-BW/2 - 4.8} {BZ + 3*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="1" translation="0 0 1050" /></box>
+  </group>
+  <group rot="0 0 180">
+    <box pos="0 {-BD/2 - 4} {BZ + 350}" size="{BW - 40} 4 40" material="tower_band"><array count="9" translation="0 0 350" /></box>
+    <box pos="{-(6 - 1)*200/2 + 0*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 0*200} {-BD/2 - 4.8} {BZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="1" translation="0 0 1050" /></box>
+    <box pos="{-(6 - 1)*200/2 + 1*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 2*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 3*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 4*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 5*200} {-BD/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(6 - 1)*200/2 + 5*200} {-BD/2 - 4.8} {BZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="8" translation="0 0 350" /></box>
+  </group>
+  <group rot="0 0 -90">
+    <box pos="0 {-BW/2 - 4} {BZ + 350}" size="{BD - 40} 4 40" material="tower_band"><array count="9" translation="0 0 350" /></box>
+    <box pos="{-(5 - 1)*200/2 + 0*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 1*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 2*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 3*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 4*200} {-BW/2 - 2} {BZ + BH/2}" size="110 3 {BH - 120}" material="glass_dark" />
+    <box pos="{-(5 - 1)*200/2 + 4*200} {-BW/2 - 4.8} {BZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="1" translation="0 0 1400" /></box>
+  </group>
+  <box pos="0 0 {BZ + BH + 30}" size="{BW + 20} {BD + 20} 60" material="roof_dark" />
+  <let name="CW" value="800" />
+  <let name="CD" value="700" />
+  <let name="CZ" value="7820" />
+  <let name="CH" value="1400" />
+  <box pos="0 0 {CZ + CH/2}" size="{CW} {CD} {CH}" material="tower_facade" />
+  <group rot="0 0 0">
+    <box pos="0 {-CD/2 - 4} {CZ + 350}" size="{CW - 40} 4 40" material="tower_band"><array count="3" translation="0 0 350" /></box>
+    <box pos="{-(3 - 1)*200/2 + 0*200} {-CD/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(3 - 1)*200/2 + 0*200} {-CD/2 - 4.8} {CZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 350" /></box>
+    <box pos="{-(3 - 1)*200/2 + 1*200} {-CD/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(3 - 1)*200/2 + 2*200} {-CD/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+  </group>
+  <group rot="0 0 90">
+    <box pos="0 {-CW/2 - 4} {CZ + 350}" size="{CD - 40} 4 40" material="tower_band"><array count="3" translation="0 0 350" /></box>
+    <box pos="{-(2 - 1)*200/2 + 0*200} {-CW/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(2 - 1)*200/2 + 0*200} {-CW/2 - 4.8} {CZ + 1*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="1" translation="0 0 1400" /></box>
+    <box pos="{-(2 - 1)*200/2 + 1*200} {-CW/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+  </group>
+  <group rot="0 0 180">
+    <box pos="0 {-CD/2 - 4} {CZ + 350}" size="{CW - 40} 4 40" material="tower_band"><array count="3" translation="0 0 350" /></box>
+    <box pos="{-(3 - 1)*200/2 + 0*200} {-CD/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(3 - 1)*200/2 + 1*200} {-CD/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(3 - 1)*200/2 + 2*200} {-CD/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(3 - 1)*200/2 + 2*200} {-CD/2 - 4.8} {CZ + 2*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="1" translation="0 0 700" /></box>
+  </group>
+  <group rot="0 0 -90">
+    <box pos="0 {-CW/2 - 4} {CZ + 350}" size="{CD - 40} 4 40" material="tower_band"><array count="3" translation="0 0 350" /></box>
+    <box pos="{-(2 - 1)*200/2 + 0*200} {-CW/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(2 - 1)*200/2 + 0*200} {-CW/2 - 4.8} {CZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 1050" /></box>
+    <box pos="{-(2 - 1)*200/2 + 1*200} {-CW/2 - 2} {CZ + CH/2}" size="110 3 {CH - 120}" material="glass_dark" />
+    <box pos="{-(2 - 1)*200/2 + 1*200} {-CW/2 - 4.8} {CZ + 0*350 + 350/2 + 10}" size="92 3 220" material="window_lit" unlit="1" castShadow="0"><array count="2" translation="0 0 350" /></box>
+  </group>
+  <box pos="0 0 {CZ + CH + 40}" size="{CW + 20} {CD + 20} 80" material="roof_dark" />
+  <cone pos="0 0 {CZ + CH + 80 + 600}" rot="90 0 0" radius="60" height="1200" sides="8" material="roof_dark" />
+  <sphere pos="0 0 {CZ + CH + 80 + 1200}" radius="50" material="beacon_red" unlit="1" castShadow="0" />
+</prefab>

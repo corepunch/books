@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- The Moon at storybook scale: a grey ball of radius 4000 cm round its centre (origin), its near
+     side (local -Y, front -y) dappled with dark maria and ringed craters. Materials from the scene:
+     moon, moon_dark. -->
+<prefab up="z" front="-y">
+  <let name="RM" value="4000"/>
+  <sphere radius="{RM}" rings="48" slices="72" material="moon"/>
+  <!-- Maria: flat dark lenses sunk into the near side. Each group turns local +Z onto the surface. -->
+  <group rot="0 70 -80"><let name="T" value="1300*1300/(2*RM) + 30"/><ellipsoid pos="0 0 {RM + 12 - T}" rot="0 0 20" radii="1300 900 {T}" rings="8" slices="24" material="moon_dark"/></group>
+  <group rot="0 95 -120"><let name="T" value="1100*1100/(2*RM) + 30"/><ellipsoid pos="0 0 {RM + 12 - T}" rot="0 0 60" radii="1100 700 {T}" rings="8" slices="24" material="moon_dark"/></group>
+  <group rot="0 110 -60"><let name="T" value="900*900/(2*RM) + 30"/><ellipsoid pos="0 0 {RM + 12 - T}" rot="0 0 -10" radii="900 600 {T}" rings="8" slices="24" material="moon_dark"/></group>
+  <group rot="0 60 -130"><let name="T" value="700*700/(2*RM) + 30"/><ellipsoid pos="0 0 {RM + 12 - T}" rot="0 0 40" radii="700 500 {T}" rings="8" slices="24" material="moon_dark"/></group>
+  <group rot="0 120 -100"><let name="T" value="600*600/(2*RM) + 30"/><ellipsoid pos="0 0 {RM + 12 - T}" rot="0 0 0" radii="600 450 {T}" rings="8" slices="24" material="moon_dark"/></group>
+  <!-- Craters: low rims standing on the surface. -->
+  <group rot="0 50 -60"><torus pos="0 0 {RM - 17}" rot="90 0 0" majorRadius="420" minorRadius="59" majorSegments="20" minorSegments="6" material="moon"/></group>
+  <group rot="0 85 -40"><torus pos="0 0 {RM - 12}" rot="90 0 0" majorRadius="300" minorRadius="42" majorSegments="20" minorSegments="6" material="moon"/></group>
+  <group rot="0 130 -140"><torus pos="0 0 {RM - 21}" rot="90 0 0" majorRadius="520" minorRadius="73" majorSegments="20" minorSegments="6" material="moon"/></group>
+  <group rot="0 75 -155"><torus pos="0 0 {RM - 10}" rot="90 0 0" majorRadius="260" minorRadius="36" majorSegments="20" minorSegments="6" material="moon"/></group>
+  <group rot="0 100 -95"><torus pos="0 0 {RM - 8}" rot="90 0 0" majorRadius="200" minorRadius="28" majorSegments="20" minorSegments="6" material="moon"/></group>
+  <group rot="0 140 -70"><torus pos="0 0 {RM - 14}" rot="90 0 0" majorRadius="340" minorRadius="48" majorSegments="20" minorSegments="6" material="moon"/></group>
+  <group rot="0 40 -110"><torus pos="0 0 {RM - 11}" rot="90 0 0" majorRadius="280" minorRadius="39" majorSegments="20" minorSegments="6" material="moon"/></group>
+</prefab>

@@ -1,264 +1,572 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Обратный отсчёт: inside Brainiac's ship. Z up, cm, X east, Y north.
-     The Red Sun Room (floor z=0): 1800 square, 900 high, lined with lead plates. A 300 cm red globe hangs
-     from the ceiling over the round Red Solar Generator; between them a column of red light holds its
-     prisoner floating 150 cm up, over the restraint bed. Round the walls: the computer relay (NW), the
-     holographic projector (NE) with the screen beside it, the drone bank (N), the bent particle
-     accelerator (S), the lead-doored kryptonite vault (SW alcove) and the elevator tube to the command
-     level (SE). Brainiac's demonstration canister stands on a stand near the generator. Four energy
-     cannons fold into the ceiling. The command level (floor z=3000): a round deck, 1800 across, the
-     throne facing the great viewscreen (N), the seeding tanks and their valves (W) that pump Bacteria to
-     the nozzles under the hull, a rack of canisters (E), the elevator (S). Superman is authored 50 m
-     below; camera transforms give world positions. -->
-<scene up="z" ambient="0.20 0.12 0.14" background="0.02 0.02 0.03">
-  <camera name="red-show-brainiac" comment="Brainiac stands over the floating Superman, a canister in his claw; drones swarm, scanning him" pos="-420 -420 420" look="160 60 180" fov="62" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="95 0 5200" rot="-90 0 90" />
-    <use-pose instance="Superman" name="Float" />
-    <transform target="Brainiac" pos="0 0 3000" />
-    <transform target="StandCanister" pos="0 0 -3000" />
+<!-- Обратный отсчёт: inside Brainiac's ship. Z up, centimetres, X east, Y north.
+
+     Resident story. Brainiac built this ship to drink suns and seed worlds. The Red Sun Room is his
+     laboratory and his trap: a lead-lined cube 1800 square and 900 high in which a red globe, 300
+     across, hangs over the Red Solar Generator and holds a prisoner in its beam while the room's
+     cannons drain him. His drones (the size of a pack of cards) charge in the bank on the north wall
+     and swarm to scan whatever the beam holds; the computer relay stands on the north wall beside the vault,
+     a console on the south wall; a viewscreen on the east wall shows the world below; the kryptonite he keeps for Superman
+     sits in a lead vault in the north-west corner, its door facing east. The west wall is the outer
+     hull. A glass elevator in the south-east quarter rises to the command deck directly above.
+     The command deck is an octagon 1720 across under a purple Brain-Net dome. Brainiac sits on a dais
+     in his throne, fingers in its control slots, turned from the great viewscreen (north) toward the
+     elevator; three seeding tanks on the north-west wall pump his Bacteria to the nozzles under the
+     hull, a rack of canisters stands on the north-east wall, consoles line the north and east walls, the
+     deck's relay stands on the west wall, and light bars on the south-west walls are the key light.
+
+     Camera state. Every alternative moment is a named group. Groups not shown by default are stored
+     in numbered parking lots below the ship (z = PZ, x = k * LOT, inside the scene's ground plane, so
+     the checker accepts them as stored, not floating); a camera brings one in with a transform that
+     undoes its lot offset, or parks a default group in its own lot. The two actors are wrapped in
+     unrotated groups: <Name>At translates (a world delta), <Name>Yaw turns about Z, SupermanTilt lays
+     him on his back (-90 about X) or stands him up (+90 back). Rotations about one axis compose
+     cleanly, which a single rotated instance does not.
+
+     Checker exceptions (sanityIgnore): SupermanAt, because in the Red Sun Room the red beam holds
+     him floating 150 cm over the generator (in the deck cameras he stands on the floor); the
+     hovering drones (Drones, NearDrone, HeldDrone, Falling), which fly on their thruster jets. -->
+<scene up="z" ambient="0.17 0.15 0.18" background="0.01 0.01 0.02">
+  <!-- Room dimensions. -->
+  <let name="RS" value="1800" />
+  <let name="HALF" value="RS / 2" />
+  <let name="RH" value="900" />
+  <let name="WT" value="40" />
+  <let name="CEIL" value="40" />
+  <let name="FT" value="40" />
+  <let name="CZ" value="RH + CEIL + FT" />
+  <let name="CIN" value="860" />
+  <let name="CWT" value="40" />
+  <let name="CWH" value="560" />
+  <let name="OCT" value="tan(rad(22.5))" />
+  <!-- The globe, the elevator shaft and the throne. -->
+  <let name="GZ" value="700" />
+  <let name="GR" value="150" />
+  <let name="EX" value="510" />
+  <let name="EY" value="-510" />
+  <let name="TX" value="0" />
+  <let name="TY" value="120" />
+  <let name="DAIS" value="16" />
+  <!-- Actor homes: Superman floats in the beam (his feet at SM, head north); Brainiac sits in his throne. -->
+  <let name="SMX" value="0" />
+  <let name="SMY" value="-95" />
+  <let name="SMZ" value="215" />
+  <let name="SMYAW" value="0" />
+  <let name="BRX" value="TX" />
+  <let name="BRY" value="TY" />
+  <let name="BRZ" value="CZ + DAIS" />
+  <let name="BRYAW" value="20" />
+  <!-- Parking lots for camera state. -->
+  <let name="LOT" value="2500" />
+  <let name="PZ" value="-3000" />
+
+  <!-- ============================== Red Sun Room cameras ==============================
+       Camera pos/look/fov/textRect are literal numbers: the book engine reads them without expressions.
+       Transforms inside a camera are Scener-only and use the lets above. -->
+  <camera name="red-show-brainiac" comment="Brainiac sets his canister on its stand beside the generator and looks down at Superman floating helpless in the red beam; drones swarm round him, scanning" pos="650 -250 120" look="-250 -200 210" fov="54" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="BrainiacAt" pos="{-30 - BRX} {-470 - BRY} {0 - BRZ}" />
+    <transform target="BrainiacYaw" rot="0 0 {176 - BRYAW}" />
+    <use-pose instance="Brainiac" name="SetCanister" />
   </camera>
-  <camera name="red-show-room" comment="Alone: Superman floats in the red light; drones buzz within reach; the canister on its stand; the vault in the corner" pos="700 600 560" look="-200 -300 200" fov="70" textRect="0.03 0.04 0.40 0.66" textScale="1">
-    <transform target="Superman" pos="95 0 5200" rot="-90 0 90" />
-    <use-pose instance="Superman" name="Float" />
+  <camera name="red-show-room" comment="Alone: Superman floats in the red beam over the generator; drones buzz within reach, one by his hand; the canister on its stand; the lead-doored vault in the corner; the caged globe hums overhead" pos="820 -150 300" look="-200 0 430" fov="64" textRect="0.03 0.04 0.37 0.44" textScale="1" />
+  <camera name="red-catch" comment="Close: Superman's fingers close on a drone; its thrusters whine; the red globe above" pos="230 -60 290" look="40 40 235" fov="45" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="NearDrone" pos="{4 * LOT} 0 {PZ}" />
+    <transform target="HeldDrone" pos="{-5 * LOT} 0 {-PZ}" />
+    <use-pose instance="Superman" name="FloatCatch" />
   </camera>
-  <camera name="red-catch" comment="Close: Superman's fingers close on a drone; its thrusters whine" pos="-260 -320 260" look="40 60 150" fov="58" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="95 0 5200" rot="-90 0 90" />
-    <use-pose instance="Superman" name="Float" />
-    <transform target="HeldDrone" pos="0 0 3000" />
-    <transform target="NearDrone" pos="0 0 -3000" />
+  <camera name="red-chaos" comment="The knocked-off nozzle spews purple Bacteria into the machines; drones crash, screens flash, the red globe gutters and Superman tumbles free of the beam" pos="650 200 260" look="-300 -300 300" fov="62" textRect="0.03 0.04 0.46 0.36" textScale="1">
+    <transform target="SupermanAt" pos="0 -40 -60" />
+    <transform target="SupermanTilt" rot="35 0 0" />
+    <transform target="RedOn" pos="{20 * LOT} 0 {PZ}" />
+    <transform target="RedDim" pos="{-2 * LOT} 0 {-PZ}" />
+    <transform target="Drones" pos="{21 * LOT} 0 {PZ}" />
+    <transform target="NearDrone" pos="{4 * LOT} 0 {PZ}" />
+    <transform target="Falling" pos="{-6 * LOT} 0 {-PZ}" />
+    <transform target="Crashed" pos="{-26 * LOT} 0 {-PZ}" />
+    <transform target="Spew" pos="{-7 * LOT} 0 {-PZ}" />
+    <transform target="Glitch" pos="{-8 * LOT} 0 {-PZ}" />
   </camera>
-  <camera name="red-chaos" comment="The canister's nozzle spews purple; drones crash, screens flash, the red globe gutters and Superman falls free" pos="-640 -330 560" look="160 180 190" fov="62" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="0 -60 5040" rot="-60 20 120" />
-    <use-pose instance="Superman" name="Float" />
-    <transform target="Spew" pos="0 0 3000" />
-    <transform target="Drones" pos="0 0 -3000" />
-    <transform target="Crashed" pos="0 0 3000" />
-    <transform target="RedOn" pos="0 0 -3000" />
-    <transform target="RedOff" pos="0 0 3000" />
-  </camera>
-  <camera name="red-show-free" comment="In the dark room Superman stands up, strong again; the vault's lead door, the elevator tube, the hull wall" pos="650 650 650" look="-150 -300 150" fov="76" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="60 -160 5000" rot="0 0 150" />
+  <camera name="red-show-free" comment="In the dark room, by emergency light, Superman stands strong again beside the dead generator; round him the vault's lead door, the elevator cage and the hull wall" pos="760 760 520" look="-250 -200 230" fov="72" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="SupermanAt" pos="{330 - SMX} {380 - SMY} {0 - SMZ}" />
+    <transform target="SupermanTilt" rot="90 0 0" />
+    <transform target="SupermanYaw" rot="0 0 {150 - SMYAW}" />
     <use-pose instance="Superman" name="HandsOnHips" />
-    <transform target="Drones" pos="0 0 -3000" />
-    <transform target="Crashed" pos="0 0 3000" />
-    <transform target="RedOn" pos="0 0 -3000" />
-    <transform target="RedOff" pos="0 0 3000" />
-    <transform target="Emergency" pos="0 0 3000" />
+    <transform target="RedOn" pos="{20 * LOT} 0 {PZ}" />
+    <transform target="RedOff" pos="{-1 * LOT} 0 {-PZ}" />
+    <transform target="Emergency" pos="{-3 * LOT} 0 {-PZ}" />
+    <transform target="Drones" pos="{21 * LOT} 0 {PZ}" />
+    <transform target="NearDrone" pos="{4 * LOT} 0 {PZ}" />
+    <transform target="Crashed" pos="{-26 * LOT} 0 {-PZ}" />
   </camera>
-  <camera name="red-drain" comment="Ending: four cannons drop from the ceiling and pour white beams into the floating Superman" pos="-640 -330 560" look="160 180 250" fov="62" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="95 0 5200" rot="-90 0 90" />
-    <use-pose instance="Superman" name="Float" />
-    <transform target="Cannons" pos="0 0 3000" />
-    <transform target="Drones" pos="0 0 -3000" />
+  <camera name="red-drain" comment="Ending: four cannons drop from the ceiling and pour white beams into the floating Superman; on the east screen the Earth shrinks" pos="-300 -780 300" look="100 150 420" fov="70" textRect="0.04 0.76 0.92 0.21" textScale="1">
+    <transform target="CannonsOut" pos="{-10 * LOT} 0 {-PZ}" />
+    <transform target="Earth" pos="{22 * LOT} 0 {PZ}" />
+    <transform target="EarthSmall" pos="{-19 * LOT} 0 {-PZ}" />
   </camera>
-  <camera name="red-kryptonite" comment="Ending: the vault's lead door torn open; green light pours out and Superman sinks to his knees" pos="420 -780 420" look="-500 -300 150" fov="62" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="-380 -500 5000" rot="0 0 -110" />
+  <camera name="red-kryptonite" comment="Ending: the vault's lead door torn off and thrown down; green light pours out of the niche and Superman sinks to his knees before it" pos="-60 700 260" look="-440 520 130" fov="60" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="SupermanAt" pos="{-420 - SMX} {690 - SMY} {0 - SMZ}" />
+    <transform target="SupermanTilt" rot="90 0 0" />
+    <transform target="SupermanYaw" rot="0 0 {-90 - SMYAW}" />
     <use-pose instance="Superman" name="Kneel" />
-    <transform target="VaultDoor" pos="0 0 -3000" />
-    <transform target="VaultOpen" pos="0 0 3000" />
-    <transform target="Drones" pos="0 0 -3000" />
-    <transform target="Crashed" pos="0 0 3000" />
-    <transform target="RedOn" pos="0 0 -3000" />
-    <transform target="RedOff" pos="0 0 3000" />
-    <transform target="Emergency" pos="0 0 3000" />
+    <transform target="VaultDoor" pos="{23 * LOT} 0 {PZ}" />
+    <transform target="VaultOpen" pos="{-9 * LOT} 0 {-PZ}" />
+    <transform target="RedOn" pos="{20 * LOT} 0 {PZ}" />
+    <transform target="RedOff" pos="{-1 * LOT} 0 {-PZ}" />
+    <transform target="Emergency" pos="{-3 * LOT} 0 {-PZ}" />
+    <transform target="Drones" pos="{21 * LOT} 0 {PZ}" />
+    <transform target="NearDrone" pos="{4 * LOT} 0 {PZ}" />
+    <transform target="Crashed" pos="{-26 * LOT} 0 {-PZ}" />
   </camera>
-  <camera name="cmd-show-brainiac" comment="The command level: Brainiac turns in his throne, fingers in the control slots; the viewscreen shows Earth; the seeding tanks and the canister rack" pos="0 -800 3430" look="0 250 3200" fov="72" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="-150 -100 8000" rot="0 0 157" />
+
+  <!-- ============================== Command deck cameras (deck floor z = 980) ============================== -->
+  <camera name="cmd-show-brainiac" comment="The command deck: Brainiac turns in his throne, fingers in the control slots, toward Superman stepping from the elevator; behind him the viewscreen shows Earth; the seeding tanks glow on the left, the canister rack stands on the right" pos="120 -640 1190" look="-40 300 1150" fov="62" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="SupermanAt" pos="{150 - SMX} {-380 - SMY} {CZ - SMZ}" />
+    <transform target="SupermanTilt" rot="90 0 0" />
+    <transform target="SupermanYaw" rot="0 0 {-163 - SMYAW}" />
     <use-pose instance="Superman" name="HandsOnHips" />
   </camera>
-  <camera name="cmd-spray" comment="Superman sprays the antidote into the open intake of the seeding tanks" pos="150 -420 3320" look="-650 0 3150" fov="64" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="-470 180 8000" rot="0 0 -90" />
-    <use-pose instance="Superman" name="Hold" />
-    <transform target="Spray" pos="0 0 20000" />
-    <transform target="CarriedSprayer" pos="0 0 20000" />
+  <camera name="cmd-spray" comment="Superman holds the antidote sprayer to the opened intake of a seeding tank and a green jet pours in; the purple brew pales; Brainiac jerks round in his throne" pos="-650 -150 1250" look="-300 420 1120" fov="60" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="SupermanAt" pos="{-350.7 - SMX} {350.7 - SMY} {CZ - SMZ}" />
+    <transform target="SupermanTilt" rot="90 0 0" />
+    <transform target="SupermanYaw" rot="0 0 {-135 - SMYAW}" />
+    <use-pose instance="Superman" name="HoldSprayer" />
+    <transform target="HeldSprayer" pos="{-18 * LOT} 0 {-PZ}" />
+    <transform target="Spray" pos="{-13 * LOT} 0 {-PZ}" />
+    <transform target="IntakeShut" pos="{24 * LOT} 0 {PZ}" />
+    <transform target="IntakeOpen" pos="{-12 * LOT} 0 {-PZ}" />
+    <transform target="Brew" pos="{25 * LOT} 0 {PZ}" />
+    <transform target="BrewPale" pos="{-11 * LOT} 0 {-PZ}" />
   </camera>
-  <camera name="cmd-essence" comment="Ending: Brainiac's skull cracks; a glowing knot of light escapes up through the dome" pos="0 -800 3430" look="0 250 3300" fov="72" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="160 -160 8000" rot="0 0 160" />
+  <camera name="cmd-essence" comment="Ending: one blow and Brainiac's skull cracks; a glowing knot of light, his mind, escapes up through the dome while Superman stands over the slumped machine" pos="250 -520 1060" look="0 120 1400" fov="70" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="SupermanAt" pos="{-150 - SMX} {-60 - SMY} {CZ - SMZ}" />
+    <transform target="SupermanTilt" rot="90 0 0" />
+    <transform target="SupermanYaw" rot="0 0 {140 - SMYAW}" />
     <use-pose instance="Superman" name="Point" />
-    <transform target="Brainiac2" rot="0 30 0" />
-    <transform target="Essence" pos="0 0 20000" />
+    <use-pose instance="Brainiac" name="Slumped" />
+    <transform target="Essence" pos="{-16 * LOT} 0 {-PZ}" />
   </camera>
-  <camera name="cmd-frozen" comment="Ending: Brainiac sits frozen, crusted purple with his own Bacteria; on the viewscreen purple clouds still drift over Earth" pos="0 -800 3430" look="0 250 3200" fov="72" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="160 -160 8000" rot="0 0 160" />
+  <camera name="cmd-frozen" comment="Ending: Brainiac sits frozen in his throne, crusted purple with his own Bacteria, the canister jammed in his cracked shell; on the viewscreen behind him purple clouds still drift over Earth" pos="280 -480 1220" look="-20 250 1190" fov="56" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="SupermanAt" pos="{210 - SMX} {-210 - SMY} {CZ - SMZ}" />
+    <transform target="SupermanTilt" rot="90 0 0" />
+    <transform target="SupermanYaw" rot="0 0 {-130 - SMYAW}" />
     <use-pose instance="Superman" name="HandsOnHips" />
-    <transform target="Crust" pos="0 0 20000" />
-    <transform target="PurpleEarth" pos="0 0 20000" />
+    <transform target="Crust" pos="{-15 * LOT} 0 {-PZ}" />
+    <transform target="PurpleEarth" pos="{-14 * LOT} 0 {-PZ}" />
+    <transform target="JammedCanister" pos="{-27 * LOT} 0 {-PZ}" />
   </camera>
-  <camera name="cmd-victory" comment="Ending: Brainiac frozen in his throne, the empty canister at Superman's feet, the viewscreen Earth clean and blue" pos="0 -800 3430" look="0 250 3200" fov="72" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="160 -160 8000" rot="0 0 160" />
+  <camera name="cmd-victory" comment="Ending: Brainiac frozen in his throne, crusted with his own Bacteria; the empty canister lies at Superman's feet; the tanks are pale and the viewscreen Earth is clean and blue" pos="-320 -560 1110" look="60 150 1220" fov="62" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="SupermanAt" pos="{190 - SMX} {-230 - SMY} {CZ - SMZ}" />
+    <transform target="SupermanTilt" rot="90 0 0" />
+    <transform target="SupermanYaw" rot="0 0 {-160 - SMYAW}" />
     <use-pose instance="Superman" name="HandsOnHips" />
-    <transform target="Crust" pos="0 0 20000" />
-    <transform target="Empty" pos="0 0 20000" />
+    <transform target="Crust" pos="{-15 * LOT} 0 {-PZ}" />
+    <transform target="EmptyCanister" pos="{-17 * LOT} 0 {-PZ}" />
+    <transform target="Brew" pos="{25 * LOT} 0 {PZ}" />
+    <transform target="BrewPale" pos="{-11 * LOT} 0 {-PZ}" />
   </camera>
 
-  <material id="lead" color="0.30 0.31 0.33" shininess="20" />
-  <material id="lead_dark" color="0.20 0.21 0.23" shininess="20" />
-  <material id="ship_hull" color="0.46 0.56 0.50" shininess="60" />
-  <material id="ship_rib" color="0.30 0.36 0.34" shininess="50" />
-  <material id="ship_dark" color="0.12 0.14 0.14" shininess="40" />
-  <material id="brain_net" color="0.62 0.30 0.72" shininess="90" />
-  <material id="drone" color="0.56 0.60 0.62" shininess="80" />
-  <material id="canister" color="0.70 0.72 0.74" shininess="90" />
-  <material id="gunmetal" color="0.14 0.14 0.16" shininess="60" />
-  <material id="screen" color="0.06 0.08 0.10" shininess="40" />
-  <material id="glass" color="0.50 0.62 0.70" shininess="90" />
-  <material id="bacteria" color="0.62 0.28 0.74" shininess="40" />
-  <material id="earth" color="0.20 0.42 0.74" shininess="40" />
-  <material id="land" color="0.30 0.56 0.30" shininess="10" />
+  <!-- ============================== Poses for this scene ============================== -->
+  <pose name="SetCanister">
+    <ik limb="right_arm" target="8 -427 165" bend="-150 -40" />
+    <ik limb="left_arm" offset="-4 -24 24" bend="150 -60" />
+    <joint target="head" rot="22 0 0" />
+  </pose>
+  <pose name="FloatCatch">
+    <ik limb="left_arm" target="72 50 234" bend="0 -90" />
+    <ik limb="right_arm" offset="-40 4 42" bend="0 -90" />
+    <ik limb="left_leg" offset="10 0 4" />
+    <ik limb="right_leg" offset="-8 0 10" />
+    <joint target="head" rot="-12 0 24" />
+  </pose>
+  <pose name="HoldSprayer">
+    <ik limb="left_arm" offset="-4 -40 44" bend="150 -60" />
+    <ik limb="right_arm" offset="4 -40 44" bend="-150 -60" />
+    <joint target="head" rot="8 0 0" />
+  </pose>
+  <pose name="Slumped">
+    <joint target="pelvis" pos="0 0 -44" />
+    <ik limb="left_leg" offset="0 -40 2" />
+    <ik limb="right_leg" offset="0 -40 2" />
+    <ik limb="left_arm" offset="6 -34 -16" bend="150 -30" />
+    <ik limb="right_arm" offset="-6 -34 -16" bend="-150 -30" />
+    <joint target="neck" rot="25 0 10" />
+    <joint target="head" rot="25 0 15" />
+  </pose>
 
-  <!-- The Red Sun Room. -->
-  <box pos="0 0 -10" size="1840 1840 20" material="lead_dark" />
-  <box pos="0 0 910" size="1840 1840 20" material="lead_dark" />
-  <box pos="0 920 450" size="1840 40 900" material="lead" />
-  <box pos="0 -920 450" size="1840 40 900" material="lead" />
-  <box pos="-920 0 450" size="40 1840 900" material="lead" />
-  <box pos="920 0 450" size="40 1840 900" material="lead" />
-  <box pos="0 898 200" size="1800 4 6" material="lead_dark"><array count="6" translation="0 0 120" /></box>
-  <box pos="-898 0 200" size="4 1800 6" material="lead_dark"><array count="6" translation="0 0 120" /></box>
-  <box pos="898 0 200" size="4 1800 6" material="lead_dark"><array count="6" translation="0 0 120" /></box>
-  <box pos="0 -898 200" size="1800 4 6" material="lead_dark"><array count="6" translation="0 0 120" /></box>
-  <!-- The generator, the globe and the light between them; and the same, burnt out. -->
-  <cylinder pos="0 0 30" rot="90 0 0" radius="160" height="60" material="ship_dark" />
-  <cylinder pos="0 0 64" rot="90 0 0" radius="120" height="8" material="ship_rib" />
-  <cylinder pos="0 0 880" rot="90 0 0" radius="60" height="60" material="ship_dark" />
-  <group name="RedOn">
-    <sphere pos="0 0 740" radius="150" color="1.0 0.16 0.08" unlit="1" castShadow="0" />
-    <light pos="0 0 560" color="1.0 0.22 0.14" intensity="1.6" radius="1600" castShadows="1" />
-    <cylinder pos="110 0 400" rot="90 0 0" radius="3" height="620" color="1.0 0.25 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="-110 0 400" rot="90 0 0" radius="3" height="620" color="1.0 0.25 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="0 110 400" rot="90 0 0" radius="3" height="620" color="1.0 0.25 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="0 -110 400" rot="90 0 0" radius="3" height="620" color="1.0 0.25 0.12" unlit="1" castShadow="0" />
+  <!-- ============================== Materials ============================== -->
+  <material id="sh_lead" color="0.36 0.38 0.42" shininess="24" />
+  <material id="sh_lead_dark" color="0.22 0.23 0.26" shininess="20" />
+  <material id="sh_deck" color="0.30 0.31 0.33" shininess="40" />
+  <material id="sh_hull" color="0.40 0.48 0.44" shininess="50" />
+  <material id="sh_rib" color="0.30 0.36 0.35" shininess="50" />
+  <material id="sh_dark" color="0.12 0.13 0.14" shininess="40" />
+  <material id="sh_trim" color="0.58 0.64 0.62" shininess="80" />
+  <material id="sh_glass" color="0.60 0.74 0.80" shininess="120" />
+  <material id="sh_net" color="0.46 0.24 0.58" shininess="70" />
+  <material id="gunmetal" color="0.15 0.15 0.17" shininess="60" />
+  <material id="bacteria" color="0.62 0.28 0.78" shininess="30" />
+  <material id="bacteria_light" color="0.78 0.48 0.90" shininess="30" />
+  <material id="bacteria_pale" color="0.80 0.76 0.84" shininess="30" />
+  <material id="dead_globe" color="0.26 0.10 0.08" shininess="60" />
+
+  <!-- The command dome's profile: an octagonal shell (lathed with 8 segments), inner then outer arc. -->
+  <let name="RI" value="CIN / cos(rad(22.5))" />
+  <let name="RO" value="(CIN + CWT) / cos(rad(22.5))" />
+  <let name="DHI" value="380" />
+  <let name="DHO" value="420" />
+  <shape id="dome" closed="0">
+    <v x="0" y="{DHI}" />
+    <v x="{RI * cos(rad(75))}" y="{DHI * sin(rad(75))}" />
+    <v x="{RI * cos(rad(60))}" y="{DHI * sin(rad(60))}" />
+    <v x="{RI * cos(rad(45))}" y="{DHI * sin(rad(45))}" />
+    <v x="{RI * cos(rad(30))}" y="{DHI * sin(rad(30))}" />
+    <v x="{RI * cos(rad(15))}" y="{DHI * sin(rad(15))}" />
+    <v x="{RI}" y="0" />
+    <v x="{RO}" y="0" />
+    <v x="{RO * cos(rad(15))}" y="{DHO * sin(rad(15))}" />
+    <v x="{RO * cos(rad(30))}" y="{DHO * sin(rad(30))}" />
+    <v x="{RO * cos(rad(45))}" y="{DHO * sin(rad(45))}" />
+    <v x="{RO * cos(rad(60))}" y="{DHO * sin(rad(60))}" />
+    <v x="{RO * cos(rad(75))}" y="{DHO * sin(rad(75))}" />
+    <v x="0" y="{DHO}" />
+  </shape>
+
+  <!-- ============================== The Red Sun Room (floor z = 0) ============================== -->
+  <group name="RedRoomShell">
+    <floor rot="90 0 0" width="{RS + 2 * WT}" depth="{RS + 2 * WT}" thickness="20" style="hexes" tileWidth="110" gap="2" material="sh_deck" colorVariation="0.10" seed="5" groutColor="0.06 0.06 0.07" />
+    <wall pos="0 {HALF + WT / 2} 0" rot="90 0 0" length="{RS + 2 * WT}" height="{RH}" thickness="{WT}" lowerHeight="240" lowerMaterial="sh_lead_dark" upperMaterial="sh_lead" />
+    <wall pos="0 {-HALF - WT / 2} 0" rot="90 0 180" length="{RS + 2 * WT}" height="{RH}" thickness="{WT}" lowerHeight="240" lowerMaterial="sh_lead_dark" upperMaterial="sh_lead" />
+    <wall pos="{HALF + WT / 2} 0 0" rot="90 0 -90" length="{RS}" height="{RH}" thickness="{WT}" lowerHeight="240" lowerMaterial="sh_lead_dark" upperMaterial="sh_lead" />
+    <!-- The west wall is the outer hull. -->
+    <wall pos="{-HALF - WT / 2} 0 0" rot="90 0 90" length="{RS}" height="{RH}" thickness="{WT}" lowerHeight="240" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
   </group>
-  <group name="RedOff" pos="0 0 -3000">
-    <sphere pos="0 0 740" radius="150" color="0.24 0.08 0.06" />
+  <box name="RedCeiling" pos="0 0 {RH + CEIL / 2}" size="{RS + 2 * WT} {RS + 2 * WT} {CEIL}" material="sh_lead_dark" />
+  <!-- Wall ribs: lead pilasters floor to ceiling, and the hull's heavier frames on the west wall. -->
+  <group name="RedRibs">
+    <box pos="-140 {HALF - 10} {RH / 2}" size="30 20 {RH}" material="sh_lead_dark" />
+    <box pos="460 {HALF - 10} {RH / 2}" size="30 20 {RH}" material="sh_lead_dark" />
+    <box pos="740 {HALF - 10} {RH / 2}" size="30 20 {RH}" material="sh_lead_dark" />
+    <box pos="60 {-HALF + 10} {RH / 2}" size="30 20 {RH}" material="sh_lead_dark" />
+    <box pos="330 {-HALF + 10} {RH / 2}" size="30 20 {RH}" material="sh_lead_dark" />
+    <box pos="{HALF - 10} -260 {RH / 2}" size="20 30 {RH}" material="sh_lead_dark" />
+    <box pos="{HALF - 10} 620 {RH / 2}" size="20 30 {RH}" material="sh_lead_dark" />
   </group>
-  <group name="Emergency" pos="0 0 -3000">
-    <light pos="300 -500 850" color="0.70 0.80 1.0" intensity="0.7" radius="1500" castShadows="1" />
+  <group name="HullFrames">
+    <box pos="{-HALF + 15} -660 {RH / 2}" size="30 44 {RH}" material="sh_rib" />
+    <box pos="{-HALF + 15} -330 {RH / 2}" size="30 44 {RH}" material="sh_rib" />
+    <box pos="{-HALF + 15} 20 {RH / 2}" size="30 44 {RH}" material="sh_rib" />
+    <box pos="{-HALF + 15} 370 {RH / 2}" size="30 44 {RH}" material="sh_rib" />
   </group>
-  <!-- The restraint bed under the light, with its open straps. -->
-  <box pos="-20 0 35" size="230 100 70" material="ship_rib" />
-  <box pos="-20 -55 72" size="12 12 4" material="gunmetal"><array count="3" translation="80 0 0" /></box>
+
+  <!-- The Red Solar Generator, the globe's ceiling mount, and the four cannon housings. -->
+  <prefab name="Generator" source="ship/generator" />
+  <!-- The globe's ceiling mount and cage: three meridian rings and an equator band round the globe. -->
+  <group name="GlobeCage">
+    <cone pos="0 0 {RH - 25}" rot="90 0 0" radius="40" radiusTop="110" height="50" material="sh_dark" />
+    <torus pos="0 0 {GZ}" majorRadius="{GR + 8}" minorRadius="4" majorSegments="48" material="sh_trim" />
+    <torus pos="0 0 {GZ}" rot="0 0 60" majorRadius="{GR + 8}" minorRadius="4" majorSegments="48" material="sh_trim" />
+    <torus pos="0 0 {GZ}" rot="0 0 120" majorRadius="{GR + 8}" minorRadius="4" majorSegments="48" material="sh_trim" />
+    <torus pos="0 0 {GZ}" rot="90 0 0" majorRadius="{GR + 9}" minorRadius="6" majorSegments="48" material="sh_dark" />
+  </group>
+  <prefab source="ship/cannon_housing" pos="-360 -360 {RH}" />
+  <prefab source="ship/cannon_housing" pos="360 -360 {RH}" />
+  <prefab source="ship/cannon_housing" pos="-360 360 {RH}" />
+  <prefab source="ship/cannon_housing" pos="360 360 {RH}" />
+
   <!-- Round the walls. -->
-  <box name="Relay" pos="-750 750 250" size="260 260 500" material="ship_dark" />
-  <box pos="-750 618 260" size="200 4 200" color="0.40 1.0 0.80" unlit="1" castShadow="0" />
-  <box name="Projector" pos="700 720 200" size="360 300 400" material="ship_rib" />
-  <box pos="898 300 420" size="4 500 300" material="screen" />
-  <box pos="0 860 150" size="600 100 300" material="ship_dark" />
-  <box pos="0 808 150" size="520 4 60" material="gunmetal"><array count="3" translation="0 0 70" /></box>
-  <box name="Accelerator" pos="250 -560 120" rot="0 0 -30" size="800 120 120" material="ship_rib" />
-  <box pos="-90 -480 120" rot="0 0 60" size="300 120 120" material="ship_rib" />
-  <!-- The kryptonite vault in the SW alcove: lead walls and a lead door facing east. -->
-  <box pos="-560 -720 300" size="20 380 600" material="lead_dark" />
-  <box pos="-730 -550 300" size="360 20 600" material="lead_dark" />
-  <group name="VaultDoor"><box pos="-560 -720 250" size="24 240 500" material="lead" /><box pos="-545 -720 250" size="10 30 80" material="gunmetal" /></group>
-  <group name="VaultOpen" pos="0 0 -3000">
-    <box pos="-450 -620 250" rot="0 0 70" size="24 240 500" material="lead" />
-    <prism pos="-760 -760 60" rot="90 0 0" radius="40" height="120" sides="6" color="0.30 1.0 0.40" unlit="1" castShadow="0" />
-    <prism pos="-700 -800 50" rot="80 0 30" radius="28" height="90" sides="6" color="0.30 1.0 0.40" unlit="1" castShadow="0" />
-    <light pos="-600 -720 200" color="0.40 1.0 0.40" intensity="1.4" radius="1200" castShadows="0" />
-  </group>
-  <!-- The elevator tube in the SE corner. -->
-  <cylinder pos="720 -720 450" rot="90 0 0" radius="130" height="900" tube="8" material="glass" />
-  <box pos="720 -588 150" size="140 6 300" material="ship_dark" />
-  <!-- The demonstration canister on its stand by the generator. -->
-  <box pos="380 260 50" size="70 70 100" material="ship_dark" />
-  <group name="StandCanister"><prefab source="props/canister" pos="380 260 100" /></group>
-  <!-- Drones round Superman; one within reach, one in his hand; drones crashed after the gas. -->
-  <group name="Drones">
-    <prefab source="props/drone" pos="-180 -120 240" rot="0 0 30" />
-    <prefab source="props/drone" pos="160 -140 260" rot="0 0 -40" />
-    <prefab source="props/drone" pos="220 120 320" rot="0 0 120" />
-    <prefab source="props/drone" pos="-240 160 200" rot="0 0 200" />
-    <prefab source="props/drone" pos="40 -220 330" rot="0 0 10" />
-    <prefab source="props/drone" pos="-80 220 300" rot="0 0 160" />
-    <group name="NearDrone"><prefab source="props/drone" pos="10 -130 165" rot="0 0 -20" /></group>
-  </group>
-  <group name="HeldDrone" pos="0 0 -3000"><prefab source="props/drone" pos="18 -80 172" rot="0 0 -20" /></group>
-  <group name="Crashed" pos="0 0 -3000">
-    <prefab source="props/drone" pos="-200 -300 3" rot="0 8 30" />
-    <prefab source="props/drone" pos="260 -200 3" rot="0 -6 80" />
-    <prefab source="props/drone" pos="120 300 3" rot="0 4 140" />
-    <prefab source="props/drone" pos="-320 120 3" rot="0 0 200" />
-    <prefab source="props/canister" pos="300 160 14" rot="0 90 30" />
-  </group>
-  <group name="Spew" pos="0 0 -3000">
-    <sphere pos="340 200 180" radius="120" scale="1.4 1 0.8" material="bacteria" castShadow="0" />
-    <sphere pos="200 100 320" radius="160" scale="1.6 1.2 0.6" material="bacteria" castShadow="0" />
-    <sphere pos="0 260 520" radius="200" scale="1.8 1.2 0.5" material="bacteria" castShadow="0" />
-  </group>
-  <group name="Cannons" pos="0 0 -3000">
-    <cylinder pos="-400 -400 800" rot="45 0 -45" radius="30" height="200" material="ship_dark" />
-    <cylinder pos="400 -400 800" rot="45 0 45" radius="30" height="200" material="ship_dark" />
-    <cylinder pos="-400 400 800" rot="-45 0 45" radius="30" height="200" material="ship_dark" />
-    <cylinder pos="400 400 800" rot="-45 0 -45" radius="30" height="200" material="ship_dark" />
-    <cylinder pos="-200 -200 480" rot="45 0 -45" radius="8" height="520" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
-    <cylinder pos="200 -200 480" rot="45 0 45" radius="8" height="520" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
-    <cylinder pos="-200 200 480" rot="-45 0 45" radius="8" height="520" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
-    <cylinder pos="200 200 480" rot="-45 0 -45" radius="8" height="520" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
-  </group>
-  <group name="Brainiac" pos="0 0 -3000">
-    <prefab source="characters/brainiac" pos="240 -260 0" rot="0 0 -50" pose="Point" />
-    <prefab source="props/canister" pos="196 -318 104" rot="0 0 -50" />
+  <prefab name="DroneDock" source="ship/drone_dock" pos="120 {HALF} 180" />
+  <prefab name="Relay" source="ship/relay" pos="-315 {HALF - 62} 0" />
+  <prefab source="ship/console" pos="-200 {-HALF + 31} 0" rot="0 0 180" />
+  <prefab name="WallScreen" source="ship/screen" pos="{HALF} 200 320" rot="0 0 -90" />
+  <prefab source="ship/console" pos="{HALF - 31} 80 0" rot="0 0 -90" />
+  <prefab source="ship/console" pos="{HALF - 31} 320 0" rot="0 0 -90" />
+  <prefab name="VaultChamber" source="ship/vault" pos="-720 720 0" rot="0 0 90" />
+  <prefab name="ElevatorCage" source="ship/elevator" pos="{EX} {EY} 0" rot="0 0 -135" />
+  <prefab source="ship/wall_lamp" pos="-30 {HALF} 720" />
+  <prefab source="ship/wall_lamp" pos="{HALF} -420 720" rot="0 0 -90" />
+  <prefab source="ship/wall_lamp" pos="0 {-HALF} 720" rot="0 0 180" />
+  <prefab source="ship/wall_lamp" pos="{-HALF} -160 720" rot="0 0 90" />
+  <!-- Practical fill: the relay's read-outs and the east viewscreen. -->
+  <light pos="-315 740 420" color="0.40 0.95 0.90" intensity="0.6" radius="900" castShadows="1" />
+  <light pos="{HALF - 120} 200 470" color="0.45 0.65 1.0" intensity="0.35" radius="700" castShadows="1" />
+
+  <!-- The canister stand by the generator; the canister's nozzle points south-south-west at the console. -->
+  <prefab name="Stand" source="ship/canister_stand" pos="8 -427 0" />
+  <group name="StandCanister">
+    <prefab source="props/canister" pos="8 -427 70" rot="0 0 -26" />
   </group>
 
-  <!-- The command level, 30 m above. -->
-  <group name="Command" pos="0 0 3000">
-    <cylinder pos="0 0 -10" rot="90 0 0" radius="920" height="20" material="ship_dark" />
-    <cylinder pos="0 0 350" rot="90 0 0" radius="920" height="700" tube="30" material="ship_rib" castShadow="0" />
-    <sphere pos="0 0 700" radius="920" scale="1 1 0.35" material="brain_net" castShadow="0" />
-    <box pos="0 870 380" size="1100 30 520" material="screen" />
-    <box pos="0 852 380" size="1040 4 470" color="0.04 0.06 0.10" unlit="1" castShadow="0" />
-    <prefab source="props/throne" pos="0 260 0" />
-    <cylinder pos="-760 400 250" rot="90 0 0" radius="110" height="500" material="ship_rib" />
-    <cylinder pos="-760 100 250" rot="90 0 0" radius="110" height="500" material="ship_rib" />
-    <box pos="-640 260 150" size="60 380 40" material="gunmetal" />
-    <box pos="-600 260 150" size="20 60 60" color="0.70 0.30 0.86" />
-    <box pos="780 200 150" size="120 500 20" material="ship_dark"><array count="2" translation="0 0 90" /></box>
-    <prefab source="props/canister" pos="780 40 160" />
-    <prefab source="props/canister" pos="780 200 160" />
-    <prefab source="props/canister" pos="780 360 160" />
-    <prefab source="props/canister" pos="780 120 250" />
-    <prefab source="props/canister" pos="780 280 250" />
-    <cylinder pos="0 -860 300" rot="90 0 0" radius="130" height="600" tube="8" material="glass" />
-    <box pos="-700 650 600" rot="0 0 40" size="80 120 60" material="ship_dark" />
-    <box pos="700 650 600" rot="0 0 -40" size="80 120 60" material="ship_dark" />
-    <light pos="250 -250 600" color="0.80 0.90 1.0" intensity="1.4" radius="1800" castShadows="1" />
-    <light pos="0 820 380" color="0.40 0.60 1.0" intensity="0.4" radius="900" castShadows="0" />
-    <!-- Earth on the viewscreen; the purple version for the seeding that went on. -->
-    <sphere pos="0 860 380" radius="190" scale="1 0.08 1" material="earth" unlit="1" castShadow="0" />
-    <sphere pos="-40 852 420" radius="90" scale="1.3 0.06 1" material="land" unlit="1" castShadow="0" />
-    <prefab source="characters/brainiac" name="Brainiac2" pos="0 255 50" pose="Throne" />
+  <!-- The red sun: lit (default), burnt out, guttering. -->
+  <group name="RedOn">
+    <sphere pos="0 0 {GZ}" radius="{GR}" rings="24" slices="36" color="1.0 0.18 0.08" unlit="1" castShadow="0" />
+    <light pos="0 0 {GZ}" color="1.0 0.22 0.12" intensity="2.2" radius="1500" castShadows="1" />
+    <cylinder pos="0 0 62.5" rot="90 0 0" radius="46" height="1" sides="32" color="1.0 0.30 0.14" unlit="1" castShadow="0" />
+    <torus pos="0 0 64.1" rot="90 0 0" majorRadius="100" minorRadius="2" majorSegments="48" color="1.0 0.24 0.10" unlit="1" castShadow="0" />
+    <cylinder pos="{113.1} {113.1} {(69 + GZ - 98.6) / 2}" rot="90 0 0" radius="1.6" height="{GZ - 98.6 - 69}" color="1.0 0.30 0.14" unlit="1" castShadow="0" />
+    <cylinder pos="{-113.1} {113.1} {(69 + GZ - 98.6) / 2}" rot="90 0 0" radius="1.6" height="{GZ - 98.6 - 69}" color="1.0 0.30 0.14" unlit="1" castShadow="0" />
+    <cylinder pos="{-113.1} {-113.1} {(69 + GZ - 98.6) / 2}" rot="90 0 0" radius="1.6" height="{GZ - 98.6 - 69}" color="1.0 0.30 0.14" unlit="1" castShadow="0" />
+    <cylinder pos="{113.1} {-113.1} {(69 + GZ - 98.6) / 2}" rot="90 0 0" radius="1.6" height="{GZ - 98.6 - 69}" color="1.0 0.30 0.14" unlit="1" castShadow="0" />
   </group>
-  <group name="Spray" pos="0 0 -20000">
-    <cone pos="-600 240 3150" rot="0 0 -90" radius="30" radiusTop="6" height="70" color="0.40 0.90 0.50" unlit="1" castShadow="0" />
+  <group name="RedOff" pos="{1 * LOT} 0 {PZ}">
+    <sphere pos="0 0 {GZ}" radius="{GR}" rings="24" slices="36" material="dead_globe" />
   </group>
-  <group name="CarriedSprayer" pos="0 0 -20000"><prefab source="props/sprayer" pos="-440 240 3000" rot="0 0 180" /></group>
-  <group name="Essence" pos="0 0 -20000">
-    <sphere pos="0 250 3330" radius="50" color="0.90 0.70 1.0" unlit="1" castShadow="0" />
-    <sphere pos="20 240 3440" radius="30" color="0.90 0.70 1.0" unlit="1" castShadow="0" />
-    <cylinder pos="10 245 3420" rot="90 0 0" radius="6" height="240" color="0.90 0.70 1.0" unlit="1" castShadow="0" />
+  <group name="RedDim" pos="{2 * LOT} 0 {PZ}">
+    <sphere pos="0 0 {GZ}" radius="{GR}" rings="24" slices="36" color="0.55 0.10 0.05" unlit="1" castShadow="0" />
+    <light pos="0 0 {GZ}" color="1.0 0.30 0.16" intensity="0.8" radius="1100" castShadows="1" />
   </group>
-  <group name="Crust" pos="0 0 -20000">
-    <sphere pos="0 230 3130" radius="38" scale="1 1 1.6" material="bacteria" castShadow="0" />
-    <sphere pos="0 240 3240" radius="20" material="bacteria" castShadow="0" />
-    <sphere pos="-40 200 3080" radius="16" material="bacteria" castShadow="0" />
-    <sphere pos="40 200 3080" radius="16" material="bacteria" castShadow="0" />
+  <!-- Emergency light: the four wall lamps lit. -->
+  <group name="Emergency" pos="{3 * LOT} 0 {PZ}">
+    <box pos="-30 {HALF - 16.5} 720" size="44 1 14" color="0.85 0.92 1.0" unlit="1" castShadow="0" />
+    <box pos="{HALF - 16.5} -420 720" size="1 44 14" color="0.85 0.92 1.0" unlit="1" castShadow="0" />
+    <box pos="0 {-HALF + 16.5} 720" size="44 1 14" color="0.85 0.92 1.0" unlit="1" castShadow="0" />
+    <box pos="{-HALF + 16.5} -160 720" size="1 44 14" color="0.85 0.92 1.0" unlit="1" castShadow="0" />
+    <light pos="-30 {HALF - 110} 660" color="0.80 0.88 1.0" intensity="0.6" radius="1300" castShadows="1" />
+    <light pos="{HALF - 110} -420 660" color="0.80 0.88 1.0" intensity="0.6" radius="1300" castShadows="1" />
+    <light pos="0 {-HALF + 110} 660" color="0.80 0.88 1.0" intensity="0.5" radius="1300" castShadows="1" />
   </group>
-  <group name="PurpleEarth" pos="0 0 -20000">
-    <sphere pos="60 848 3400" radius="120" scale="1.4 0.05 0.8" material="bacteria" unlit="1" castShadow="0" />
-  </group>
-  <group name="Empty" pos="0 0 -20000"><prefab source="props/canister" pos="160 -230 3014" rot="0 90 60" /></group>
 
-  <prefab source="characters/superman" name="Superman" pos="0 0 -5000" />
+  <!-- Earth on the east viewscreen (display face at x = HALF - 17). -->
+  <group name="Earth">
+    <sphere pos="{HALF - 18} 200 470" radius="80" scale="0.01 1 1" color="0.20 0.45 0.85" unlit="1" castShadow="0" />
+    <sphere pos="{HALF - 19.5} 170 500" radius="40" scale="0.01 1.3 0.9" color="0.32 0.62 0.34" unlit="1" castShadow="0" />
+  </group>
+  <group name="EarthSmall" pos="{19 * LOT} 0 {PZ}">
+    <sphere pos="{HALF - 18} 230 470" radius="26" scale="0.01 1 1" color="0.20 0.45 0.85" unlit="1" castShadow="0" />
+  </group>
 
-  <!-- Anchors. -->
-  <group name="Drone" pos="10 -130 165" />
-  <group name="Globe" pos="0 0 740" />
-  <group name="Stand-Canister" pos="380 260 200" />
-  <group name="Vault" pos="-560 -720 250" />
-  <group name="Elevator" pos="720 -620 160" />
-  <group name="Hull-Wall" pos="-900 200 300" />
-  <group name="Brainiac-Throne" pos="0 255 3170" />
-  <group name="Canister" pos="780 200 3200" />
-  <group name="Seeding-Tanks" pos="-680 260 3150" />
+  <!-- Drones hovering round Superman on their jets (deliberately airborne), one within reach of his
+       right hand; the one he holds; the ones that fall and lie broken after the gas. -->
+  <group name="Drones" sanityIgnore="1">
+    <prefab source="props/drone" pos="-160 -170 300" rot="0 0 20" />
+    <prefab source="props/drone" pos="120 -150 330" rot="8 0 -30" />
+    <prefab source="props/drone" pos="210 110 290" rot="0 -6 130" />
+    <prefab source="props/drone" pos="-230 120 250" rot="0 0 210" />
+    <prefab source="props/drone" pos="40 -230 400" rot="-6 0 10" />
+    <prefab source="props/drone" pos="-60 190 380" rot="0 8 170" />
+  </group>
+  <group name="NearDrone" sanityIgnore="1">
+    <prefab source="props/drone" pos="80 46 248" rot="0 0 70" />
+  </group>
+  <group name="HeldDrone" pos="{5 * LOT} 0 {PZ}" sanityIgnore="1">
+    <prefab source="props/drone" pos="80 50 238" rot="25 0 70" />
+  </group>
+  <group name="Falling" pos="{6 * LOT} 0 {PZ}" sanityIgnore="1">
+    <prefab source="props/drone" pos="-150 -130 160" rot="40 20 20" />
+    <prefab source="props/drone" pos="200 80 120" rot="-30 50 130" />
+    <prefab source="props/drone" pos="60 -200 260" rot="70 0 10" />
+  </group>
+  <group name="Crashed" pos="{26 * LOT} 0 {PZ}">
+    <prefab source="props/drone" pos="-210 -300 3.2" rot="0 0 30" />
+    <prefab source="props/drone" pos="300 -180 3.2" rot="0 0 80" />
+    <prefab source="props/drone" pos="-340 160 3.2" rot="0 0 200" />
+    <prefab source="props/drone" pos="150 420 3.2" rot="0 0 140" />
+  </group>
+
+  <!-- The purple gush from the nozzle into the drone bank and the east consoles, and the screens'
+       flashing nonsense. -->
+  <group name="Spew" pos="{7 * LOT} 0 {PZ}">
+    <group name="SpewCloud">
+      <sphere pos="-9.1 -462.1 150.0" radius="18.0" material="bacteria" castShadow="0" />
+      <sphere pos="-28.4 -501.6 166.0" radius="40.0" material="bacteria_light" castShadow="0" />
+      <sphere pos="-6.4 -491.6 176.0" radius="24.8" material="bacteria" castShadow="0" />
+      <sphere pos="-48.4 -489.6 160.0" radius="23.2" material="bacteria_light" castShadow="0" />
+      <sphere pos="-24.4 -519.6 180.0" radius="22.0" material="bacteria" castShadow="0" />
+      <sphere pos="-66.9 -580.8 196.0" radius="70.0" material="bacteria_light" castShadow="0" />
+      <sphere pos="-28.4 -563.2 213.5" radius="43.4" material="bacteria" castShadow="0" />
+      <sphere pos="-101.9 -559.8 185.5" radius="40.6" material="bacteria_light" castShadow="0" />
+      <sphere pos="-59.9 -612.2 220.5" radius="38.5" material="bacteria" castShadow="0" />
+      <sphere pos="-106.3 -661.7 236.0" radius="90.0" material="bacteria_light" castShadow="0" />
+      <sphere pos="-56.8 -639.2 258.5" radius="55.8" material="bacteria" castShadow="0" />
+      <sphere pos="-151.3 -634.7 222.5" radius="52.2" material="bacteria_light" castShadow="0" />
+      <sphere pos="-97.3 -702.2 267.5" radius="49.5" material="bacteria" castShadow="0" />
+      <sphere pos="-132.6 -715.6 280.0" radius="95.0" material="bacteria_light" castShadow="0" />
+      <sphere pos="-80.3 -691.8 303.8" radius="58.9" material="bacteria" castShadow="0" />
+      <sphere pos="-180.1 -687.1 265.8" radius="55.1" material="bacteria_light" castShadow="0" />
+      <sphere pos="-123.1 -758.3 313.2" radius="52.3" material="bacteria" castShadow="0" />
+    </group>
+    <light pos="-100 -640 330" color="0.70 0.35 0.95" intensity="0.6" radius="700" castShadows="1" />
+  </group>
+  <group name="Glitch" pos="{8 * LOT} 0 {PZ}">
+    <box pos="-188 {-HALF + 31.15} 92.6" rot="25 0 180" size="70 40 1" color="1.0 0.40 0.90" unlit="1" castShadow="0" />
+    <box pos="{HALF - 18} 140 400" size="1 180 60" color="1.0 0.40 0.90" unlit="1" castShadow="0" />
+    <box pos="{HALF - 18} 280 520" size="1 120 40" color="0.95 0.95 1.0" unlit="1" castShadow="0" />
+    <box pos="-385 {HALF - 119.6} 420" size="66 1 50" color="1.0 0.40 0.90" unlit="1" castShadow="0" />
+    <box pos="-245 {HALF - 119.6} 420" size="66 1 50" color="0.95 0.95 1.0" unlit="1" castShadow="0" />
+    <light pos="{HALF - 100} 200 420" color="0.95 0.60 1.0" intensity="0.6" radius="800" castShadows="1" />
+  </group>
+
+  <!-- The vault's lead door: in its doorway, or torn off and thrown down on its back. -->
+  <group name="VaultDoor">
+    <prefab source="ship/vault_door" pos="-555 720 0" rot="0 0 90" />
+  </group>
+  <group name="VaultOpen" pos="{9 * LOT} 0 {PZ}">
+    <prefab source="ship/vault_door" pos="-440 400 12" rot="-90 0 -75" />
+    <light pos="-470 720 140" color="0.40 1.0 0.40" intensity="1.3" radius="900" castShadows="1" />
+  </group>
+
+  <!-- The four cannons dropped and firing at the floating Superman (body centre at 0 0 220). -->
+  <let name="AIMZ" value="220" />
+  <let name="CANZ" value="RH - 51.2 - 40" />
+  <let name="CP" value="deg(atan2(CANZ - AIMZ, 360 * sqrt(2)))" />
+  <let name="BD" value="sqrt(2 * 360 * 360 + (CANZ - AIMZ) * (CANZ - AIMZ))" />
+  <let name="BLEN" value="BD - 194 - 25" />
+  <let name="BF" value="(194 + BLEN / 2) / BD" />
+  <group name="CannonsOut" pos="{10 * LOT} 0 {PZ}">
+    <prefab source="ship/cannon" pos="-360 -360 {CANZ}" rot="{CP} 0 {deg(atan2(1 * 360, -1 * 360))}" />
+    <prefab source="ship/cannon" pos="360 -360 {CANZ}" rot="{CP} 0 {deg(atan2(-1 * 360, -1 * 360))}" />
+    <prefab source="ship/cannon" pos="-360 360 {CANZ}" rot="{CP} 0 {deg(atan2(1 * 360, 1 * 360))}" />
+    <prefab source="ship/cannon" pos="360 360 {CANZ}" rot="{CP} 0 {deg(atan2(-1 * 360, 1 * 360))}" />
+    <!-- Beams from each muzzle (194 cm out along the barrel) to 25 cm short of the aim point. -->
+    <cylinder pos="{-1 * 360 * (1 - BF)} {-1 * 360 * (1 - BF)} {CANZ + (AIMZ - CANZ) * BF}" rot="{CP} 0 {deg(atan2(1 * 360, -1 * 360))}" radius="7" height="{BLEN}" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
+    <cylinder pos="{1 * 360 * (1 - BF)} {-1 * 360 * (1 - BF)} {CANZ + (AIMZ - CANZ) * BF}" rot="{CP} 0 {deg(atan2(-1 * 360, -1 * 360))}" radius="7" height="{BLEN}" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
+    <cylinder pos="{-1 * 360 * (1 - BF)} {1 * 360 * (1 - BF)} {CANZ + (AIMZ - CANZ) * BF}" rot="{CP} 0 {deg(atan2(1 * 360, 1 * 360))}" radius="7" height="{BLEN}" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
+    <cylinder pos="{1 * 360 * (1 - BF)} {1 * 360 * (1 - BF)} {CANZ + (AIMZ - CANZ) * BF}" rot="{CP} 0 {deg(atan2(-1 * 360, 1 * 360))}" radius="7" height="{BLEN}" color="0.95 0.97 1.0" unlit="1" castShadow="0" />
+    <light pos="0 0 {AIMZ + 80}" color="0.92 0.95 1.0" intensity="1.4" radius="900" castShadows="1" />
+  </group>
+
+  <!-- The Red Sun Room's anchors (literal numbers: the book engine reads them without expressions). -->
+  <group name="Drone" pos="80 46 248" />
+  <group name="Globe" pos="0 0 700" />
+  <group name="Stand-Canister" pos="8 -427 110" />
+  <group name="Vault" pos="-540 720 130" />
+  <group name="Elevator" pos="510 -510 160" />
+  <group name="Hull-Wall" pos="-898 -160 380" />
+
+  <!-- ============================== The command deck (floor z = CZ) ============================== -->
+  <group name="CommandShell" pos="0 0 {CZ}">
+    <floor rot="90 0 0" width="{RS + 2 * WT}" depth="{RS + 2 * WT}" thickness="{FT}" style="squares" tileWidth="120" gap="3" material="sh_rib" colorVariation="0.08" seed="9" groutColor="0.30 0.70 0.62" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(0))} {(CIN + CWT / 2) * sin(rad(0))} 0" rot="90 0 -90" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(45))} {(CIN + CWT / 2) * sin(rad(45))} 0" rot="90 0 -45" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(90))} {(CIN + CWT / 2) * sin(rad(90))} 0" rot="90 0 0" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(135))} {(CIN + CWT / 2) * sin(rad(135))} 0" rot="90 0 45" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(180))} {(CIN + CWT / 2) * sin(rad(180))} 0" rot="90 0 90" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(225))} {(CIN + CWT / 2) * sin(rad(225))} 0" rot="90 0 135" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(270))} {(CIN + CWT / 2) * sin(rad(270))} 0" rot="90 0 180" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+    <wall pos="{(CIN + CWT / 2) * cos(rad(315))} {(CIN + CWT / 2) * sin(rad(315))} 0" rot="90 0 225" length="{2 * (CIN + CWT) * OCT}" height="{CWH}" thickness="{CWT}" lowerHeight="120" lowerMaterial="sh_rib" upperMaterial="sh_hull" />
+  </group>
+  <lathe name="Dome" shape="dome" segments="8" pos="0 0 {CZ + CWH}" rot="90 0 22.5" material="sh_net" />
+  <!-- The Brain-Net core glowing at the dome's apex. -->
+  <sphere name="NetCore" pos="0 0 {CZ + CWH + DHI - 36}" radius="36" color="0.80 0.50 1.0" unlit="1" castShadow="0" />
+  <light pos="0 0 {CZ + CWH + DHI - 90}" color="0.75 0.50 1.0" intensity="0.5" radius="900" castShadows="1" />
+
+  <!-- The throne on its dais, turned from the viewscreen toward the elevator. -->
+  <cylinder name="ThroneDais" pos="{TX} {TY} {CZ + DAIS / 2}" rot="90 0 0" radius="170" height="{DAIS}" sides="8" material="sh_trim" />
+  <prefab name="Throne" source="props/throne" pos="{TX} {TY} {CZ + DAIS}" rot="0 0 {BRYAW}" />
+
+  <!-- The great viewscreen over the north consoles; two more consoles on the east wall and the
+       deck's computer relay on the west wall. -->
+  <prefab name="Viewscreen" source="ship/screen" pos="0 {CIN} {CZ + 140}" scale="1.3 1 1.3" />
+  <light pos="0 {CIN - 160} {CZ + 330}" color="0.45 0.65 1.0" intensity="0.7" radius="1000" castShadows="1" />
+  <prefab source="ship/console" pos="-230 {CIN - 31} {CZ}" />
+  <prefab source="ship/console" pos="0 {CIN - 31} {CZ}" />
+  <prefab source="ship/console" pos="230 {CIN - 31} {CZ}" />
+  <prefab source="ship/console" pos="{CIN - 31} -150 {CZ}" rot="0 0 -90" />
+  <prefab source="ship/console" pos="{CIN - 31} 150 {CZ}" rot="0 0 -90" />
+  <prefab name="DeckRelay" source="ship/relay" pos="{-CIN + 62 * 0.85} 0 {CZ}" rot="0 0 90" scale="0.85 0.85 0.85" />
+  <group name="DeckEarth">
+    <sphere pos="0 {CIN - 22} {CZ + 140 + 195}" radius="130" scale="1 0.01 1" color="0.20 0.45 0.85" unlit="1" castShadow="0" />
+    <sphere pos="-40 {CIN - 24.4} {CZ + 140 + 230}" radius="60" scale="1.3 0.01 0.9" color="0.32 0.62 0.34" unlit="1" castShadow="0" />
+  </group>
+  <group name="PurpleEarth" pos="{14 * LOT} 0 {PZ}">
+    <sphere pos="30 {CIN - 26} {CZ + 140 + 210}" radius="90" scale="1.5 0.01 0.7" color="0.70 0.32 0.86" unlit="1" castShadow="0" />
+    <sphere pos="-60 {CIN - 27.5} {CZ + 140 + 160}" radius="60" scale="1.4 0.01 0.6" color="0.62 0.26 0.80" unlit="1" castShadow="0" />
+  </group>
+
+  <!-- The seeding bay on the north-west wall. Local frame: the wall face at y = 0, the deck toward -y.
+       Three tanks with their outlet stubs into the wall; the Bacteria inside (purple, or pale once the
+       antidote is in); the middle tank's intake cap, shut or lifted off onto its flange; and the
+       cmd-spray moment, measured from the intake mouth at local (0, -214, 140): Superman stands at
+       y = -364 holding the sprayer (base at -330, valve at -260, axis 150 high) and the jet crosses to the mouth. -->
+  <group name="SeedingBay" pos="{CIN * cos(rad(135))} {CIN * sin(rad(135))} {CZ}" rot="0 0 45">
+    <prefab source="ship/seeding_tank" pos="-230 -108 0" />
+    <prefab name="MidTank" source="ship/seeding_tank" pos="0 -108 0" />
+    <prefab source="ship/seeding_tank" pos="230 -108 0" />
+    <light pos="0 -320 220" color="0.70 0.40 1.0" intensity="0.6" radius="800" castShadows="1" />
+    <group name="Brew">
+      <cylinder pos="-230 -108 180" rot="90 0 0" radius="59" height="300" sides="32" color="0.60 0.26 0.84" unlit="1" castShadow="0" />
+      <cylinder pos="0 -108 180" rot="90 0 0" radius="59" height="300" sides="32" color="0.60 0.26 0.84" unlit="1" castShadow="0" />
+      <cylinder pos="230 -108 180" rot="90 0 0" radius="59" height="300" sides="32" color="0.60 0.26 0.84" unlit="1" castShadow="0" />
+    </group>
+    <group name="BrewPale" pos="{11 * LOT} 0 {PZ}">
+      <cylinder pos="-230 -108 180" rot="90 0 0" radius="59" height="300" sides="32" material="bacteria_pale" />
+      <cylinder pos="0 -108 180" rot="90 0 0" radius="59" height="300" sides="32" material="bacteria_pale" />
+      <cylinder pos="230 -108 180" rot="90 0 0" radius="59" height="300" sides="32" material="bacteria_pale" />
+    </group>
+    <group name="IntakeShut">
+      <cylinder pos="0 -217 140" radius="17" height="4" material="sh_trim" />
+    </group>
+    <group name="IntakeOpen" pos="{12 * LOT} 0 {PZ}">
+      <cylinder pos="0 -200 160" rot="90 0 0" radius="17" height="4" material="sh_trim" />
+    </group>
+    <group name="HeldSprayer" pos="{18 * LOT} 0 {PZ}">
+      <prefab source="props/sprayer" pos="0 -330 150" rot="90 0 180" />
+    </group>
+    <group name="Spray" pos="{13 * LOT} 0 {PZ}">
+      <cone pos="0 -237 145" rot="-12 0 0" radius="3" radiusTop="12" height="40" color="0.45 1.0 0.55" unlit="1" castShadow="0" />
+      <light pos="0 -250 170" color="0.45 1.0 0.55" intensity="0.5" radius="400" castShadows="1" />
+    </group>
+  </group>
+
+  <!-- The canister rack on the north-east wall (local frame as the seeding bay's). -->
+  <group name="RackBay" pos="{CIN * cos(rad(45))} {CIN * sin(rad(45))} {CZ}" rot="0 0 -45">
+    <prefab name="Rack" source="ship/canister_rack" pos="0 -22 0" />
+    <light pos="0 -220 300" color="0.50 0.85 0.90" intensity="0.35" radius="600" castShadows="1" />
+  </group>
+
+  <!-- The elevator's upper landing, and the light bars that key the deck from the south-west. -->
+  <prefab name="DeckElevator" source="ship/elevator" pos="{EX} {EY} {CZ}" rot="0 0 -135" scale="1 1 {CWH / 900}" />
+  <prefab source="ship/light_bar" pos="{CIN * cos(rad(225))} {CIN * sin(rad(225))} {CZ + 470}" rot="0 0 135" />
+  <prefab source="ship/light_bar" pos="-260 {-CIN} {CZ + 470}" rot="0 0 180" />
+
+  <!-- Moments at the throne: the essence escaping; the purple crust; the empty canister. -->
+  <group name="Essence" pos="{16 * LOT} 0 {PZ}">
+    <!-- The trail out of his cracked skull, and the knot of his mind rising to the dome. -->
+    <cylinder pos="8 119 1305" rot="90 0 0" radius="4" height="270" color="0.92 0.78 1.0" unlit="1" castShadow="0" />
+    <sphere pos="16 120 1480" radius="34" color="0.95 0.85 1.0" unlit="1" castShadow="0" />
+    <sphere pos="44 108 1500" radius="20" color="0.85 0.68 1.0" unlit="1" castShadow="0" />
+    <sphere pos="-10 134 1510" radius="18" color="0.85 0.68 1.0" unlit="1" castShadow="0" />
+    <torus pos="16 120 1480" rot="30 0 20" majorRadius="52" minorRadius="3" color="0.92 0.78 1.0" unlit="1" castShadow="0" />
+    <torus pos="16 120 1480" rot="-40 0 70" majorRadius="46" minorRadius="2.5" color="0.92 0.78 1.0" unlit="1" castShadow="0" />
+    <light pos="16 60 1440" color="0.85 0.70 1.0" intensity="1.1" radius="900" castShadows="1" />
+  </group>
+  <!-- The crust is a coating wrapped round Brainiac's seated body (joints from the scener joint listing in
+       the Throne pose), so it overlaps him by design; the jammed canister is wedged neck-first into
+       the crack in his skull. -->
+  <group name="Crust" pos="{15 * LOT} 0 {PZ}" sanityIgnore="1">
+    <sphere pos="0 119 1134" radius="14" scale="1 1 0.75" material="bacteria" />
+    <sphere pos="16 124 1114" radius="10" material="bacteria_light" />
+    <sphere pos="-15 114 1114" radius="10" material="bacteria" />
+    <sphere pos="0 110 1092" radius="15" scale="1.1 0.8 1.2" material="bacteria_light" />
+    <sphere pos="5 92 1062" radius="15" scale="1.5 1.1 0.6" material="bacteria" />
+    <sphere pos="34 92 1080" radius="8" material="bacteria_light" />
+    <sphere pos="-12 76 1080" radius="8" material="bacteria" />
+    <sphere pos="20 76 1052" radius="9" material="bacteria_light" />
+    <sphere pos="9 71 1052" radius="9" material="bacteria" />
+  </group>
+  <group name="JammedCanister" pos="{27 * LOT} 0 {PZ}" sanityIgnore="1">
+    <prefab source="props/canister" pos="20.9 81.3 1212" rot="149.1 0 -151" />
+  </group>
+  <group name="EmptyCanister" pos="{17 * LOT} 0 {PZ}">
+    <prefab source="props/canister" pos="150 -150 {CZ + 16.5}" rot="0 90 60" />
+  </group>
+
+  <!-- The command deck's anchors (literal numbers: the book engine reads them without expressions).
+       Brainiac's chest in the throne; a canister on the rack's upper shelf; the middle tank's intake. -->
+  <group name="Brainiac-Throne" pos="0 120 1095" />
+  <group name="Canister" pos="567 615 1143" />
+  <group name="Seeding-Tanks" pos="-457 457 1120" />
+
+  <!-- ============================== The actors ============================== -->
+  <group name="SupermanAt" pos="{SMX} {SMY} {SMZ}" sanityIgnore="1">
+    <group name="SupermanYaw" rot="0 0 {SMYAW}">
+      <group name="SupermanTilt" rot="-90 0 0">
+        <prefab name="Superman" source="characters/superman" pose="Float" />
+      </group>
+    </group>
+  </group>
+  <group name="BrainiacAt" pos="{BRX} {BRY} {BRZ}">
+    <group name="BrainiacYaw" rot="0 0 {BRYAW}">
+      <prefab name="Brainiac" source="characters/brainiac" pose="Throne" />
+    </group>
+  </group>
 </scene>

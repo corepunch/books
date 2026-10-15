@@ -1,0 +1,5 @@
+<!-- The Star 7's face picture failing red: one unlit red panel over the CRT of props/star7, back face on the
+     glass. Place it with exactly the same transform as the Star 7 instance. Origin as props/star7 (front -Y). -->
+<prefab up="z" front="-y">
+  <rounded-rect pos="0 -132 150" rot="90 0 0" size="140 84" radius="6" material="glitch_red" unlit="1" castShadow="0"><extrude amount="1" /></rounded-rect>
+</prefab>

@@ -1,0 +1,16 @@
+<!-- A plate girder of the lost span, washed down by the flood and left on the gravel: 900 cm of it,
+     standing on its bottom flange, the web torn at one end and a bent cross-frame still bolted on;
+     beside it a timber tie and a length of rail from the deck. Footprint 920 x 140, lies along local X.
+     Not directional. Baseline: the flange, tie and rail rest on the gravel at z=0. Origin: the middle of
+     the girder's bottom flange. Materials from the scene: steel, rust, sleeper, rail. -->
+<prefab up="z" front="+x">
+  <box pos="0 0 3" size="900 44 6" material="rust" />
+  <box pos="-30 0 137" size="840 44 6" material="rust" />
+  <box pos="-20 0 70" size="856 3 134" material="steel" />
+  <box pos="430 1 60" size="40 3 108" rot="0 -20 0" material="rust" />
+  <box pos="-250 0 70" size="6 40 126" material="steel" />
+  <box pos="120 0 70" size="6 40 126" material="steel" />
+  <box pos="-250 50 74" size="8 90 8" rot="38 0 0" material="rust" />
+  <box pos="-200 52 8" size="24 220 16" rot="0 0 86" material="sleeper" />
+  <box pos="140 -44 7.5" size="420 7 15" rot="0 0 2.5" material="rail" />
+</prefab>

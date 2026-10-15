@@ -1,131 +1,354 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Обратный отсчёт: low Earth orbit, early afternoon over the Atlantic. Z up, cm, storybook scale: the
-     Earth is a 2.2 km ball whose top lies 100 m below the belt, the belt of Brainiac's meteorites rings it in a
-     decaying orbit, rocks 2-4 m across. One rock is not a meteorite at all: a lead-shelled red-sun
-     weapon that X-ray vision cannot see into. Superman is authored 50 m below the belt plane; camera
-     transforms give world positions. -->
-<scene up="z" ambient="0.10 0.10 0.14" background="0.01 0.01 0.03">
-  <camera name="orbit-show-belt" comment="Superman among the tumbling meteorites of the belt, the Earth's curve below; one dull grey rock among the brown" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-300 -700 5000" rot="0 0 -30" />
-    <use-pose instance="Superman" name="Float" />
+<!-- Обратный отсчёт: Brainiac's meteorite belt in low orbit, early afternoon over the Atlantic.
+
+     Resident story: Brainiac has strung a belt of brown iron-stone meteorites round the Earth in a slowly
+     decaying orbit; each rock carries a sealed capsule of Cybernetic Bacteria and will fall on a city by
+     nightfall. One "rock" is no meteorite: a grey lead clam-shell hiding a red-sun emitter, set among
+     the others as a trap for whoever starts smashing them. Superman has just flown up from the Fortress.
+
+     Units and axes: centimetres, Z up, storybook scale. The Earth is a 3 km ball (RE) and the belt hangs
+     ALT above its surface, so the curved limb, its atmosphere and the cloud bands stay inside Scener's
+     1000 m far clip. Everything orbital lives in <group name="OrbitFrame">, whose rot tilts the belt's
+     local frame against the world: inside it x runs across the orbit, y along it, z away from the Earth,
+     and Superman's middle is the origin. Because cameras keep world Z up, the tilt is what makes the
+     horizon run diagonally across every frame.
+
+     Free fall: nothing in orbit has a support, and Scener's floating test (ground plane or contact) cannot
+     model an orbit, so the free-flying content sits in one <group name="InOrbit" sanityIgnore="1">. That
+     also hides intersections between those units from the checker, so audit them with the attribute
+     stripped: copy this file to _audit.blks beside it, delete the InOrbit sanityIgnore, run scener's
+     check on the copy and expect no intersection or coplanar warnings, then delete the copy. (Only the
+     Moon reports floating there: the checker counts the Earth's 3 km bounding box as contact for
+     everything near the belt, which is why the exemption is explicit rather than left to chance.) The atmosphere rims are exempt separately (they hug the globe on purpose).
+
+     Camera-scoped state: shot-only groups are authored in their shot positions and parked by STORE (and STORE_A/C/E) deep
+     inside the Earth, where no camera sees them; each camera's <transform> brings them back (pos -STORE).
+     The atmosphere rim is drawn per viewpoint (a glow ring on the limb seen from that camera), parked at the
+     Earth's centre by HIDE scale and restored by the camera's scale transform.
+
+     The book engine reads camera pos/look and the anchors' pos/rot/scale (and their ancestors') as plain
+     numbers, so those stay literal: cameras are world coordinates of the belt-frame viewpoints C1..C5
+     declared below, and the anchors sit outside OrbitFrame at the world positions scener's query reports
+     for the objects they name. Change a C* let and its camera together. -->
+<scene up="z" ambient="0.17 0.17 0.21" background="0.0 0.0 0.015">
+  <!-- The world and the orbit frame. -->
+  <let name="RE" value="150000"/>      <!-- Earth radius -->
+  <let name="ALT" value="20000"/>      <!-- belt altitude above the sea -->
+  <let name="RB" value="RE + ALT"/>    <!-- belt radius from the Earth's centre -->
+  <let name="TILT" value="28"/>        <!-- orbit frame: tilt of the local vertical from world Z ... -->
+  <let name="TURN" value="-34"/>       <!-- ... and its heading -->
+  <let name="STORE" value="-60000"/>   <!-- shot-only groups wait 600 m down, inside the Earth: X-ray set -->
+  <let name="STORE_A" value="STORE - 6000"/>   <!-- ... orbit-ambush groups -->
+  <let name="STORE_C" value="STORE - 12000"/>  <!-- ... orbit-clear groups -->
+  <let name="STORE_E" value="STORE - 18000"/>  <!-- ... the two endings (separate depths keep parked groups apart) -->
+  <let name="HIDE" value="0.001"/>     <!-- atmosphere rims wait shrunk at the Earth's centre -->
+  <let name="EARTH_SPIN" value="-20"/> <!-- turns the Atlantic so the coast lies past the belt -->
+
+  <!-- Viewpoints in the belt frame (mirrored as literal world pos in the cameras below). -->
+  <let name="C1X" value="-250"/> <let name="C1Y" value="-520"/> <let name="C1Z" value="240"/>   <!-- show-belt, xray -->
+  <let name="C2X" value="100"/>  <let name="C2Y" value="-750"/> <let name="C2Z" value="400"/>    <!-- ambush -->
+  <let name="C3X" value="-420"/> <let name="C3Y" value="-560"/> <let name="C3Z" value="330"/>   <!-- clear -->
+  <let name="C4X" value="-900"/> <let name="C4Y" value="-1400"/> <let name="C4Z" value="2600"/> <!-- falling -->
+  <let name="C5X" value="-260"/> <let name="C5Y" value="-420"/> <let name="C5Z" value="80"/>    <!-- ship escapes -->
+
+  <!-- The near belt round Superman (belt frame), shared by the solid and the X-ray rocks. -->
+  <let name="P1X" value="-250"/> <let name="P1Y" value="-253"/> <let name="P1Z" value="-21"/>   <!-- foreground -->
+  <let name="P2X" value="514"/>  <let name="P2Y" value="310"/>  <let name="P2Z" value="-62"/>    <!-- the "Belt" rock -->
+  <let name="P3X" value="1655"/> <let name="P3Y" value="521"/>  <let name="P3Z" value="-38"/>
+  <let name="P4X" value="-16"/>  <let name="P4Y" value="981"/>  <let name="P4Z" value="-359"/>
+  <let name="P5X" value="359"/>  <let name="P5Y" value="-340"/> <let name="P5Z" value="-51"/>
+  <let name="P6X" value="1086"/> <let name="P6Y" value="1700"/> <let name="P6Z" value="-549"/>
+  <let name="P7X" value="-216"/> <let name="P7Y" value="1949"/> <let name="P7Z" value="-1072"/>
+  <let name="P8X" value="2498"/> <let name="P8Y" value="1620"/> <let name="P8Z" value="-340"/>
+  <let name="P9X" value="267"/>  <let name="P9Y" value="885"/>  <let name="P9Z" value="-1004"/>
+  <!-- The lead rock, and the point on Superman's chest its beam strikes in orbit-ambush. -->
+  <let name="LX" value="595"/> <let name="LY" value="106"/> <let name="LZ" value="-251"/>
+  <let name="HX" value="-8"/>  <let name="HY" value="17"/>  <let name="HZ" value="43"/>
+  <let name="LHX" value="HX - LX"/> <let name="LHY" value="HY - LY"/> <let name="LHZ" value="HZ - LZ"/>
+  <let name="LHD" value="sqrt(LHX*LHX + LHY*LHY + LHZ*LHZ)"/>
+  <let name="LENS" value="40"/>        <!-- emitter lens tip above the lead rock's centre -->
+  <!-- Heat vision in orbit-clear: Superman turned to face +x; his eyes, and the rock bursting. -->
+  <let name="EYE_X" value="9"/> <let name="EYE_Z" value="78"/> <let name="EYE_W" value="4"/>
+  <let name="SPARK" value="60"/>  <!-- the spark star floats this far in front of the burst, toward C3 -->
+  <let name="STOP" value="45"/>   <!-- the beams stop on the broken emitter, short of the rock's centre -->
+  <!-- Burning meteorites fall along this belt-frame direction (down, across and along the orbit); a
+       trail (front -z) turns its +z to -FALL with rot (-acos(-FALL_Z/FALL_L), 0, atan2(FALL_X, -FALL_Y)). -->
+  <let name="FALL_X" value="0.55"/> <let name="FALL_Y" value="0.35"/> <let name="FALL_Z" value="-1"/>
+  <let name="FALL_L" value="sqrt(FALL_X*FALL_X + FALL_Y*FALL_Y + FALL_Z*FALL_Z)"/>
+
+  <camera name="orbit-show-belt" comment="Superman hangs among the tumbling brown meteorites of the belt, the Earth's curved limb and the Atlantic below; one dull grey rock lies just below him to the right" pos="-527 -334 -32" look="606 184 35" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="AirC1" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
   </camera>
-  <camera name="orbit-xray" comment="X-ray vision: the meteorites turn pale and show their purple capsules; the lead rock stays black" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-300 -700 5000" rot="0 0 -30" />
-    <use-pose instance="Superman" name="Float" />
-    <transform target="Rocks" pos="0 0 -20000" />
-    <transform target="RocksXray" pos="0 0 20000" />
+  <camera name="orbit-xray" comment="X-ray vision: the meteorites turn to pale glass and show their purple capsules; the lead rock alone stays black" pos="-527 -334 -32" look="606 184 35" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="AirC1" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
+    <transform target="Rocks" pos="0 0 {STORE}"/>
+    <transform target="RocksXray" pos="0 0 {-STORE}"/>
+    <transform target="BeltStream" pos="0 0 {STORE}"/>
+    <transform target="BeltStreamXray" pos="0 0 {-STORE}"/>
+    <transform target="LeadRock" pos="0 0 {STORE}"/>
+    <transform target="LeadRockXray" pos="0 0 {-STORE}"/>
   </camera>
-  <camera name="orbit-clear" comment="Superman smashes the lead rock first; the red-sun weapon inside breaks apart and the capsules burn up as streaks" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="580 220 5040" rot="90 0 70" />
-    <use-pose instance="Superman" name="FlyReach" />
-    <transform target="LeadRock" pos="0 0 -20000" />
-    <transform target="Shards" pos="0 0 20000" />
-    <transform target="Streaks" pos="0 0 20000" />
-    <transform target="Rocks" pos="0 0 -20000" />
+  <camera name="orbit-ambush" comment="Above and beside the grey rock as it opens like a clam: the red-sun beam lashes out of it into Superman's chest and he tumbles backwards" pos="-392 -761 1" look="215 -39 47" fov="46" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="AirC2" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
+    <transform target="Superman" rot="-70 10 0"/>
+    <use-pose instance="Superman" name="Panic"/>
+    <transform target="LeadLid" rot="0 115 0"/>
+    <transform target="Rocks" pos="0 0 {STORE}"/>
+    <transform target="RedBeam" pos="0 0 {-STORE_A}"/>
   </camera>
-  <camera name="orbit-ambush" comment="A red beam lashes out of the grey rock and strikes Superman; he tumbles" pos="-1400 -2400 700" look="300 0 -100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-150 -500 5100" rot="120 30 0" />
-    <use-pose instance="Superman" name="Float" />
-    <transform target="RedBeam" pos="0 0 20000" />
+  <camera name="orbit-clear" comment="Superman's heat vision bursts the lead rock first; the red-sun emitter inside breaks apart in sparks, and below him the other meteorites burn up in the atmosphere as fiery streaks" pos="-711 -303 28" look="724 323 -73" fov="58" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="AirC3" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
+    <transform target="Superman" rot="0 0 65"/>
+    <use-pose instance="Superman" name="Float"/>
+    <transform target="LeadRock" pos="0 0 {STORE}"/>
+    <transform target="Rocks" pos="0 0 {STORE}"/>
+    <transform target="BeltStream" pos="0 0 {STORE}"/>
+    <transform target="Burst" pos="0 0 {-STORE_C}"/>
+    <transform target="HeatVision" pos="0 0 {-STORE_C}"/>
+    <transform target="Streaks" pos="0 0 {-STORE_C}"/>
   </camera>
-  <camera name="orbit-falling" comment="Ending: from high above, meteorites stream down into the atmosphere toward the cities" pos="0 -3000 5000" look="0 6000 -9000" fov="60" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Falling" pos="0 0 20000" />
-    <transform target="Superman" pos="-400 -1200 6800" rot="80 0 160" />
-    <use-pose instance="Superman" name="Float" />
+  <camera name="orbit-falling" comment="Ending: from high above, the meteorites stream down into the atmosphere as fiery trails toward the cities, while Superman dives the other way, toward home" pos="-2120 -1533 1638" look="2207 2556 84" fov="60" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="AirC4" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
+    <transform target="SupermanSpot" pos="-754 -1124 2267"/>
+    <transform target="Superman" rot="-156 0 -25"/>
+    <use-pose instance="Superman" name="Fly"/>
+    <transform target="Rocks" pos="0 0 {STORE}"/>
+    <transform target="LeadRock" pos="0 0 {STORE}"/>
+    <transform target="Falling" pos="0 0 {-STORE_E}"/>
   </camera>
-  <camera name="orbit-ship-escapes" comment="Ending: Brainiac's ship sails away past the Moon, its tentacles trailing, the Earth behind it" pos="-3000 -9000 1500" look="6000 30000 2000" fov="50" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Ship" pos="0 0 20000" />
-    <transform target="Superman" pos="-2500 -7400 6400" rot="0 0 200" />
-    <use-pose instance="Superman" name="HandsOnHips" />
+  <camera name="orbit-ship-escapes" comment="Ending: Superman, free of the ship, watches Brainiac's ship sail away past the Moon, its tentacles trailing, the Earth's rim below" pos="-444 -193 -127" look="6758 6443 2018" fov="50" textRect="0.04 0.035 0.92 0.30" textScale="1">
+    <transform target="AirC5" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
+    <use-pose instance="Superman" name="HandsOnHips"/>
+    <transform target="SupermanSpot" pos="-5 -36 -43"/>
+    <transform target="Superman" rot="0 0 150"/>
+    <transform target="Rocks" pos="0 0 {STORE}"/>
+    <transform target="LeadRock" pos="0 0 {STORE}"/>
+    <transform target="BeltStream" pos="0 0 {STORE}"/>
+    <transform target="Ship" pos="0 0 {-STORE_E}"/>
   </camera>
 
-  <material id="earth_sea" color="0.12 0.30 0.62" shininess="40" />
-  <material id="earth_land" color="0.30 0.50 0.26" shininess="8" />
-  <material id="cloud" color="0.94 0.95 0.96" shininess="4" />
-  <material id="meteor" color="0.46 0.34 0.24" shininess="6" />
-  <material id="lead" color="0.34 0.35 0.38" shininess="30" />
-  <material id="xray" color="0.70 0.86 0.98" shininess="4" />
-  <material id="capsule" color="0.70 0.30 0.86" shininess="40" />
-  <material id="ship_hull" color="0.46 0.56 0.50" shininess="60" />
-  <material id="ship_rib" color="0.30 0.36 0.34" shininess="50" />
-  <material id="ship_dark" color="0.12 0.14 0.14" shininess="40" />
-  <material id="brain_net" color="0.62 0.30 0.72" shininess="90" />
-  <material id="moon" color="0.70 0.70 0.68" shininess="4" />
+  <material id="earth_sea" color="0.10 0.31 0.66" shininess="40"/>
+  <material id="earth_land" color="0.36 0.52 0.26" shininess="6"/>
+  <material id="earth_desert" color="0.74 0.62 0.40" shininess="6"/>
+  <material id="cloud" color="0.96 0.97 0.98" shininess="4"/>
+  <material id="air_inner" color="0.66 0.85 1.0" shininess="4"/>
+  <material id="air_outer" color="0.22 0.46 0.95" shininess="4"/>
+  <material id="meteor" color="0.48 0.34 0.22" shininess="6"/>
+  <material id="meteor_dark" color="0.22 0.15 0.10" shininess="4"/>
+  <material id="xray" color="0.78 0.90 1.0" shininess="60"/>
+  <material id="capsule" color="0.74 0.26 0.95" shininess="40"/>
+  <material id="capsule_band" color="0.96 0.78 1.0" shininess="40"/>
+  <material id="lead" color="0.42 0.43 0.46" shininess="10"/>
+  <material id="lead_dark" color="0.20 0.20 0.22" shininess="18"/>
+  <material id="iron_dark" color="0.16 0.16 0.18" shininess="40"/>
+  <material id="ruby" color="0.85 0.08 0.06" shininess="90"/>
+  <material id="moon" color="0.70 0.70 0.68" shininess="4"/>
+  <material id="moon_dark" color="0.40 0.40 0.43" shininess="4"/>
+  <material id="ship_hull" color="0.46 0.56 0.50" shininess="60"/>
+  <material id="ship_rib" color="0.30 0.36 0.34" shininess="50"/>
+  <material id="ship_dark" color="0.12 0.14 0.14" shininess="40"/>
+  <material id="brain_net" color="0.62 0.30 0.72" shininess="90"/>
 
-  <!-- Sunlight from the upper left. -->
-  <sun dir="0.8 0.55 -0.18" color="1.0 0.98 0.94" intensity="1.4" castShadows="1" />
+  <!-- Key: the Sun, hard and white, from upper left behind the belt camera. Fill: earthshine, a weak
+       blue light thrown back up from the sunlit ocean (it travels along the belt frame's +z). -->
+  <sun dir="0.864 0.295 -0.408" color="1.0 0.97 0.92" intensity="1.55" castShadows="1"/>
+  <sun dir="-0.263 -0.389 0.883" color="0.40 0.56 0.85" intensity="0.30" castShadows="0"/>
 
-  <!-- The Earth below, with a continent and cloud bands. -->
-  <sphere pos="0 20000 -120000" radius="110000" rings="64" slices="96" material="earth_sea" />
-  <sphere pos="-9721 7849 -40611" radius="30000" rings="32" slices="48" material="earth_land" />
-  <sphere pos="17335 24334 -35059" radius="24000" rings="32" slices="48" material="earth_land" />
-  <sphere pos="0 45536 -39136" radius="26000" rings="32" slices="48" material="earth_land" />
-  <sphere pos="5901 8199 -22640" radius="12000" rings="32" slices="48" material="cloud" castShadow="0" />
-  <sphere pos="-17182 34317 -27413" radius="15000" rings="32" slices="48" material="cloud" castShadow="0" />
-  <sphere pos="26000 90000 6000" radius="2400" material="moon" />
+  <prefab source="orbit/starfield"/>
 
-  <!-- The belt of meteorites, brown and solid; the X-ray set, pale with purple capsules. -->
-  <group name="Rocks">
-    <sphere pos="-900 300 100" radius="160" scale="1.2 1 0.9" material="meteor" />
-    <sphere pos="-200 900 -50" radius="200" scale="1 1.3 0.9" material="meteor" />
-    <sphere pos="700 700 200" radius="140" scale="1.3 1 1" material="meteor" />
-    <sphere pos="1600 1200 -150" radius="220" scale="1 1 0.8" material="meteor" />
-    <sphere pos="-1800 1500 300" radius="180" material="meteor" />
-    <sphere pos="2600 2400 0" radius="200" material="meteor" />
-    <sphere pos="-2900 2600 -200" radius="210" material="meteor" />
-    <sphere pos="200 2600 400" radius="160" material="meteor" />
-  </group>
-  <group name="RocksXray" pos="0 0 -20000">
-    <sphere pos="-900 300 100" radius="160" scale="1.2 1 0.9" material="xray" unlit="1" />
-    <sphere pos="-200 900 -50" radius="200" scale="1 1.3 0.9" material="xray" unlit="1" />
-    <sphere pos="700 700 200" radius="140" scale="1.3 1 1" material="xray" unlit="1" />
-    <sphere pos="1600 1200 -150" radius="220" scale="1 1 0.8" material="xray" unlit="1" />
-    <sphere pos="-1800 1500 300" radius="180" material="xray" unlit="1" />
-    <sphere pos="2600 2400 0" radius="200" material="xray" unlit="1" />
-    <sphere pos="-2900 2600 -200" radius="210" material="xray" unlit="1" />
-    <sphere pos="200 2600 400" radius="160" material="xray" unlit="1" />
-    <capsule pos="-900 -10 100" radius="40" height="60" material="capsule" unlit="1" />
-    <capsule pos="-200 520 -50" radius="50" height="80" material="capsule" unlit="1" />
-    <capsule pos="700 450 200" radius="36" height="60" material="capsule" unlit="1" />
-    <capsule pos="1600 950 -150" radius="50" height="80" material="capsule" unlit="1" />
-  </group>
-  <!-- The lead-shelled weapon among them, its emitter turned toward the belt. -->
-  <group name="LeadRock">
-    <sphere pos="400 -150 -60" radius="190" scale="1.1 1 0.9" material="lead" />
-    <cylinder pos="400 -330 -40" rot="0 0 0" radius="30" height="60" color="0.60 0.10 0.08" />
-  </group>
-  <group name="RedBeam" pos="0 0 -20000">
-    <cylinder pos="140 -400 20" rot="0 0 -60" radius="10" height="560" color="1.0 0.15 0.08" unlit="1" castShadow="0" />
-    <sphere pos="-120 -540 120" radius="60" color="1.0 0.35 0.20" unlit="1" castShadow="0" />
-  </group>
-  <group name="Shards" pos="0 0 -20000">
-    <sphere pos="520 -80 40" radius="70" material="lead" />
-    <sphere pos="300 -260 -120" radius="55" material="lead" />
-    <sphere pos="620 120 -150" radius="40" material="lead" />
-    <sphere pos="250 60 120" radius="45" material="lead" />
-    <sphere pos="440 -140 -40" radius="90" color="1.0 0.55 0.25" unlit="1" castShadow="0" />
-  </group>
-  <group name="Streaks" pos="0 0 -20000">
-    <cylinder pos="-900 600 -700" rot="70 0 10" radius="18" height="900" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
-    <cylinder pos="200 1200 -800" rot="70 0 -10" radius="22" height="1000" color="1.0 0.60 0.25" unlit="1" castShadow="0" />
-    <cylinder pos="1500 1600 -900" rot="70 0 -20" radius="18" height="900" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
-    <cylinder pos="-2200 2200 -700" rot="70 0 20" radius="20" height="900" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
-  </group>
-  <group name="Falling" pos="0 0 -20000">
-    <cylinder pos="-1500 4000 -2500" rot="60 0 10" radius="40" height="2400" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
-    <cylinder pos="1200 6000 -3200" rot="60 0 -10" radius="50" height="2800" color="1.0 0.60 0.25" unlit="1" castShadow="0" />
-    <cylinder pos="3200 3500 -2400" rot="60 0 -20" radius="40" height="2400" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
-    <cylinder pos="-3500 7000 -3500" rot="60 0 20" radius="50" height="2800" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
-    <cylinder pos="200 9000 -4200" rot="60 0 0" radius="60" height="3000" color="1.0 0.60 0.25" unlit="1" castShadow="0" />
-  </group>
-  <group name="Ship" pos="0 0 -20000">
-    <prefab source="props/brainiac_ship" pos="4000 20000 2600" rot="0 0 150" />
+  <group name="OrbitFrame" rot="{TILT} 0 {TURN}">
+    <prefab source="orbit/earth" pos="0 0 {-RB}" rot="0 0 {EARTH_SPIN}" scale="{RE/1000} {RE/1000} {RE/1000}"/>
+
+    <!-- Atmosphere rims: seen from a viewpoint at distance D from the Earth's centre, the limb is a circle
+         of radius RE*sqrt(1 - RE^2/D^2) lying RE^2/D toward the viewer. Each rim is a bright inner band on
+         that circle and a deeper blue haze just outside and behind it. The rims lie on the globe's surface
+         on purpose (the haze over the limb), so the checker skips them. -->
+    <group name="Atmosphere" sanityIgnore="1">
+    <group><let name="VX" value="C1X"/><let name="VY" value="C1Y"/><let name="VZ" value="C1Z + RB"/>
+      <let name="D" value="sqrt(VX*VX + VY*VY + VZ*VZ)"/>
+      <group name="AirC1" pos="0 0 {-RB}" rot="0 {deg(acos(VZ/D))} {deg(atan2(VY, VX))}" scale="{HIDE} {HIDE} {HIDE}">
+        <torus pos="0 0 {RE*RE/D}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D))}" minorRadius="{RE*0.010}" majorSegments="256" minorSegments="10" material="air_inner" unlit="1" castShadow="0"/>
+        <torus pos="0 0 {RE*RE/D - RE*0.016}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D)) + RE*0.010}" minorRadius="{RE*0.018}" majorSegments="256" minorSegments="10" material="air_outer" unlit="1" castShadow="0"/>
+      </group>
+    </group>
+    <group><let name="VX" value="C2X"/><let name="VY" value="C2Y"/><let name="VZ" value="C2Z + RB"/>
+      <let name="D" value="sqrt(VX*VX + VY*VY + VZ*VZ)"/>
+      <group name="AirC2" pos="0 0 {-RB}" rot="0 {deg(acos(VZ/D))} {deg(atan2(VY, VX))}" scale="{HIDE} {HIDE} {HIDE}">
+        <torus pos="0 0 {RE*RE/D}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D))}" minorRadius="{RE*0.010}" majorSegments="256" minorSegments="10" material="air_inner" unlit="1" castShadow="0"/>
+        <torus pos="0 0 {RE*RE/D - RE*0.016}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D)) + RE*0.010}" minorRadius="{RE*0.018}" majorSegments="256" minorSegments="10" material="air_outer" unlit="1" castShadow="0"/>
+      </group>
+    </group>
+    <group><let name="VX" value="C3X"/><let name="VY" value="C3Y"/><let name="VZ" value="C3Z + RB"/>
+      <let name="D" value="sqrt(VX*VX + VY*VY + VZ*VZ)"/>
+      <group name="AirC3" pos="0 0 {-RB}" rot="0 {deg(acos(VZ/D))} {deg(atan2(VY, VX))}" scale="{HIDE} {HIDE} {HIDE}">
+        <torus pos="0 0 {RE*RE/D}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D))}" minorRadius="{RE*0.010}" majorSegments="256" minorSegments="10" material="air_inner" unlit="1" castShadow="0"/>
+        <torus pos="0 0 {RE*RE/D - RE*0.016}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D)) + RE*0.010}" minorRadius="{RE*0.018}" majorSegments="256" minorSegments="10" material="air_outer" unlit="1" castShadow="0"/>
+      </group>
+    </group>
+    <group><let name="VX" value="C4X"/><let name="VY" value="C4Y"/><let name="VZ" value="C4Z + RB"/>
+      <let name="D" value="sqrt(VX*VX + VY*VY + VZ*VZ)"/>
+      <group name="AirC4" pos="0 0 {-RB}" rot="0 {deg(acos(VZ/D))} {deg(atan2(VY, VX))}" scale="{HIDE} {HIDE} {HIDE}">
+        <torus pos="0 0 {RE*RE/D}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D))}" minorRadius="{RE*0.010}" majorSegments="256" minorSegments="10" material="air_inner" unlit="1" castShadow="0"/>
+        <torus pos="0 0 {RE*RE/D - RE*0.016}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D)) + RE*0.010}" minorRadius="{RE*0.018}" majorSegments="256" minorSegments="10" material="air_outer" unlit="1" castShadow="0"/>
+      </group>
+    </group>
+    <group><let name="VX" value="C5X"/><let name="VY" value="C5Y"/><let name="VZ" value="C5Z + RB"/>
+      <let name="D" value="sqrt(VX*VX + VY*VY + VZ*VZ)"/>
+      <group name="AirC5" pos="0 0 {-RB}" rot="0 {deg(acos(VZ/D))} {deg(atan2(VY, VX))}" scale="{HIDE} {HIDE} {HIDE}">
+        <torus pos="0 0 {RE*RE/D}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D))}" minorRadius="{RE*0.010}" majorSegments="256" minorSegments="10" material="air_inner" unlit="1" castShadow="0"/>
+        <torus pos="0 0 {RE*RE/D - RE*0.016}" rot="90 0 0" majorRadius="{RE*sqrt(1 - RE*RE/(D*D)) + RE*0.010}" minorRadius="{RE*0.018}" majorSegments="256" minorSegments="10" material="air_outer" unlit="1" castShadow="0"/>
+      </group>
+    </group>
+    </group>
+
+    <!-- Everything below is in free fall: see the header for why the checker skips it. -->
+    <group name="InOrbit" sanityIgnore="1">
+      <!-- Superman floats with his middle at the frame origin (his prefab origin is at his feet). -->
+      <group name="SupermanSpot">
+        <prefab source="characters/superman" name="Superman" pos="0 0 -95" rot="0 0 25" pivotOffset="0 0 95" pose="Float"/>
+      </group>
+
+      <!-- The near belt. -->
+      <group name="Rocks">
+        <prefab source="orbit/meteorite" pos="{P1X} {P1Y} {P1Z}" rot="24 -30 40" scale="0.7 0.7 0.7"/>
+        <prefab source="orbit/meteorite" pos="{P2X} {P2Y} {P2Z}" rot="-15 20 160" scale="1.25 1.25 1.25"/>
+        <prefab source="orbit/meteorite_shard" pos="{P3X} {P3Y} {P3Z}" rot="60 10 -35" scale="1.1 1.1 1.1"/>
+        <prefab source="orbit/meteorite" pos="{P4X} {P4Y} {P4Z}" rot="40 70 10" scale="1.4 1.2 1.3"/>
+        <prefab source="orbit/meteorite_shard" pos="{P5X} {P5Y} {P5Z}" rot="-70 30 120" scale="0.55 0.55 0.55"/>
+        <prefab source="orbit/meteorite" pos="{P6X} {P6Y} {P6Z}" rot="10 -50 250" scale="1.8 1.6 1.7"/>
+        <prefab source="orbit/meteorite_shard" pos="{P7X} {P7Y} {P7Z}" rot="35 -20 80" scale="1.3 1.3 1.3"/>
+        <prefab source="orbit/meteorite" pos="{P8X} {P8Y} {P8Z}" rot="-30 15 300" scale="2.0 1.8 1.9"/>
+        <prefab source="orbit/meteorite" pos="{P9X} {P9Y} {P9Z}" rot="80 0 200" scale="1.5 1.5 1.4"/>
+      </group>
+      <!-- The same rocks under X-ray: each pale cup opens toward the belt camera C1 to show its capsule. -->
+      <group name="RocksXray" pos="0 0 {STORE}">
+        <group><let name="DX" value="C1X - P1X"/><let name="DY" value="C1Y - P1Y"/><let name="DZ" value="C1Z - P1Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P1X} {P1Y} {P1Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="0.75 0.75 0.75"/></group>
+        <group><let name="DX" value="C1X - P2X"/><let name="DY" value="C1Y - P2Y"/><let name="DZ" value="C1Z - P2Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P2X} {P2Y} {P2Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="1.3 1.3 1.3"/></group>
+        <group><let name="DX" value="C1X - P3X"/><let name="DY" value="C1Y - P3Y"/><let name="DZ" value="C1Z - P3Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P3X} {P3Y} {P3Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="1.0 1.0 1.5"/></group>
+        <group><let name="DX" value="C1X - P4X"/><let name="DY" value="C1Y - P4Y"/><let name="DZ" value="C1Z - P4Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P4X} {P4Y} {P4Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="1.4 1.3 1.3"/></group>
+        <group><let name="DX" value="C1X - P5X"/><let name="DY" value="C1Y - P5Y"/><let name="DZ" value="C1Z - P5Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P5X} {P5Y} {P5Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="0.55 0.55 0.8"/></group>
+        <group><let name="DX" value="C1X - P6X"/><let name="DY" value="C1Y - P6Y"/><let name="DZ" value="C1Z - P6Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P6X} {P6Y} {P6Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="1.8 1.7 1.7"/></group>
+        <group><let name="DX" value="C1X - P7X"/><let name="DY" value="C1Y - P7Y"/><let name="DZ" value="C1Z - P7Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P7X} {P7Y} {P7Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="1.2 1.2 1.8"/></group>
+        <group><let name="DX" value="C1X - P8X"/><let name="DY" value="C1Y - P8Y"/><let name="DZ" value="C1Z - P8Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P8X} {P8Y} {P8Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="2.0 1.9 1.9"/></group>
+        <group><let name="DX" value="C1X - P9X"/><let name="DY" value="C1Y - P9Y"/><let name="DZ" value="C1Z - P9Z"/>
+          <prefab source="orbit/meteorite_xray" pos="{P9X} {P9Y} {P9Z}" rot="{deg(asin(DZ/sqrt(DX*DX + DY*DY + DZ*DZ)))} 0 {deg(atan2(-DX, DY))}" scale="1.5 1.5 1.4"/></group>
+      </group>
+
+      <!-- The rest of the belt strung along the orbit, falling slowly behind (a decaying orbit). -->
+      <prefab source="orbit/belt_stream" name="BeltStream" rot="0 0 -58"/>
+      <prefab source="orbit/belt_stream" name="BeltStreamXray" pos="0 0 {STORE}" rot="0 0 -58" color="0.80 0.91 1.0"/>
+
+      <!-- The lead rock, its open side (+z) aimed at Superman's chest. The lid hinges on the +x side of
+           the rim; orbit-ambush swings it open. -->
+      <group name="LeadRock"><group pos="{LX} {LY} {LZ}" rot="{deg(acos(LHZ/LHD))*(-1)} 0 {deg(atan2(-LHX, LHY))}">
+        <prefab source="orbit/lead_shell"/>
+        <group name="LeadLid" pos="150 0 0">
+          <prefab source="orbit/lead_shell" pos="-150 0 0.4" rot="180 0 0"/>
+        </group>
+        <prefab source="orbit/red_sun_emitter" pos="0 0 -45" scale="0.55 0.55 0.55"/>
+      </group></group>
+      <!-- Under X-ray the lead stays black: the same shell, blackened. -->
+      <group name="LeadRockXray" pos="0 0 {STORE}"><group pos="{LX} {LY} {LZ}" rot="{deg(acos(LHZ/LHD))*(-1)} 0 {deg(atan2(-LHX, LHY))}">
+        <prefab source="orbit/lead_shell" color="0.02 0.02 0.03"/>
+        <prefab source="orbit/lead_shell" pos="0 0 0.4" rot="180 0 0" color="0.02 0.02 0.03"/>
+      </group></group>
+
+      <!-- orbit-ambush: the red-sun beam from the lens to Superman's chest, and the red light it throws. -->
+      <group name="RedBeam" pos="0 0 {STORE_A}">
+        <cylinder pos="{LX + LHX*(LENS + (LHD - LENS)/2)/LHD} {LY + LHY*(LENS + (LHD - LENS)/2)/LHD} {LZ + LHZ*(LENS + (LHD - LENS)/2)/LHD}" rot="{deg(asin(LHZ/LHD))} 0 {deg(atan2(-LHX, LHY))}" radius="7" height="{LHD - LENS}" sides="12" color="1.0 0.20 0.10" unlit="1" castShadow="0"/>
+        <cylinder pos="{LX + LHX*(LENS + (LHD - LENS)/2)/LHD} {LY + LHY*(LENS + (LHD - LENS)/2)/LHD} {LZ + LHZ*(LENS + (LHD - LENS)/2)/LHD}" rot="{deg(asin(LHZ/LHD))} 0 {deg(atan2(-LHX, LHY))}" radius="2.5" height="{LHD - LENS + 6}" sides="8" color="1.0 0.85 0.75" unlit="1" castShadow="0"/>
+        <star pos="{HX} {HY} {HZ}" rot="{deg(asin(LHZ/LHD)) + 90} 0 {deg(atan2(-LHX, LHY))}" outerRadius="34" innerRadius="14" points="9" color="1.0 0.45 0.25" unlit="1" castShadow="0"><extrude amount="2"/></star>
+        <light pos="{HX - LHX*60/LHD} {HY - LHY*60/LHD} {HZ - LHZ*60/LHD}" color="1.0 0.18 0.10" intensity="1.6" radius="260" castShadows="0"/>
+      </group>
+
+      <!-- orbit-clear: heat vision from Superman's eyes (he turns to face +x) into the lead rock, and the
+           star of sparks where it strikes, turned to the clear camera C3: one self-lit assembly. -->
+      <group name="HeatVision" pos="0 0 {STORE_C}">
+        <let name="BX1" value="LX - EYE_X"/><let name="BY1" value="LY - EYE_W"/><let name="BZ1" value="LZ - EYE_Z"/><let name="BD1" value="sqrt(BX1*BX1 + BY1*BY1 + BZ1*BZ1)"/>
+        <let name="BX2" value="LX - EYE_X"/><let name="BY2" value="LY + EYE_W"/><let name="BZ2" value="LZ - EYE_Z"/><let name="BD2" value="sqrt(BX2*BX2 + BY2*BY2 + BZ2*BZ2)"/>
+        <let name="DX" value="C3X - LX"/><let name="DY" value="C3Y - LY"/><let name="DZ" value="C3Z - LZ"/><let name="DD" value="sqrt(DX*DX + DY*DY + DZ*DZ)"/>
+        <cylinder pos="{EYE_X + BX1*(BD1 - STOP)/(2*BD1)} {EYE_W + BY1*(BD1 - STOP)/(2*BD1)} {EYE_Z + BZ1*(BD1 - STOP)/(2*BD1)}" rot="{deg(asin(BZ1/BD1))} 0 {deg(atan2(-BX1, BY1))}" radius="5" height="{BD1 - STOP}" sides="10" color="1.0 0.30 0.08" unlit="1" castShadow="0"/>
+        <cylinder pos="{EYE_X + BX2*(BD2 - STOP)/(2*BD2)} {-EYE_W + BY2*(BD2 - STOP)/(2*BD2)} {EYE_Z + BZ2*(BD2 - STOP)/(2*BD2)}" rot="{deg(asin(BZ2/BD2))} 0 {deg(atan2(-BX2, BY2))}" radius="5" height="{BD2 - STOP}" sides="10" color="1.0 0.30 0.08" unlit="1" castShadow="0"/>
+        <star pos="{LX + DX*SPARK/DD} {LY + DY*SPARK/DD} {LZ + DZ*SPARK/DD}" rot="{-deg(acos(DZ/DD))} 0 {deg(atan2(-DX, DY))}" outerRadius="150" innerRadius="55" points="11" color="1.0 0.62 0.20" unlit="1" castShadow="0"><extrude amount="4"/></star>
+        <star pos="{LX + DX*(SPARK + 10)/DD} {LY + DY*(SPARK + 10)/DD} {LZ + DZ*(SPARK + 10)/DD}" rot="{-deg(acos(DZ/DD))} 0 {deg(atan2(-DX, DY)) + 16}" outerRadius="90" innerRadius="38" points="9" color="1.0 0.92 0.60" unlit="1" castShadow="0"><extrude amount="4"/></star>
+      </group>
+      <!-- orbit-clear: the lead shell blown apart round the broken emitter, sparks and their light. -->
+      <group name="Burst" pos="0 0 {STORE_C}">
+        <group pos="{LX} {LY} {LZ}">
+          <prefab source="orbit/red_sun_emitter" pos="0 0 -40" rot="35 -20 30" scale="0.55 0.55 0.55"/>
+          <group><let name="A" value="0"/><let name="E" value="-35"/><let name="R" value="230"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="1.0 1.0 1.0"/></group>
+          <group><let name="A" value="53"/><let name="E" value="10"/><let name="R" value="280"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="0.8 0.8 0.8"/></group>
+          <group><let name="A" value="106"/><let name="E" value="40"/><let name="R" value="200"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="1.2 1.2 1.2"/></group>
+          <group><let name="A" value="120"/><let name="E" value="-10"/><let name="R" value="300"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="0.7 0.7 0.7"/></group>
+          <group><let name="A" value="173"/><let name="E" value="25"/><let name="R" value="250"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="0.9 0.9 0.9"/></group>
+          <group><let name="A" value="226"/><let name="E" value="-40"/><let name="R" value="220"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="1.1 1.1 1.1"/></group>
+          <group><let name="A" value="240"/><let name="E" value="5"/><let name="R" value="320"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="0.6 0.6 0.6"/></group>
+          <group><let name="A" value="293"/><let name="E" value="30"/><let name="R" value="260"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="1.0 1.0 1.0"/></group>
+          <group><let name="A" value="346"/><let name="E" value="-20"/><let name="R" value="240"/>
+            <prefab source="orbit/lead_fragment" pos="{R*cos(rad(E))*cos(rad(A))} {R*cos(rad(E))*sin(rad(A))} {R*sin(rad(E))}" rot="{-deg(acos(sin(rad(E))))} 0 {deg(atan2(-cos(rad(E))*cos(rad(A)), cos(rad(E))*sin(rad(A))))}" scale="0.85 0.85 0.85"/></group>
+          <light pos="0 0 60" color="1.0 0.62 0.30" intensity="1.4" radius="600" castShadows="0"/>
+        </group>
+      </group>
+      <!-- orbit-clear: the rest of the belt burning up as it falls into the atmosphere. -->
+      <group name="Streaks" pos="0 0 {STORE_C}">
+        <prefab source="orbit/fire_trail" pos="1500 2200 -3400" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 4}" scale="1.4 1.4 1.4"/>
+        <prefab source="orbit/fire_trail" pos="2600 3600 -5200" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -6}" scale="1.8 1.8 1.8"/>
+        <prefab source="orbit/fire_trail" pos="400 4200 -5600" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 8}" scale="1.8 1.8 1.8"/>
+        <prefab source="orbit/fire_trail" pos="3800 6000 -7400" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -3}" scale="2.4 2.4 2.4"/>
+        <prefab source="orbit/fire_trail" pos="-600 6600 -8200" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 5}" scale="2.4 2.4 2.4"/>
+        <prefab source="orbit/fire_trail" pos="2200 8600 -9800" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -8}" scale="2.8 2.8 2.8"/>
+        <prefab source="orbit/fire_trail" pos="5200 4400 -6000" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 2}" scale="2.0 2.0 2.0"/>
+        <prefab source="orbit/fire_trail" pos="6800 3000 -4400" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -4}" scale="1.6 1.6 1.6"/>
+        <prefab source="orbit/fire_trail" pos="8200 7400 -8600" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 6}" scale="2.4 2.4 2.4"/>
+      </group>
+      <!-- orbit-falling: the whole belt raining down on the cities. -->
+      <group name="Falling" pos="0 0 {STORE_E}">
+        <prefab source="orbit/fire_trail" pos="3459 3500 -5000" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -10}" scale="2.4 2.4 2.4"/>
+        <prefab source="orbit/fire_trail" pos="-3203 6357 -5900" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -3}" scale="2.75 2.75 2.75"/>
+        <prefab source="orbit/fire_trail" pos="432 2010 -6679" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 4}" scale="3.1 3.1 3.1"/>
+        <prefab source="orbit/fire_trail" pos="3317 9082 -7419" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -9}" scale="3.45 3.45 3.45"/>
+        <prefab source="orbit/fire_trail" pos="-5788 6420 -8134" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -2}" scale="2.4 2.4 2.4"/>
+        <prefab source="orbit/fire_trail" pos="5280 5758 -8831" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 5}" scale="2.75 2.75 2.75"/>
+        <prefab source="orbit/fire_trail" pos="-1711 13156 -9514" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -8}" scale="3.1 3.1 3.1"/>
+        <prefab source="orbit/fire_trail" pos="-3201 5700 -10186" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -1}" scale="3.45 3.45 3.45"/>
+        <prefab source="orbit/fire_trail" pos="6799 12350 -10848" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 6}" scale="2.4 2.4 2.4"/>
+        <prefab source="orbit/fire_trail" pos="-6948 13519 -11502" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -7}" scale="2.75 2.75 2.75"/>
+        <prefab source="orbit/fire_trail" pos="3293 7793 -12149" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 0}" scale="3.1 3.1 3.1"/>
+        <prefab source="orbit/fire_trail" pos="2420 18518 -12789" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 7}" scale="3.45 3.45 3.45"/>
+        <prefab source="orbit/fire_trail" pos="-7184 11535 -13424" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + -6}" scale="2.4 2.4 2.4"/>
+        <prefab source="orbit/fire_trail" pos="8331 13969 -14053" rot="{-deg(acos(-FALL_Z/FALL_L))} 0 {deg(atan2(FALL_X, -FALL_Y)) + 1}" scale="2.75 2.75 2.75"/>
+      </group>
+
+      <!-- orbit-ship-escapes: Brainiac's ship heading for the Moon, tentacles trailing toward us. -->
+      <let name="SX" value="5387"/> <let name="SY" value="28151"/> <let name="SZ" value="-7225"/>
+      <let name="MX" value="-15285"/> <let name="MY" value="77666"/> <let name="MZ" value="-19400"/>
+      <group name="Ship" pos="0 0 {STORE_E}">
+        <group><let name="DX" value="MX - SX"/><let name="DY" value="MY - SY"/><let name="DZ" value="MZ - SZ"/><let name="DD" value="sqrt(DX*DX + DY*DY + DZ*DZ)"/>
+          <prefab source="props/brainiac_ship" pos="{SX} {SY} {SZ}" rot="{-deg(acos(DZ/DD))} 0 {deg(atan2(-DX, DY))}"/></group>
+      </group>
+      <!-- The Moon, 750 m out, turning its maria toward the ship-escapes viewpoint. -->
+      <prefab source="orbit/moon" pos="{MX} {MY} {MZ}" rot="0 0 {deg(atan2(C5X - MX, -(C5Y - MY)))}"/>
+    </group>
   </group>
 
-  <prefab source="characters/superman" name="Superman" pos="0 0 -5000" />
-
-  <!-- Anchors. -->
-  <group name="Belt" pos="-200 900 -50" />
-  <group name="Lead-Rock" pos="400 -150 -60" />
-  <group name="Earth" pos="1200 -1200 -1150" />
+  <!-- Anchors (literal world positions; see the header). -->
+  <group name="Belt" pos="596 -36 90"/>          <!-- on the big brown rock P2 -->
+  <group name="Lead-Rock" pos="611 -157 -172"/> <!-- the lead rock's centre -->
+  <group name="Earth" pos="25593 13864 -10810"/> <!-- the ocean below the belt camera -->
 </scene>

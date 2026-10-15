@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- One track: a ballast bank, timber sleepers every 65 cm and two rails at standard gauge.
+     Footprint 6000 x 390 cm (the bank's foot; the taper widens the base by 1.3), rail top 60 cm above the ground. Origin on the ground under
+     the track centre line; the track runs along local X (front +X).
+     Attach: rail_n / rail_s are the rail tops at the origin (where wheels stand).
+     Materials from the scene: ballast, sleeper, rail. -->
+<prefab up="z" front="+x">
+  <let name="TL" value="6000" />
+  <let name="BH" value="30" />    <!-- ballast height -->
+  <let name="SH" value="15" />    <!-- sleeper height -->
+  <let name="RH" value="15" />    <!-- rail height -->
+  <let name="G2" value="71.75" /> <!-- half gauge plus half rail head -->
+  <attach name="rail_n" pos="0 {G2} {BH + SH + RH}" />
+  <attach name="rail_s" pos="0 {-G2} {BH + SH + RH}" />
+  <box pos="0 0 {BH/2}" size="{TL} 300 {BH}" material="ballast">
+    <taper amount="-0.3" axis="z" />
+  </box>
+  <box pos="{-TL/2 + 30} 0 {BH + SH/2}" size="24 250 {SH}" material="sleeper">
+    <array count="{floor((TL - 60)/65) + 1}" translation="65 0 0" />
+  </box>
+  <box pos="0 {G2} {BH + SH + RH/2}" size="{TL} 7 {RH}" material="rail" />
+  <box pos="0 {-G2} {BH + SH + RH/2}" size="{TL} 7 {RH}" material="rail" />
+</prefab>

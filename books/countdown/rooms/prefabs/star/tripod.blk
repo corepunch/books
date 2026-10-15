@@ -1,0 +1,19 @@
+<!-- A news crew's camera tripod: three tubular legs splayed to a 45 cm radius, a pan head with its plate at
+     140 cm and a pan handle pointing back (+Y). Baseline z=0 (the rubber feet); origin on the floor under the
+     head. Attach "head" is the top of the plate (z=140), where props/tv_camera stands
+     with its origin (the underside of its shoulder pad) on the plate. The camera on it looks local -Y. Materials: tripod_metal, cable. -->
+<prefab up="z" front="-y">
+  <let name="HEAD" value="140" />
+  <let name="FR" value="45" />
+  <let name="TOP" value="HEAD - 12" />
+  <let name="LL" value="hypot(FR - 3, TOP)" />
+  <let name="TILT" value="deg(atan2(FR - 3, TOP))" />
+  <attach name="head" pos="0 0 {HEAD}" />
+  <box pos="{(FR + 3)/2*cos(rad(90))} {(FR + 3)/2*sin(rad(90))} {TOP/2 + 0.6}" rot="0 {-TILT} 90" size="2.6 2.6 {LL}" material="tripod_metal" />
+  <box pos="{(FR + 3)/2*cos(rad(210))} {(FR + 3)/2*sin(rad(210))} {TOP/2 + 0.6}" rot="0 {-TILT} 210" size="2.6 2.6 {LL}" material="tripod_metal" />
+  <box pos="{(FR + 3)/2*cos(rad(330))} {(FR + 3)/2*sin(rad(330))} {TOP/2 + 0.6}" rot="0 {-TILT} 330" size="2.6 2.6 {LL}" material="tripod_metal" />
+  <cylinder pos="0 0 {TOP + 1}" rot="90 0 0" radius="5" height="6" material="tripod_metal" />
+  <cylinder pos="0 0 {HEAD - 4}" rot="90 0 0" radius="4" height="6" material="cable" />
+  <box pos="0 0 {HEAD - 0.5}" size="14 18 1" material="tripod_metal" />
+  <box pos="0 22 {HEAD - 6}" rot="12 0 0" size="2 34 2" material="cable" />
+</prefab>

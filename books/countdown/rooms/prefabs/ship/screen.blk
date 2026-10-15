@@ -1,0 +1,13 @@
+<!-- A ship viewscreen: a 520 x 300 cm frame 16 cm deep with a dark glass display on its face (local -Y).
+     Its back (local +Y, y = 0) mounts flat on a wall. The scene puts the picture (Earth) on the display
+     as camera state. Origin at the bottom centre of the back face. Attach: display (display face
+     centre). Scene materials: sh_dark, sh_trim. -->
+<prefab up="z" front="-y">
+  <let name="W" value="520" />
+  <let name="H" value="300" />
+  <attach name="display" pos="0 -17 {H / 2}" />
+  <box pos="0 -8 {H / 2}" size="{W} 16 {H}" material="sh_dark" />
+  <box pos="0 -16.5 {H / 2}" size="{W - 40} 1 {H - 40}" color="0.03 0.06 0.11" unlit="1" castShadow="0" />
+  <box pos="0 -10 {H + 4}" size="{W + 20} 20 8" material="sh_trim" />
+  <box pos="0 -10 -4" size="{W + 20} 20 8" material="sh_trim" />
+</prefab>

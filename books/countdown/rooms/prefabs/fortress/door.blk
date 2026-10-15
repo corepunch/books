@@ -1,0 +1,43 @@
+<!-- The great door of the Fortress, set in the south face of the crag high above the sea ice.
+     One slab of blue-grey ice-steel 600 wide, 900 tall and 130 thick with a raised rim, diamond
+     studs and a gold-rimmed keyhole slot that takes the giant key (props/giant_key): the key's
+     axis sits 420 above the sill and its deepest ward rests on the slot floor at 340.
+     Origin on the sill at the middle of the door's thickness; local X across, Z up.
+     Front (the outside face, toward the sea ice) is -Y. Self-contained materials. -->
+<prefab up="z" front="-y">
+  <material id="door_steel" color="0.42 0.52 0.62" shininess="70" />
+  <material id="door_rim" color="0.30 0.38 0.48" shininess="60" />
+  <material id="door_gold" color="0.92 0.70 0.24" shininess="70" />
+  <let name="W" value="600" />
+  <let name="H" value="900" />
+  <let name="D" value="130" />
+  <let name="KZ" value="420" />
+  <let name="SX" value="24" />
+  <let name="S0" value="340" />
+  <let name="S1" value="446" />
+  <attach name="key_axis" pos="0 {-D/2} {KZ}" />
+  <attach name="slot_floor" pos="0 0 {S0}" />
+  <!-- The slab, built around the keyhole slot. -->
+  <box pos="{-(W/2 + SX)/2} 0 {H/2}" size="{W/2 - SX} {D} {H}" material="door_steel" />
+  <box pos="{(W/2 + SX)/2} 0 {H/2}" size="{W/2 - SX} {D} {H}" material="door_steel" />
+  <box pos="0 0 {S0/2}" size="{2*SX} {D} {S0}" material="door_steel" />
+  <box pos="0 0 {(S1 + H)/2}" size="{2*SX} {D} {H - S1}" material="door_steel" />
+  <!-- A raised rim round the outside face and a gold escutcheon round the slot. -->
+  <group name="rim">
+    <box pos="0 {-D/2 - 6} {H - 20}" size="{W - 2} 12 40" material="door_rim" />
+    <box pos="0 {-D/2 - 6} 20" size="{W - 2} 12 40" material="door_rim" />
+    <box pos="{-W/2 + 21} {-D/2 - 6} {H/2}" size="40 12 {H - 82}" material="door_rim" />
+    <box pos="{W/2 - 21} {-D/2 - 6} {H/2}" size="40 12 {H - 82}" material="door_rim" />
+  </group>
+  <group name="escutcheon">
+    <box pos="{-SX - 12} {-D/2 - 4} {(S0 + S1)/2}" size="24 8 {S1 - S0 + 48}" material="door_gold" />
+    <box pos="{SX + 12} {-D/2 - 4} {(S0 + S1)/2}" size="24 8 {S1 - S0 + 48}" material="door_gold" />
+    <box pos="0 {-D/2 - 4} {S1 + 12}" size="{2*SX - 2} 8 24" material="door_gold" />
+    <box pos="0 {-D/2 - 4} {S0 - 12}" size="{2*SX - 2} 8 24" material="door_gold" />
+  </group>
+  <!-- Diamond studs in two columns. -->
+  <pyramid pos="-160 {-D/2} 700" rot="-90 0 45" radius="46" height="22" material="door_rim" />
+  <pyramid pos="160 {-D/2} 700" rot="-90 0 45" radius="46" height="22" material="door_rim" />
+  <pyramid pos="-160 {-D/2} 200" rot="-90 0 45" radius="46" height="22" material="door_rim" />
+  <pyramid pos="160 {-D/2} 200" rot="-90 0 45" radius="46" height="22" material="door_rim" />
+</prefab>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Brainiac's red-sun emitter, the weapon hidden in the lead rock: a round iron housing with cooling
+     fins and a ruby lens on top. Origin at the bottom of its rounded base; the lens points up, +Z (front
+     +z), 150 cm above the origin. The scene stands it at 0.55 scale on the cavity floor of
+     orbit/lead_shell, where it fits the 90 cm-high hollow of the closed rock. Materials from the scene: iron_dark, ruby. -->
+<prefab up="z" front="+z">
+  <sphere pos="0 0 55" radius="55" rings="10" slices="16" scale="1 1 1" material="iron_dark"/>
+  <cylinder pos="0 0 100" rot="90 0 0" radius="34" height="60" sides="16" material="iron_dark"/>
+  <!-- Four cooling fins round the barrel. -->
+  <box pos="40 0 100" size="16 6 54" material="iron_dark"/>
+  <box pos="-40 0 100" size="16 6 54" material="iron_dark"/>
+  <box pos="0 40 100" size="6 16 54" material="iron_dark"/>
+  <box pos="0 -40 100" size="6 16 54" material="iron_dark"/>
+  <torus pos="0 0 128" rot="90 0 0" majorRadius="34" minorRadius="6" majorSegments="18" minorSegments="6" material="iron_dark"/>
+  <sphere pos="0 0 130" radius="28" rings="10" slices="16" scale="1 1 0.75" material="ruby"/>
+</prefab>

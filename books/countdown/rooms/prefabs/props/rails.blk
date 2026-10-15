@@ -1,10 +1,15 @@
-<!-- 1000 cm of standard-gauge track along local X: sleepers on ballast and two rails; origin at the
-     middle, the rail head at z=0 and the ballast below it. -->
-<prefab>
-  <box pos="0 0 -30" size="1000 320 24" material="ballast" />
-  <box pos="-480 0 -14" size="24 260 14" material="sleeper">
-    <array count="17" translation="60 0 0" />
+<!-- 1000 cm of standard-gauge track along local X, front +x (it runs both ways): two rails spiked to
+     sixteen timber sleepers bedded in a two-step ballast shoulder. Footprint 1000 x 340.
+     Baseline: the ballast bottom at z=-45 rests on the ground; the rail head is z=0.
+     Origin: the middle of the segment on the rail head; rails at y=±72 (gauge 144).
+     Segments butt end to end every 1000 cm, sleepers keep a 62.5 cm pitch across the joints. -->
+<prefab up="z" front="+x">
+  <attach name="rail_head" pos="0 0 0" />
+  <box pos="0 0 -39" size="1000 340 12" material="ballast" />
+  <box pos="0 0 -28" size="1000 280 10" material="ballast_top" />
+  <box pos="-468.75 0 -23" size="24 260 16" material="sleeper">
+    <array count="16" translation="62.5 0 0" />
   </box>
-  <box pos="0 72 -4" size="1000 7 10" material="rail" />
-  <box pos="0 -72 -4" size="1000 7 10" material="rail" />
+  <box pos="0 72 -7.5" size="1000 7 15" material="rail" />
+  <box pos="0 -72 -7.5" size="1000 7 15" material="rail" />
 </prefab>

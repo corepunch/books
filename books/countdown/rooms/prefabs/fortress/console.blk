@@ -1,0 +1,38 @@
+<!-- The Super Computer's console: a tapered ice-steel desk 560 wide (local X) and 150 deep with a
+     sloped crystal keyboard at hand height (about 100) lit by glowing key panels, a pointed crystal
+     fin at each end (175 tall), and the projector lens on its back edge that throws images into the
+     air above. Origin on the floor under the middle of the desk. Front (the operator's side) is -Y.
+     Self-contained materials (the hall's own override them). -->
+<prefab up="z" front="-y">
+  <material id="fortress_metal" color="0.24 0.30 0.38" shininess="70" />
+  <material id="fortress_crystal" color="0.80 0.93 0.98" shininess="140" />
+  <material id="fortress_glow" color="0.55 0.95 1.0" shininess="5" />
+  <let name="W" value="560" />
+  <let name="BH" value="88" />
+  <attach name="lens" pos="0 52 {BH + 44}" />
+  <attach name="top_surface" pos="0 0 {BH + 12}" />
+  <!-- Body: a block narrowing toward the floor. -->
+  <box pos="0 0 {BH/2}" size="{W - 80} 110 {BH}" material="fortress_metal">
+    <taper amount="0.1" axis="z" />
+  </box>
+  <!-- Keyboard: a crystal slab tilted toward the operator, with three glowing key panels. -->
+  <group name="desk" pos="0 -8 {BH + 6}" rot="14 0 0">
+    <box pos="0 0 0" size="{W - 40} 150 10" material="fortress_crystal" />
+    <box pos="-160 -10 5.5" size="120 70 1" material="fortress_glow" unlit="1" castShadow="0" />
+    <box pos="0 -14 5.5" size="140 80 1" material="fortress_glow" unlit="1" castShadow="0" />
+    <box pos="160 -10 5.5" size="120 70 1" material="fortress_glow" unlit="1" castShadow="0" />
+  </group>
+  <!-- The projector: a short column on the back edge with its glowing lens. -->
+  <group name="projector">
+    <cylinder pos="0 52 {BH + 14}" rot="90 0 0" radius="26" height="28" material="fortress_metal" />
+    <cylinder pos="0 52 {BH + 31}" rot="90 0 0" radius="20" height="6" material="fortress_crystal" />
+    <sphere pos="0 52 {BH + 34}" radius="13" scale="1 1 0.7" material="fortress_glow" unlit="1" castShadow="0" />
+  </group>
+  <!-- End fins: pointed crystals standing on the floor at each end of the desk. -->
+  <group name="fins">
+    <prism pos="{-W/2 + 10} 0 60" rot="90 0 0" radius="34" height="120" sides="6" material="fortress_crystal" />
+    <cone pos="{-W/2 + 10} 0 147.5" rot="90 0 0" radius="34" height="55" sides="6" material="fortress_crystal" />
+    <prism pos="{W/2 - 10} 0 60" rot="90 0 0" radius="34" height="120" sides="6" material="fortress_crystal" />
+    <cone pos="{W/2 - 10} 0 147.5" rot="90 0 0" radius="34" height="55" sides="6" material="fortress_crystal" />
+  </group>
+</prefab>

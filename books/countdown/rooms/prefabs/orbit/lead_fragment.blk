@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- A fragment of the burst lead shell: a thick, faceted, slightly curled plate of lead about 90 x 70 cm
+     and 16 cm thick, centred on the origin. Its outer face (the rock's old skin) faces local +Z (front
+     +z); the bright inner face is lead_dark. Free-flying debris, no baseline.
+     Materials from the scene: lead, lead_dark. -->
+<prefab up="z" front="+z">
+  <prism rot="90 0 0" radius="46" height="10" sides="5" scale="1 1 0.8" material="lead">
+    <taper amount="0.25" axis="x"/>
+    <bend angle="28" axis="x"/>
+  </prism>
+  <prism pos="0 0 -8" rot="90 0 0" radius="40" height="6" sides="5" scale="1 1 0.8" material="lead_dark">
+    <taper amount="0.25" axis="x"/>
+    <bend angle="28" axis="x"/>
+  </prism>
+</prefab>

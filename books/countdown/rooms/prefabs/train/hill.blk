@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A rolling grass hill: a lathed dome with a flat base. 2000 cm across and 460 cm high at scale 1;
+     instances scale it (usually much larger and flattened) and tint it (tint="1").
+     Origin on the ground at the centre of its base. No front. Material from the scene: grass. -->
+<prefab up="z" front="-y">
+  <shape id="hill_profile" closed="0">
+    <v x="0" y="0" />
+    <v x="1000" y="0" />
+    <v x="880" y="90" />
+    <v x="680" y="250" />
+    <v x="420" y="390" />
+    <v x="180" y="450" />
+    <v x="0" y="460" />
+  </shape>
+  <lathe shape="hill_profile" segments="40" rot="90 0 0" material="grass" tint="1" />
+</prefab>

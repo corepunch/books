@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- A long, splintered meteorite: a twisted five-sided spar tapering to a broken point, with a knob
+     fused at its thick end. About 170 x 160 cm across and 300 cm long along local Z round its centre
+     (origin); the thick end is at -Z, the point at +Z. Free-falling, so no baseline.
+     Materials from the scene: meteor, meteor_dark. -->
+<prefab up="z">
+  <let name="L" value="300"/>
+  <prism rot="90 0 0" radius="80" height="{L*0.8}" sides="5" material="meteor">
+    <taper amount="-0.55" axis="y"/>
+    <twist angle="38" axis="y"/>
+    <skew amount="0.12" axis="y"/>
+  </prism>
+  <sphere pos="10 -8 {-L*0.36}" rot="0 30 15" radius="72" rings="5" slices="6" scale="1.1 0.95 0.8" material="meteor">
+    <taper amount="0.2" axis="x"/>
+  </sphere>
+  <torus pos="-52 -38 {-L*0.12}" rot="0 0 127" majorRadius="22" minorRadius="5" majorSegments="10" minorSegments="6" material="meteor_dark"/>
+</prefab>

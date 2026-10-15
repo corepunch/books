@@ -1,0 +1,13 @@
+<!-- A ship control console: a 120 cm desk on a solid base, its top tilted 25 degrees toward the operator
+     and covered by a glowing cyan key panel with an amber status pad. Footprint 120 x 70, 104 cm high.
+     The operator stands at local -Y; the back (local +Y, y = 31) can stand against a wall.
+     Origin on the floor under the base centre. Attach: top_surface (panel centre).
+     Scene materials: sh_dark, sh_rib. -->
+<prefab up="z" front="-y">
+  <attach name="top_surface" pos="0 0.1 92.1" />
+  <box pos="0 6 44" size="110 50 72" material="sh_dark" />
+  <box pos="0 4 4" size="114 52 8" material="sh_rib" />
+  <box pos="0 2 88" rot="25 0 0" size="120 60 8" material="sh_rib" />
+  <box pos="-12 0.1 92.08" rot="25 0 0" size="80 48 1" color="0.28 0.92 0.80" unlit="1" castShadow="0" />
+  <box pos="40 0.1 92.08" rot="25 0 0" size="20 30 1" color="1.0 0.62 0.20" unlit="1" castShadow="0" />
+</prefab>

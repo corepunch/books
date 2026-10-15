@@ -1,0 +1,9 @@
+<!-- Trophy: a lump of meteor rock, about 80 across, pitted and dark with a rust streak. Origin on the
+     surface it rests on, under its middle. No front (declared -Y). Self-contained materials. -->
+<prefab up="z" front="-y">
+  <material id="trophy_rock" color="0.36 0.31 0.27" shininess="8" />
+  <sphere pos="0 0 37.3" radius="40" scale="1.1 0.9 0.85" material="trophy_rock">
+    <noise strength="0.05" seed="7" />
+  </sphere>
+  <sphere pos="18 -18 55" radius="16" color="0.55 0.30 0.16" shininess="10" />
+</prefab>

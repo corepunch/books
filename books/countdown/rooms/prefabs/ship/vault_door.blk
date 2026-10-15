@@ -1,0 +1,15 @@
+<!-- The vault's lead door: a 158 x 24 x 258 cm slab with a locking wheel and four bolt housings on its
+     face (local -Y). It fills ship/vault's doorway (attach "door"); torn away it lies on its back.
+     Origin at the bottom centre of the slab. Scene materials: sh_lead, gunmetal. -->
+<prefab up="z" front="-y">
+  <box pos="0 0 129" size="158 24 258" material="sh_lead" />
+  <box pos="0 -13 129" size="140 2 240" material="sh_lead_dark" />
+  <torus pos="0 -22 130" majorRadius="30" minorRadius="3.5" material="gunmetal" />
+  <cylinder pos="0 -18 130" radius="8" height="10" material="gunmetal" />
+  <box pos="0 -18 130" size="60 4 5" material="gunmetal" />
+  <box pos="0 -18 130" size="5 3.4 60" material="gunmetal" />
+  <box pos="-62 -17 40" size="14 6 30" material="gunmetal" />
+  <box pos="62 -17 40" size="14 6 30" material="gunmetal" />
+  <box pos="-62 -17 218" size="14 6 30" material="gunmetal" />
+  <box pos="62 -17 218" size="14 6 30" material="gunmetal" />
+</prefab>

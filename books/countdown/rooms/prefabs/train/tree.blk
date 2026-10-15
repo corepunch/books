@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A summer field tree: a tapered trunk and three lumpy leaf masses. About 460 cm across, 480 cm tall at
+     scale 1; instances scale it and tint the foliage (tint="1"). Origin on the ground at the trunk's foot.
+     No front. Note: <noise strength> is in metres (0.16 = 16 cm), unlike every other length. Materials from the scene: bark, leaf. -->
+<prefab up="z" front="-y">
+  <cylinder pos="0 0 150" rot="90 0 0" radius="16" height="300" material="bark">
+    <taper amount="-0.35" />
+  </cylinder>
+  <sphere pos="0 0 330" radius="150" material="leaf" tint="1"><noise strength="0.16" seed="3" /></sphere>
+  <sphere pos="80 40 285" radius="105" material="leaf" tint="1"><noise strength="0.12" seed="5" /></sphere>
+  <sphere pos="-70 -45 270" radius="100" material="leaf" tint="1"><noise strength="0.12" seed="9" /></sphere>
+</prefab>

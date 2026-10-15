@@ -1,15 +1,64 @@
-<!-- One Cybernetic Bacterium, enlarged: a skull-like dome on eight jointed legs, 100 cm across as seen
-     on the Fortress display. Origin under the dome's middle. -->
-<prefab>
-  <sphere pos="0 0 50" radius="30" scale="1 1 0.8" material="bacterium" />
-  <sphere pos="-10 -26 52" radius="6" material="bacterium_eye" />
-  <sphere pos="10 -26 52" radius="6" material="bacterium_eye" />
-  <cylinder pos="0 30 30" rot="35 0 0" radius="3" height="60" material="bacterium" />
-  <cylinder pos="0 -30 30" rot="-35 0 0" radius="3" height="60" material="bacterium" />
-  <cylinder pos="30 0 30" rot="0 -35 0" radius="3" height="60" material="bacterium" />
-  <cylinder pos="-30 0 30" rot="0 35 0" radius="3" height="60" material="bacterium" />
-  <cylinder pos="22 22 30" rot="25 -25 0" radius="3" height="60" material="bacterium" />
-  <cylinder pos="-22 22 30" rot="25 25 0" radius="3" height="60" material="bacterium" />
-  <cylinder pos="22 -22 30" rot="-25 -25 0" radius="3" height="60" material="bacterium" />
-  <cylinder pos="-22 -22 30" rot="-25 25 0" radius="3" height="60" material="bacterium" />
+<!-- One Cybernetic Bacterium, enlarged: a skull-like dome with two glowing eye sockets and a jaw plate,
+     on eight jointed spider legs, about 100 cm across and 60 cm tall as seen on the Fortress display.
+     Origin on the ground plane under the dome's middle, where the leg tips stand. Front (the face)
+     is -Y. Z up. Self-contained materials. -->
+<prefab up="z" front="-y">
+  <material id="bacterium_shell" color="0.62 0.34 0.74" shininess="60" />
+  <material id="bacterium_leg" color="0.36 0.20 0.46" shininess="40" />
+  <material id="bacterium_eye" color="1.0 0.30 0.20" shininess="5" />
+  <let name="BZ" value="42" />
+  <let name="KR" value="34" />
+  <let name="KZ" value="56" />
+  <let name="TR" value="52" />
+  <!-- Skull: the dome, a jaw plate under its face, two eye sockets. -->
+  <sphere pos="0 0 {BZ}" radius="26" scale="1 1.1 0.8" material="bacterium_shell" />
+  <box pos="0 -18 {BZ - 16}" size="22 14 10" material="bacterium_leg" />
+  <sphere pos="-9 -24 {BZ + 2}" radius="5.5" material="bacterium_eye" unlit="1" castShadow="0" />
+  <sphere pos="9 -24 {BZ + 2}" radius="5.5" material="bacterium_eye" unlit="1" castShadow="0" />
+  <!-- Eight legs: an upper segment rising from the body to a knee, a lower one down to the tip. -->
+  <!-- Each leg group turns about Z; inside it the leg lies in the local XZ plane, radial along +X. -->
+  <let name="UL" value="hypot(KR - 14, KZ - BZ)" />
+  <let name="DL" value="hypot(TR - KR, KZ - 0.7)" />
+  <let name="UA" value="deg(atan2(KR - 14, KZ - BZ))" />
+  <let name="DA" value="deg(atan2(TR - KR, 0.7 - KZ))" />
+  <group rot="0 0 22.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
+  <group rot="0 0 67.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
+  <group rot="0 0 112.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
+  <group rot="0 0 157.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
+  <group rot="0 0 202.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
+  <group rot="0 0 247.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
+  <group rot="0 0 292.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
+  <group rot="0 0 337.5">
+    <cylinder pos="{(14 + KR)/2} 0 {(BZ + KZ)/2}" rot="90 {UA} 0" radius="2.6" height="{UL}" material="bacterium_leg" />
+    <sphere pos="{KR} 0 {KZ}" radius="4" material="bacterium_shell" />
+    <cylinder pos="{(KR + TR)/2} 0 {(KZ + 0.7)/2}" rot="90 {DA} 0" radius="2.2" height="{DL}" material="bacterium_leg" />
+  </group>
 </prefab>

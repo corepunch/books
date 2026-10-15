@@ -1,0 +1,9 @@
+<!-- A ceiling-high light bar on the command deck: a 140 cm housing with a cold white emitter strip on
+     its face (local -Y) and the point light just in front of the strip. Its back (local +Y, y = 0)
+     mounts flat on a wall. Origin at the back centre. Scene materials: sh_dark, sh_trim. -->
+<prefab up="z" front="-y">
+  <box pos="0 -7 0" size="140 14 24" material="sh_dark" />
+  <box pos="0 -14.5 0" size="124 1 10" color="0.92 0.97 1.0" unlit="1" castShadow="0" />
+  <box pos="0 -12 15" size="146 24 6" material="sh_trim" />
+  <light pos="0 -30 -6" color="0.86 0.94 1.0" intensity="1.5" radius="1500" castShadows="1" />
+</prefab>

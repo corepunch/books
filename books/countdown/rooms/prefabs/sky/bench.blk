@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A park bench of the Mt. Royal lawn: two cast-iron side frames, three wooden seat slats and two back slats.
+     Footprint 164 x 56 cm (local X along the seat, Y deep); baseline z=0 on the grass; the seat top is 46 cm,
+     the backrest top 84 cm. Origin on the ground under the middle of the seat. Front -Y: the sitters face
+     local -Y and the back is at +Y; rot="0 0 180" faces +Y.
+     Attach: seat (seat top centre, where people sit or Clark stands), place_a / place_b (two sitting places).
+     Materials from the scene: bench_wood, bench_iron. -->
+<prefab up="z" front="-y">
+  <let name="L" value="164" />     <!-- seat length -->
+  <let name="SEAT" value="46" />   <!-- seat top -->
+  <let name="SLAT" value="3" />    <!-- slat thickness -->
+  <let name="D" value="44" />      <!-- seat depth -->
+  <let name="BACK" value="84" />   <!-- backrest top -->
+  <let name="FX" value="L/2 - 12" /> <!-- side frame offset -->
+  <attach name="seat" pos="0 0 {SEAT}" />
+  <attach name="place_a" pos="-38 4 {SEAT}" />
+  <attach name="place_b" pos="38 4 {SEAT}" />
+
+  <!-- Side frames: front leg, back leg rising into the backrest post, seat rail and armrest. -->
+  <group name="frame_left" pos="{-FX} 0 0">
+    <box pos="0 {-D/2 + 4} {(SEAT - SLAT - 5)/2}" size="6 6 {SEAT - SLAT - 5}" material="bench_iron" />
+    <box pos="0 {D/2 - 2} {BACK/2}" size="6 6 {BACK}" material="bench_iron" />
+    <box pos="0 0 {SEAT - SLAT - 2.5}" size="5 {D} 5" material="bench_iron" />
+    <box pos="0 {-3} {SEAT + 18}" size="7 {D - 8} 4" material="bench_iron" />
+    <box pos="0 {-D/2 + 4} {SEAT + 8}" size="5 5 16" material="bench_iron" />
+  </group>
+  <group name="frame_right" pos="{FX} 0 0">
+    <box pos="0 {-D/2 + 4} {(SEAT - SLAT - 5)/2}" size="6 6 {SEAT - SLAT - 5}" material="bench_iron" />
+    <box pos="0 {D/2 - 2} {BACK/2}" size="6 6 {BACK}" material="bench_iron" />
+    <box pos="0 0 {SEAT - SLAT - 2.5}" size="5 {D} 5" material="bench_iron" />
+    <box pos="0 {-3} {SEAT + 18}" size="7 {D - 8} 4" material="bench_iron" />
+    <box pos="0 {-D/2 + 4} {SEAT + 8}" size="5 5 16" material="bench_iron" />
+  </group>
+  <!-- Seat slats rest on the rails; back slats are screwed to the front of the back posts. -->
+  <box pos="0 {-D/2 + 7} {SEAT - SLAT/2}" size="{L} 13 {SLAT}" material="bench_wood" />
+  <box pos="0 0 {SEAT - SLAT/2}" size="{L} 13 {SLAT}" material="bench_wood" />
+  <box pos="0 {D/2 - 7} {SEAT - SLAT/2}" size="{L} 13 {SLAT}" material="bench_wood" />
+  <box pos="0 {D/2 - 6.5} {SEAT + 14}" size="{L} {SLAT} 13" material="bench_wood" />
+  <box pos="0 {D/2 - 6.5} {BACK - 8}" size="{L} {SLAT} 13" material="bench_wood" />
+</prefab>

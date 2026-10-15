@@ -1,0 +1,17 @@
+<!-- The computer relay: a 240 x 110 cm tower of Brainiac's circuitry, 620 cm tall, on a plinth under a
+     cornice. Three cyan read-outs and a wide green display face its front (local -Y), framed by two
+     vertical light strips, over a vent grille. Its back (local +Y, y = 55) stands against a wall.
+     Origin on the floor under its centre. Scene materials: sh_dark, sh_rib, sh_trim. -->
+<prefab up="z" front="-y">
+  <attach name="screens" pos="0 -57 420" />
+  <box pos="0 0 10" size="250 118 20" material="sh_rib" />
+  <box pos="0 0 310" size="240 110 580" material="sh_dark" />
+  <box pos="0 0 610" size="256 124 20" material="sh_rib" />
+  <box pos="-70 -56 420" size="66 2 50" color="0.30 0.95 0.90" unlit="1" castShadow="0" />
+  <box pos="0 -56 420" size="66 2 50" color="0.30 0.95 0.90" unlit="1" castShadow="0" />
+  <box pos="70 -56 420" size="66 2 50" color="0.30 0.95 0.90" unlit="1" castShadow="0" />
+  <box pos="0 -56 270" size="200 2 90" color="0.16 0.52 0.40" unlit="1" castShadow="0" />
+  <box pos="-112 -56 340" size="6 2 480" color="0.40 1.0 0.85" unlit="1" castShadow="0" />
+  <box pos="112 -56 340" size="6 2 480" color="0.40 1.0 0.85" unlit="1" castShadow="0" />
+  <box pos="0 -58 70" size="200 6 6" material="sh_trim"><array count="6" translation="0 0 14" /></box>
+</prefab>

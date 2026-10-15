@@ -1,0 +1,27 @@
+<!-- A seeding tank on the command deck: a 124 cm column of Bacteria held between a 156 cm plinth and a
+     domed cap by six struts and two hoops, 380 cm tall (the glass wall is left out so the brew shows;
+     the illustration paints it). The pumps send the brew to the nozzles under the hull; the scene fills
+     the column (radius 59, z 30..330: the liquid is camera state). On its front (local -Y) a pipe neck at chest height
+     is the intake; a pipe stub at the back (local +Y) runs into the wall behind. Origin on the floor
+     under its centre. Attach: intake (neck mouth), top. Scene materials: sh_dark, sh_rib, sh_trim. -->
+<prefab up="z" front="-y">
+  <let name="R" value="62" />
+  <let name="B" value="30" />
+  <let name="H" value="300" />
+  <attach name="intake" pos="0 -106 140" />
+  <attach name="top" pos="0 0 {B + H + 46}" />
+  <cylinder pos="0 0 {B / 2}" rot="90 0 0" radius="78" height="{B}" sides="16" material="sh_dark" />
+  <cylinder pos="{(R + 3) * cos(rad(30))} {(R + 3) * sin(rad(30))} {B + H / 2}" rot="90 0 0" radius="3" height="{H}" material="sh_trim" />
+  <cylinder pos="{(R + 3) * cos(rad(90))} {(R + 3) * sin(rad(90))} {B + H / 2}" rot="90 0 0" radius="3" height="{H}" material="sh_trim" />
+  <cylinder pos="{(R + 3) * cos(rad(150))} {(R + 3) * sin(rad(150))} {B + H / 2}" rot="90 0 0" radius="3" height="{H}" material="sh_trim" />
+  <cylinder pos="{(R + 3) * cos(rad(210))} {(R + 3) * sin(rad(210))} {B + H / 2}" rot="90 0 0" radius="3" height="{H}" material="sh_trim" />
+  <cylinder pos="{(R + 3) * cos(rad(330))} {(R + 3) * sin(rad(330))} {B + H / 2}" rot="90 0 0" radius="3" height="{H}" material="sh_trim" />
+  <cylinder pos="0 0 {B + H + 12}" rot="90 0 0" radius="70" height="24" sides="16" material="sh_rib" />
+  <sphere pos="0 0 {B + H + 24}" radius="50" scale="1 1 0.44" material="sh_dark" />
+  <torus pos="0 0 {B + 90}" rot="90 0 0" majorRadius="{R + 2}" minorRadius="3" majorSegments="40" material="sh_trim" />
+  <torus pos="0 0 {B + 200}" rot="90 0 0" majorRadius="{R + 2}" minorRadius="3" majorSegments="40" material="sh_trim" />
+  <!-- Intake neck and flange on the front; the outlet stub at the back. -->
+  <cylinder pos="0 -84 140" radius="14" height="44" material="sh_rib" />
+  <torus pos="0 -104 140" majorRadius="15" minorRadius="3" material="sh_trim" />
+  <cylinder pos="0 88 16" radius="12" height="40" material="sh_rib" />
+</prefab>

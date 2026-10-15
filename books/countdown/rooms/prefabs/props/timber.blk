@@ -1,4 +1,7 @@
-<!-- One squared timber from the old bridge, 600 x 30 x 30, along local X; origin at its middle. -->
-<prefab>
-  <box size="600 30 30" material="timber" />
+<!-- One squared timber from the old wooden bridge: a 1500 cm stringer, 35 x 35 cm, weathered grey-brown.
+     Lies along local X.
+     Baseline: its underside at z=0. Origin: the middle of the underside. Not directional. -->
+<prefab up="z" front="+x">
+  <attach name="top" pos="0 0 35" />
+  <box pos="0 0 17.5" size="1500 35 35" material="timber" />
 </prefab>

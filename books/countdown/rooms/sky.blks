@@ -1,204 +1,427 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Обратный отсчёт: Mt. Royal Observatory above Metropolis, 8 P.M., and the sky over the city when
-     Brainiac's ship arrives. Z up, cm, X east, Y north. The hilltop lawn (z=0) holds the charity Star
-     Watch: the domed observatory, telescopes on tripods, lamp posts strung for the evening and couples
-     looking up. The hill falls away north to the city: towers along the river 30 m lower. The ship hangs
-     over the city's edge, its centre 90 m north of the lawn and 60 m up; far away (the Falling-Star group)
-     it is only a glowing point. Superman and Clark are authored 50 m below the lawn; camera transforms
-     give world positions. -->
-<scene up="z" ambient="0.20 0.20 0.28" background="0.20 0.18 0.32">
-  <camera name="obs-show-lana" comment="The Star Watch: Lana takes Clark's arm and points at a falling star over the city" pos="-420 -560 170" look="300 3000 1100" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Clark" pos="60 0 5000" rot="0 0 175" />
-    <transform target="Ship" pos="0 0 -90000" />
-    <transform target="FallingStar" pos="0 0 90000" />
+<!-- Обратный отсчёт: Mt. Royal Observatory above Metropolis at 8 P.M., and the sky over the city when Brainiac's
+     ship arrives. Z up, cm, X east, Y north.
+     Resident story: the observatory holds its charity Star Watch tonight. Volunteers carried telescopes out onto
+     the hilltop lawn (z=0) by the lookout parapet, the park lamps are lit, couples sit on the benches and the big
+     refractor looks out of the dome's open slit. Below the lookout the hill falls 30 m to the river road; across
+     the river (north bank from y=13000) Metropolis rises, the Daily Planet's globe among its towers.
+     Brainiac's ship is a 40 m sphere whose belly hangs 60 m over the river, its centre (ShipFrame) at
+     600 11400 5000, its skull turned 20 degrees west of south toward the hill. Far off (the FallingStar group)
+     it is a streak in the north-east sky.
+     Key light is the moon, low in the west-south-west; a warm shadowless glow from the city lights the
+     undersides; the park lamps, the observatory porch and the ship's red airlock are practicals.
+     Camera-scoped sets: actors and alternative crowds are stored 200 m underground (z = PARK) where nothing can
+     see them, and each camera's transforms bring its own set up to the lawn or the sky. Cameras and anchors
+     use plain numbers because the book engine reads them without evaluating expressions. -->
+<scene up="z" ambient="0.15 0.16 0.24" background="0.05 0.07 0.16">
+  <let name="CITY" value="-3000" />      <!-- street level of Metropolis -->
+  <let name="RIVER_S" value="9600" />    <!-- south bank of the river -->
+  <let name="RIVER_N" value="13000" />   <!-- north bank -->
+  <let name="WATER" value="CITY - 220" /> <!-- river surface -->
+  <let name="HILL_R" value="9200" />     <!-- hill foot radius -->
+  <let name="LAWN_R" value="4300" />     <!-- lawn plateau radius -->
+  <let name="PARK" value="-20000" />     <!-- storage depth for camera-scoped sets -->
+  <let name="CLARK_X" value="60000" />   <!-- storage spots of the actors, PARK deep -->
+  <let name="LANA_X" value="70000" />
+  <let name="HERO_X" value="80000" />
+
+  <!-- Cameras. Lawn shots look north-north-east from the south-west of the lawn; sky shots stay on the
+       hill's side of the ship so the skull, the airlock and the city share a frame. -->
+  <camera name="obs-show-lana" comment="The Star Watch: at the lookout parapet Lana takes Clark's arm and points at a falling star in the sky over the city" pos="-1080 3000 135" look="-300 5200 680" fov="50" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="Clark" pos="{-760 - CLARK_X} 3655 {-PARK}" rot="0 0 170" />
+    <transform target="Lana" pos="{-880 - LANA_X} 3630 {-PARK}" rot="0 0 172" />
+    <use-pose instance="Lana" name="StarPoint" />
+    <transform target="ShipFrame" pos="0 0 -70000" />
+    <transform target="FallingStar" pos="0 0 {-PARK}" />
   </camera>
-  <camera name="obs-show-ship" comment="The ship looms over Metropolis, tentacles hanging; on the lawn the stargazers scatter; Clark beside the telescope" pos="-1300 -1500 300" look="300 6000 2000" fov="64" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Clark" pos="60 0 5000" rot="0 0 175" />
-    <transform target="Crowd" pos="0 0 5000" />
-    <transform target="Couples" pos="0 0 -5000" />
+  <camera name="obs-show-ship" comment="The ship hangs over Metropolis, tentacles down, skull turned to the hill; on the lawn the stargazers run, one has fallen by a telescope; Clark stands by the middle telescope with Lana pointing; the observatory on the left" pos="-800 -1700 160" look="-200 9000 2600" fov="66" textRect="0.04 0.035 0.92 0.22" textScale="1">
+    <transform target="Couples" pos="0 0 {PARK}" />
+    <transform target="Panic" pos="0 0 {-PARK}" />
+    <transform target="Clark" pos="{180 - CLARK_X} 1420 {-PARK}" rot="0 0 175" />
+    <transform target="Lana" pos="{380 - LANA_X} 1560 {-PARK}" rot="0 0 172" />
+    <use-pose instance="Lana" name="Point" />
   </camera>
-  <camera name="obs-calm" comment="Clark stands on a bench and calls to the crowd; the people stop and turn to him" pos="-1300 -1500 300" look="300 6000 2000" fov="64" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Clark" pos="-300 400 5045" rot="0 0 140" />
+  <camera name="obs-calm" comment="Clark stands on a bench and calls to the crowd; the people stop and turn to him, Lana amazed" pos="-380 400 95" look="-330 1500 330" fov="58" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="Couples" pos="0 0 {PARK}" />
+    <transform target="Calm" pos="-20000 0 {-PARK}" />
+    <transform target="Clark" pos="{-350 - CLARK_X} 1450 {46 - PARK}" rot="0 0 10" />
     <use-pose instance="Clark" name="Wave" />
-    <transform target="Calm" pos="0 0 5000" />
-    <transform target="Couples" pos="0 0 -5000" />
+    <transform target="Lana" pos="{0 - LANA_X} 1150 {-PARK}" rot="0 0 -131" />
+    <use-pose instance="Lana" name="Reveal" />
   </camera>
-  <camera name="ship-show-belly" comment="X-ray vision: under the hull of the ship, the airlock glowing red, and above it the red globe in its room" pos="1550 6850 1850" look="300 8800 3600" fov="58" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="1100 7400 7100" rot="40 0 150" />
-    <use-pose instance="Superman" name="Fly" />
-    <transform target="XrayRoom" pos="0 0 90000" />
+  <camera name="ship-show-belly" comment="X-ray vision over Clark's shoulder: the ship turned to pale hoops, the airlock lens and above it the Red Sun Room with the red globe burning" pos="-905 3470 112" look="600 11400 4300" fov="34" textRect="0.04 0.035 0.92 0.26" textScale="1">
+    <transform target="Clark" pos="{-930 - CLARK_X} 3610 {-PARK}" rot="0 0 168" />
+    <transform target="Ship" pos="0 0 {PARK}" />
+    <transform target="XrayShip" pos="-40000 0 {-PARK}" />
   </camera>
-  <camera name="ship-show-tentacles" comment="Over the city: a tentacle has Superman round the waist; under the ship the airlock opens red" pos="1500 7000 2400" look="650 8900 3350" fov="66" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="1250 8300 7900" rot="0 0 150" />
-    <use-pose instance="Superman" name="Float" />
-    <transform target="Grip" pos="0 0 90000" />
+  <camera name="ship-show-tentacles" comment="Under the ship: the front tentacle has Superman round the waist and he pries at the coil; the other tentacles hang and lash, the airlock opens red, the city lies far below" pos="-500 7500 2300" look="700 10500 3150" fov="62" textRect="0.04 0.035 0.92 0.24" textScale="1">
+    <transform target="Superman" pos="{-115 - HERO_X} 8086 {2515 - PARK}" rot="0 0 -30" />
+    <use-pose instance="Superman" name="HandsOnHips" />
+    <use-pose instance="Ship" name="ShipGrip" />
+    <transform target="Grip" pos="0 0 {-PARK}" />
+    <transform target="LockOpen" pos="-32000 0 {-PARK}" />
   </camera>
-  <camera name="ship-tentacles" comment="Superman tears a tentacle apart; the severed coil falls toward the river" pos="900 7550 2700" look="1250 8600 3300" fov="58" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="1250 8200 7950" rot="0 0 150" />
+  <camera name="ship-tentacles" comment="Superman has torn the front tentacle in two and holds the stump over his head; the severed end falls away toward the river" pos="143 8753 2172" look="900 9700 2700" fov="66" textRect="0.04 0.035 0.92 0.24" textScale="1">
+    <transform target="Superman" pos="{703 - HERO_X} 9165 {2290 - PARK}" rot="0 0 -30" />
     <use-pose instance="Superman" name="Lift" />
-    <transform target="Torn" pos="0 0 90000" />
+    <use-pose instance="Ship" name="ShipTorn" />
+    <transform target="Torn" pos="-8000 0 {-PARK}" />
+    <transform target="LockOpen" pos="-32000 0 {-PARK}" />
   </camera>
-  <camera name="ship-red-beam" comment="The red-sun beam pours from the airlock; Superman hangs limp in it and is drawn up" pos="-500 7900 2400" look="0 9000 3300" fov="58" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="0 9000 7700" rot="90 0 30" />
+  <camera name="ship-red-beam" comment="The red-sun beam pours from the airlock; Superman hangs limp in it, on his back, and is drawn up" pos="50 10850 1750" look="600 11400 2600" fov="70" textRect="0.04 0.035 0.92 0.24" textScale="1">
+    <transform target="Superman" pos="{647 - HERO_X} 11317 {2160 - PARK}" rot="-90 0 30" />
     <use-pose instance="Superman" name="Float" />
-    <transform target="RedBeam" pos="0 0 90000" />
+    <transform target="RedBeam" pos="-16000 0 {-PARK}" />
+    <transform target="LockOpen" pos="-32000 0 {-PARK}" />
   </camera>
-  <camera name="ship-breach" comment="Superman's heat vision cuts a glowing ring in the hull beside the dead emitter" pos="350 7650 3050" look="700 8700 3550" fov="58" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Superman" pos="700 8400 8250" rot="0 0 150" />
-    <use-pose instance="Superman" name="Hold" />
-    <transform target="Breach" pos="0 0 90000" />
+  <camera name="ship-breach" comment="From a distance Superman's heat vision has burst the red emitter under the airlock (smoke, a charred plug) and now cuts a glowing ring in the hull's flank" pos="-2700 7900 4250" look="-1100 10300 3800" fov="58" textRect="0.04 0.035 0.92 0.24" textScale="1">
+    <transform target="Superman" pos="{-2300 - HERO_X} 8900 {3950 - PARK}" rot="0 0 135" />
+    <use-pose instance="Superman" name="HandsOnHips" />
+    <transform target="Breach" pos="-24000 0 {-PARK}" />
+    <transform target="HeatVision" pos="-56000 0 {-PARK}" />
   </camera>
-  <camera name="ship-starbolts" comment="Ending: the ship's guns fire on the city; towers burn by the river while Superman flies away" pos="-2600 -1500 900" look="1500 9000 1500" fov="60" textRect="0.04 0.035 0.92 0.28" textScale="1">
-    <transform target="Starbolts" pos="0 0 90000" />
-    <transform target="Superman" pos="-1200 2500 7800" rot="90 0 200" />
+  <camera name="ship-starbolts" comment="Ending: the ship's guns fire on the embankment and its blocks burn by the river while Superman flies away west over the hill" pos="-5200 -2600 1400" look="1000 12000 2000" fov="58" textRect="0.04 0.035 0.92 0.24" textScale="1">
+    <transform target="Starbolts" pos="-48000 0 {-PARK}" />
+    <transform target="Superman" pos="{-5050 - HERO_X} -1650 {1580 - PARK}" rot="90 0 -70" />
     <use-pose instance="Superman" name="Fly" />
   </camera>
 
-  <material id="grass" color="0.30 0.46 0.24" shininess="2" />
-  <material id="path" color="0.62 0.58 0.50" shininess="4" />
-  <material id="dome" color="0.78 0.80 0.82" shininess="60" />
-  <material id="stone" color="0.66 0.62 0.56" shininess="6" />
-  <material id="iron" color="0.16 0.16 0.18" shininess="40" />
+  <!-- Poses used only here. ShipGrip swings the front tentacle out toward the hill to hold Superman;
+       ShipTorn tears the same tentacle after its fifth link, the severed end dropping away. -->
+  <pose name="ShipGrip">
+    <joint target="tentacle_2" aim="0 -10" />
+  </pose>
+  <pose name="ShipTorn">
+    <joint target="tentacle_2_6" pos="0 0 -520" rot="12 0 25" />
+  </pose>
+  <pose name="StarPoint">
+    <ik limb="left_arm" offset="-6 -44 70" bend="150 -30" />
+    <ik limb="right_arm" offset="-16 -22 32" bend="-150 -40" />
+    <joint target="head" rot="-22 0 6" />
+  </pose>
+
+  <material id="grass" color="0.24 0.38 0.20" shininess="3" />
+  <material id="gravel" color="0.58 0.54 0.46" shininess="4" />
+  <material id="parapet_stone" color="0.56 0.53 0.48" shininess="6" />
+  <material id="coping_stone" color="0.68 0.65 0.58" shininess="8" />
+  <material id="plinth_stone" color="0.44 0.42 0.40" shininess="8" />
+  <material id="limestone" color="0.76 0.73 0.66" shininess="8" />
+  <material id="cornice_stone" color="0.66 0.63 0.57" shininess="8" />
+  <material id="dome_metal" color="0.80 0.82 0.84" shininess="70" />
+  <material id="slit_dark" color="0.42 0.28 0.16" shininess="2" />
+  <material id="door_wood" color="0.34 0.22 0.14" shininess="12" />
+  <material id="window_lit" color="1.0 0.82 0.50" shininess="2" />
   <material id="brass" color="0.72 0.56 0.26" shininess="60" />
-  <material id="tower" color="0.40 0.44 0.52" shininess="30" />
-  <material id="tower_dark" color="0.26 0.28 0.34" shininess="30" />
-  <material id="window_lit" color="1.0 0.86 0.52" shininess="5" />
-  <material id="river" color="0.12 0.16 0.26" shininess="90" />
-  <material id="ship_hull" color="0.46 0.56 0.50" shininess="60" />
-  <material id="ship_rib" color="0.30 0.36 0.34" shininess="50" />
-  <material id="ship_dark" color="0.12 0.14 0.14" shininess="40" />
-  <material id="brain_net" color="0.62 0.30 0.72" shininess="90" />
-  <material id="bench" color="0.42 0.30 0.20" shininess="8" />
+  <material id="bench_iron" color="0.14 0.15 0.16" shininess="40" />
+  <material id="bench_wood" color="0.50 0.34 0.20" shininess="10" />
+  <material id="tripod_wood" color="0.56 0.40 0.24" shininess="14" />
+  <material id="scope_tube" color="0.86 0.86 0.84" shininess="60" />
+  <material id="bark" color="0.26 0.20 0.15" shininess="4" />
+  <material id="foliage" color="0.16 0.30 0.16" shininess="4" />
+  <material id="street" color="0.20 0.20 0.22" shininess="6" />
+  <material id="river" color="0.07 0.11 0.20" shininess="120" />
+  <material id="quay" color="0.40 0.38 0.36" shininess="6" />
+  <material id="street_light" color="1.0 0.78 0.46" shininess="1" />
+  <material id="tower_facade" color="0.30 0.32 0.38" shininess="12" />
+  <material id="tower_band" color="0.50 0.50 0.52" shininess="14" />
+  <material id="glass_dark" color="0.10 0.14 0.22" shininess="90" />
+  <material id="roof_dark" color="0.20 0.20 0.22" shininess="8" />
+  <material id="beacon_red" color="1.0 0.16 0.10" shininess="1" />
+  <material id="planet_globe" color="0.80 0.66 0.30" shininess="70" />
+  <material id="planet_ring" color="0.62 0.50 0.24" shininess="60" />
+  <material id="star" color="0.94 0.96 1.0" shininess="1" />
+  <material id="haze" color="0.10 0.11 0.22" shininess="1" />
+  <material id="haze_low" color="0.17 0.15 0.24" shininess="1" />
+  <material id="xray_line" color="0.66 0.90 1.0" shininess="1" />
+  <material id="xray_dim" color="0.36 0.56 0.72" shininess="1" />
+  <material id="sun_red" color="1.0 0.16 0.08" shininess="1" />
+  <material id="beam_red" color="1.0 0.28 0.16" shininess="1" />
+  <material id="fire" color="1.0 0.56 0.18" shininess="1" />
+  <material id="starbolt" color="0.70 0.92 1.0" shininess="1" />
+  <material id="heat" color="1.0 0.36 0.10" shininess="1" />
+  <material id="char" color="0.06 0.05 0.05" shininess="4" />
+  <material id="smoke" color="0.30 0.30 0.32" shininess="2" />
+  <material id="tentacle" color="0.30 0.36 0.33" shininess="45" />
 
-  <!-- Dusk light from the west, the lamps of the Star Watch and the city's glow. -->
-  <sun dir="0.85 0.25 -0.45" color="1.0 0.70 0.50" intensity="0.75" castShadows="1" />
-  <light pos="-600 -200 330" color="1.0 0.86 0.60" intensity="0.6" radius="900" castShadows="1" />
-  <light pos="700 300 330" color="1.0 0.86 0.60" intensity="0.6" radius="900" castShadows="0" />
-
-  <!-- The hilltop: lawn, path, the observatory, telescopes, lamp posts and benches. -->
-  <cylinder pos="0 0 -150" rot="90 0 0" radius="3200" height="300" material="grass" />
-  <cone pos="0 0 -3300" rot="90 0 0" radius="9000" radiusTop="3200" height="3000" material="grass" />
-  <box pos="-200 -800 2" size="260 3000 4" material="path" />
-  <group name="Observatory" pos="1400 1600 0">
-    <cylinder pos="0 0 280" rot="90 0 0" radius="620" height="560" material="stone" />
-    <sphere pos="0 0 560" radius="640" scale="1 1 0.85" material="dome" />
-    <box pos="0 -300 820" rot="-30 0 0" size="120 300 300" material="iron" />
-    <box pos="0 -622 130" size="160 4 260" material="iron" />
-  </group>
-  <group name="Telescope1" pos="80 120 0">
-    <cylinder pos="0 0 70" rot="90 0 0" radius="3" height="140" material="iron" />
-    <cylinder pos="0 30 150" rot="-55 0 0" radius="12" height="140" material="brass" />
-  </group>
-  <group name="Telescope2" pos="-900 600 0">
-    <cylinder pos="0 0 70" rot="90 0 0" radius="3" height="140" material="iron" />
-    <cylinder pos="0 30 150" rot="-55 0 15" radius="11" height="130" material="brass" />
-  </group>
-  <group name="Telescope3" pos="900 -300 0">
-    <cylinder pos="0 0 70" rot="90 0 0" radius="3" height="140" material="iron" />
-    <cylinder pos="0 30 150" rot="-55 0 -20" radius="11" height="130" material="brass" />
-  </group>
-  <group pos="-600 -200 0">
-    <cylinder pos="0 0 160" rot="90 0 0" radius="5" height="320" material="iron" />
-    <sphere pos="0 0 330" radius="16" color="1.0 0.92 0.70" unlit="1" castShadow="0" />
-  </group>
-  <group pos="700 300 0">
-    <cylinder pos="0 0 160" rot="90 0 0" radius="5" height="320" material="iron" />
-    <sphere pos="0 0 330" radius="16" color="1.0 0.92 0.70" unlit="1" castShadow="0" />
-  </group>
-  <group name="Bench" pos="-300 400 0" rot="0 0 140">
-    <box pos="0 0 44" size="180 46 6" material="bench" />
-    <box pos="-80 0 22" size="8 40 44" material="iron" />
-    <box pos="80 0 22" size="8 40 44" material="iron" />
+  <!-- The moon, low in the west-south-west, is the key; the city's glow lights undersides from below. -->
+  <sun dir="0.74 0.27 -0.62" color="0.72 0.80 1.0" intensity="1.15" castShadows="1" />
+  <sun dir="-0.15 -0.35 1" color="1.0 0.62 0.36" intensity="0.30" castShadows="0" />
+  <sphere name="Moon" pos="-66600 -24200 55800" radius="1500" color="0.96 0.95 0.88" unlit="1" castShadow="0" />
+  <prefab source="sky/starfield" />
+  <!-- Horizon glow over the city lights: two open bands far out, a boundary of the composed sky. -->
+  <group name="Horizon">
+    <cylinder pos="0 0 {CITY + 3100}" rot="90 0 0" radius="96000" height="6000" tube="10" sides="96" material="haze_low" unlit="1" castShadow="0" />
+    <cylinder pos="0 0 {CITY + 9600}" rot="90 0 0" radius="96000" height="7000" tube="10" sides="96" material="haze" unlit="1" castShadow="0" />
   </group>
 
-  <!-- People: Lana beside Clark at the telescope, couples on the lawn; the crowd that panics; the
-       crowd that listens. Each set is shown only in its own cameras. -->
-  <prefab source="characters/lana" name="Lana" pos="-30 20 0" rot="0 0 165" pose="Point" />
-  <prefab source="characters/clark" name="Clark" pos="0 0 -5000" />
+  <!-- The ground of Metropolis at street level, the river between its quays, and two bridges. One unit: the
+       piers stand in the water. -->
+  <group name="River">
+    <box pos="0 {(RIVER_S - 60000)/2} {CITY - 200}" size="120000 {RIVER_S + 60000} 400" material="street" />
+    <box pos="0 {(RIVER_N + 95000)/2} {CITY - 200}" size="120000 {95000 - RIVER_N} 400" material="street" />
+    <box pos="0 {(RIVER_S + RIVER_N)/2} {(WATER + CITY - 400)/2}" size="120000 {RIVER_N - RIVER_S} {WATER - CITY + 400}" material="river" />
+    <box pos="-7600 {(RIVER_S + RIVER_N)/2} {CITY + 60}" size="1500 {RIVER_N - RIVER_S + 800} 120" material="quay" />
+    <box pos="-7600 {(RIVER_S + RIVER_N)/2 - 900} {CITY - 190}" size="900 500 380" material="quay" />
+    <box pos="-7600 {(RIVER_S + RIVER_N)/2 + 900} {CITY - 190}" size="900 500 380" material="quay" />
+    <box pos="9800 {(RIVER_S + RIVER_N)/2} {CITY + 60}" size="1500 {RIVER_N - RIVER_S + 800} 120" material="quay" />
+    <box pos="9800 {(RIVER_S + RIVER_N)/2 - 900} {CITY - 190}" size="900 500 380" material="quay" />
+    <box pos="9800 {(RIVER_S + RIVER_N)/2 + 900} {CITY - 190}" size="900 500 380" material="quay" />
+  </group>
+  <!-- Street lights: both quays, both bridges and the avenues running north from the river. -->
+  <group name="StreetLights">
+    <sphere pos="-40000 {RIVER_N + 260} {CITY + 520}" radius="70" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="81" translation="1000 0 0" /></sphere>
+    <sphere pos="-40000 {RIVER_S - 260} {CITY + 520}" radius="70" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="81" translation="1000 0 0" /></sphere>
+    <sphere pos="-8300 {RIVER_S - 400} {CITY + 560}" radius="70" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="6" translation="0 840 0" /></sphere>
+    <sphere pos="-6900 {RIVER_S - 400} {CITY + 560}" radius="70" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="6" translation="0 840 0" /></sphere>
+    <sphere pos="9100 {RIVER_S - 400} {CITY + 560}" radius="70" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="6" translation="0 840 0" /></sphere>
+    <sphere pos="10500 {RIVER_S - 400} {CITY + 560}" radius="70" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="6" translation="0 840 0" /></sphere>
+    <sphere pos="-17000 {RIVER_N + 3000} {CITY + 520}" radius="60" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="24" translation="0 1100 0" /></sphere>
+    <sphere pos="-7600 {RIVER_N + 3000} {CITY + 520}" radius="60" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="24" translation="0 1100 0" /></sphere>
+    <sphere pos="1600 {RIVER_N + 3000} {CITY + 520}" radius="60" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="24" translation="0 1100 0" /></sphere>
+    <sphere pos="9800 {RIVER_N + 3000} {CITY + 520}" radius="60" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="24" translation="0 1100 0" /></sphere>
+    <sphere pos="18500 {RIVER_N + 3000} {CITY + 520}" radius="60" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="24" translation="0 1100 0" /></sphere>
+    <sphere pos="-40000 {RIVER_N + 17600} {CITY + 520}" radius="60" rings="4" slices="6" material="street_light" unlit="1" castShadow="0"><array count="80" translation="1000 0 0" /></sphere>
+  </group>
+
+  <!-- Mt. Royal: a lathed hill whose flat top is the lawn, its brow falling north to the river road. -->
+  <shape id="hill_profile" closed="0">
+    <v x="0" y="0" />
+    <v x="{HILL_R}" y="0" />
+    <v x="{HILL_R - 500}" y="180" />
+    <v x="{HILL_R - 1500}" y="650" />
+    <v x="{HILL_R - 2700}" y="1400" />
+    <v x="{LAWN_R + 1300}" y="2300" />
+    <v x="{LAWN_R + 500}" y="{-CITY - 180}" />
+    <v x="{LAWN_R + 150}" y="{-CITY - 40}" />
+    <v x="{LAWN_R}" y="{-CITY}" />
+    <v x="0" y="{-CITY}" />
+  </shape>
+  <group name="Hill">
+    <lathe shape="hill_profile" segments="72" pos="0 0 {CITY}" rot="90 0 0" material="grass" />
+    <!-- Gravel walks: from the car park up the south slope to the lookout, and a branch west to the porch. -->
+    <box pos="-500 -500 0.1" rot="0 0 6" size="260 7400 1" material="gravel" />
+    <box pos="-1250 600 0.05" size="1300 220 1" material="gravel" />
+  </group>
+
+  <!-- The lawn: the lookout parapet on the brow, the observatory on the west side with its door to the lawn,
+       benches facing the view, the volunteers' telescopes, park lamps and the old oaks round the edge. -->
+  <prefab source="sky/lookout" />
+  <prefab source="sky/observatory" name="Observatory" pos="-2700 600 0" rot="0 0 90" />
+  <prefab source="sky/bench" name="BenchWest" pos="-1900 2250 0" rot="0 0 170" />
+  <prefab source="sky/bench" name="BenchMid" pos="-350 1500 0" rot="0 0 180" />
+  <prefab source="sky/bench" name="BenchEast" pos="1100 1900 0" rot="0 0 200" />
+  <prefab source="sky/telescope" name="ScopeWest" pos="-1450 3250 0" rot="0 0 172" />
+  <prefab source="sky/telescope" name="ScopeMid" pos="450 1250 0" rot="0 0 190" />
+  <prefab source="sky/telescope" name="ScopeEast" pos="1700 2900 0" rot="0 0 205" />
+  <prefab source="sky/lamp_post" pos="-1450 1150 0" />
+  <prefab source="sky/lamp_post" pos="450 450 0" />
+  <prefab source="sky/lamp_post" pos="2500 2000 0" />
+  <prefab source="sky/tree" pos="-3900 -900 0" rot="0 0 20" />
+  <prefab source="sky/tree" pos="-2600 -2900 0" rot="0 0 110" scale="0.9 0.9 0.9" />
+  <prefab source="sky/tree" pos="3500 -1700 0" rot="0 0 200" />
+  <prefab source="sky/tree" pos="-1000 -3700 0" rot="0 0 290" scale="1.1 1.1 1.1" />
+  <prefab source="sky/tree" pos="1200 -3600 0" rot="0 0 60" scale="0.95 0.95 0.95" />
+  <prefab source="sky/tree" pos="3700 600 0" rot="0 0 150" scale="0.85 0.85 0.85" />
+  <!-- Metropolis. -->
+  <!-- North bank: the embankment row of apartment blocks facing the river. -->
+  <prefab source="sky/towers/block" pos="-26000 {RIVER_N + 1500 + 371} {CITY}" rot="0 0 90" scale="1.0 1.0 0.8" />
+  <prefab source="sky/towers/block" pos="-22673 {RIVER_N + 1500 + 66} {CITY}" rot="0 0 0" scale="1.1 1.1 1.0" />
+  <prefab source="sky/towers/block" pos="-18981 {RIVER_N + 1500 + 48} {CITY}" rot="0 0 90" scale="1.0 1.0 0.8" />
+  <prefab source="sky/towers/block" pos="-15682 {RIVER_N + 1500 + 262} {CITY}" rot="0 0 180" scale="0.9 0.9 0.8" />
+  <prefab source="sky/towers/block" pos="-12974 {RIVER_N + 1500 + 323} {CITY}" rot="0 0 90" scale="0.9 0.9 1.0" />
+  <prefab source="sky/towers/block" pos="-10072 {RIVER_N + 1500 + 194} {CITY}" rot="0 0 180" scale="0.9 0.9 1.4" />
+  <prefab source="sky/towers/block" pos="-3607 {RIVER_N + 1500 + 240} {CITY}" rot="0 0 0" scale="0.9 0.9 1.0" />
+  <prefab source="sky/towers/block" pos="-669 {RIVER_N + 1500 + 181} {CITY}" rot="0 0 0" scale="0.9 0.9 0.8" />
+  <prefab source="sky/towers/block" pos="5533 {RIVER_N + 1500 + 313} {CITY}" rot="0 0 90" scale="0.8 0.8 1.0" />
+  <prefab source="sky/towers/block" pos="8125 {RIVER_N + 1500 + 21} {CITY}" rot="0 0 90" scale="1.1 1.1 0.8" />
+  <prefab source="sky/towers/block" pos="11633 {RIVER_N + 1500 + 328} {CITY}" rot="0 0 180" scale="0.8 0.8 1.4" />
+  <prefab source="sky/towers/block" pos="14074 {RIVER_N + 1500 + 374} {CITY}" rot="0 0 0" scale="0.9 0.9 0.8" />
+  <prefab source="sky/towers/block" pos="17282 {RIVER_N + 1500 + 131} {CITY}" rot="0 0 90" scale="1.1 1.1 1.4" />
+  <prefab source="sky/towers/block" pos="20878 {RIVER_N + 1500 + 216} {CITY}" rot="0 0 180" scale="1.1 1.1 0.8" />
+  <prefab source="sky/towers/block" pos="24575 {RIVER_N + 1500 + 172} {CITY}" rot="0 0 0" scale="1.1 1.1 1.0" />
+  <!-- Downtown: towers rising behind the embankment, the Daily Planet among them. -->
+  <prefab source="sky/towers/planet" pos="-5200 23500 {CITY}" rot="0 0 20" scale="1.0 1.0 1.0" />
+  <prefab source="sky/towers/setback" pos="14568 36125 {CITY}" rot="0 0 180" scale="1.15 1.15 0.6" />
+  <prefab source="sky/towers/slab" pos="22300 36313 {CITY}" rot="0 0 0" scale="0.85 0.85 0.9" />
+  <prefab source="sky/towers/setback" pos="-19254 22609 {CITY}" rot="0 0 15" scale="1.0 1.0 0.75" />
+  <prefab source="sky/towers/slab" pos="-24904 36295 {CITY}" rot="0 0 -20" scale="1.0 1.0 0.9" />
+  <prefab source="sky/towers/slab" pos="7793 33166 {CITY}" rot="0 0 180" scale="0.85 0.85 0.9" />
+  <prefab source="sky/towers/slab" pos="12158 24978 {CITY}" rot="0 0 0" scale="1.0 1.0 0.7" />
+  <prefab source="sky/towers/slab" pos="-10265 21635 {CITY}" rot="0 0 -20" scale="1.15 1.15 0.6" />
+  <prefab source="sky/towers/block" pos="-20346 41281 {CITY}" rot="0 0 90" scale="1.15 1.15 1.3" />
+  <prefab source="sky/towers/block" pos="-1084 39052 {CITY}" rot="0 0 -20" scale="0.85 0.85 1.0" />
+  <prefab source="sky/towers/slab" pos="-24851 42436 {CITY}" rot="0 0 90" scale="1.0 1.0 0.9" />
+  <prefab source="sky/towers/block" pos="-13809 21456 {CITY}" rot="0 0 -90" scale="1.15 1.15 1.0" />
+  <prefab source="sky/towers/slab" pos="5948 28067 {CITY}" rot="0 0 -90" scale="1.15 1.15 0.9" />
+  <prefab source="sky/towers/slab" pos="25179 44906 {CITY}" rot="0 0 -20" scale="1.0 1.0 0.9" />
+  <prefab source="sky/towers/setback" pos="16298 21127 {CITY}" rot="0 0 -20" scale="0.85 0.85 0.9" />
+  <prefab source="sky/towers/block" pos="-13948 41714 {CITY}" rot="0 0 15" scale="0.85 0.85 1.6" />
+  <prefab source="sky/towers/setback" pos="25153 48459 {CITY}" rot="0 0 -20" scale="0.85 0.85 0.6" />
+  <prefab source="sky/towers/slab" pos="3717 32747 {CITY}" rot="0 0 90" scale="1.15 1.15 0.5" />
+  <prefab source="sky/towers/slab" pos="20501 40565 {CITY}" rot="0 0 15" scale="1.15 1.15 0.6" />
+  <prefab source="sky/towers/setback" pos="21594 47276 {CITY}" rot="0 0 -90" scale="0.85 0.85 0.9" />
+  <prefab source="sky/towers/slab" pos="22794 23575 {CITY}" rot="0 0 -20" scale="1.15 1.15 0.7" />
+  <prefab source="sky/towers/block" pos="-10732 40192 {CITY}" rot="0 0 180" scale="1.15 1.15 1.6" />
+  <prefab source="sky/towers/setback" pos="11870 47613 {CITY}" rot="0 0 90" scale="1.0 1.0 0.9" />
+  <prefab source="sky/towers/block" pos="4951 47060 {CITY}" rot="0 0 0" scale="0.85 0.85 1.3" />
+  <prefab source="sky/towers/slab" pos="25417 40211 {CITY}" rot="0 0 0" scale="1.0 1.0 0.7" />
+  <prefab source="sky/towers/slab" pos="-13046 25215 {CITY}" rot="0 0 -90" scale="1.15 1.15 0.7" />
+  <prefab source="sky/towers/setback" pos="-3895 49894 {CITY}" rot="0 0 -90" scale="1.15 1.15 0.6" />
+  <prefab source="sky/towers/slab" pos="-3117 35308 {CITY}" rot="0 0 15" scale="1.15 1.15 0.7" />
+  <prefab source="sky/towers/slab" pos="12716 43549 {CITY}" rot="0 0 -20" scale="1.15 1.15 0.6" />
+  <prefab source="sky/towers/block" pos="24455 27956 {CITY}" rot="0 0 -20" scale="0.85 0.85 1.0" />
+  <prefab source="sky/towers/slab" pos="-24508 23129 {CITY}" rot="0 0 15" scale="1.15 1.15 0.6" />
+  <prefab source="sky/towers/slab" pos="-9762 26661 {CITY}" rot="0 0 180" scale="0.85 0.85 0.6" />
+  <prefab source="sky/towers/slab" pos="-5509 38168 {CITY}" rot="0 0 0" scale="1.0 1.0 0.6" />
+  <prefab source="sky/towers/slab" pos="-21777 25152 {CITY}" rot="0 0 -90" scale="0.85 0.85 0.9" />
+  <!-- The far city: rows of blocks out to the horizon. -->
+  <prefab source="sky/towers/block" pos="-44141 55000 {CITY}" scale="1.2 1.2 0.7"><array count="21" translation="3500 9 0" /></prefab>
+  <prefab source="sky/towers/block" pos="-42122 60000 {CITY}" scale="1.0 1.0 2.0"><array count="21" translation="4200 -10 0" /></prefab>
+  <prefab source="sky/towers/block" pos="-43486 65000 {CITY}" scale="1.2 1.2 0.7"><array count="21" translation="3500 -10 0" /></prefab>
+  <prefab source="sky/towers/block" pos="-44642 70000 {CITY}" scale="0.9 0.9 2.0"><array count="21" translation="4667 -11 0" /></prefab>
+  <prefab source="sky/towers/block" pos="-44089 75000 {CITY}" scale="0.9 0.9 1.0"><array count="21" translation="4667 -13 0" /></prefab>
+  <!-- West and east along the south bank, beyond the hill. -->
+  <prefab source="sky/towers/block" pos="-15000 2000 {CITY}" scale="1 1 1.3"><array count="9" translation="-4300 1 0" /></prefab>
+  <prefab source="sky/towers/block" pos="-15000 6000 {CITY}" scale="1 1 1.0"><array count="9" translation="-4300 -15 0" /></prefab>
+  <prefab source="sky/towers/block" pos="15000 2000 {CITY}" scale="1 1 1.0"><array count="9" translation="4300 7 0" /></prefab>
+  <prefab source="sky/towers/block" pos="15000 6000 {CITY}" scale="1 1 1.0"><array count="9" translation="4300 13 0" /></prefab>
+
+  <!-- People. Each crowd state is its own group: the Star Watch couples stand on the lawn by default; the
+       fleeing crowd and the listening crowd are stored at PARK until their cameras raise them. Clark, Lana
+       and Superman are stored at PARK unrotated, so every camera's transform gives their world offset and
+       facing directly. -->
   <group name="Couples">
-    <prefab source="characters/person" pos="-950 450 0" rot="0 0 150" color="0.52 0.30 0.30" />
-    <prefab source="characters/lana" pos="-870 470 0" rot="0 0 170" />
-    <prefab source="characters/person" pos="850 -450 0" rot="0 0 200" color="0.30 0.42 0.56" />
-    <prefab source="characters/person" pos="960 -420 0" rot="0 0 190" color="0.70 0.62 0.40" />
+    <prefab source="characters/person" attach="BenchWest:place_a" pose="Sit" color="0.52 0.30 0.30" />
+    <prefab source="characters/person" attach="BenchWest:place_b" pose="Sit" color="0.70 0.62 0.40" />
+    <prefab source="characters/person" attach="BenchEast:place_a" pose="Sit" color="0.36 0.50 0.36" />
+    <prefab source="characters/person" attach="BenchEast:place_b" pose="Sit" color="0.60 0.36 0.56" />
+    <prefab source="characters/person" pos="463 1180 0" rot="0 0 190" pose="Crouch" color="0.30 0.42 0.56" />
+    <prefab source="characters/person" pos="750 1350 0" rot="0 0 200" pose="Point" color="0.78 0.74 0.66" />
+    <prefab source="characters/person" pos="2050 3050 0" rot="0 0 215" color="0.46 0.34 0.24" />
   </group>
-  <group name="Crowd" pos="0 0 -5000">
-    <prefab source="characters/person" pos="-700 100 0" rot="0 0 -30" pose="Panic" color="0.52 0.30 0.30" />
-    <prefab source="characters/lana" pos="-560 -80 0" rot="0 0 -60" pose="Panic" />
-    <prefab source="characters/person" pos="500 -600 0" rot="0 0 10" pose="Panic" color="0.30 0.42 0.56" />
-    <prefab source="characters/person" pos="700 -250 0" rot="0 0 40" pose="Panic" color="0.70 0.62 0.40" />
-    <prefab source="characters/person" pos="-300 -700 0" rot="0 0 -10" pose="Panic" color="0.36 0.50 0.36" />
+  <group name="Panic" pos="0 0 {PARK}">
+    <prefab source="characters/person" pos="-1000 -650 0" rot="0 0 -15" pose="Panic" color="0.52 0.30 0.30" />
+    <prefab source="characters/person" pos="-500 400 0" rot="0 0 10" pose="Panic" color="0.70 0.62 0.40" />
+    <prefab source="characters/person" pos="250 -350 0" rot="0 0 35" pose="Panic" color="0.36 0.50 0.36" />
+    <prefab source="characters/person" pos="250 700 0" rot="0 0 175" pose="Kneel" color="0.30 0.42 0.56" />
+    <prefab source="characters/person" pos="-1900 200 0" rot="0 0 -90" pose="Panic" color="0.60 0.36 0.56" />
+    <prefab source="characters/person" pos="700 650 0" rot="0 0 20" pose="Panic" color="0.78 0.74 0.66" />
+    <prefab source="characters/person" pos="-1100 1600 0" rot="0 0 -10" pose="Panic" color="0.46 0.34 0.24" />
+    <prefab source="characters/person" pos="500 2200 0" rot="0 0 5" pose="Panic" color="0.40 0.40 0.62" />
   </group>
-  <group name="Calm" pos="0 0 -5000">
-    <prefab source="characters/person" pos="-700 100 0" rot="0 0 -110" color="0.52 0.30 0.30" />
-    <prefab source="characters/lana" pos="-560 -80 0" rot="0 0 -100" />
-    <prefab source="characters/person" pos="100 -400 0" rot="0 0 -140" color="0.30 0.42 0.56" />
-    <prefab source="characters/person" pos="250 -150 0" rot="0 0 -120" color="0.70 0.62 0.40" />
-    <prefab source="characters/person" pos="-300 -700 0" rot="0 0 -170" color="0.36 0.50 0.36" />
+  <group name="Calm" pos="20000 0 {PARK}">
+    <prefab source="characters/person" pos="-850 1150 0" rot="0 0 121" color="0.52 0.30 0.30" />
+    <prefab source="characters/person" pos="-1150 1550 0" rot="0 0 83" color="0.70 0.62 0.40" />
+    <prefab source="characters/person" pos="150 1100 0" rot="0 0 -125" color="0.36 0.50 0.36" />
+    <prefab source="characters/person" pos="350 1550 0" rot="0 0 -82" color="0.30 0.42 0.56" />
+    <prefab source="characters/person" pos="-700 950 0" rot="0 0 145" color="0.60 0.36 0.56" />
+    <prefab source="characters/person" pos="-1300 1050 0" rot="0 0 113" color="0.78 0.74 0.66" />
+    <prefab source="characters/person" pos="550 1300 0" rot="0 0 -99" color="0.46 0.34 0.24" />
+  </group>
+  <prefab source="characters/clark" name="Clark" pos="{CLARK_X} 0 {PARK}" />
+  <prefab source="characters/lana" name="Lana" pos="{LANA_X} 0 {PARK}" />
+  <prefab source="characters/superman" name="Superman" pos="{HERO_X} 0 {PARK}" />
+
+  <!-- Brainiac's ship and its states, in the ship's own frame (origin at the hull centre, skull toward local -Y).
+       Its pos and rot stay plain numbers: the anchors below inherit them in the book engine. -->
+  <group name="ShipFrame" pos="600 11400 5000" rot="0 0 -20">
+    <!-- The ship hovers by the story; the checker cannot see what holds it up. -->
+    <prefab source="props/brainiac_ship" name="Ship" sanityIgnore="1" />
+    <!-- Anchors on the ship: the skull's brow, the airlock lens and the front-right tentacle at its fifth link. -->
+    <group name="Ship-Spot" pos="0 -2000 300" />
+    <group name="Airlock" pos="0 0 -2090" />
+    <group name="Tentacles" pos="1865 -773 -2380" />
+    <!-- Camera-scoped states, stored at PARK below the ship. -->
+    <group name="XrayShip" pos="40000 0 {PARK}"><prefab source="sky/ship_xray" /></group>
+    <!-- The airlock opens: the iris glows through and a red light floods the tentacles. -->
+    <group name="LockOpen" pos="32000 0 {PARK}">
+      <cylinder pos="0 0 -2082" rot="90 0 0" radius="520" height="8" sides="48" material="sun_red" unlit="1" castShadow="0" />
+      <light pos="0 0 -2300" color="1.0 0.22 0.12" intensity="2.2" radius="2600" castShadows="1" />
+    </group>
+    <!-- The emitter burst by heat vision: a charred plug over the iris, smoke and embers; and the glowing ring
+         Superman is cutting in the hull's front-left flank. -->
+    <group name="Breach" pos="24000 0 {PARK}">
+      <group name="BurntLock">
+      <cylinder pos="0 0 -2088" rot="90 0 0" radius="600" height="10" sides="40" material="char" />
+      <sphere pos="120 -80 -2380" radius="240" rings="14" slices="18" material="smoke"><noise strength="0.18" seed="2" /></sphere>
+      <sphere pos="-180 60 -2700" radius="300" rings="14" slices="18" material="smoke"><noise strength="0.22" seed="4" /></sphere>
+      <sphere pos="40 -260 -3120" radius="360" rings="14" slices="18" material="smoke"><noise strength="0.26" seed="6" /></sphere>
+      <sphere pos="200 100 -2120" radius="40" material="fire" unlit="1" castShadow="0" />
+      <sphere pos="-150 -120 -2130" radius="30" material="fire" unlit="1" castShadow="0" />
+      </group>
+      <group rot="0 0 236"><group rot="0 26 0">
+        <torus pos="{2000 + 6} 0 0" rot="0 0 90" majorRadius="170" minorRadius="16" majorSegments="40" material="heat" unlit="1" castShadow="0" />
+        <cylinder pos="{2000 + 2} 0 0" rot="0 0 90" radius="150" height="10" sides="32" material="char" />
+        <light pos="{2000 + 120} 0 0" color="1.0 0.50 0.20" intensity="1.2" radius="900" castShadows="0" />
+      </group></group>
+    </group>
   </group>
 
-  <!-- Metropolis below the hill: towers along the river, lit windows. -->
-  <box pos="0 14000 -3020" size="40000 16000 20" color="0.22 0.22 0.24" />
-  <box pos="0 9500 -3000" size="40000 1200 20" material="river" />
-  <group name="City" pos="0 0 -3000">
-    <box pos="-6000 12000 2400" size="1400 1400 4800" material="tower" />
-    <box pos="-3500 13500 3200" size="1600 1600 6400" material="tower_dark" />
-    <box pos="-800 12500 2000" size="1200 1200 4000" material="tower" />
-    <box pos="1800 14500 3600" size="1800 1800 7200" material="tower_dark" />
-    <box pos="4500 12500 2600" size="1400 1400 5200" material="tower" />
-    <box pos="7200 14000 3000" size="1600 1600 6000" material="tower_dark" />
-    <box pos="-6000 11290 2400" size="1200 20 4400" material="window_lit" unlit="1" castShadow="0" />
-    <box pos="-800 11890 2000" size="1000 20 3600" material="window_lit" unlit="1" castShadow="0" />
-    <box pos="4500 11790 2600" size="1200 20 4800" material="window_lit" unlit="1" castShadow="0" />
-    <sphere pos="1800 14500 7400" radius="300" material="brass" />
+  <!-- The front tentacle's tip has Superman round the waist (ship-show-tentacles; his place is set by the
+       camera at -115 8086 2515). -->
+  <group name="Grip" pos="0 0 {PARK}">
+    <torus pos="-115 8086 2620" rot="90 0 0" majorRadius="30" minorRadius="13" material="tentacle" />
+    <torus pos="-115 8086 2644" rot="84 0 30" majorRadius="31" minorRadius="12" material="tentacle" />
   </group>
 
-  <!-- The ship over the city's edge; far away, it is a falling star. -->
-  <group name="Ship"><prefab source="props/brainiac_ship" pos="0 9000 6000" rot="0 0 200" /></group>
-  <group name="FallingStar" pos="0 0 -90000">
-    <sphere pos="2400 60000 22000" radius="260" color="1.0 0.90 0.70" unlit="1" castShadow="0" />
-    <cylinder pos="2900 61000 23000" rot="0 -60 -20" radius="40" height="2400" color="1.0 0.80 0.50" unlit="1" castShadow="0" />
-  </group>
-  <!-- What each sky camera adds: the tentacle's grip, the torn coil, the beam, the breach, the guns. -->
-  <group name="Grip" pos="0 0 -90000">
-    <torus pos="1250 8300 3020" rot="90 0 0" majorRadius="40" minorRadius="12" material="ship_rib" />
-    <cylinder pos="1300 8650 3200" rot="-60 0 10" radius="20" height="700" material="ship_rib" />
-  </group>
-  <group name="Torn" pos="0 0 -90000">
-    <cylinder pos="1600 7900 1800" rot="30 20 0" radius="60" height="900" material="ship_rib" />
-    <sphere pos="1400 8500 3100" radius="70" color="1.0 0.70 0.30" unlit="1" castShadow="0" />
-  </group>
-  <group name="RedBeam" pos="0 0 -90000">
-    <cylinder pos="140 9000 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="-140 9000 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="0 9140 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="0 8860 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="100 9100 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="-100 8900 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="100 8900 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-    <cylinder pos="-100 9100 3200" rot="90 0 0" radius="5" height="1600" color="1.0 0.20 0.12" unlit="1" castShadow="0" />
-  </group>
-  <group name="Breach" pos="0 0 -90000">
-    <torus pos="560 8200 3420" rot="0 0 0" majorRadius="110" minorRadius="10" color="1.0 0.70 0.30" unlit="1" castShadow="0" />
-    <cylinder pos="640 8300 3420" rot="0 0 -30" radius="2" height="220" color="1.0 0.20 0.08" unlit="1" castShadow="0" />
-  </group>
-  <group name="Starbolts" pos="0 0 -90000">
-    <cylinder pos="-2200 10600 2000" rot="0 30 -25" radius="25" height="5000" color="0.70 0.90 1.0" unlit="1" castShadow="0" />
-    <cylinder pos="1800 11200 1600" rot="0 -30 20" radius="25" height="5200" color="0.70 0.90 1.0" unlit="1" castShadow="0" />
-    <sphere pos="-3500 13500 3000" radius="700" color="1.0 0.50 0.15" unlit="1" castShadow="0" />
-    <sphere pos="1800 14500 1800" radius="800" color="1.0 0.55 0.20" unlit="1" castShadow="0" />
-  </group>
-  <!-- The x-ray glimpse: the red globe and its room above the airlock. -->
-  <group name="XrayRoom" pos="0 0 -90000">
-    <sphere pos="0 9000 5000" radius="160" color="1.0 0.20 0.10" unlit="1" castShadow="0" />
-    <box pos="0 9000 4400" size="900 900 20" color="0.70 0.86 0.98" unlit="1" castShadow="0" />
+  <!-- Sparks where Superman has torn the front tentacle in two (ship-tentacles). -->
+  <group name="Torn" pos="8000 0 {PARK}">
+    <sphere pos="698 9157 2490" radius="16" material="fire" unlit="1" castShadow="0" />
+    <sphere pos="728 9107 2430" radius="9" material="fire" unlit="1" castShadow="0" />
+    <sphere pos="678 9197 2040" radius="14" material="fire" unlit="1" castShadow="0" />
+    <sphere pos="658 9127 2350" radius="12" material="fire" unlit="1" castShadow="0" />
+    <light pos="698 9097 2450" color="1.0 0.62 0.30" intensity="1.0" radius="500" castShadows="0" />
   </group>
 
-  <prefab source="characters/superman" name="Superman" pos="0 0 -5000" />
+  <!-- The red-sun beam: a cage of red light from the airlock lens down past Superman (ship-red-beam). -->
+  <group name="RedBeam" pos="16000 0 {PARK}">
+    <cylinder pos="927 11446 2150" rot="-90.0 0 -0.0" radius="5" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="899 11634 2150" rot="-90.0 0 -0.0" radius="7" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="724 11706 2150" rot="-90.0 0 -0.0" radius="5" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="547 11776 2150" rot="-90.0 0 -0.0" radius="7" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="397 11660 2150" rot="-90.0 0 -0.0" radius="5" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="248 11542 2150" rot="-90.0 0 -0.0" radius="7" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="273 11354 2150" rot="-90.0 0 -0.0" radius="5" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="301 11166 2150" rot="-90.0 0 -0.0" radius="7" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="476 11094 2150" rot="-90.0 0 -0.0" radius="5" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="653 11024 2150" rot="-90.0 0 -0.0" radius="7" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="803 11140 2150" rot="-90.0 0 -0.0" radius="5" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <cylinder pos="952 11258 2150" rot="-90.0 0 -0.0" radius="7" height="1480" sides="10" material="beam_red" unlit="1" castShadow="0" />
+    <torus pos="600 11400 2610" rot="90 0 0" majorRadius="360" minorRadius="6" majorSegments="40" minorSegments="6" material="beam_red" unlit="1" castShadow="0" />
+    <torus pos="600 11400 2160" rot="90 0 0" majorRadius="360" minorRadius="6" majorSegments="40" minorSegments="6" material="beam_red" unlit="1" castShadow="0" />
+    <torus pos="600 11400 1660" rot="90 0 0" majorRadius="360" minorRadius="6" majorSegments="40" minorSegments="6" material="beam_red" unlit="1" castShadow="0" />
+    <light pos="600 11400 2460" color="1.0 0.20 0.10" intensity="2.4" radius="1400" castShadows="1" />
+  </group>
 
-  <!-- Anchors. -->
-  <group name="Crowd-Spot" pos="-560 -80 200" />
-  <group name="Ship-Spot" pos="0 9000 4500" />
-  <group name="Airlock" pos="0 9000 3990" />
-  <group name="Tentacles" pos="1400 8800 3000" />
-  <group name="Down-City" pos="1900 8600 2900" />
+  <!-- Ending: the guns' starbolts strike the embankment, where two apartment blocks burn (ship-starbolts). -->
+  <group name="Starbolts" pos="48000 0 {PARK}">
+    <cylinder pos="-2168 11713 2433" rot="-55.2 0 31.7" radius="22" height="9582" sides="10" material="starbolt" unlit="1" castShadow="0" />
+    <sphere pos="-729 9386 6366" radius="70" material="starbolt" unlit="1" castShadow="0" />
+    <cylinder pos="-442 11600 2273" rot="-59.6 0 5.3" radius="22" height="9680" sides="10" material="starbolt" unlit="1" castShadow="0" />
+    <sphere pos="-216 9158 6446" radius="70" material="starbolt" unlit="1" castShadow="0" />
+    <cylinder pos="-173 11522 2533" rot="-56.2 0 11.1" radius="22" height="9226" sides="10" material="starbolt" unlit="1" castShadow="0" />
+    <sphere pos="323 9003 6366" radius="70" material="starbolt" unlit="1" castShadow="0" />
+    <sphere pos="-3607 14000 -1400" radius="420" rings="10" slices="14" material="fire" unlit="1" castShadow="0"><noise strength="0.42" seed="3" /></sphere>
+    <sphere pos="-3300 14050 -900" radius="300" rings="10" slices="14" material="fire" unlit="1" castShadow="0"><noise strength="0.30" seed="4" /></sphere>
+    <sphere pos="-669 14020 -1650" radius="520" rings="10" slices="14" material="fire" unlit="1" castShadow="0"><noise strength="0.52" seed="5" /></sphere>
+    <sphere pos="-450 14080 -1050" radius="320" rings="10" slices="14" material="fire" unlit="1" castShadow="0"><noise strength="0.32" seed="6" /></sphere>
+    <light pos="-3607 13700 -1200" color="1.0 0.50 0.18" intensity="2.0" radius="3000" castShadows="1" />
+    <light pos="-669 13700 -1400" color="1.0 0.50 0.18" intensity="2.0" radius="3000" castShadows="1" />
+  </group>
+
+  <!-- Far off, the ship is a falling star over the city (obs-show-lana only). -->
+  <group name="FallingStar" pos="0 0 {PARK}">
+    <sphere pos="9000 60000 18000" radius="360" color="1.0 0.94 0.80" unlit="1" castShadow="0" />
+    <cylinder pos="{9000 - 3000*sin(rad(28))} 60000 {18000 + 3000*cos(rad(28))}" rot="90 -28 0" radius="90" height="6000" sides="10" color="1.0 0.80 0.56" unlit="1" castShadow="0"><taper amount="-0.85" /></cylinder>
+  </group>
+  <!-- Heat vision: two beams from Superman's eyes to the ring in the hull (ship-breach). Filled in below. -->
+  <group name="HeatVision" pos="56000 0 {PARK}">
+    <cylinder pos="-1581 9628 4121" rot="-0.4 0 -44.4" radius="2.2" height="2028" sides="10" material="heat" unlit="1" castShadow="0" />
+    <cylinder pos="-1571 9619 4127" rot="-0.0 0 -45.6" radius="2.2" height="2028" sides="10" material="heat" unlit="1" castShadow="0" />
+  </group>
+
+  <!-- Anchors on the lawn and in the city: the fleeing crowd, and the roof of a downtown office tower across
+       the river. -->
+  <group name="Crowd-Spot" pos="-500 400 140" />
+  <group name="Down-City" pos="12158 24978 1434" />
 </scene>

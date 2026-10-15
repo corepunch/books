@@ -1,193 +1,958 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Обратный отсчёт: the disused branch line north of Rielly's Field, where the switching station sent the
-     runaway 8:00 train. Z up, cm; the rail head on the near (west) rim is z=0 and the track runs east
-     along y=0. The bridge over the gorge washed out years ago: a 1600 cm gap between the stub of the
-     steel trestle (west rim, x=0) and the stone pier (east rim, x=1600), 2400 cm above a shallow river.
-     The old bridge timbers lie stacked on the west rim where the railway left them. Superman is
-     authored at the origin, 50 m below ground, so camera transforms read as world positions. -->
-<scene up="z" ambient="0.30 0.32 0.36" background="0.56 0.72 0.90">
-  <camera name="gorge-xray-bridge" comment="From the cab: the rails run out to the broken trestle, the gap and the river; the timber pile on the rim" pos="-1010 40 410" look="1300 -40 150" fov="52" textRect="0.04 0.035 0.92 0.33" textScale="1">
-    <transform target="Train" pos="0 0 -3000" />
+     runaway 8:00 train. Z up, cm; X east along the track (y=0), Y north. The rail head on both rims is z=0.
+     Resident story: the line crossed a narrow rock gorge on a steel trestle that replaced an older wooden
+     bridge; the railway stacked the old bridge's stringers on the west rim and never took them away.
+     A spring flood took the trestle years ago: the stubs of its girders and first bents still stand on
+     both rims, a fallen girder lies on the gravel bar 24 m below, and the line has been closed since.
+     Moments: the train is authored where gorge-show-train sees it; each other camera moves it, the
+     timbers, the span and Superman with camera-scoped transforms and poses.
+     Storage: actors and effects not in a shot wait 60 m under the set (z = STORE), below the ground plane
+     where nothing is drawn or supported; each shot's transform brings them up by -STORE.
+     Camera pos/look and anchor positions stay literal numbers: the C engine reads them without Scener's
+     expression evaluator. The terrain blocks are written in terms of GAP, DEPTH and GROUND. -->
+<scene up="z" ambient="0.27 0.29 0.33" background="0.60 0.74 0.90">
+  <let name="GAP" value="1600" />      <!-- rim to rim at the crossing: west edge x=0, east edge x=GAP -->
+  <let name="DEPTH" value="2400" />    <!-- rail head to the gravel of the riverbed -->
+  <let name="GROUND" value="-45" />    <!-- both rims: plateau grass under the ballast (props/rails baseline) -->
+  <let name="BED" value="-DEPTH" />
+  <let name="SEAT" value="-181" />     <!-- abutment bridge seat: rail head minus the stub's 181 cm deck -->
+  <let name="DROP" value="600" />      <!-- seat to the rock shelf under each stub's first bent -->
+  <let name="CAR" value="1500" />      <!-- engine and car body length -->
+  <let name="PITCH" value="CAR + 60" /><!-- coupler to coupler -->
+  <let name="ENG" value="-2200" />     <!-- engine centre where the train runs at the gap (gorge-show-train) -->
+  <let name="STORE" value="-6000" />   <!-- off-stage storage under the set -->
+  <let name="SUP_Y" value="-3000" />   <!-- Superman's storage slot, clear of the stored effects -->
+
+  <camera name="gorge-xray-bridge" comment="X-ray from the cab, the train seen through: the rails run out onto the broken trestle stub over the gorge, the far stub across the gap, the old timber pile on the rim beside the track" pos="-1900 0 900" look="900 -60 -900" fov="52" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Train" pos="0 0 {STORE}" />
   </camera>
-  <camera name="gorge-show-train" comment="The runaway train racing for the gap, Superman flying beside the engine; the timber pile on the rim" pos="900 -1900 1050" look="-1100 150 60" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Superman" pos="-1250 -400 5440" rot="90 0 90" />
+  <camera name="gorge-show-train" comment="The runaway train racing along the rim toward the broken trestle stub at the brink, Superman flying alongside just ahead of the engine; the old timber pile beside the track near the brink" pos="0 -2600 800" look="-1600 100 100" fov="58" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Superman" pos="{-850} {-520 - SUP_Y} {330 - STORE}" rot="90 20 90" />
     <use-pose instance="Superman" name="Fly" />
   </camera>
-  <camera name="gorge-lift-coupling" comment="Superman lifts the train over the rim; the coupling behind the first car has snapped and the rear cars sag" pos="1300 -1650 1250" look="-1000 0 820" fov="58" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Train" pos="2600 0 700" />
-    <transform target="RearCars" rot="0 -9 0" pos="-40 0 -30" />
-    <transform target="Superman" pos="20 0 5520" rot="0 0 -90" />
+  <camera name="gorge-lift-coupling" comment="Superman holds the engine and first car high over the east rim; behind the first car the coupling has snapped to one bent pin and the two rear cars hang down into the gorge" pos="1900 -3300 1500" look="1500 0 700" fov="56" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Train" pos="{3340 - ENG} 0 1000" />
+    <transform target="RearCars" rot="0 -80 0" />
+    <transform target="Car3" rot="0 -4 0" />
+    <transform target="Superman" pos="{2560} {-10 - SUP_Y} {875 - STORE}" />
     <use-pose instance="Superman" name="Lift" />
   </camera>
-  <camera name="gorge-weld" comment="Superman's heat vision welds the coupling; the rear cars come level again" pos="1300 -1650 1250" look="-1000 0 420" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Train" pos="2600 0 700" />
-    <transform target="Superman" pos="-1510 -270 5620" rot="0 0 180" />
+  <camera name="gorge-weld" comment="Close on the coupling over the gorge: Superman's heat vision welds the bent pin; the rear cars hang level with the first car again" pos="250 -950 780" look="1000 -60 1380" fov="48" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Train" pos="{3340 - ENG} 0 1000" />
+    <transform target="Superman" pos="{1000} {-170 - SUP_Y} {940 - STORE}" rot="0 0 180" />
     <use-pose instance="Superman" name="Hold" />
-    <transform target="HeatBeams" pos="0 0 5000" />
+    <transform target="HeatBeams" pos="0 0 {-STORE}" />
   </camera>
-  <camera name="gorge-hold-span" comment="Seen from the riverbed: Superman holds up a span of old timbers while the engine rolls across it" pos="900 -1600 -1150" look="800 0 -120" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Span" pos="0 0 5000" />
-    <transform target="Timbers" pos="0 0 -5000" />
-    <transform target="Train" pos="2600 0 0" />
-    <transform target="Superman" pos="800 0 4750" />
+  <camera name="gorge-hold-span" comment="Looking up from low in the gorge: Superman holds the span of old timbers on his hands while the engine rolls across it between the two broken trestle stubs" pos="1200 -1300 -1900" look="600 150 600" fov="56" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Span" pos="0 0 {-STORE}" />
+    <transform target="TimberPile" pos="0 0 {STORE}" />
+    <transform target="Train" pos="{1100 - ENG} 0 19" />
+    <transform target="Superman" pos="{800} {-SUP_Y} {-31 - 200 - STORE}" />
     <use-pose instance="Superman" name="Lift" />
   </camera>
-  <camera name="gorge-breath" comment="Superman blows against the engine; the train stops with its front wheels at the brink" pos="950 -1000 560" look="-500 0 220" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Train" pos="1030 0 0" />
-    <transform target="Superman" pos="120 0 5150" rot="0 0 -90" />
+  <camera name="gorge-breath" comment="Superman hangs in the air over the gap and blows; the wind tears at the engine and gravel flies; the train stops with its front wheels past the last rail of the stub" pos="1300 -1500 450" look="0 0 220" fov="52" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Train" pos="{-525 - ENG} 0 0" />
+    <transform target="Superman" pos="{620} {-SUP_Y} {140 - STORE}" rot="0 0 -90" />
     <use-pose instance="Superman" name="Blow" />
-    <transform target="Breath" pos="0 0 5000" />
+    <transform target="Breath" pos="0 0 {-STORE}" />
   </camera>
-  <camera name="gorge-headon" comment="Ending: Superman has stopped the train with his body; the engine's nose is crushed and the cars have jumped the rails" pos="950 -1000 560" look="-500 0 220" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Train" pos="1050 0 0" />
-    <transform target="EngineNose" pos="0 0 5000" />
-    <transform target="Car1" rot="0 0 7" pos="0 -60 -20" />
-    <transform target="RearCars" rot="0 0 -9" pos="0 120 -40" />
-    <transform target="Superman" pos="70 -40 5000" rot="0 0 -80" />
-    <use-pose instance="Superman" name="Kneel" />
+  <camera name="gorge-headon" comment="Ending: Superman braced on the brink has stopped the train with his body; the engine's nose is crushed and the cars behind have jumped the rails" pos="900 -1200 350" look="-900 0 200" fov="54" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Train" pos="{-850 - ENG} 0 0" />
+    <transform target="EngineNose" pos="0 0 {-STORE}" />
+    <transform target="Car1" pos="0 -70 -12" rot="2 0 6" />
+    <transform target="RearCars" pos="0 40 -20" rot="-3 0 -11" />
+    <transform target="Superman" pos="{-850 + 750 + 40} {-SUP_Y} {-STORE}" rot="0 0 -90" />
+    <use-pose instance="Superman" name="Push" />
   </camera>
-  <camera name="gorge-saved" comment="Across the gorge: the train stands safe on the far rim, Superman lands beside the engine and waves" pos="2000 -1500 520" look="3900 300 160" fov="56" textRect="0.04 0.035 0.92 0.30" textScale="1">
-    <transform target="Train" pos="5600 0 0" />
-    <transform target="Superman" pos="3950 -330 5000" rot="0 0 -49" />
+  <camera name="gorge-saved" comment="Across the gorge: the whole train stands safe on the east rim beyond the far stub; Superman has landed by the last car near the brink and waves to the passengers at the windows" pos="-100 -1300 350" look="2600 0 -150" fov="54" textRect="0.04 0.035 0.92 0.3" textScale="1">
+    <transform target="Train" pos="{7400 - ENG} 0 0" />
+    <transform target="Superman" pos="{2350} {-330 - SUP_Y} {-STORE}" rot="0 0 -40" />
     <use-pose instance="Superman" name="Wave" />
-    <transform target="Span" pos="0 0 5000" />
-    <transform target="Timbers" pos="0 0 -5000" />
   </camera>
 
-  <material id="engine_body" color="0.78 0.20 0.16" shininess="20" />
-  <material id="engine_frame" color="0.16 0.16 0.18" shininess="30" />
-  <material id="engine_stripe" color="0.95 0.86 0.40" shininess="20" />
-  <material id="car_body" color="0.72 0.74 0.76" shininess="40" />
-  <material id="car_roof" color="0.42 0.44 0.46" shininess="30" />
-  <material id="glass" color="0.40 0.52 0.62" shininess="90" />
-  <material id="ballast" color="0.46 0.43 0.40" shininess="2" />
-  <material id="sleeper" color="0.34 0.25 0.18" shininess="2" />
-  <material id="rail" color="0.50 0.48 0.46" shininess="60" />
-  <material id="timber" color="0.46 0.34 0.22" shininess="4" />
-  <material id="grass" color="0.46 0.58 0.28" shininess="2" />
-  <material id="rock" color="0.52 0.46 0.40" shininess="4" />
-  <material id="rock_dark" color="0.38 0.34 0.30" shininess="4" />
-  <material id="water" color="0.26 0.42 0.50" shininess="90" />
-  <material id="steel" color="0.30 0.32 0.34" shininess="30" />
-  <material id="masonry" color="0.62 0.58 0.52" shininess="4" />
-  <material id="leaf" color="0.24 0.40 0.20" shininess="2" />
-  <material id="bark" color="0.36 0.26 0.18" shininess="2" />
+  <material id="engine_body" color="0.74 0.16 0.12" shininess="22" />
+  <material id="engine_frame" color="0.15 0.15 0.17" shininess="30" />
+  <material id="engine_stripe" color="0.96 0.84 0.34" shininess="20" />
+  <material id="grille" color="0.30 0.30 0.32" shininess="10" />
+  <material id="glass" color="0.30 0.42 0.52" shininess="90" />
+  <material id="lamp" color="1.0 0.95 0.76" shininess="10" />
+  <material id="car_body" color="0.76 0.78 0.80" shininess="50" />
+  <material id="car_roof" color="0.48 0.50 0.52" shininess="30" />
+  <material id="car_door" color="0.62 0.64 0.66" shininess="40" />
+  <material id="steel" color="0.30 0.32 0.35" shininess="30" />
+  <material id="rust" color="0.46 0.24 0.12" shininess="6" />
+  <material id="concrete" color="0.58 0.56 0.52" shininess="4" />
+  <material id="ballast" color="0.44 0.41 0.38" shininess="2" />
+  <material id="ballast_top" color="0.52 0.49 0.45" shininess="2" />
+  <material id="sleeper" color="0.30 0.22 0.16" shininess="2" />
+  <material id="rail" color="0.42 0.36 0.32" shininess="50" />
+  <material id="timber" color="0.50 0.42 0.32" shininess="4" />
+  <material id="timber_dark" color="0.34 0.27 0.20" shininess="4" />
+  <material id="grass" color="0.45 0.56 0.27" shininess="2" />
+  <material id="gravel" color="0.58 0.54 0.48" shininess="3" />
+  <material id="rock" color="0.58 0.52 0.45" shininess="5" />
+  <material id="rock_warm" color="0.64 0.52 0.40" shininess="5" />
+  <material id="rock_dark" color="0.44 0.40 0.36" shininess="5" />
+  <material id="rock_rim" color="0.50 0.47 0.41" shininess="4" />
+  <material id="masonry" color="0.66 0.62 0.55" shininess="4" />
+  <material id="masonry_cap" color="0.74 0.71 0.64" shininess="4" />
+  <material id="water" color="0.22 0.40 0.46" shininess="90" />
+  <material id="hill" color="0.30 0.42 0.24" shininess="2" />
+  <material id="hill_far" color="0.40 0.50 0.42" shininess="2" />
+  <material id="bark" color="0.34 0.26 0.20" shininess="2" />
+  <material id="leaf" color="0.24 0.40 0.18" shininess="2" />
+  <material id="leaf_light" color="0.36 0.50 0.22" shininess="2" />
+  <material id="pine" color="0.16 0.30 0.18" shininess="2" />
+  <material id="beam" color="1.0 0.18 0.06" shininess="1" />
+  <material id="glow" color="1.0 0.82 0.42" shininess="1" />
+  <material id="wind" color="0.90 0.96 1.0" shininess="1" />
 
-  <!-- Mid-morning sun from the south-east. -->
-  <sun dir="-0.45 0.6 -0.75" color="1.0 0.95 0.84" intensity="1.15" castShadows="1" />
+  <!-- July mid-morning sun high in the south-east: it lights the south faces of the train and the west
+       wall of the gorge; a cool shadowless skylight from the north-west fills the shade. -->
+  <sun dir="-0.3 0.6 -0.9" color="1.0 0.95 0.84" intensity="1.2" castShadows="1" />
+  <sun dir="0.45 -0.35 -0.6" color="0.62 0.72 0.92" intensity="0.42" castShadows="0" />
 
-  <!-- The ground: west and east plateaus, the gorge walls, its floor and the river. -->
-  <box pos="-4000 0 -1545" size="8000 9000 3090" material="grass" />
-  <box pos="5600 0 -1545" size="8000 9000 3090" material="grass" />
-  <box pos="-30 0 -1210" size="64 9000 2420" material="rock" />
-  <box pos="1630 0 -1210" size="64 9000 2420" material="rock" />
-  <box pos="-40 0 -900" rot="0 -12 0" size="100 9000 600" material="rock_dark" />
-  <box pos="1640 0 -1500" rot="0 10 0" size="110 9000 700" material="rock_dark" />
-  <box pos="800 0 -2450" size="1700 9000 100" material="rock_dark" />
-  <box pos="800 0 -2392" size="700 9000 20" material="water" />
-  <sphere pos="300 -500 -2340" radius="120" material="rock" />
-  <sphere pos="1250 400 -2350" radius="140" material="rock" />
-  <sphere pos="1100 -1300 -2360" radius="100" material="rock" />
+  <!-- Land: plateaus, the two faceted rock walls in four strata, the masonry abutments built into the
+       rims with the rock shelves under the first bents, the gravel bed, the river and its boulders, and
+       the far hills. One interlocking natural assembly. -->
+  <group name="Land">
+    <!-- Plateau slabs: grass tops at GROUND, edges stepping with the bends of the rim. -->
+    <box pos="-7380 -12500 {(GROUND + BED - 150)/2}" size="17240 7000 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 10380} -12500 {(GROUND + BED - 150)/2}" size="11240 7000 {GROUND - BED + 150}" material="grass" />
+    <box pos="-7980 -7000 {(GROUND + BED - 150)/2}" size="16040 4000 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 9330} -7000 {(GROUND + BED - 150)/2}" size="13340 4000 {GROUND - BED + 150}" material="grass" />
+    <box pos="-8251 -3750 {(GROUND + BED - 150)/2}" size="15498 2500 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 8730} -3750 {(GROUND + BED - 150)/2}" size="14540 2500 {GROUND - BED + 150}" material="grass" />
+    <box pos="-8251 -1550 {(GROUND + BED - 150)/2}" size="15498 1900 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 8251} -1550 {(GROUND + BED - 150)/2}" size="15498 1900 {GROUND - BED + 150}" material="grass" />
+    <box pos="-8160 0 {(GROUND + BED - 150)/2}" size="15680 1200 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 8160} 0 {(GROUND + BED - 150)/2}" size="15680 1200 {GROUND - BED + 150}" material="grass" />
+    <box pos="-8251 1550 {(GROUND + BED - 150)/2}" size="15498 1900 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 8251} 1550 {(GROUND + BED - 150)/2}" size="15498 1900 {GROUND - BED + 150}" material="grass" />
+    <box pos="-9292.5 3750 {(GROUND + BED - 150)/2}" size="13415 2500 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 8251} 3750 {(GROUND + BED - 150)/2}" size="15498 2500 {GROUND - BED + 150}" material="grass" />
+    <box pos="-10792.5 7000 {(GROUND + BED - 150)/2}" size="10415 4000 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 7417.5} 7000 {(GROUND + BED - 150)/2}" size="17165 4000 {GROUND - BED + 150}" material="grass" />
+    <box pos="-13417.5 12500 {(GROUND + BED - 150)/2}" size="5165 7000 {GROUND - BED + 150}" material="grass" />
+    <box pos="{GAP + 5917.5} 12500 {(GROUND + BED - 150)/2}" size="20165 7000 {GROUND - BED + 150}" material="grass" />
+    <!-- The gorge floor: a gravel bed under both walls. -->
+    <box pos="{GAP/2} 0 {BED - 150}" size="34200 32600 300" material="gravel" />
+    <!-- Rock walls: tilted, overlapping blocks in four strata, faces jittered into ledges. -->
+    <box pos="{2259.9} -15209.9 {(GROUND - 524) / 2}" size="2039.9 1580.2 {GROUND + 524}" material="grass" />
+    <box pos="{3280.9} -15220 {GROUND + -267.1}" rot="0.2 5.9 5.3" size="220 1659.7 505.2" material="rock_rim" />
+    <box pos="{2313.9} -15347.4 {-DEPTH * 0.4360}" rot="1.4 -10 6.8" size="2375.5 1663.2 732" material="rock_warm" />
+    <box pos="{3360.1} -15519.8 {-DEPTH * 0.3589}" rot="0 -6.8 7.4" size="320 756 532.3" material="rock" />
+    <box pos="{2347.9} -15353.2 {-DEPTH * 0.6735}" rot="-1.1 -7.7 6.8" size="2456.8 1695.8 756" material="rock" />
+    <box pos="{2383.2} -15343.2 {-DEPTH * 0.9518}" rot="2.7 -8.1 6.1" size="2526.8 1678.1 816" material="rock_dark" />
+    <box pos="{3524} -14782.2 {-DEPTH * 0.8517}" rot="0 -6.1 -5" size="320 881.6 566.4" material="rock" />
+    <box pos="{2035.8} -13688.5 {(GROUND - 524) / 2}" size="1591.7 1462.6 {GROUND + 524}" material="grass" />
+    <box pos="{2832.4} -13677.1 {GROUND + -267}" rot="0.8 3 -6" size="220 1527.3 516.4" material="rock_rim" />
+    <box pos="{2045.7} -13614.3 {-DEPTH * 0.3815}" rot="-0.7 -4.6 -4.5" size="1879.5 1592.3 732" material="rock_warm" />
+    <box pos="{2876.1} -13424 {-DEPTH * 0.3240}" rot="0 -6.3 -3.7" size="320 776 560" material="rock" />
+    <box pos="{2130.9} -13833.4 {-DEPTH * 0.6457}" rot="-2.1 -5.5 8.2" size="2031.5 1536.7 756" material="rock" />
+    <box pos="{3035.9} -13854.8 {-DEPTH * 0.6573}" rot="0 -4.7 -5.8" size="320 724.1 511.6" material="rock_dark" />
+    <box pos="{2172.7} -13751.3 {-DEPTH * 0.9404}" rot="0.1 -8.2 3.4" size="2120.1 1572 816" material="rock_dark" />
+    <box pos="{3126.2} -13382.1 {-DEPTH * 0.8620}" rot="0 -12.9 -4.4" size="320 903.7 598.9" material="rock" />
+    <box pos="{1780.5} -12055.9 {(GROUND - 524) / 2}" size="1080.9 1802.6 {GROUND + 524}" material="grass" />
+    <box pos="{2322.8} -12041.1 {GROUND + -267.1}" rot="-0.5 7.1 -7.8" size="220 1875.6 500.5" material="rock_rim" />
+    <box pos="{1803.6} -11948.5 {-DEPTH * 0.3816}" rot="-2.1 -6.3 -9" size="1382 1870.8 732" material="rock_warm" />
+    <box pos="{2384.8} -12368.3 {-DEPTH * 0.3852}" rot="0 -10.8 -6" size="320 1063.7 500.8" material="rock" />
+    <box pos="{1880.8} -12174.2 {-DEPTH * 0.6309}" rot="-0.2 -4.6 8.9" size="1538.2 1901.3 756" material="rock" />
+    <box pos="{2529.4} -11797.4 {-DEPTH * 0.6420}" rot="0 -4.3 19.8" size="320 828.3 438" material="rock_dark" />
+    <box pos="{1886.7} -12066.2 {-DEPTH * 0.9335}" rot="-2.8 -10 0.8" size="1549.7 1904.9 816" material="rock_dark" />
+    <box pos="{1545.1} -10450 {(GROUND - 524) / 2}" size="610.2 1409.3 {GROUND + 524}" material="grass" />
+    <box pos="{1851.2} -10445.4 {GROUND + -267.1}" rot="0.1 7.5 -2.4" size="220 1531 498.9" material="rock_rim" />
+    <box pos="{1594.6} -10424.3 {-DEPTH * 0.3853}" rot="-1.7 -10 -3.1" size="972.9 1534.2 732" material="rock_warm" />
+    <box pos="{1632.8} -10502.1 {-DEPTH * 0.6326}" rot="1.4 -7.2 5.7" size="1052.1 1487.4 756" material="rock" />
+    <box pos="{2081.3} -10668.4 {-DEPTH * 0.6369}" rot="0 -7.9 20.1" size="320 531.4 384.3" material="rock_dark" />
+    <box pos="{1682.8} -10537.1 {-DEPTH * 0.9002}" rot="2.7 -5.4 8.8" size="1146.9 1498.4 816" material="rock_dark" />
+    <box pos="{2173.5} -10354.5 {-DEPTH * 0.8409}" rot="0 -3.6 -0.9" size="320 598.1 458" material="rock" />
+    <box pos="{1378.7} -9372.7 {(GROUND - 524) / 2}" size="277.4 745.3 {GROUND + 524}" material="grass" />
+    <box pos="{1518.7} -9378.2 {GROUND + -267.2}" rot="0.8 8.2 2.9" size="220 867.9 496.2" material="rock_rim" />
+    <box pos="{1415.1} -9341.8 {-DEPTH * 0.3700}" rot="1.7 -8.9 -5.8" size="619.6 831.9 732" material="rock_warm" />
+    <box pos="{1445.5} -9362.1 {-DEPTH * 0.6179}" rot="2.7 -5.1 -1.8" size="687.9 863.3 756" material="rock" />
+    <box pos="{1724.3} -9298 {-DEPTH * 0.6422}" rot="0 -3.3 21.1" size="320 334.8 583.2" material="rock_dark" />
+    <box pos="{1488.3} -9378.4 {-DEPTH * 0.9050}" rot="-2.2 -10 0.9" size="765.1 806.5 816" material="rock_dark" />
+    <box pos="{625.3} -8195.7 {(GROUND - 524) / 2}" size="1170.6 1608.7 {GROUND + 524}" material="grass" />
+    <box pos="{1211.3} -8193.4 {GROUND + -267.1}" rot="-0.9 6.4 -1.2" size="220 1734.8 503.3" material="rock_rim" />
+    <box pos="{627} -8149 {-DEPTH * 0.3798}" rot="-1.6 -5.7 -3.7" size="1443.9 1715.6 732" material="rock_warm" />
+    <box pos="{1264.6} -8369.6 {-DEPTH * 0.3615}" rot="0 -6.6 17.8" size="320 656.7 565.8" material="rock" />
+    <box pos="{695.7} -8196.1 {-DEPTH * 0.6294}" rot="0.2 -4.2 0" size="1587 1710.5 756" material="rock" />
+    <box pos="{1395.7} -7967.3 {-DEPTH * 0.6401}" rot="0 -3.6 9.9" size="320 677 378.9" material="rock_dark" />
+    <box pos="{707.6} -8200.3 {-DEPTH * 0.9053}" rot="0.3 -4.8 0.3" size="1609.5 1731.4 816" material="rock_dark" />
+    <box pos="{381.4} -6691.6 {(GROUND - 524) / 2}" size="682.8 1399.4 {GROUND + 524}" material="grass" />
+    <box pos="{723.6} -6701 {GROUND + -267}" rot="0.8 4.5 4.9" size="220 1504.4 510.5" material="rock_rim" />
+    <box pos="{433.6} -6682.2 {-DEPTH * 0.3776}" rot="0.7 -7.2 -1" size="1058.7 1499.9 732" material="rock_warm" />
+    <box pos="{450.4} -6697.2 {-DEPTH * 0.6378}" rot="-0.1 -8.3 0.6" size="1089.2 1534.8 756" material="rock" />
+    <box pos="{519.5} -6646.2 {-DEPTH * 0.9180}" rot="0.4 -9.2 -4.3" size="1220 1534.9 816" material="rock_dark" />
+    <box pos="{1006.1} -7040.3 {-DEPTH * 0.9106}" rot="0 -5.8 7.5" size="320 583.9 516.2" material="rock" />
+    <box pos="{199.2} -5495.9 {(GROUND - 524) / 2}" size="318.4 991.9 {GROUND + 524}" material="grass" />
+    <box pos="{360} -5503.3 {GROUND + -267.2}" rot="1.1 8.9 3.9" size="220 1063.3 493.7" material="rock_rim" />
+    <box pos="{256.8} -5465.1 {-DEPTH * 0.3680}" rot="2.7 -7 -5" size="705.5 1083.8 732" material="rock_warm" />
+    <box pos="{288.6} -5455.4 {-DEPTH * 0.6222}" rot="-0.4 -6.2 -6.1" size="768.5 1093.1 756" material="rock" />
+    <box pos="{585.1} -5701.3 {-DEPTH * 0.6094}" rot="0 -8.2 -21.2" size="320 469.6 541.8" material="rock_dark" />
+    <box pos="{319.7} -5497.5 {-DEPTH * 0.9041}" rot="-2.6 -8.9 0.2" size="829.4 1130.7 816" material="rock_dark" />
+    <box pos="{-175.6} -4788.1 {(GROUND - 524) / 2}" size="652.9 423.8 {GROUND + 524}" material="grass" />
+    <box pos="{152.3} -4772.3 {GROUND + -267}" rot="-1.1 3.6 -8.3" size="220 505.4 514.3" material="rock_rim" />
+    <box pos="{-145.7} -4851.1 {-DEPTH * 0.3679}" rot="1.9 -5 7.4" size="980.7 504.5 732" material="rock_warm" />
+    <box pos="{-99.4} -4821.5 {-DEPTH * 0.6371}" rot="-2.5 -8.3 3.6" size="1072 488.4 756" material="rock" />
+    <box pos="{324.8} -4797.3 {-DEPTH * 0.5920}" rot="0 -13.5 15.7" size="320 179.8 590.8" material="rock_dark" />
+    <box pos="{-42} -4779.6 {-DEPTH * 0.9190}" rot="-1 -9.7 -0.8" size="1183 528 816" material="rock_dark" />
+    <box pos="{443.3} -4804.4 {-DEPTH * 0.9326}" rot="0 -13.3 -19.8" size="320 201.9 537" material="rock" />
+    <box pos="{-240.3} -4323.1 {(GROUND - 524) / 2}" size="523.4 506.2 {GROUND + 524}" material="grass" />
+    <box pos="{22.1} -4332 {GROUND + -267}" rot="-1 5 4.7" size="220 606.2 508.9" material="rock_rim" />
+    <box pos="{-212.1} -4260.4 {-DEPTH * 0.3760}" rot="-1.5 -8.5 -8.7" size="841.1 567.4 732" material="rock_warm" />
+    <box pos="{-185.5} -4319.6 {-DEPTH * 0.6345}" rot="2.6 -9 -0.5" size="901.8 574.7 756" material="rock" />
+    <box pos="{191.2} -4410.7 {-DEPTH * 0.6170}" rot="0 -10.9 21.2" size="320 272.3 567.3" material="rock_dark" />
+    <box pos="{-113.9} -4356.9 {-DEPTH * 0.9011}" rot="0.8 -6.2 3.7" size="1047.9 598.6 816" material="rock_dark" />
+    <box pos="{303} -4200.8 {-DEPTH * 0.9049}" rot="0 -2.1 -18.3" size="320 228.9 425.3" material="rock" />
+    <box pos="{-274.3} -3854.7 {(GROUND - 524) / 2}" size="455.4 430.5 {GROUND + 524}" material="grass" />
+    <box pos="{-45.1} -3847.3 {GROUND + -267.2}" rot="-0.1 8.7 -3.9" size="220 514 494.4" material="rock_rim" />
+    <box pos="{-269.8} -3848.6 {-DEPTH * 0.3764}" rot="-1.4 -10 -1" size="733.2 567.5 732" material="rock_warm" />
+    <box pos="{-25.6} -3894.5 {-DEPTH * 0.3750}" rot="0 -10.3 -5.2" size="320 233.3 578.1" material="rock" />
+    <box pos="{-216} -3815.3 {-DEPTH * 0.6225}" rot="0 -5.7 -5.4" size="844.2 490.9 756" material="rock" />
+    <box pos="{96} -3982.4 {-DEPTH * 0.6297}" rot="0 -5.4 3.8" size="320 220.9 387.5" material="rock_dark" />
+    <box pos="{-163} -3878.1 {-DEPTH * 0.8998}" rot="1.3 -6.5 2.8" size="950.7 560.9 816" material="rock_dark" />
+    <box pos="{196.5} -3832.6 {-DEPTH * 0.8649}" rot="0 -1.8 14.8" size="320 334.4 444.6" material="rock" />
+    <box pos="{-313.9} -3422 {(GROUND - 524) / 2}" size="376.3 434.9 {GROUND + 524}" material="grass" />
+    <box pos="{-124.4} -3432.7 {GROUND + -267.1}" rot="0 7.1 5.6" size="220 536.8 500.7" material="rock_rim" />
+    <box pos="{-276.1} -3455.9 {-DEPTH * 0.3747}" rot="2 -9.5 5.5" size="718.7 541.6 732" material="rock_warm" />
+    <box pos="{-247.7} -3389.1 {-DEPTH * 0.6228}" rot="-2.8 -6.3 -4.9" size="781 505.5 756" material="rock" />
+    <box pos="{60.1} -3388.5 {-DEPTH * 0.6072}" rot="0 -12.2 -0.5" size="320 282.6 504.7" material="rock_dark" />
+    <box pos="{-199.7} -3455.7 {-DEPTH * 0.9031}" rot="0 -8.1 4.5" size="873.2 537.7 816" material="rock_dark" />
+    <box pos="{156} -3500.7 {-DEPTH * 0.9075}" rot="0 -5.2 -13" size="320 287.2 469.7" material="rock" />
+    <box pos="{-364.8} -2952.5 {(GROUND - 524) / 2}" size="274.4 504.3 {GROUND + 524}" material="grass" />
+    <box pos="{-226} -2948.5 {GROUND + -267.2}" rot="0.8 9.4 -2.1" size="220 619 491.6" material="rock_rim" />
+    <box pos="{-336.4} -2966 {-DEPTH * 0.3625}" rot="-2.5 -5.6 2.6" size="607.7 576.1 732" material="rock_warm" />
+    <box pos="{-313.8} -2959.4 {-DEPTH * 0.6186}" rot="-2.9 -5.7 1.2" size="652.9 569.2 756" material="rock" />
+    <box pos="{-251.9} -2973.6 {-DEPTH * 0.8969}" rot="-1.3 -6.9 3.2" size="773.4 605.6 816" material="rock_dark" />
+    <box pos="{75} -2986.1 {-DEPTH * 0.8373}" rot="0 -7.4 -21.2" size="320 229.9 626.8" material="rock" />
+    <box pos="{-385.4} -2600.2 {(GROUND - 524) / 2}" size="233.3 200.3 {GROUND + 524}" material="grass" />
+    <box pos="{-267.5} -2598.4 {GROUND + -267.2}" rot="1.3 8.4 -0.9" size="220 277.1 495.7" material="rock_rim" />
+    <box pos="{-388.2} -2606.5 {-DEPTH * 0.3678}" rot="-2.1 -9.8 1.5" size="500.1 302.2 732" material="rock_warm" />
+    <box pos="{-239.4} -2589.1 {-DEPTH * 0.3430}" rot="0 -10 17.5" size="320 167.8 477.7" material="rock" />
+    <box pos="{-358.1} -2557 {-DEPTH * 0.6170}" rot="-0 -5.9 -8.9" size="558 296.4 756" material="rock" />
+    <box pos="{-154.7} -2590.2 {-DEPTH * 0.6642}" rot="0 -10.5 14.9" size="320 129.2 449.7" material="rock_dark" />
+    <box pos="{-274} -2624.4 {-DEPTH * 0.8943}" rot="2.4 -6.4 3.8" size="729.9 283.5 816" material="rock_dark" />
+    <box pos="{-4.6} -2566.5 {-DEPTH * 0.8977}" rot="0 -11.1 -19.9" size="320 170 552.2" material="rock" />
+    <box pos="{-401.5} -2279.1 {(GROUND - 524) / 2}" size="201 441.8 {GROUND + 524}" material="grass" />
+    <box pos="{-298.7} -2294 {GROUND + -267.2}" rot="0 8.5 7.8" size="220 523 495.3" material="rock_rim" />
+    <box pos="{-387.1} -2269.2 {-DEPTH * 0.3664}" rot="2.7 -9 -2.3" size="503.3 572.5 732" material="rock_warm" />
+    <box pos="{-311.8} -2324 {-DEPTH * 0.6155}" rot="0.3 -4.4 7.9" size="652.1 559.3 756" material="rock" />
+    <box pos="{-296.1} -2306.3 {-DEPTH * 0.8885}" rot="0.9 -4.4 4.5" size="687.6 524.6 816" material="rock_dark" />
+    <box pos="{-372.1} -1827 {(GROUND - 524) / 2}" size="259.9 462.4 {GROUND + 524}" material="grass" />
+    <box pos="{-241.7} -1821.6 {GROUND + -267}" rot="1.4 3.7 -2.8" size="220 581.6 513.7" material="rock_rim" />
+    <box pos="{-359.8} -1840.7 {-DEPTH * 0.3632}" rot="-1.2 -6.5 2.8" size="560 567 732" material="rock_warm" />
+    <box pos="{-182.1} -1761 {-DEPTH * 0.3509}" rot="0 -0.5 17.9" size="320 221.4 411.6" material="rock" />
+    <box pos="{-310.2} -1790.2 {-DEPTH * 0.6197}" rot="-1.8 -6.2 -6.5" size="655.5 529.7 756" material="rock" />
+    <box pos="{-63.6} -1798 {-DEPTH * 0.5768}" rot="0 -7.2 -3.8" size="320 217.1 436.6" material="rock_dark" />
+    <box pos="{-267.5} -1812.7 {-DEPTH * 0.8932}" rot="-1 -5.8 -2.2" size="744.7 527.4 816" material="rock_dark" />
+    <box pos="{-343.5} -1322.6 {(GROUND - 524) / 2}" size="317.1 546.5 {GROUND + 524}" material="grass" />
+    <box pos="{-184.6} -1327 {GROUND + -267}" rot="-0.7 3.7 2.3" size="220 623.8 513.7" material="rock_rim" />
+    <box pos="{-330.7} -1313 {-DEPTH * 0.3705}" rot="-0.3 -9.2 -1.8" size="614.4 682.8 732" material="rock_warm" />
+    <box pos="{-301.9} -1274 {-DEPTH * 0.6219}" rot="1.3 -7 -8.4" size="668.2 678.2 756" material="rock" />
+    <box pos="{-263} -1310 {-DEPTH * 0.9026}" rot="2.6 -9.3 -2" size="747.8 672.6 816" material="rock_dark" />
+    <box pos="{-326.8} -824.7 {(GROUND - 524) / 2}" size="350.4 449.3 {GROUND + 524}" material="grass" />
+    <box pos="{-150.6} -812.8 {GROUND + -267}" rot="1.3 4.5 -6.2" size="220 563.9 510.5" material="rock_rim" />
+    <box pos="{-280.4} -841.1 {-DEPTH * 0.3693}" rot="1.6 -7.4 2.7" size="716.5 545.9 732" material="rock_warm" />
+    <box pos="{-19.8} -665.7 {-DEPTH * 0.3487}" rot="0 -10.4 -16.4" size="320 297.8 417.1" material="rock" />
+    <box pos="{-245.9} -848.9 {-DEPTH * 0.6257}" rot="-2.3 -7.3 3.6" size="784.4 514.9 756" material="rock" />
+    <box pos="{-217.5} -788.4 {-DEPTH * 0.8956}" rot="0.6 -5.9 -5" size="841.3 510.1 816" material="rock_dark" />
+    <box pos="{95.3} -695.9 {-DEPTH * 0.8805}" rot="0 -0.4 -11.1" size="320 300.9 565.8" material="rock" />
+    <box pos="{-186} -315.8 {-DEPTH * 0.3660}" rot="-2.9 -8.2 -3.5" size="541.5 635.9 732" material="rock_warm" />
+    <box pos="{-149.3} -348.2 {-DEPTH * 0.6147}" rot="2.6 -4.3 3" size="618.7 614.2 756" material="rock" />
+    <box pos="{80.9} -425.3 {-DEPTH * 0.5861}" rot="0 -7.9 0.2" size="320 279.5 532.8" material="rock_dark" />
+    <box pos="{-71.7} -309.3 {-DEPTH * 0.8928}" rot="1.9 -5.5 -3.4" size="771.7 614.5 816" material="rock_dark" />
+    <box pos="{-183.5} 146.9 {-DEPTH * 0.3608}" rot="-0 -5.5 8.1" size="545 573.5 732" material="rock_warm" />
+    <box pos="{-123.7} 138.9 {-DEPTH * 0.6180}" rot="-2.1 -5.4 8.1" size="663 590 756" material="rock" />
+    <box pos="{-105.6} 233.2 {-DEPTH * 0.9013}" rot="-2.6 -9.5 -8.1" size="692.4 590 816" material="rock_dark" />
+    <box pos="{-194.1} 517.3 {(GROUND - 524) / 2}" size="251.8 165.5 {GROUND + 524}" material="grass" />
+    <box pos="{-66.1} 502.5 {GROUND + -267.1}" rot="1.3 7.8 7.8" size="220 240.3 497.9" material="rock_rim" />
+    <box pos="{-169.8} 558.8 {-DEPTH * 0.3632}" rot="1 -6.4 -8.4" size="570.7 255.7 732" material="rock_warm" />
+    <box pos="{-157.4} 562.4 {-DEPTH * 0.6260}" rot="-1.3 -9.9 -8.9" size="589.5 253.6 756" material="rock" />
+    <box pos="{60.6} 507.1 {-DEPTH * 0.5922}" rot="0 -15.3 -3" size="320 149.9 425" material="rock_dark" />
+    <box pos="{-106.7} 531.2 {-DEPTH * 0.8936}" rot="2.5 -6.3 -2.3" size="701.7 240.9 816" material="rock_dark" />
+    <box pos="{-318} 812.8 {(GROUND - 524) / 2}" size="367.9 425.7 {GROUND + 524}" material="grass" />
+    <box pos="{-133.4} 802.1 {GROUND + -267}" rot="-1.4 3.1 5.6" size="220 488.9 516.2" material="rock_rim" />
+    <box pos="{-308.8} 770.5 {-DEPTH * 0.3725}" rot="-1.5 -9.5 7.6" size="651.8 545.5 732" material="rock_warm" />
+    <box pos="{-65.6} 866.7 {-DEPTH * 0.3859}" rot="0 -12.2 -8.1" size="320 228.1 576.3" material="rock" />
+    <box pos="{-274.4} 784.3 {-DEPTH * 0.6306}" rot="2.5 -9.8 4.6" size="722.5 536.4 756" material="rock" />
+    <box pos="{-12.7} 965.2 {-DEPTH * 0.5744}" rot="0 -10.6 -11" size="320 219.1 485.8" material="rock_dark" />
+    <box pos="{-206.9} 756.3 {-DEPTH * 0.9039}" rot="-1.9 -8.6 7.7" size="853.2 549.9 816" material="rock_dark" />
+    <box pos="{-340.1} 1323 {(GROUND - 524) / 2}" size="323.8 594.6 {GROUND + 524}" material="grass" />
+    <box pos="{-176.9} 1328.9 {GROUND + -267.2}" rot="0.8 8 -3.1" size="220 683.5 496.9" material="rock_rim" />
+    <box pos="{-341} 1351.2 {-DEPTH * 0.3598}" rot="1.5 -4.5 -5.4" size="597.4 674.3 732" material="rock_warm" />
+    <box pos="{-105.5} 1513.2 {-DEPTH * 0.3259}" rot="0 -9.5 -10.3" size="320 329.2 437.5" material="rock" />
+    <box pos="{-302.6} 1323.1 {-DEPTH * 0.6186}" rot="1.3 -5.5 -0" size="675.6 690.3 756" material="rock" />
+    <box pos="{-43.1} 1454.4 {-DEPTH * 0.5739}" rot="0 -1.4 -16.7" size="320 348.7 530.9" material="rock_dark" />
+    <box pos="{-251.7} 1314.8 {-DEPTH * 0.8925}" rot="-0.8 -5.3 1.2" size="777.1 713.6 816" material="rock_dark" />
+    <box pos="{33.6} 1472.8 {-DEPTH * 0.8688}" rot="0 0.6 -4.6" size="320 293.5 445.5" material="rock" />
+    <box pos="{-380.1} 1858.4 {(GROUND - 524) / 2}" size="243.8 476.2 {GROUND + 524}" material="grass" />
+    <box pos="{-257} 1847.8 {GROUND + -267.1}" rot="-1.2 6.3 5.6" size="220 615.5 503.8" material="rock_rim" />
+    <box pos="{-350.7} 1829.5 {-DEPTH * 0.3592}" rot="2 -4.4 5.7" size="578.1 609.4 732" material="rock_warm" />
+    <box pos="{-132} 2018.2 {-DEPTH * 0.3424}" rot="0 0 -5.6" size="320 231.4 407.6" material="rock" />
+    <box pos="{-314} 1882.8 {-DEPTH * 0.6163}" rot="1.7 -4.8 -4.3" size="652 611.9 756" material="rock" />
+    <box pos="{-263.5} 1891.5 {-DEPTH * 0.8921}" rot="-0.8 -5.3 -5.1" size="750.8 547.5 816" material="rock_dark" />
+    <box pos="{10.3} 1755.6 {-DEPTH * 0.9379}" rot="0 -9.1 7.8" size="320 273.7 567.5" material="rock" />
+    <box pos="{-405.2} 2298.2 {(GROUND - 524) / 2}" size="193.6 403.5 {GROUND + 524}" material="grass" />
+    <box pos="{-307.5} 2288.1 {GROUND + -267}" rot="-1.2 5 5.3" size="220 468.6 508.9" material="rock_rim" />
+    <box pos="{-380.1} 2294.2 {-DEPTH * 0.3597}" rot="0.8 -5.1 0.9" size="521.7 470.8 732" material="rock_warm" />
+    <box pos="{-339.8} 2318.5 {-DEPTH * 0.6181}" rot="-1.2 -6 -3.9" size="599.7 539.8 756" material="rock" />
+    <box pos="{-301.8} 2307.1 {-DEPTH * 0.8930}" rot="2.2 -6.3 -1.5" size="676.2 543.2 816" material="rock_dark" />
+    <box pos="{-56.4} 2125.4 {-DEPTH * 0.8452}" rot="0 -7.4 14.1" size="320 289 457.9" material="rock" />
+    <box pos="{-1545} 2720.3 {(GROUND - 524) / 2}" size="2080.1 440.5 {GROUND + 524}" material="grass" />
+    <box pos="{-503} 2731.8 {GROUND + -267.2}" rot="0.4 8.8 -6.1" size="220 544.6 494" material="rock_rim" />
+    <box pos="{-1483.1} 2876.4 {-DEPTH * 0.4134}" rot="0.7 -7.2 -7.4" size="2444.6 530.2 732" material="rock_warm" />
+    <box pos="{-369} 2795.9 {-DEPTH * 0.3876}" rot="0 -1.5 13.4" size="320 223.1 480.4" material="rock" />
+    <box pos="{-1482.6} 2862.5 {-DEPTH * 0.6674}" rot="2.7 -7 -6.7" size="2449.8 578.5 756" material="rock" />
+    <box pos="{-344.1} 2878.4 {-DEPTH * 0.5978}" rot="0 -3.6 -14.9" size="320 336.4 466" material="rock_dark" />
+    <box pos="{-1452.2} 2758.1 {-DEPTH * 0.9256}" rot="2.1 -5.2 -1.7" size="2534 566.8 816" material="rock_dark" />
+    <box pos="{-295} 2659.8 {-DEPTH * 0.9165}" rot="0 -0.5 9.9" size="320 255 534.8" material="rock" />
+    <box pos="{-1740.8} 3180.6 {(GROUND - 524) / 2}" size="1688.4 480.2 {GROUND + 524}" material="grass" />
+    <box pos="{-896.1} 3171.7 {GROUND + -267}" rot="-1.1 3.1 4.6" size="220 607.2 515.9" material="rock_rim" />
+    <box pos="{-1709.3} 3164.8 {-DEPTH * 0.3986}" rot="0.8 -6.6 0.9" size="2017.7 564.7 732" material="rock_warm" />
+    <box pos="{-1682.4} 3128.9 {-DEPTH * 0.6372}" rot="-0.3 -4.3 2.9" size="2076.8 575.2 756" material="rock" />
+    <box pos="{-1631.1} 3269.9 {-DEPTH * 0.9315}" rot="1.6 -6.9 -4.8" size="2164.9 602.6 816" material="rock_dark" />
+    <box pos="{-673.8} 3075.7 {-DEPTH * 0.8924}" rot="0 -6.8 -2.6" size="320 282.2 434.2" material="rock" />
+    <box pos="{-1967.9} 3713.5 {(GROUND - 524) / 2}" size="1234.1 585.8 {GROUND + 524}" material="grass" />
+    <box pos="{-1349.8} 3727.9 {GROUND + -267}" rot="0 3.1 -7.5" size="220 708 515.9" material="rock_rim" />
+    <box pos="{-1969.8} 3712.6 {-DEPTH * 0.3770}" rot="-0.7 -4.9 0.1" size="1504.8 721.8 732" material="rock_warm" />
+    <box pos="{-1872.3} 3653.4 {-DEPTH * 0.6657}" rot="1.9 -10 4.2" size="1675.5 661.3 756" material="rock" />
+    <box pos="{-1106.3} 3654.1 {-DEPTH * 0.5914}" rot="0 -11.8 -19.1" size="320 389.6 585.8" material="rock_dark" />
+    <box pos="{-1842.8} 3805.1 {-DEPTH * 0.9341}" rot="2.4 -9 -6.1" size="1733.2 667.8 816" material="rock_dark" />
+    <box pos="{-1077.3} 3637.6 {-DEPTH * 0.9185}" rot="0 -14.6 -8" size="320 317.6 633.2" material="rock" />
+    <box pos="{-2204.4} 4233.2 {(GROUND - 524) / 2}" size="761.3 453.6 {GROUND + 524}" material="grass" />
+    <box pos="{-1822.4} 4218.2 {GROUND + -267}" rot="-1 4.1 7.9" size="220 585.2 512.3" material="rock_rim" />
+    <box pos="{-2152} 4301 {-DEPTH * 0.3758}" rot="0.2 -6.3 -6.9" size="1130.9 564.5 732" material="rock_warm" />
+    <box pos="{-2123.4} 4218.6 {-DEPTH * 0.6482}" rot="2.3 -10.1 1.4" size="1184.5 522 756" material="rock" />
+    <box pos="{-2091.8} 4175.4 {-DEPTH * 0.9119}" rot="-1.4 -7.6 5.4" size="1250.1 592.8 816" material="rock_dark" />
+    <box pos="{-1584.8} 4099.2 {-DEPTH * 0.8649}" rot="0 -10.5 14.1" size="320 320.8 516.3" material="rock" />
+    <box pos="{-2375.8} 4728.5 {(GROUND - 524) / 2}" size="418.5 537 {GROUND + 524}" material="grass" />
+    <box pos="{-2165.6} 4725.6 {GROUND + -267.1}" rot="-1.5 7.2 1.5" size="220 622 500.4" material="rock_rim" />
+    <box pos="{-2386.9} 4764.9 {-DEPTH * 0.3674}" rot="0.7 -7.2 -6.3" size="667 631.6 732" material="rock_warm" />
+    <box pos="{-2346} 4760.6 {-DEPTH * 0.6163}" rot="0.9 -4.1 -4.9" size="753.3 598.8 756" material="rock" />
+    <box pos="{-2055} 4681.9 {-DEPTH * 0.6002}" rot="0 -2.7 -13" size="320 225.5 459" material="rock_dark" />
+    <box pos="{-2285.8} 4778.1 {-DEPTH * 0.8934}" rot="2.6 -5 -6.6" size="869.4 616.5 816" material="rock_dark" />
+    <box pos="{-1949.7} 4874 {-DEPTH * 0.8913}" rot="0 -3.3 -21.5" size="320 314.1 621.3" material="rock" />
+    <box pos="{-2494.5} 4998.5 {(GROUND - 524) / 2}" size="181 3 {GROUND + 524}" material="grass" />
+    <box pos="{-2403.1} 4993.5 {GROUND + -267.1}" rot="0.7 6.6 2.6" size="220 138 502.4" material="rock_rim" />
+    <box pos="{-2478.5} 4968 {-DEPTH * 0.3616}" rot="-2.7 -6.6 7.3" size="486 105.5 732" material="rock_warm" />
+    <box pos="{-2298.9} 5015.5 {-DEPTH * 0.3571}" rot="0 -10.2 -15.7" size="320 38.5 537" material="rock" />
+    <box pos="{-2424.6} 4997.8 {-DEPTH * 0.6162}" rot="0.8 -5.2 0.1" size="598.4 128.1 756" material="rock" />
+    <box pos="{-2195.8} 5082.6 {-DEPTH * 0.5795}" rot="0 -1 -21.7" size="320 54.4 389" material="rock_dark" />
+    <box pos="{-2376.4} 5002.3 {-DEPTH * 0.8913}" rot="1.5 -5.5 -0.6" size="693.9 99.2 816" material="rock_dark" />
+    <box pos="{-2107.1} 4948.5 {-DEPTH * 0.8555}" rot="0 -2.9 15.2" size="320 40.5 417.5" material="rock" />
+    <box pos="{-4082.2} 5246.7 {(GROUND - 524) / 2}" size="3005.5 493.5 {GROUND + 524}" material="grass" />
+    <box pos="{-2579.1} 5248.9 {GROUND + -267}" rot="-0.7 4.7 -1.2" size="220 595.3 510.1" material="rock_rim" />
+    <box pos="{-4033.2} 5004.3 {-DEPTH * 0.4011}" rot="-1.7 -4.2 8.4" size="3339.2 623.9 732" material="rock_warm" />
+    <box pos="{-2480.2} 5339.7 {-DEPTH * 0.3348}" rot="0 -6.3 16.7" size="320 255.2 529.4" material="rock" />
+    <box pos="{-4006.7} 5033.4 {-DEPTH * 0.7043}" rot="0.8 -8.1 7.3" size="3375.4 608.9 756" material="rock" />
+    <box pos="{-3963} 5062.7 {-DEPTH * 0.9627}" rot="1.2 -6.7 6.1" size="3480.2 622.1 816" material="rock_dark" />
+    <box pos="{-4506.1} 6359.7 {(GROUND - 524) / 2}" size="2157.8 1732.5 {GROUND + 524}" material="grass" />
+    <box pos="{-3426} 6369.6 {GROUND + -267.1}" rot="1.2 6.7 -5.2" size="220 1798.7 502.2" material="rock_rim" />
+    <box pos="{-4477} 6540.4 {-DEPTH * 0.4052}" rot="-2.4 -6.2 -8.5" size="2454.7 1866.8 732" material="rock_warm" />
+    <box pos="{-3346.2} 6511.1 {-DEPTH * 0.3509}" rot="0 -11.4 10.4" size="320 666.8 375.1" material="rock" />
+    <box pos="{-4418.4} 6414.2 {-DEPTH * 0.6933}" rot="1.9 -9.5 -2.5" size="2575.8 1858 756" material="rock" />
+    <box pos="{-3245.6} 6817.8 {-DEPTH * 0.6594}" rot="0 -15.1 -17.1" size="320 1053.4 585.4" material="rock_dark" />
+    <box pos="{-4364.2} 6229.6 {-DEPTH * 0.9545}" rot="0.8 -7.9 5.6" size="2683.3 1858.5 816" material="rock_dark" />
+    <box pos="{-3139.4} 6607.9 {-DEPTH * 0.9233}" rot="0 -13.7 -3.4" size="320 696.9 432" material="rock" />
+    <box pos="{-5094.9} 7927.3 {(GROUND - 524) / 2}" size="980.2 1402.7 {GROUND + 524}" material="grass" />
+    <box pos="{-4604.2} 7919.8 {GROUND + -267}" rot="1.4 4.6 3.9" size="220 1488.4 510.3" material="rock_rim" />
+    <box pos="{-5059.2} 7855.3 {-DEPTH * 0.3815}" rot="0.7 -6.6 6.3" size="1314.9 1465.2 732" material="rock_warm" />
+    <box pos="{-4508.9} 8034.2 {-DEPTH * 0.3598}" rot="0 -11.5 15.9" size="320 796 442.2" material="rock" />
+    <box pos="{-5001.5} 8000 {-DEPTH * 0.6498}" rot="-3 -8.7 -5.9" size="1423 1478.9 756" material="rock" />
+    <box pos="{-5010.4} 7929.3 {-DEPTH * 0.9045}" rot="-0.1 -5.2 -0.2" size="1423.2 1526.4 816" material="rock_dark" />
+    <box pos="{-4402.1} 7779.3 {-DEPTH * 0.8355}" rot="0 -2.8 -12.6" size="320 666.7 611.6" material="rock" />
+    <box pos="{-5432.1} 8814.3 {(GROUND - 524) / 2}" size="305.8 371.4 {GROUND + 524}" material="grass" />
+    <box pos="{-5278.4} 8809.6 {GROUND + -267.1}" rot="0.6 6.2 2.5" size="220 494.4 504" material="rock_rim" />
+    <box pos="{-5383.6} 8800.8 {-DEPTH * 0.3660}" rot="-0.9 -6.5 2.3" size="678 463.5 732" material="rock_warm" />
+    <box pos="{-5378.6} 8772.9 {-DEPTH * 0.6192}" rot="-2.8 -5.7 7" size="684.4 447.9 756" material="rock" />
+    <box pos="{-5318} 8829.5 {-DEPTH * 0.8977}" rot="2.3 -6.9 -2.2" size="807.6 450.1 816" material="rock_dark" />
+    <box pos="{-5013.6} 8889 {-DEPTH * 0.8962}" rot="0 -2.8 -15.2" size="320 242.4 592.3" material="rock" />
+    <box pos="{-8390.5} 9750 {(GROUND - 524) / 2}" size="4889.1 1500.1 {GROUND + 524}" material="grass" />
+    <box pos="{-5944.5} 9761.3 {GROUND + -267.1}" rot="0.2 7.3 -5.9" size="220 1621.9 499.8" material="rock_rim" />
+    <box pos="{-8383.8} 9780.7 {-DEPTH * 0.4488}" rot="2.3 -5.3 -0.7" size="5160.1 1579.1 732" material="rock_warm" />
+    <box pos="{-5919.3} 9498.5 {-DEPTH * 0.3873}" rot="0 -5 -7.6" size="320 830.3 551.3" material="rock" />
+    <box pos="{-8322.4} 9889.9 {-DEPTH * 0.7663}" rot="-1.9 -8.5 -3.1" size="5240.1 1638.1 756" material="rock" />
+    <box pos="{-5806.6} 9627.1 {-DEPTH * 0.5700}" rot="0 -9.3 10.3" size="320 967.4 401.1" material="rock_dark" />
+    <box pos="{-8293} 9635.4 {-DEPTH * 1.0022}" rot="-2.4 -6.5 2.5" size="5325.3 1576.6 816" material="rock_dark" />
+    <box pos="{-5732} 9906.9 {-DEPTH * 0.8899}" rot="0 -10.8 -1.6" size="320 709.1 601.6" material="rock" />
+    <box pos="{-9022.8} 11411.4 {(GROUND - 524) / 2}" size="3624.4 1822.7 {GROUND + 524}" material="grass" />
+    <box pos="{-7209.5} 11403.1 {GROUND + -267.1}" rot="0.2 6.9 4.3" size="220 1917.1 501.3" material="rock_rim" />
+    <box pos="{-8959.5} 11460 {-DEPTH * 0.4854}" rot="-1.6 -9.4 -1.4" size="3976.4 1940.4 732" material="rock_warm" />
+    <box pos="{-8924.3} 11189.3 {-DEPTH * 0.7056}" rot="1.1 -6.8 6.3" size="4048 1934 756" material="rock" />
+    <box pos="{-7004.7} 11318 {-DEPTH * 0.5897}" rot="0 -9.8 5.7" size="320 980.7 400.2" material="rock_dark" />
+    <box pos="{-8902.9} 11440 {-DEPTH * 0.9990}" rot="0.7 -8.2 -0.8" size="4102.1 1915.4 816" material="rock_dark" />
+    <box pos="{-9667.5} 13148.1 {(GROUND - 524) / 2}" size="2334.9 1650.8 {GROUND + 524}" material="grass" />
+    <box pos="{-8499.4} 13138.5 {GROUND + -267}" rot="1.4 4.1 5" size="220 1749.9 512.2" material="rock_rim" />
+    <box pos="{-9654.6} 13130.6 {-DEPTH * 0.4420}" rot="-2 -9.8 0.8" size="2602.7 1773.3 732" material="rock_warm" />
+    <box pos="{-8462.4} 13167.5 {-DEPTH * 0.3369}" rot="0 -5.8 6.1" size="320 665.5 492.2" material="rock" />
+    <box pos="{-9596.6} 13186.1 {-DEPTH * 0.6864}" rot="2.7 -8.2 -1.6" size="2727.6 1727.6 756" material="rock" />
+    <box pos="{-8359.8} 13593.8 {-DEPTH * 0.6296}" rot="0 -9.4 -9.9" size="320 934.1 405.8" material="rock_dark" />
+    <box pos="{-9587.1} 13183.2 {-DEPTH * 0.9399}" rot="-0.5 -6.2 -1.5" size="2758.5 1766.6 816" material="rock_dark" />
+    <box pos="{-8318.8} 13500.3 {-DEPTH * 0.8835}" rot="0 -7.5 13.3" size="320 717.4 589.5" material="rock" />
+    <box pos="{-10286.5} 14760.3 {(GROUND - 524) / 2}" size="1096.9 1573.6 {GROUND + 524}" material="grass" />
+    <box pos="{-9737.4} 14750.8 {GROUND + -267}" rot="-0.1 4.3 5" size="220 1684.4 511.5" material="rock_rim" />
+    <box pos="{-10242.4} 14821.9 {-DEPTH * 0.3917}" rot="2.8 -8 -4.9" size="1446 1661.9 732" material="rock_warm" />
+    <box pos="{-10198.2} 14768 {-DEPTH * 0.6324}" rot="-1.2 -4.9 -0.6" size="1547.9 1677.5 756" material="rock" />
+    <box pos="{-10174.6} 14673.7 {-DEPTH * 0.9100}" rot="-1.4 -5.6 6.3" size="1583.5 1663.7 816" material="rock_dark" />
+    <box pos="{-9495.3} 14968.9 {-DEPTH * 0.9067}" rot="0 -5.9 -8.7" size="320 659.6 408.7" material="rock" />
+    <box pos="{-10652.4} 15773.6 {(GROUND - 524) / 2}" size="365.3 452.9 {GROUND + 524}" material="grass" />
+    <box pos="{-10469} 15768.1 {GROUND + -267.1}" rot="1.1 5.7 2.9" size="220 587.2 505.9" material="rock_rim" />
+    <box pos="{-10654.4} 15741 {-DEPTH * 0.3615}" rot="2.4 -5 5.9" size="635.5 575.6 732" material="rock_warm" />
+    <box pos="{-10582} 15831.4 {-DEPTH * 0.6275}" rot="-2.9 -8.1 -8.7" size="769.7 589 756" material="rock" />
+    <box pos="{-10300.4} 15737.2 {-DEPTH * 0.5826}" rot="0 -3.2 -15.3" size="320 221.1 410.4" material="rock_dark" />
+    <box pos="{-10533.9} 15818.2 {-DEPTH * 0.9052}" rot="2.3 -8.8 -6" size="867.3 561.6 816" material="rock_dark" />
+    <box pos="{GAP + 4539.2} -15209.9 {(GROUND - 524) / 2}" size="441.5 1580.2 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -4316.6} -15198.3 {GROUND + -267.2}" rot="0.1 -8.8 6.1" size="220 1695.6 493.8" material="rock_rim" />
+    <box pos="{GAP - -4512.4} -15217.3 {-DEPTH * 0.3660}" rot="2.3 5.7 -1.1" size="771.2 1684.6 732" material="rock" />
+    <box pos="{GAP - -4240} -15582.9 {-DEPTH * 0.3596}" rot="0 5.7 -0.4" size="320 648.3 474.3" material="rock_dark" />
+    <box pos="{GAP - -4480.6} -15163.2 {-DEPTH * 0.6258}" rot="-3 6.9 6.5" size="827.5 1707.5 756" material="rock_dark" />
+    <box pos="{GAP - -4429.7} -15161.4 {-DEPTH * 0.9105}" rot="-0.8 9.9 6.1" size="921.8 1673.7 816" material="rock" />
+    <box pos="{GAP - -4050.5} -15552.9 {-DEPTH * 0.8754}" rot="0 7.9 19" size="320 852.4 563.7" material="rock_warm" />
+    <box pos="{GAP + 4318.6} -13688.5 {(GROUND - 524) / 2}" size="882.8 1462.6 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -3875.7} -13689 {GROUND + -267.2}" rot="0.7 -9.4 -0.3" size="220 1525.3 491.5" material="rock_rim" />
+    <box pos="{GAP - -4286.7} -13719.1 {-DEPTH * 0.3808}" rot="2.2 7 -2.9" size="1216 1551.9 732" material="rock" />
+    <box pos="{GAP - -3768.1} -13699.2 {-DEPTH * 0.3623}" rot="0 4.5 14.4" size="320 842.1 412.3" material="rock_dark" />
+    <box pos="{GAP - -4238.2} -13708.2 {-DEPTH * 0.6391}" rot="0 7.2 -1.7" size="1312.7 1544.3 756" material="rock_dark" />
+    <box pos="{GAP - -4204.9} -13625.8 {-DEPTH * 0.9071}" rot="-1 5.9 5.3" size="1377.2 1547.9 816" material="rock" />
+    <box pos="{GAP + 4066.5} -12055.9 {(GROUND - 524) / 2}" size="1387.1 1802.6 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -3370.9} -12071.6 {GROUND + -267.1}" rot="0.1 -7.1 -8.3" size="220 1933.5 500.5" material="rock_rim" />
+    <box pos="{GAP - -4062.6} -12106.8 {-DEPTH * 0.4076}" rot="-3 9.7 -3.6" size="1648.2 1877.8 732" material="rock" />
+    <box pos="{GAP - -3995.3} -11975.7 {-DEPTH * 0.6556}" rot="2.5 7.8 5.2" size="1785.5 1911.6 756" material="rock_dark" />
+    <box pos="{GAP - -3954.6} -12027.9 {-DEPTH * 0.9326}" rot="1.1 8.1 1.7" size="1871.1 1879.6 816" material="rock" />
+    <box pos="{GAP - -3096} -12306.2 {-DEPTH * 0.9363}" rot="0 10 18.2" size="320 1016.3 432.8" material="rock_warm" />
+    <box pos="{GAP + 3824.7} -10450 {(GROUND - 524) / 2}" size="1870.5 1409.3 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -2888.5} -10440.1 {GROUND + -267}" rot="-0.6 -5.3 5.2" size="220 1489.9 507.4" material="rock_rim" />
+    <box pos="{GAP - -3799.1} -10510.8 {-DEPTH * 0.4263}" rot="-0.4 9.7 -3.3" size="2167.2 1520.6 732" material="rock" />
+    <box pos="{GAP - -2811.1} -10689.8 {-DEPTH * 0.3321}" rot="0 9.1 18.4" size="320 747.9 374.6" material="rock_dark" />
+    <box pos="{GAP - -3781.1} -10488.4 {-DEPTH * 0.6848}" rot="0.6 10 -2" size="2202.9 1544.3 756" material="rock_dark" />
+    <box pos="{GAP - -2797.4} -10396.4 {-DEPTH * 0.6369}" rot="0 4.1 -21.3" size="320 699.7 401.1" material="rock" />
+    <box pos="{GAP - -3700.4} -10587.5 {-DEPTH * 0.9570}" rot="2.8 9.3 -6.8" size="2351.6 1476.3 816" material="rock" />
+    <box pos="{GAP - -2645} -10693.1 {-DEPTH * 0.8683}" rot="0 12.6 -19.8" size="320 523.3 584.1" material="rock_warm" />
+    <box pos="{GAP + 3661.9} -9372.7 {(GROUND - 524) / 2}" size="2196.1 745.3 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -2562.6} -9364.8 {GROUND + -267.1}" rot="0.6 -7.7 4.1" size="220 855.6 498.4" material="rock_rim" />
+    <box pos="{GAP - -3628} -9205.6 {-DEPTH * 0.4262}" rot="-1.5 8.4 7.8" size="2494.3 882.5 732" material="rock" />
+    <box pos="{GAP - -2505.7} -9204.7 {-DEPTH * 0.3936}" rot="0 4.4 10.1" size="320 312.1 508.9" material="rock_dark" />
+    <box pos="{GAP - -3583.2} -9378.2 {-DEPTH * 0.6767}" rot="-2.6 7.6 -0.2" size="2610.8 834.7 756" material="rock_dark" />
+    <box pos="{GAP - -2371.9} -9232.7 {-DEPTH * 0.6256}" rot="0 6.6 5.7" size="320 433.4 410.9" material="rock" />
+    <box pos="{GAP - -3560.8} -9254.9 {-DEPTH * 0.9497}" rot="2.7 7.5 5.2" size="2645 868.1 816" material="rock" />
+    <box pos="{GAP - -2351.9} -9271.8 {-DEPTH * 0.8594}" rot="0 13.3 4.7" size="320 317 646.4" material="rock_warm" />
+    <box pos="{GAP + 2442.3} -8195.7 {(GROUND - 524) / 2}" size="435.4 1608.7 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -2223.2} -8202.2 {GROUND + -267.2}" rot="-0.4 -8.4 -3.4" size="220 1739.7 495.4" material="rock_rim" />
+    <box pos="{GAP - -2412.9} -8183.4 {-DEPTH * 0.3663}" rot="2.4 5.8 1.8" size="769.8 1733.3 732" material="rock" />
+    <box pos="{GAP - -2089.4} -8174.9 {-DEPTH * 0.3325}" rot="0 9.8 -20.1" size="320 720.6 458.8" material="rock_dark" />
+    <box pos="{GAP - -2362.1} -8146.9 {-DEPTH * 0.6337}" rot="0.4 9.2 6.6" size="859 1690.6 756" material="rock_dark" />
+    <box pos="{GAP - -2328.2} -8136 {-DEPTH * 0.9026}" rot="-0.9 7.4 7.4" size="928 1675.5 816" material="rock" />
+    <box pos="{GAP + 2213.1} -6691.6 {(GROUND - 524) / 2}" size="893.8 1399.4 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -1764.9} -6676.8 {GROUND + -267}" rot="0.5 -4.2 7.8" size="220 1508 511.8" material="rock_rim" />
+    <box pos="{GAP - -2190.8} -6746.1 {-DEPTH * 0.3885}" rot="-1.5 8.9 -5.3" size="1199 1519.5 732" material="rock" />
+    <box pos="{GAP - -1677.5} -6438.1 {-DEPTH * 0.3900}" rot="0 13.5 17.5" size="320 565.2 543.1" material="rock_dark" />
+    <box pos="{GAP - -2156.7} -6696.3 {-DEPTH * 0.6296}" rot="0.5 5.3 -0.4" size="1281.2 1474.6 756" material="rock_dark" />
+    <box pos="{GAP - -1604.6} -6686.7 {-DEPTH * 0.6140}" rot="0 -0.2 -15.4" size="320 774.5 460.3" material="rock" />
+    <box pos="{GAP - -2085.8} -6719.2 {-DEPTH * 0.9227}" rot="-2.4 8.8 -2.3" size="1410.5 1510.1 816" material="rock" />
+    <box pos="{GAP - -1492.5} -6619.6 {-DEPTH * 0.9417}" rot="0 13.2 21.6" size="320 754 492.4" material="rock_warm" />
+    <box pos="{GAP + 2038.6} -5495.9 {(GROUND - 524) / 2}" size="1242.9 991.9 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -1416.2} -5504.1 {GROUND + -267.1}" rot="1.3 -6.1 -4.3" size="220 1086 504.4" material="rock_rim" />
+    <box pos="{GAP - -1999.8} -5416.8 {-DEPTH * 0.3751}" rot="2.8 4.4 5.7" size="1587.9 1072.2 732" material="rock" />
+    <box pos="{GAP - -1281.8} -5741.7 {-DEPTH * 0.3560}" rot="0 9.7 -1.8" size="320 423.7 384.4" material="rock_dark" />
+    <box pos="{GAP - -1949.8} -5610.1 {-DEPTH * 0.6345}" rot="0.6 4.8 -7.8" size="1678.7 1083.7 756" material="rock_dark" />
+    <box pos="{GAP - -1943.7} -5479 {-DEPTH * 0.9275}" rot="0.8 8.1 1.2" size="1695.2 1128.4 816" material="rock" />
+    <box pos="{GAP - -1202.1} -5288.4 {-DEPTH * 0.8334}" rot="0 5.2 -20.3" size="320 521.4 447.1" material="rock_warm" />
+    <box pos="{GAP + 1323.3} -4788.1 {(GROUND - 524) / 2}" size="273.5 423.8 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -1185.2} -4774.2 {GROUND + -267}" rot="0.9 -5.2 7.3" size="220 487.6 507.8" material="rock_rim" />
+    <box pos="{GAP - -1301.3} -4774.5 {-DEPTH * 0.3608}" rot="2.9 5 2.6" size="594.5 488.3 732" material="rock" />
+    <box pos="{GAP - -1248.5} -4769 {-DEPTH * 0.6268}" rot="-1.2 8.7 3.2" size="694 531.1 756" material="rock_dark" />
+    <box pos="{GAP - -1013} -4919.7 {-DEPTH * 0.6119}" rot="0 4.4 -11.5" size="320 228.9 436.3" material="rock" />
+    <box pos="{GAP - -1219.8} -4845.1 {-DEPTH * 0.8893}" rot="1.3 4.3 -8.8" size="749.6 499.4 816" material="rock" />
+    <box pos="{GAP + 1249} -4323.1 {(GROUND - 524) / 2}" size="421.9 506.2 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -1037} -4310.5 {GROUND + -267}" rot="-0.2 -4.3 6.6" size="220 577.4 511.3" material="rock_rim" />
+    <box pos="{GAP - -1254.4} -4277.8 {-DEPTH * 0.3669}" rot="2.1 6.8 7.7" size="680.2 616.5 732" material="rock" />
+    <box pos="{GAP - -1016.4} -4336.3 {-DEPTH * 0.3936}" rot="0 9.4 -19.5" size="320 342.6 470.9" material="rock_dark" />
+    <box pos="{GAP - -1193.7} -4367.5 {-DEPTH * 0.6242}" rot="2.2 6.6 -6.4" size="802.4 587.5 756" material="rock_dark" />
+    <box pos="{GAP - -885.9} -4393.6 {-DEPTH * 0.6496}" rot="0 11.4 -8" size="320 245.4 568.4" material="rock" />
+    <box pos="{GAP - -1171} -4260.8 {-DEPTH * 0.9023}" rot="-2.7 8.1 8.6" size="840.2 637.8 816" material="rock" />
+    <box pos="{GAP - -844} -4343.2 {-DEPTH * 0.9242}" rot="0 14.1 21.6" size="320 299.4 478.1" material="rock_warm" />
+    <box pos="{GAP + 1175.4} -3854.7 {(GROUND - 524) / 2}" size="569.1 430.5 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -889.3} -3861.9 {GROUND + -267.2}" rot="0.7 -9.1 -3.8" size="220 495.1 492.9" material="rock_rim" />
+    <box pos="{GAP - -1146.5} -3788.3 {-DEPTH * 0.3700}" rot="-2.9 6.2 8.6" size="891.9 555.1 732" material="rock" />
+    <box pos="{GAP - -796} -3797.6 {-DEPTH * 0.3820}" rot="0 2.8 18.1" size="320 194.5 548.8" material="rock_dark" />
+    <box pos="{GAP - -1093.4} -3910.6 {-DEPTH * 0.6353}" rot="-1.9 8.4 -6.5" size="996.2 552.2 756" material="rock_dark" />
+    <box pos="{GAP - -702.4} -3860.1 {-DEPTH * 0.6167}" rot="0 9.7 -12.9" size="320 204.2 397.8" material="rock" />
+    <box pos="{GAP - -1049.9} -3801.6 {-DEPTH * 0.8954}" rot="0.5 4.5 5.6" size="1091.6 506.7 816" material="rock" />
+    <box pos="{GAP + 1070} -3422 {(GROUND - 524) / 2}" size="780 434.9 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -678.4} -3437.3 {GROUND + -267.1}" rot="1 -5.6 -8" size="220 521.7 506.4" material="rock_rim" />
+    <box pos="{GAP - -1032.6} -3423.3 {-DEPTH * 0.3785}" rot="-2.9 7 -0.1" size="1126.4 567.7 732" material="rock" />
+    <box pos="{GAP - -1023.4} -3478.1 {-DEPTH * 0.6262}" rot="2 5.1 -5.7" size="1143.1 524.2 756" material="rock_dark" />
+    <box pos="{GAP - -540.4} -3462.4 {-DEPTH * 0.6190}" rot="0 7.7 -16.7" size="320 261.4 379.1" material="rock" />
+    <box pos="{GAP - -951.9} -3349.2 {-DEPTH * 0.9073}" rot="-1.1 6.4 6.6" size="1279.9 551.8 816" material="rock" />
+    <box pos="{GAP + 969.9} -2952.5 {(GROUND - 524) / 2}" size="980.3 504.3 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -478.4} -2936.8 {GROUND + -267}" rot="0.1 -3.3 8.2" size="220 605.4 515.4" material="rock_rim" />
+    <box pos="{GAP - -947} -3048.5 {-DEPTH * 0.3744}" rot="2.8 5.2 -8.6" size="1286.2 582.2 732" material="rock" />
+    <box pos="{GAP - -391} -3126.4 {-DEPTH * 0.3863}" rot="0 -0.6 -13.4" size="320 240.2 545.4" material="rock_dark" />
+    <box pos="{GAP - -913} -2936.1 {-DEPTH * 0.6286}" rot="0.1 4.7 1.4" size="1368.9 620.5 756" material="rock_dark" />
+    <box pos="{GAP - -855.7} -3055.8 {-DEPTH * 0.9153}" rot="-2.3 7.1 -8.2" size="1462.5 603.8 816" material="rock" />
+    <box pos="{GAP - -202.8} -3104.5 {-DEPTH * 0.8774}" rot="0 8 -15.5" size="320 229.7 507.3" material="rock_warm" />
+    <box pos="{GAP + 916.6} -2600.2 {(GROUND - 524) / 2}" size="1086.9 200.3 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -371.5} -2589 {GROUND + -267.1}" rot="-0.2 -7.9 5.9" size="220 291.4 497.6" material="rock_rim" />
+    <box pos="{GAP - -860.9} -2594.3 {-DEPTH * 0.3965}" rot="-0.6 8.8 0.5" size="1460.9 335.6 732" material="rock" />
+    <box pos="{GAP - -203.2} -2562.3 {-DEPTH * 0.3205}" rot="0 12.6 18.2" size="320 137.6 439.6" material="rock_dark" />
+    <box pos="{GAP - -812.4} -2706.1 {-DEPTH * 0.6592}" rot="0.1 9.7 -8" size="1538.2 336.9 756" material="rock_dark" />
+    <box pos="{GAP - -175.5} -2631.1 {-DEPTH * 0.6134}" rot="0 9.8 -2.9" size="320 153.5 521.5" material="rock" />
+    <box pos="{GAP - -815.4} -2685.8 {-DEPTH * 0.9317}" rot="2.8 9.7 -6.5" size="1537.3 322.4 816" material="rock" />
+    <box pos="{GAP + 385} -2279.1 {(GROUND - 524) / 2}" size="233.9 441.8 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -266.1} -2266 {GROUND + -267.2}" rot="-0.7 -8.3 6.9" size="220 553.1 496" material="rock_rim" />
+    <box pos="{GAP - -362.6} -2298.6 {-DEPTH * 0.3657}" rot="0.3 7.9 -4.1" size="552.1 575.7 732" material="rock" />
+    <box pos="{GAP - -191.8} -2131.3 {-DEPTH * 0.3733}" rot="0 3.3 6.5" size="320 276.4 461.2" material="rock_dark" />
+    <box pos="{GAP - -326.5} -2235.2 {-DEPTH * 0.6206}" rot="0.1 6.9 8.2" size="620.2 523.2 756" material="rock_dark" />
+    <box pos="{GAP - -116.9} -2401.4 {-DEPTH * 0.6290}" rot="0 3.8 -9.3" size="320 202.5 406.1" material="rock" />
+    <box pos="{GAP - -313.5} -2274.4 {-DEPTH * 0.8953}" rot="2 7.5 0.8" size="651.3 550.5 816" material="rock" />
+    <box pos="{GAP + 365.4} -1827 {(GROUND - 524) / 2}" size="273.1 462.4 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -228.6} -1828.4 {GROUND + -267}" rot="-0.1 -4.2 -0.7" size="220 571.5 511.8" material="rock_rim" />
+    <box pos="{GAP - -356.8} -1849.7 {-DEPTH * 0.3632}" rot="-1.7 6.4 -4.6" size="565.1 563.4 732" material="rock" />
+    <box pos="{GAP - -333.2} -1841.1 {-DEPTH * 0.6216}" rot="2.2 7.5 -2.7" size="611.7 541.5 756" material="rock_dark" />
+    <box pos="{GAP - -129.5} -1933.5 {-DEPTH * 0.5931}" rot="0 11.9 -19.1" size="320 228.1 602" material="rock" />
+    <box pos="{GAP - -266.3} -1877 {-DEPTH * 0.9003}" rot="-0.7 8.5 -7.9" size="736.3 557.6 816" material="rock" />
+    <box pos="{GAP - -3.4} -1778.3 {-DEPTH * 0.9250}" rot="0 10.6 -6.5" size="320 226.6 642.8" material="rock_warm" />
+    <box pos="{GAP + 333.5} -1322.6 {(GROUND - 524) / 2}" size="337 546.5 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -163.7} -1311.6 {GROUND + -267.1}" rot="0.7 -7 5.8" size="220 665.6 501" material="rock_rim" />
+    <box pos="{GAP - -304.6} -1325.1 {-DEPTH * 0.3732}" rot="1.7 9.6 -0.4" size="665.5 663.2 732" material="rock" />
+    <box pos="{GAP - -56.6} -1179.7 {-DEPTH * 0.3543}" rot="0 10.5 20.4" size="320 376.5 366.9" material="rock_dark" />
+    <box pos="{GAP - -284.5} -1291.3 {-DEPTH * 0.6214}" rot="2.2 6.4 5.1" size="707.8 655.1 756" material="rock_dark" />
+    <box pos="{GAP - -22.6} -1404.5 {-DEPTH * 0.6203}" rot="0 4.3 -5.1" size="320 304.3 542" material="rock" />
+    <box pos="{GAP - -224.6} -1277.5 {-DEPTH * 0.8932}" rot="-0 5.2 6.3" size="826.5 642 816" material="rock" />
+    <box pos="{GAP - 118.7} -1317.7 {-DEPTH * 0.9304}" rot="0 9.4 -7.7" size="320 248 548.9" material="rock_warm" />
+    <box pos="{GAP + 303} -824.7 {(GROUND - 524) / 2}" size="398.1 449.3 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -102.3} -834.7 {GROUND + -267.2}" rot="-1.5 -8.5 -5.3" size="220 582.2 495.2" material="rock_rim" />
+    <box pos="{GAP - -313.6} -818.1 {-DEPTH * 0.3706}" rot="-0 8.8 1.2" size="649 582.9 732" material="rock" />
+    <box pos="{GAP - -88.2} -836.8 {-DEPTH * 0.3445}" rot="0 9.9 -6.3" size="320 349.5 479.6" material="rock_dark" />
+    <box pos="{GAP - -259} -771.8 {-DEPTH * 0.6180}" rot="1.1 4.7 8.1" size="755.9 551.3 756" material="rock_dark" />
+    <box pos="{GAP - 47.3} -805.9 {-DEPTH * 0.5738}" rot="0 4 -0.6" size="320 248.2 505.3" material="rock" />
+    <box pos="{GAP - -199} -758.3 {-DEPTH * 0.9058}" rot="-0.9 9 8.9" size="865 551.7 816" material="rock" />
+    <box pos="{GAP - 119.3} -687.9 {-DEPTH * 0.8893}" rot="0 11.3 17.4" size="320 237 647.5" material="rock_warm" />
+    <box pos="{GAP - -185} -290.6 {-DEPTH * 0.3600}" rot="2.3 5.1 8.8" size="541.5 629.7 732" material="rock" />
+    <box pos="{GAP - -134.9} -331.5 {-DEPTH * 0.6235}" rot="-1.9 7.9 0.1" size="644.1 610.6 756" material="rock_dark" />
+    <box pos="{GAP - -98.4} -277.5 {-DEPTH * 0.8945}" rot="0.8 6.6 8.9" size="710.1 599.4 816" material="rock" />
+    <box pos="{GAP - -183.5} 201.4 {-DEPTH * 0.3681}" rot="-3 9.2 3.4" size="545 582.9 732" material="rock" />
+    <box pos="{GAP - -125.2} 153.9 {-DEPTH * 0.6188}" rot="-0 5.7 -5.5" size="663.3 602.8 756" material="rock_dark" />
+    <box pos="{GAP - -88.6} 242 {-DEPTH * 0.8904}" rot="0.4 4.9 8.9" size="731.4 591.4 816" material="rock" />
+    <box pos="{GAP - 185.9} 106.1 {-DEPTH * 0.9183}" rot="0 6.2 14.2" size="320 319.3 434.1" material="rock_warm" />
+    <box pos="{GAP + 219.7} 517.3 {(GROUND - 524) / 2}" size="200.5 165.5 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -117.1} 500.7 {GROUND + -267.2}" rot="0.6 -8.3 -8.8" size="220 251.3 496" material="rock_rim" />
+    <box pos="{GAP - -189.2} 490.1 {-DEPTH * 0.3684}" rot="-1.4 9.5 -6" size="531.5 233.4 732" material="rock" />
+    <box pos="{GAP - -152.1} 512.6 {-DEPTH * 0.6258}" rot="-0.7 9.5 -0.9" size="607.5 229.8 756" material="rock_dark" />
+    <box pos="{GAP - -83.7} 510.2 {-DEPTH * 0.8895}" rot="0.7 4.4 -1.1" size="750.3 245.4 816" material="rock" />
+    <box pos="{GAP + 320} 812.8 {(GROUND - 524) / 2}" size="364 425.7 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -135.9} 826.4 {GROUND + -267.2}" rot="0.3 -8.6 7.2" size="220 510 494.8" material="rock_rim" />
+    <box pos="{GAP - -268.8} 812.3 {-DEPTH * 0.3674}" rot="2.7 6.5 -0.1" size="741.6 505.1 732" material="rock" />
+    <box pos="{GAP - -264.8} 790.8 {-DEPTH * 0.6289}" rot="2.3 8.9 -3.4" size="744.2 524.4 756" material="rock_dark" />
+    <box pos="{GAP - -1.2} 738.2 {-DEPTH * 0.5654}" rot="0 4.3 2.7" size="320 206.3 459.3" material="rock" />
+    <box pos="{GAP - -211.6} 797.5 {-DEPTH * 0.8926}" rot="-0.6 4.9 -2.1" size="857.2 490.9 816" material="rock" />
+    <box pos="{GAP + 350.4} 1323 {(GROUND - 524) / 2}" size="303.2 594.6 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -197.8} 1312.4 {GROUND + -267}" rot="-1.4 -5.2 -5.6" size="220 673.5 507.9" material="rock_rim" />
+    <box pos="{GAP - -312.6} 1306.7 {-DEPTH * 0.3612}" rot="-2.1 4.7 -2.9" size="655.9 711 732" material="rock" />
+    <box pos="{GAP - -56.2} 1261.5 {-DEPTH * 0.3226}" rot="0 2.9 -15" size="320 397.3 394.1" material="rock_dark" />
+    <box pos="{GAP - -267.2} 1308.9 {-DEPTH * 0.6313}" rot="2.8 9.8 -2.2" size="738.2 671.2 756" material="rock_dark" />
+    <box pos="{GAP - 0.8} 1246.6 {-DEPTH * 0.5981}" rot="0 10.9 17.6" size="320 273.1 480.7" material="rock" />
+    <box pos="{GAP - -243.3} 1292.1 {-DEPTH * 0.9041}" rot="0.6 9.4 -4.6" size="784.5 671.6 816" material="rock" />
+    <box pos="{GAP - 47.4} 1264.9 {-DEPTH * 0.8616}" rot="0 10.2 6.9" size="320 321.2 540.8" material="rock_warm" />
+    <box pos="{GAP + 375.9} 1858.4 {(GROUND - 524) / 2}" size="252.2 476.2 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -248.4} 1844.2 {GROUND + -267}" rot="-0.5 -5 -7.5" size="220 604.3 508.9" material="rock_rim" />
+    <box pos="{GAP - -339} 1822.1 {-DEPTH * 0.3654}" rot="0.4 7.1 -7" size="596.9 565.2 732" material="rock" />
+    <box pos="{GAP - -122.6} 1754.6 {-DEPTH * 0.3911}" rot="0 6 -9.6" size="320 207.1 434.4" material="rock_dark" />
+    <box pos="{GAP - -290.4} 1888.4 {-DEPTH * 0.6175}" rot="2.3 4.9 4.9" size="698 605.1 756" material="rock_dark" />
+    <box pos="{GAP - -38.9} 1927.2 {-DEPTH * 0.6275}" rot="0 7.3 7" size="320 216.3 532.1" material="rock" />
+    <box pos="{GAP - -281.6} 1897 {-DEPTH * 0.8910}" rot="-0.9 5.2 6.2" size="713.7 586.5 816" material="rock" />
+    <box pos="{GAP - -40.7} 1879.7 {-DEPTH * 0.9262}" rot="0 1.6 -14.9" size="320 339.1 587.7" material="rock_warm" />
+    <box pos="{GAP + 400.3} 2298.2 {(GROUND - 524) / 2}" size="203.3 403.5 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -297.1} 2282.4 {GROUND + -267}" rot="-1 -4.9 -8.3" size="220 514.6 509.1" material="rock_rim" />
+    <box pos="{GAP - -356.9} 2304.4 {-DEPTH * 0.3638}" rot="1.3 6.7 1.3" size="566.1 483.9 732" material="rock" />
+    <box pos="{GAP - -340} 2252.1 {-DEPTH * 0.6176}" rot="2 5.8 -9" size="593.6 525.6 756" material="rock_dark" />
+    <box pos="{GAP - -158.2} 2214.8 {-DEPTH * 0.6319}" rot="0 2.4 12.8" size="320 296.2 515.8" material="rock" />
+    <box pos="{GAP - -272.6} 2326.7 {-DEPTH * 0.8947}" rot="-2.5 6.5 4.5" size="731.9 519.1 816" material="rock" />
+    <box pos="{GAP + 343.3} 2720.3 {(GROUND - 524) / 2}" size="317.5 440.5 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - -182.5} 2706.3 {GROUND + -267.2}" rot="1.3 -8.4 -7.4" size="220 534.4 495.5" material="rock_rim" />
+    <box pos="{GAP - -303.6} 2745.2 {-DEPTH * 0.3666}" rot="2 6.8 4.3" size="670.1 550.7 732" material="rock" />
+    <box pos="{GAP - -81.6} 2755.5 {-DEPTH * 0.3124}" rot="0 1.4 11.5" size="320 288.9 460.1" material="rock_dark" />
+    <box pos="{GAP - -260.8} 2755.6 {-DEPTH * 0.6319}" rot="-1.4 9.9 5.5" size="747.7 544.2 756" material="rock_dark" />
+    <box pos="{GAP - -231.3} 2688.5 {-DEPTH * 0.8970}" rot="-2.6 6.6 -4.5" size="813.6 529.1 816" material="rock" />
+    <box pos="{GAP - 68.9} 2743.7 {-DEPTH * 0.8680}" rot="0 6.8 -11.4" size="320 226.3 441.4" material="rock_warm" />
+    <box pos="{GAP + 178.3} 3180.6 {(GROUND - 524) / 2}" size="647.5 480.2 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 146.1} 3175.5 {GROUND + -267.1}" rot="-1.1 -5.9 -2.7" size="220 610.9 505.4" material="rock_rim" />
+    <box pos="{GAP - -159.9} 3156 {-DEPTH * 0.3800}" rot="1.9 8.7 -3" size="951.9 584 732" material="rock" />
+    <box pos="{GAP - 243.5} 3122.8 {-DEPTH * 0.3328}" rot="0 6.2 -17" size="320 301.7 497.5" material="rock_dark" />
+    <box pos="{GAP - -133.6} 3134.4 {-DEPTH * 0.6244}" rot="-2.6 5.3 -5.3" size="1008.1 562.6 756" material="rock_dark" />
+    <box pos="{GAP - -85.3} 3114.4 {-DEPTH * 0.9026}" rot="-1.1 6.3 -7" size="1098.6 577.7 816" material="rock" />
+    <box pos="{GAP - 346.9} 3348.7 {-DEPTH * 0.8659}" rot="0 12.1 9.6" size="320 212.6 410.6" material="rock_warm" />
+    <box pos="{GAP + 30.4} 3713.5 {(GROUND - 524) / 2}" size="943.3 585.8 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 442} 3713.2 {GROUND + -267.1}" rot="0.1 -6.7 -0.2" size="220 660.9 502.3" material="rock_rim" />
+    <box pos="{GAP - -9} 3793.7 {-DEPTH * 0.3936}" rot="0.9 9.7 7.6" size="1237.5 696 732" material="rock" />
+    <box pos="{GAP - 37.1} 3660.8 {-DEPTH * 0.6475}" rot="-2.2 8.8 -4.6" size="1338.3 648 756" material="rock_dark" />
+    <box pos="{GAP - 83.8} 3644.3 {-DEPTH * 0.9274}" rot="0.8 9.7 -5.7" size="1424.5 713.4 816" material="rock" />
+    <box pos="{GAP - 679} 3839.2 {-DEPTH * 0.9039}" rot="0 7.5 14.3" size="320 389.6 611.3" material="rock_warm" />
+    <box pos="{GAP + -147.9} 4233.2 {(GROUND - 524) / 2}" size="1299.9 453.6 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 798.4} 4228.7 {GROUND + -267}" rot="-1.4 -5.3 -2.4" size="220 532.7 507.4" material="rock_rim" />
+    <box pos="{GAP - 182.9} 4265.5 {-DEPTH * 0.4062}" rot="1.9 9.6 2.3" size="1625.9 570 732" material="rock" />
+    <box pos="{GAP - 213.1} 4233.1 {-DEPTH * 0.6518}" rot="-2.1 7.6 -0" size="1695.2 537.6 756" material="rock_dark" />
+    <box pos="{GAP - 949.1} 4163 {-DEPTH * 0.5686}" rot="0 6.9 -20.2" size="320 280.6 415.1" material="rock" />
+    <box pos="{GAP - 244.8} 4293.5 {-DEPTH * 0.9360}" rot="-3 9.3 4" size="1746.6 580.9 816" material="rock" />
+    <box pos="{GAP + -317.7} 4728.5 {(GROUND - 524) / 2}" size="1639.3 537 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 1138} 4734.1 {GROUND + -267.1}" rot="-0.5 -5.7 2.9" size="220 630.7 505.9" material="rock_rim" />
+    <box pos="{GAP - 346.9} 4779.6 {-DEPTH * 0.3865}" rot="2 5.1 3" size="1967.2 669.3 732" material="rock" />
+    <box pos="{GAP - 1211.9} 4656.1 {-DEPTH * 0.3833}" rot="0 4.6 -7.8" size="320 308.4 489.7" material="rock_dark" />
+    <box pos="{GAP - 430.6} 4860.8 {-DEPTH * 0.6801}" rot="2.2 9.9 7.4" size="2097 674.9 756" material="rock_dark" />
+    <box pos="{GAP - 455.4} 4580.3 {-DEPTH * 0.9239}" rot="1.1 5.9 -7.9" size="2162.7 645.7 816" material="rock" />
+    <box pos="{GAP + -424.8} 4998.5 {(GROUND - 524) / 2}" size="1853.5 3 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 1353.1} 5003.5 {GROUND + -267.2}" rot="1.2 -9.2 2.7" size="220 90.5 492.2" material="rock_rim" />
+    <box pos="{GAP - 430.9} 4895 {-DEPTH * 0.3858}" rot="1.1 4.6 -5.6" size="2128.7 98.8 732" material="rock" />
+    <box pos="{GAP - 487.8} 5026.7 {-DEPTH * 0.6660}" rot="-0.5 7.5 1.5" size="2239.6 105.4 756" material="rock_dark" />
+    <box pos="{GAP - 1490.4} 5062.8 {-DEPTH * 0.6057}" rot="0 4.6 15.9" size="320 39.9 418.9" material="rock" />
+    <box pos="{GAP - 514.5} 5009.5 {-DEPTH * 0.9394}" rot="-1.5 7.4 0.6" size="2293.6 102.2 816" material="rock" />
+    <box pos="{GAP - 1536.6} 4987.9 {-DEPTH * 0.8712}" rot="0 2.3 -4" size="320 50.4 435.7" material="rock_warm" />
+    <box pos="{GAP + -1361.5} 5246.7 {(GROUND - 524) / 2}" size="392.9 493.5 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 1558.5} 5248.5 {GROUND + -267.1}" rot="-1.2 -5.8 0.9" size="220 614 505.6" material="rock_rim" />
+    <box pos="{GAP - 1400.3} 5272.4 {-DEPTH * 0.3675}" rot="-2.4 6.5 4" size="744.1 619.9 732" material="rock" />
+    <box pos="{GAP - 1701.2} 5278.7 {-DEPTH * 0.3871}" rot="0 3.3 -19.5" size="320 365.7 489.6" material="rock_dark" />
+    <box pos="{GAP - 1410.8} 5189.5 {-DEPTH * 0.6213}" rot="0.6 5.9 -8.7" size="758.8 570.5 756" material="rock_dark" />
+    <box pos="{GAP - 1454.7} 5297.8 {-DEPTH * 0.9005}" rot="0.7 7.5 7" size="845.9 623.2 816" material="rock" />
+    <box pos="{GAP + -1760.1} 6359.7 {(GROUND - 524) / 2}" size="1190.1 1732.5 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 2356.7} 6368.1 {GROUND + -267.2}" rot="0.5 -8.7 4.4" size="220 1853.6 494.4" material="rock_rim" />
+    <box pos="{GAP - 1823} 6268.7 {-DEPTH * 0.4055}" rot="-0.8 9.8 -6.8" size="1562.3 1851.4 732" material="rock" />
+    <box pos="{GAP - 1815.2} 6384.8 {-DEPTH * 0.6555}" rot="-2.4 8.9 1.9" size="1560.6 1836.4 756" material="rock_dark" />
+    <box pos="{GAP - 2497.9} 6174.8 {-DEPTH * 0.6455}" rot="0 9.9 14.9" size="320 1067.6 531.1" material="rock" />
+    <box pos="{GAP - 1862.4} 6236.6 {-DEPTH * 0.9089}" rot="-2.3 5.2 -8.6" size="1649.4 1856.5 816" material="rock" />
+    <box pos="{GAP + -2361.7} 7927.3 {(GROUND - 524) / 2}" size="2393.4 1402.7 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 3558.9} 7923.2 {GROUND + -267}" rot="0.1 -4.8 -2.1" size="220 1532.7 509.5" material="rock_rim" />
+    <box pos="{GAP - 2401.5} 8058.2 {-DEPTH * 0.4111}" rot="2.7 6.2 5.5" size="2724.4 1463.8 732" material="rock" />
+    <box pos="{GAP - 3645.8} 8185.5 {-DEPTH * 0.4022}" rot="0 8.3 14" size="320 696 557.7" material="rock_dark" />
+    <box pos="{GAP - 2419.5} 7916.8 {-DEPTH * 0.6702}" rot="-2.1 6.5 -0.4" size="2771.2 1530.3 756" material="rock_dark" />
+    <box pos="{GAP - 2494.6} 7738.9 {-DEPTH * 0.9762}" rot="-1 9.5 -7.6" size="2874.8 1480 816" material="rock" />
+    <box pos="{GAP + -2679.9} 8814.3 {(GROUND - 524) / 2}" size="3029.8 371.4 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 4195.1} 8809.5 {GROUND + -267}" rot="-0.3 -3.2 -2.5" size="220 477.5 515.9" material="rock_rim" />
+    <box pos="{GAP - 2727.8} 8555.6 {-DEPTH * 0.4018}" rot="0.5 4.2 -8.9" size="3356.1 458.1 732" material="rock" />
+    <box pos="{GAP - 4278.9} 8705.6 {-DEPTH * 0.3393}" rot="0 4.2 -10" size="320 273.3 376" material="rock_dark" />
+    <box pos="{GAP - 2763.5} 8850.8 {-DEPTH * 0.7298}" rot="0.2 10.1 1.2" size="3423.4 507.9 756" material="rock_dark" />
+    <box pos="{GAP - 4365.8} 8925.2 {-DEPTH * 0.5889}" rot="0 8.4 5.9" size="320 249 552.8" material="rock" />
+    <box pos="{GAP - 2804} 8975.1 {-DEPTH * 0.9819}" rot="2.2 8.2 5.3" size="3507.1 506.5 816" material="rock" />
+    <box pos="{GAP - 4432.8} 8822.8 {-DEPTH * 0.8719}" rot="0 7.1 2.2" size="320 273.9 589" material="rock_warm" />
+    <box pos="{GAP + -4535.4} 9750 {(GROUND - 524) / 2}" size="740.9 1500.1 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 4906.2} 9743.9 {GROUND + -267}" rot="-0.4 -3.3 -3.2" size="220 1598.6 515.4" material="rock_rim" />
+    <box pos="{GAP - 4551.6} 9706.6 {-DEPTH * 0.3659}" rot="-0.9 4.2 -4.8" size="1046.9 1570.9 732" material="rock" />
+    <box pos="{GAP - 4599.5} 9740.3 {-DEPTH * 0.6264}" rot="0.4 5.1 -1" size="1144.3 1584.2 756" material="rock_dark" />
+    <box pos="{GAP - 5104.6} 9910.3 {-DEPTH * 0.6120}" rot="0 10.2 -7" size="320 673.9 448" material="rock" />
+    <box pos="{GAP - 4659.4} 9669.8 {-DEPTH * 0.9225}" rot="-1.9 10 -7.6" size="1239.1 1606.5 816" material="rock" />
+    <box pos="{GAP - 5179.5} 10093.7 {-DEPTH * 0.9301}" rot="0 7.4 17.6" size="320 873.3 512.8" material="rock_warm" />
+    <box pos="{GAP + -5150} 11411.4 {(GROUND - 524) / 2}" size="1969.9 1822.7 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 6135.9} 11399.9 {GROUND + -267}" rot="-0.8 -4.6 -6" size="220 1939 510.3" material="rock_rim" />
+    <box pos="{GAP - 5195.6} 11303.9 {-DEPTH * 0.4170}" rot="0.6 8 -5.4" size="2308.5 1951.8 732" material="rock" />
+    <box pos="{GAP - 6265.5} 11555.2 {-DEPTH * 0.3956}" rot="0 6.1 16.5" size="320 1041.2 577.5" material="rock_dark" />
+    <box pos="{GAP - 5221.3} 11297.2 {-DEPTH * 0.6731}" rot="0.2 8 -5.6" size="2358.7 1952.7 756" material="rock_dark" />
+    <box pos="{GAP - 5258.8} 11345.2 {-DEPTH * 0.9357}" rot="1.5 6.6 -3.1" size="2448 1934.6 816" material="rock" />
+    <box pos="{GAP + -5802.2} 13148.1 {(GROUND - 524) / 2}" size="3274.5 1650.8 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 7440} 13145.2 {GROUND + -267}" rot="-0.5 -5.1 -1.5" size="220 1760.9 508.2" material="rock_rim" />
+    <box pos="{GAP - 5841} 13203.6 {-DEPTH * 0.4053}" rot="-1.5 4.2 1.8" size="3620.5 1747.8 732" material="rock" />
+    <box pos="{GAP - 5918.6} 13427.6 {-DEPTH * 0.7187}" rot="-2.7 8.5 8.8" size="3704 1759.9 756" material="rock_dark" />
+    <box pos="{GAP - 7619.9} 12871.5 {-DEPTH * 0.5885}" rot="0 7.5 13.8" size="320 657.1 413.4" material="rock" />
+    <box pos="{GAP - 5934.5} 13200.2 {-DEPTH * 0.9836}" rot="0.3 7.7 1.6" size="3783.2 1763.4 816" material="rock" />
+    <box pos="{GAP - 7735.5} 13311.6 {-DEPTH * 0.8634}" rot="0 11 -8.4" size="320 943.9 471.1" material="rock_warm" />
+    <box pos="{GAP + -6418.2} 14760.3 {(GROUND - 524) / 2}" size="4506.4 1573.6 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 8673.2} 14752.7 {GROUND + -267.2}" rot="-1.1 -9.4 -4" size="220 1708.9 491.6" material="rock_rim" />
+    <box pos="{GAP - 6430.1} 14742.2 {-DEPTH * 0.4593}" rot="0.9 6.3 -0.4" size="4781.1 1695.6 732" material="rock" />
+    <box pos="{GAP - 6481.7} 14956 {-DEPTH * 0.6924}" rot="-2.5 4.9 4.6" size="4879.5 1635.9 756" material="rock_dark" />
+    <box pos="{GAP - 8810.4} 14457.5 {-DEPTH * 0.5647}" rot="0 1.1 -15.4" size="320 777.8 503.9" material="rock" />
+    <box pos="{GAP - 6582.3} 15087.3 {-DEPTH * 1.0371}" rot="-2 8.8 7.6" size="5012.2 1635.9 816" material="rock" />
+    <box pos="{GAP - 8962.4} 14866.8 {-DEPTH * 0.9011}" rot="0 6.7 -1.8" size="320 974.3 530.1" material="rock_warm" />
+    <box pos="{GAP + -6788.6} 15773.6 {(GROUND - 524) / 2}" size="5247.2 452.9 {GROUND + 524}" material="grass" />
+    <box pos="{GAP - 9413.9} 15781.5 {GROUND + -267.2}" rot="-0.3 -8.9 4.2" size="220 564.5 493.5" material="rock_rim" />
+    <box pos="{GAP - 6904.5} 15391.4 {-DEPTH * 0.5463}" rot="0.4 9.6 -7.9" size="5626.6 545.7 732" material="rock" />
+    <box pos="{GAP - 6894.8} 15529.4 {-DEPTH * 0.7436}" rot="-1.5 6.7 -5" size="5679.4 533.9 756" material="rock_dark" />
+    <box pos="{GAP - 9644.2} 15777.4 {-DEPTH * 0.6328}" rot="0 7.6 -12.5" size="320 214 550.2" material="rock" />
+    <box pos="{GAP - 6932.8} 16095 {-DEPTH * 1.0562}" rot="2.2 8.6 6.5" size="5714.1 534.3 816" material="rock" />
+    <!-- Masonry abutments built into each rim: bridge seat, backwall, wing walls with copings. -->
+    <box pos="{-100} 0 {(SEAT - 600)/2}" size="200 480 {SEAT + 600}" material="masonry" />
+    <box pos="{-260} 0 {(GROUND - 600)/2}" size="120 480 {GROUND + 600}" material="masonry" />
+    <box pos="{-160} 270 {(GROUND - 600)/2}" size="320 60 {GROUND + 600}" material="masonry" />
+    <box pos="{-159} 270 {GROUND + 7}" size="342 76 14" material="masonry_cap" />
+    <box pos="{-160} -270 {(GROUND - 600)/2}" size="320 60 {GROUND + 600}" material="masonry" />
+    <box pos="{-159} -270 {GROUND + 7}" size="342 76 14" material="masonry_cap" />
+    <box pos="{130} 0 {(SEAT - DROP) - 110}" size="380 640 220" material="rock_warm" />
+    <box pos="{GAP - -100} 0 {(SEAT - 600)/2}" size="200 480 {SEAT + 600}" material="masonry" />
+    <box pos="{GAP - -260} 0 {(GROUND - 600)/2}" size="120 480 {GROUND + 600}" material="masonry" />
+    <box pos="{GAP - -160} 270 {(GROUND - 600)/2}" size="320 60 {GROUND + 600}" material="masonry" />
+    <box pos="{GAP - -159} 270 {GROUND + 7}" size="342 76 14" material="masonry_cap" />
+    <box pos="{GAP - -160} -270 {(GROUND - 600)/2}" size="320 60 {GROUND + 600}" material="masonry" />
+    <box pos="{GAP - -159} -270 {GROUND + 7}" size="342 76 14" material="masonry_cap" />
+    <box pos="{GAP - 130} 0 {(SEAT - DROP) - 110}" size="380 640 220" material="rock_warm" />
+    <!-- The river: water in the channel, stepping down 2 cm a reach as it flows south. -->
+    <box pos="{GAP/2 + 3840.2} -15375 {BED + 14}" rot="0 0 18.37" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 3481.1} -14275 {BED + 16}" rot="0 0 17.63" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 3142.8} -13175 {BED + 18}" rot="0 0 16.51" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 2828.6} -12075 {BED + 20}" rot="0 0 15.45" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 2532.2} -10975 {BED + 22}" rot="0 0 14.90" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 2239.9} -9875 {BED + 24}" rot="0 0 15.07" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 1936.5} -8775 {BED + 26}" rot="0 0 15.91" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 1611.3} -7675 {BED + 28}" rot="0 0 17.05" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 1262.3} -6575 {BED + 30}" rot="0 0 18.05" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 897.2} -5475 {BED + 32}" rot="0 0 18.49" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 530.2} -4375 {BED + 34}" rot="0 0 18.22" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 176.3} -3275 {BED + 36}" rot="0 0 17.33" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -57.5} -2175 {BED + 38}" rot="0 0 3.55" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -35.5} -1075 {BED + 40}" rot="0 0 -1.59" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 0.9} 25 {BED + 42}" rot="0 0 -1.98" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 36.9} 1125 {BED + 44}" rot="0 0 -1.56" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + 58} 2225 {BED + 46}" rot="0 0 11.37" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -563.1} 3325 {BED + 48}" rot="0 0 37.34" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -1413} 4425 {BED + 50}" rot="0 0 37.94" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -2275.2} 5525 {BED + 52}" rot="0 0 38.11" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -3134.9} 6625 {BED + 54}" rot="0 0 37.78" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -3977.9} 7725 {BED + 56}" rot="0 0 37.08" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -4797} 8825 {BED + 58}" rot="0 0 36.28" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -5594.6} 9925 {BED + 60}" rot="0 0 35.71" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -6381.7} 11025 {BED + 62}" rot="0 0 35.61" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -7173.7} 12125 {BED + 64}" rot="0 0 36.02" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -7983.9} 13225 {BED + 66}" rot="0 0 36.78" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -8818.3} 14325 {BED + 68}" rot="0 0 37.55" size="400 1310 32" material="water" />
+    <box pos="{GAP/2 + -9653.5} 15400 {BED + 70}" rot="0 0 38.04" size="400 1260 32" material="water" />
+    <box pos="{GAP/2 + -10085} 15950 {BED + 72}" rot="0 0 38.14" size="400 160 32" material="water" />
+    <!-- Boulders fallen from the walls: in the river, on the gravel bars and along the wall feet. -->
+    <sphere pos="{GAP/2 + 234.4} -1656.9 {BED + 24.9}" radius="71.2" rings="5" slices="7" scale="1 0.96 0.73" material="rock_dark"><noise strength="0.119" seed="1" /></sphere>
+    <sphere pos="{GAP/2 + -669.7} -2291.4 {BED + 48.2}" radius="137.8" rings="5" slices="7" scale="1 0.98 0.78" material="rock_dark"><noise strength="0.230" seed="2" /></sphere>
+    <sphere pos="{GAP/2 + -669.1} -2559.3 {BED + 16.6}" radius="47.6" rings="5" slices="7" scale="1 0.86 0.84" material="rock"><noise strength="0.079" seed="3" /></sphere>
+    <sphere pos="{GAP/2 + 357.1} -2999.5 {BED + 19.3}" radius="55.2" rings="5" slices="7" scale="1 0.88 0.75" material="rock"><noise strength="0.092" seed="4" /></sphere>
+    <sphere pos="{GAP/2 + 361.8} -472.2 {BED + 17}" radius="48.5" rings="5" slices="7" scale="1 0.92 0.79" material="rock_warm"><noise strength="0.081" seed="5" /></sphere>
+    <sphere pos="{GAP/2 + -392.8} -4061.8 {BED + 31.6}" radius="90.2" rings="5" slices="7" scale="1 0.85 0.56" material="rock_dark"><noise strength="0.150" seed="6" /></sphere>
+    <sphere pos="{GAP/2 + 178.2} -3619 {BED + 20.7}" radius="59.3" rings="5" slices="7" scale="1 1.01 0.60" material="rock_warm"><noise strength="0.099" seed="7" /></sphere>
+    <sphere pos="{GAP/2 + -1539.4} 4415.2 {BED + 51.3}" radius="146.6" rings="5" slices="7" scale="1 1.24 0.77" material="rock_dark"><noise strength="0.244" seed="9" /></sphere>
+    <sphere pos="{GAP/2 + -73.8} 2132.2 {BED + 17.3}" radius="49.5" rings="5" slices="7" scale="1 1.05 0.67" material="rock_warm"><noise strength="0.083" seed="10" /></sphere>
+    <sphere pos="{GAP/2 + -1202.9} 4367.3 {BED + 39.8}" radius="113.6" rings="5" slices="7" scale="1 1.07 0.71" material="rock_warm"><noise strength="0.189" seed="11" /></sphere>
+    <sphere pos="{GAP/2 + 123.7} -506.6 {BED + 31.2}" radius="89" rings="5" slices="7" scale="1 1.29 0.67" material="rock_dark"><noise strength="0.148" seed="12" /></sphere>
+    <sphere pos="{GAP/2 + -1695.3} 3735.1 {BED + 24.5}" radius="70.1" rings="5" slices="7" scale="1 1.05 0.85" material="rock_warm"><noise strength="0.117" seed="13" /></sphere>
+    <sphere pos="{GAP/2 + 474.2} 1298.2 {BED + 40.1}" radius="114.7" rings="5" slices="7" scale="1 0.84 0.74" material="rock"><noise strength="0.191" seed="14" /></sphere>
+    <sphere pos="{GAP/2 + -1913.8} 3976.7 {BED + 40.9}" radius="116.9" rings="5" slices="7" scale="1 1.02 0.75" material="rock_dark"><noise strength="0.195" seed="15" /></sphere>
+    <sphere pos="{GAP/2 + -2372.8} 4544.5 {BED + 33}" radius="94.4" rings="5" slices="7" scale="1 0.97 0.71" material="rock_dark"><noise strength="0.157" seed="16" /></sphere>
+    <sphere pos="{GAP/2 + 72.8} -2090.1 {BED + 51.6}" radius="147.5" rings="5" slices="7" scale="1 0.93 0.75" material="rock_dark"><noise strength="0.246" seed="17" /></sphere>
+    <sphere pos="{GAP/2 + -415} -3552 {BED + 25.4}" radius="72.5" rings="5" slices="7" scale="1 1.22 0.81" material="rock_dark"><noise strength="0.121" seed="18" /></sphere>
+    <sphere pos="{GAP/2 + 361.9} 498.4 {BED + 18.2}" radius="51.9" rings="5" slices="7" scale="1 1.18 0.66" material="rock"><noise strength="0.087" seed="19" /></sphere>
+    <sphere pos="{GAP/2 + 94.5} 547.3 {BED + 46}" radius="131.3" rings="5" slices="7" scale="1 1.03 0.74" material="rock_warm"><noise strength="0.219" seed="20" /></sphere>
+    <sphere pos="{GAP/2 + -964.9} 3610 {BED + 47.5}" radius="135.7" rings="5" slices="7" scale="1 1.01 0.67" material="rock_warm"><noise strength="0.226" seed="21" /></sphere>
+    <sphere pos="{GAP/2 + -192.6} -1936.7 {BED + 35}" radius="99.9" rings="5" slices="7" scale="1 0.95 0.75" material="rock_dark"><noise strength="0.166" seed="22" /></sphere>
+    <sphere pos="{GAP/2 + 454.5} -640.1 {BED + 33.3}" radius="95.2" rings="5" slices="7" scale="1 1.20 0.78" material="rock"><noise strength="0.159" seed="23" /></sphere>
+    <sphere pos="{GAP/2 + 329.9} -4146.7 {BED + 24.5}" radius="70" rings="5" slices="7" scale="1 0.99 0.65" material="rock_dark"><noise strength="0.117" seed="24" /></sphere>
+    <sphere pos="{GAP/2 + -111.9} -1924.2 {BED + 37.5}" radius="107" rings="5" slices="7" scale="1 0.95 0.71" material="rock_dark"><noise strength="0.178" seed="25" /></sphere>
+    <sphere pos="{GAP/2 + 643.1} -1899.4 {BED + 39.1}" radius="111.8" rings="5" slices="7" scale="1 1.23 0.61" material="rock_dark"><noise strength="0.186" seed="26" /></sphere>
+    <sphere pos="{GAP/2 + -566} 4425.3 {BED + 17.4}" radius="49.6" rings="5" slices="7" scale="1 1.02 0.66" material="rock_warm"><noise strength="0.083" seed="27" /></sphere>
+    <sphere pos="{GAP/2 + 587.1} 2577.9 {BED + 25.2}" radius="72" rings="5" slices="7" scale="1 0.92 0.80" material="rock"><noise strength="0.120" seed="28" /></sphere>
+    <sphere pos="{GAP/2 + -1998.8} 4123.4 {BED + 37.1}" radius="105.9" rings="5" slices="7" scale="1 0.83 0.61" material="rock"><noise strength="0.177" seed="29" /></sphere>
+    <sphere pos="{GAP/2 + 459.3} -3480.5 {BED + 34}" radius="97.1" rings="5" slices="7" scale="1 1.25 0.78" material="rock"><noise strength="0.162" seed="30" /></sphere>
+    <sphere pos="{GAP/2 + 923.1} -3229.7 {BED + 31.8}" radius="90.8" rings="5" slices="7" scale="1 1.30 0.60" material="rock"><noise strength="0.151" seed="31" /></sphere>
+    <sphere pos="{GAP/2 + 210.6} -241.5 {BED + 16.1}" radius="46" rings="5" slices="7" scale="1 0.92 0.61" material="rock_warm"><noise strength="0.077" seed="32" /></sphere>
+    <sphere pos="{GAP/2 + 1161.5} -3834.7 {BED + 44}" radius="125.8" rings="5" slices="7" scale="1 0.86 0.62" material="rock"><noise strength="0.210" seed="33" /></sphere>
+    <sphere pos="{GAP/2 + -77.7} 939.2 {BED + 43.4}" radius="124.1" rings="5" slices="7" scale="1 1.08 0.57" material="rock_warm"><noise strength="0.207" seed="34" /></sphere>
+    <!-- Rim outcrops and stones on the plateaus near the edges. -->
+    <sphere pos="{GAP/2 + -1488.3} -2301.4 {GROUND + 20.1}" radius="100.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.143" seed="100" /></sphere>
+    <sphere pos="{GAP/2 + -1824.7} 2357.4 {GROUND + 10}" radius="49.8" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.071" seed="102" /></sphere>
+    <sphere pos="{GAP/2 + -1495.1} -3574.2 {GROUND + 12.5}" radius="62.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.089" seed="104" /></sphere>
+    <sphere pos="{GAP/2 + 1917.6} -2382.9 {GROUND + 10.6}" radius="53" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.076" seed="105" /></sphere>
+    <sphere pos="{GAP/2 + -1396.3} -3263.8 {GROUND + 17.3}" radius="86.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.124" seed="108" /></sphere>
+    <sphere pos="{GAP/2 + 1434.3} -1460.4 {GROUND + 20.4}" radius="102" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.146" seed="109" /></sphere>
+    <sphere pos="{GAP/2 + -1413.2} 1789 {GROUND + 11.5}" radius="57.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.082" seed="110" /></sphere>
+    <sphere pos="{GAP/2 + 1385} -768.1 {GROUND + 15.6}" radius="77.8" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.111" seed="111" /></sphere>
+    <sphere pos="{GAP/2 + -1257.5} -1407.8 {GROUND + 10.9}" radius="54.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.078" seed="112" /></sphere>
+    <sphere pos="{GAP/2 + 1792.9} 1544.1 {GROUND + 17.2}" radius="85.9" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.123" seed="113" /></sphere>
+    <sphere pos="{GAP/2 + -1332.6} 2033.9 {GROUND + 21}" radius="105.1" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.150" seed="114" /></sphere>
+    <sphere pos="{GAP/2 + 1434.1} -1095.1 {GROUND + 17.9}" radius="89.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.128" seed="115" /></sphere>
+    <!-- Distant wooded hills ringing the plateau. -->
+    <sphere pos="-9000 14500 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.89" seed="40" /></sphere>
+    <sphere pos="2500 15500 {GROUND - 1400}" radius="5600" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="3.11" seed="41" /></sphere>
+    <sphere pos="12000 13000 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.78" seed="42" /></sphere>
+    <sphere pos="-14500 4000 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="2.89" seed="43" /></sphere>
+    <sphere pos="-14000 -9000 {GROUND - 1200}" radius="4800" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.67" seed="44" /></sphere>
+    <sphere pos="16500 3500 {GROUND - 1350}" radius="5400" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="3.00" seed="45" /></sphere>
+    <sphere pos="15500 -9500 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.78" seed="46" /></sphere>
+    <sphere pos="-3000 -15500 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="2.78" seed="47" /></sphere>
+    <sphere pos="7000 -15000 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.89" seed="48" /></sphere>
+  </group>
 
-  <!-- The line: track on both rims, the steel trestle stub on the west, the stone pier on the east. -->
-  <prefab source="props/rails" pos="-500 0 0" />
-  <prefab source="props/rails" pos="-1500 0 0" />
-  <prefab source="props/rails" pos="-2500 0 0" />
-  <prefab source="props/rails" pos="-3500 0 0" />
-  <prefab source="props/rails" pos="-4500 0 0" />
-  <prefab source="props/rails" pos="-5500 0 0" />
-  <prefab source="props/rails" pos="-6500 0 0" />
-  <prefab source="props/rails" pos="-7500 0 0" />
-  <prefab source="props/rails" pos="2100 0 0" />
-  <prefab source="props/rails" pos="3100 0 0" />
-  <prefab source="props/rails" pos="4100 0 0" />
-  <prefab source="props/rails" pos="5100 0 0" />
-  <prefab source="props/rails" pos="6100 0 0" />
-  <!-- The trestle stub: a deck girder over the brink on a steel tower that stands on the gorge floor. -->
-  <group name="TrestleStub">
-    <box pos="130 0 -40" size="260 320 30" material="steel" />
-    <box pos="130 160 -130" size="260 12 180" material="steel" />
-    <box pos="130 -160 -130" size="260 12 180" material="steel" />
-    <box pos="130 160 -130" size="250 10 10" rot="0 40 0" material="steel" />
-    <box pos="130 -160 -130" size="250 10 10" rot="0 40 0" material="steel" />
-    <box pos="200 140 -1300" size="24 24 2200" material="steel" />
-    <box pos="200 -140 -1300" size="24 24 2200" material="steel" />
-    <box pos="200 0 -900" size="14 280 14" material="steel" />
-    <box pos="200 0 -1700" size="14 280 14" material="steel" />
-    <box pos="240 0 -10" size="200 160 10" rot="0 -14 0" material="sleeper" />
-  </group>
-  <group name="Pier">
-    <box pos="1520 0 -1220" size="180 380 2440" material="masonry" />
-    <box pos="1520 0 -30" size="240 340 30" material="masonry" />
-  </group>
-  <!-- The old warning sign the engine smashes through, still standing on its post here. -->
-  <group name="Sign" pos="-700 -230 0">
-    <cylinder pos="0 0 120" rot="90 0 0" radius="6" height="240" material="sleeper" />
-    <box pos="0 0 220" size="160 6 70" color="0.94 0.92 0.86" />
-    <box pos="0 -4 220" size="140 2 12" color="0.72 0.10 0.10" />
-  </group>
-  <!-- The timbers of the old bridge, stacked on the west rim by the railway years ago. -->
-  <group name="Timbers" pos="-420 430 0">
-    <prefab source="props/timber" pos="0 0 15" rot="0 0 4" />
-    <prefab source="props/timber" pos="10 34 15" rot="0 0 -2" />
-    <prefab source="props/timber" pos="-14 68 15" rot="0 0 3" />
-    <prefab source="props/timber" pos="20 102 15" rot="0 0 -5" />
-    <prefab source="props/timber" pos="6 18 45" rot="0 0 -3" />
-    <prefab source="props/timber" pos="-8 52 45" rot="0 0 6" />
-    <prefab source="props/timber" pos="14 86 45" rot="0 0 -1" />
-    <prefab source="props/timber" pos="0 40 75" rot="0 0 2" />
-  </group>
-  <!-- The span Superman builds from those timbers across the gap; shown only once it exists. -->
-  <group name="Span" pos="0 0 -5000">
-    <box pos="800 72 -24" size="1760 30 30" material="timber" />
-    <box pos="800 -72 -24" size="1760 30 30" material="timber" />
-    <box pos="800 110 -24" size="1760 30 30" material="timber" />
-    <box pos="800 -110 -24" size="1760 30 30" material="timber" />
-    <box pos="800 72 -4" size="1760 7 10" material="rail" />
-    <box pos="800 -72 -4" size="1760 7 10" material="rail" />
+  <!-- The line: ballasted track on both plateaus up to the abutment backwalls (x=-200 / GAP+200). -->
+  <prefab source="props/rails" pos="{-700 - 15000} 0 0"><array count="16" translation="1000 0 0" /></prefab>
+  <prefab source="props/rails" pos="{GAP + 700} 0 0"><array count="16" translation="1000 0 0" /></prefab>
+  <!-- The trestle stubs on the bridge seats; the east one turned to face back over the gorge. -->
+  <prefab source="gorge/trestle_stub" name="WestStub" pos="0 0 {SEAT}" />
+  <prefab source="gorge/trestle_stub" name="EastStub" pos="{GAP} 0 {SEAT}" rot="0 0 180" />
+  <!-- A girder of the lost span, washed onto the west gravel bar by the flood, lying on its flange. -->
+  <prefab source="gorge/girder_wreck" pos="485 150 -2400" rot="0 0 90" />
+
+  <!-- The old bridge stringers, stacked on the south side of the track near the west brink. -->
+  <prefab source="gorge/timber_pile" name="TimberPile" pos="-1350 -470 {GROUND}" rot="0 0 1.5" />
+
+  <!-- The span Superman builds from those stringers between the two stubs: four timbers on the bare
+       girder ends, rails spiked on top. Stored; gorge-hold-span brings it up. -->
+  <group name="Span" pos="0 0 {STORE}">
+    <prefab source="props/timber" pos="{GAP/2} 89.5 -31" />
+    <prefab source="props/timber" pos="{GAP/2} 54.5 -31" />
+    <prefab source="props/timber" pos="{GAP/2} -54.5 -31" />
+    <prefab source="props/timber" pos="{GAP/2} -89.5 -31" />
+    <box pos="{GAP/2} 72 11.5" size="1500 7 15" material="rail" />
+    <box pos="{GAP/2} -72 11.5" size="1500 7 15" material="rail" />
   </group>
 
-  <!-- The train: the engine and the first car, then the two rear cars behind the coupling. -->
-  <group name="Train">
-    <group name="Locomotive" pos="-1800 0 0">
+  <!-- The train: the engine and the first car, then the two rear cars hung from the coupling behind
+       the first car (RearCars' origin is that coupling, so a rotation swings them on its pin). -->
+  <group name="Train" pos="{ENG} 0 0">
+    <group name="Locomotive">
       <prefab source="props/engine" />
-      <group name="EngineNose" pos="0 0 -5000"><box pos="690 0 200" size="80 300 260" rot="0 18 0" material="engine_frame" /></group>
+      <!-- The crushed nose for gorge-headon: buckled plates over the cab front. Stored. -->
+      <group name="EngineNose" pos="0 0 {STORE}">
+        <box pos="738 0 210" size="40 300 150" rot="0 -16 4" material="engine_body" />
+        <box pos="742 60 300" size="30 150 70" rot="12 28 -10" material="engine_body" />
+        <box pos="740 -70 310" size="26 140 60" rot="-14 -22 12" material="engine_body" />
+        <box pos="752 0 110" size="34 290 60" rot="0 30 -6" material="engine_frame" />
+        <box pos="725 0 352" size="10 230 60" rot="0 -18 0" material="engine_frame" />
+        <box pos="748 -20 160" size="20 200 40" rot="8 -40 15" material="engine_frame" />
+      </group>
     </group>
-    <group name="Car1" pos="-3360 0 0"><prefab source="props/railcar" /></group>
-    <group name="RearCars" pos="-4140 0 90" pivotOffset="0 0 0">
-      <prefab source="props/railcar" pos="-780 0 -90" />
-      <prefab source="props/railcar" pos="-2340 0 -90" />
+    <group name="Car1" pos="{-PITCH} 0 0"><prefab source="props/railcar" /></group>
+    <group name="RearCars" pos="{-1.5*PITCH} 0 90">
+      <group name="Car2" pos="{-PITCH/2} 0 -90"><prefab source="props/railcar" /></group>
+      <group name="Car3" pos="{-PITCH} 0 0">
+        <prefab source="props/railcar" pos="{-PITCH/2} 0 -90" />
+      </group>
     </group>
   </group>
-  <!-- Heat vision on the coupling and Superman's breath, shown only in their cameras. -->
-  <group name="HeatBeams" pos="0 0 -5000">
-    <cylinder pos="-1506 -130 792" radius="2.2" height="250" color="1.0 0.20 0.08" unlit="1" castShadow="0" />
-    <cylinder pos="-1514 -130 792" radius="2.2" height="250" color="1.0 0.20 0.08" unlit="1" castShadow="0" />
-    <sphere pos="-1510 0 790" radius="20" color="1.0 0.70 0.30" unlit="1" castShadow="0" />
+
+  <!-- Heat vision for gorge-weld: two beams from Superman's eyes into the coupling pin and the glow of
+       the hot metal. Breath for gorge-breath: wind streaks from his mouth to the engine and the gravel
+       it tears from the track. Both stored. -->
+  <group name="HeatBeams" pos="0 0 {STORE}">
+    <cylinder pos="998.4 -80 1100" rot="-7.49 0 -1.21" radius="2.6" height="153.3" material="beam" unlit="1" castShadow="0" />
+    <cylinder pos="1001.6 -80 1100" rot="-7.49 0 1.21" radius="2.6" height="153.3" material="beam" unlit="1" castShadow="0" />
+    <sphere pos="1000 -6 1090" radius="16" material="glow" unlit="1" castShadow="0" />
+    <sphere pos="1000 -14 1090" radius="30" rings="8" slices="12" material="beam" unlit="1" castShadow="0" scale="1 0.3 1" />
   </group>
-  <group name="Breath" pos="0 0 -5000">
-    <cone pos="30 0 305" rot="0 0 -90" radius="110" radiusTop="12" height="150" color="0.90 0.95 1.0" castShadow="0" />
+  <group name="Breath" pos="0 0 {STORE}">
+    <cylinder pos="404.6 31.7 300.8" rot="-1.1 0 81.6" radius="2.6" height="319" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="382.4 58.8 255.2" rot="-11.7 0 76.1" radius="2.0" height="394" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="378.4 -68.7 293.6" rot="-2.6 0 105.9" radius="2.6" height="394" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="369.7 49.5 308.1" rot="0.7 0 78.8" radius="2.8" height="399" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="372.7 -23.7 258.8" rot="-10.7 0 95.5" radius="2.1" height="381" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="398.4 59.4 326.2" rot="5.3 0 75.0" radius="3.0" height="336" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="396 -26.9 330.2" rot="6.4 0 96.9" radius="2.3" height="323" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="443.5 -43.8 322.7" rot="5.6 0 103.9" radius="1.9" height="276" material="wind" unlit="1" castShadow="0" />
+    <cylinder pos="398.5 -58.9 291.9" rot="-3.3 0 104.9" radius="2.4" height="360" material="wind" unlit="1" castShadow="0" />
+    <sphere pos="140.4 -56.7 86.1" radius="5.3" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="-56.6 69.2 130.8" radius="6.4" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="-89.6 65.1 31.2" radius="6.4" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="-79.6 153.8 84" radius="5.9" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="206.8 126 84.6" radius="4.1" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="262.9 134.5 138.7" radius="3.4" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="-17.2 -34 29.6" radius="4.2" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="-5.1 141.7 15.7" radius="5.5" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="269.9 83 53" radius="6.5" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="-85.6 2.1 139.8" radius="4.2" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="257.8 37.9 14.1" radius="3.8" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="132 42 30.3" radius="3.2" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="-42.8 -70.7 134.6" radius="6.6" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="143.4 -15 77.6" radius="5.6" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="60.7 22.5 90.6" radius="6.8" rings="4" slices="5" material="ballast" castShadow="0" />
+    <sphere pos="94.3 -26.1 103.6" radius="4.0" rings="4" slices="5" material="ballast" castShadow="0" />
   </group>
 
-  <!-- Trees on both plateaus and hills beyond. -->
-  <group pos="-2400 1900 0">
-    <cylinder pos="0 0 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="0 0 420" radius="220" material="leaf" />
-    <cylinder pos="600 500 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="600 500 400" radius="200" material="leaf" />
-    <cylinder pos="-900 300 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="-900 300 430" radius="240" material="leaf" />
+  <!-- Woods on both plateaus, bushes along the overgrown line. -->
+  <group name="Woods">
+    <prefab source="gorge/tree" pos="-7664 4356 {GROUND}" rot="0 0 245" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-4727 4879 {GROUND}" rot="0 0 299" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="-5461 5975 {GROUND}" rot="0 0 208" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-8724 2443 {GROUND}" rot="0 0 59" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-2998 1169 {GROUND}" rot="0 0 10" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="-4529 2517 {GROUND}" rot="0 0 95" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-8396 1746 {GROUND}" rot="0 0 336" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-2821 3778 {GROUND}" rot="0 0 62" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-6236 1475 {GROUND}" rot="0 0 149" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="-5344 2745 {GROUND}" rot="0 0 197" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="-2244 1542 {GROUND}" rot="0 0 253" scale="0.8 0.8 0.8" />
+    <prefab source="gorge/tree" pos="-8432 3877 {GROUND}" rot="0 0 292" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-4492 4000 {GROUND}" rot="0 0 87" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-2247 2462 {GROUND}" rot="0 0 156" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/pine" pos="-7634 5593 {GROUND}" rot="0 0 219" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="-3465 4282 {GROUND}" rot="0 0 123" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="-4217 5381 {GROUND}" rot="0 0 192" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-5700 4629 {GROUND}" rot="0 0 147" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="-6910 2236 {GROUND}" rot="0 0 87" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="-7816 1501 {GROUND}" rot="0 0 25" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="-7282 5143 {GROUND}" rot="0 0 188" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-5549 3780 {GROUND}" rot="0 0 157" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="-4234 1438 {GROUND}" rot="0 0 195" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-6917 2850 {GROUND}" rot="0 0 70" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/pine" pos="-8795 3068 {GROUND}" rot="0 0 60" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-7975 3555 {GROUND}" rot="0 0 252" scale="1.2 1.2 1.2" />
+    <prefab source="gorge/tree" pos="-4962 -5038 {GROUND}" rot="0 0 103" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-5425 -5755 {GROUND}" rot="0 0 29" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-8949 -3541 {GROUND}" rot="0 0 290" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="-4375 -4660 {GROUND}" rot="0 0 160" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-7409 -5172 {GROUND}" rot="0 0 151" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-3780 -3403 {GROUND}" rot="0 0 279" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="-5697 -2107 {GROUND}" rot="0 0 158" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/pine" pos="-4939 -1984 {GROUND}" rot="0 0 315" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-2650 -4117 {GROUND}" rot="0 0 215" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="-8505 -5611 {GROUND}" rot="0 0 229" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="8651 4643 {GROUND}" rot="0 0 241" scale="1 1 1" />
+    <prefab source="gorge/pine" pos="4970 3029 {GROUND}" rot="0 0 24" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="6290 3047 {GROUND}" rot="0 0 121" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="4561 2021 {GROUND}" rot="0 0 335" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="5566 3553 {GROUND}" rot="0 0 110" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="6537 5099 {GROUND}" rot="0 0 310" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="6908 2123 {GROUND}" rot="0 0 197" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="4920 3741 {GROUND}" rot="0 0 3" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="3733 5779 {GROUND}" rot="0 0 46" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="5452 1328 {GROUND}" rot="0 0 221" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="4613 4421 {GROUND}" rot="0 0 133" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="8637 6310 {GROUND}" rot="0 0 259" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/pine" pos="6347 2309 {GROUND}" rot="0 0 201" scale="1 1 1" />
+    <prefab source="gorge/pine" pos="5283 4279 {GROUND}" rot="0 0 89" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="6503 1274 {GROUND}" rot="0 0 110" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="7749 6122 {GROUND}" rot="0 0 9" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/pine" pos="3376 6342 {GROUND}" rot="0 0 189" scale="1.2 1.2 1.2" />
+    <prefab source="gorge/tree" pos="4842 1483 {GROUND}" rot="0 0 221" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="8231 802 {GROUND}" rot="0 0 41" scale="1 1 1" />
+    <prefab source="gorge/pine" pos="6883 4622 {GROUND}" rot="0 0 78" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="4367 -2676 {GROUND}" rot="0 0 36" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="3630 -5480 {GROUND}" rot="0 0 184" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="5667 -2392 {GROUND}" rot="0 0 80" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/pine" pos="3936 -4099 {GROUND}" rot="0 0 101" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="7204 -3220 {GROUND}" rot="0 0 112" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="3549 -2239 {GROUND}" rot="0 0 82" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="5314 -5900 {GROUND}" rot="0 0 28" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="7533 -1215 {GROUND}" rot="0 0 57" scale="1.2 1.2 1.2" />
+    <prefab source="gorge/tree" pos="4975 -1008 {GROUND}" rot="0 0 187" scale="0.8 0.8 0.8" />
+    <prefab source="gorge/tree" pos="6407 -1995 {GROUND}" rot="0 0 82" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/tree" pos="8832 -3347 {GROUND}" rot="0 0 115" scale="1.2 1.2 1.2" />
+    <prefab source="gorge/tree" pos="4792 -5561 {GROUND}" rot="0 0 91" scale="1 1 1" />
+    <prefab source="gorge/tree" pos="-500 1600 {GROUND}" rot="0 0 293" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/pine" pos="-580 2300 {GROUND}" rot="0 0 216" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-1110 3100 {GROUND}" rot="0 0 340" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="-1800 3900 {GROUND}" rot="0 0 108" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="2100 1650 {GROUND}" rot="0 0 263" scale="1 1 1" />
+    <prefab source="gorge/pine" pos="2170 2350 {GROUND}" rot="0 0 122" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/tree" pos="1810 3150 {GROUND}" rot="0 0 253" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/pine" pos="1300 3950 {GROUND}" rot="0 0 129" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/bush" pos="-3600 -300 {GROUND}" rot="0 0 193" scale="0.8 0.8 0.8" />
+    <prefab source="gorge/bush" pos="-2500 290 {GROUND}" rot="0 0 244" scale="0.9 0.9 0.9" />
+    <prefab source="gorge/bush" pos="-5200 320 {GROUND}" rot="0 0 275" scale="1.2 1.2 1.2" />
+    <prefab source="gorge/bush" pos="-6800 -290 {GROUND}" rot="0 0 105" scale="0.7 0.7 0.7" />
+    <prefab source="gorge/bush" pos="-1900 310 {GROUND}" rot="0 0 172" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/bush" pos="2300 300 {GROUND}" rot="0 0 154" scale="1.1 1.1 1.1" />
+    <prefab source="gorge/bush" pos="3300 -310 {GROUND}" rot="0 0 112" scale="1.3 1.3 1.3" />
+    <prefab source="gorge/bush" pos="4700 290 {GROUND}" rot="0 0 192" scale="0.8 0.8 0.8" />
   </group>
-  <group pos="3400 1600 0">
-    <cylinder pos="0 0 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="0 0 420" radius="220" material="leaf" />
-    <cylinder pos="900 -300 150" rot="90 0 0" radius="25" height="300" material="bark" /><sphere pos="900 -300 400" radius="200" material="leaf" />
-  </group>
-  <sphere pos="-6000 9000 -2600" radius="4200" material="leaf" />
-  <sphere pos="4000 10000 -3000" radius="4800" material="leaf" />
 
-  <prefab source="characters/superman" name="Superman" pos="0 0 -5000" />
+  <prefab source="characters/superman" name="Superman" pos="0 {SUP_Y} {STORE}" />
 
-  <!-- Anchors. -->
-  <group name="Engine" pos="-1700 0 300" />
-  <group name="Cars" pos="-2700 -150 140" />
-  <group name="Timber-Pile" pos="-410 480 60" />
-  <group name="Coupling" pos="-1510 0 790" />
-  <group name="Rear-Cars" pos="-2350 0 760" />
+  <!-- Anchors: literal world positions on the objects as each page's camera shows them.
+       gorge-show-train: Engine, Cars, Timber-Pile. gorge-lift-coupling: Coupling, Rear-Cars. -->
+  <group name="Engine" pos="-2850 -150 330" />
+  <group name="Cars" pos="-3960 -152 260" />
+  <group name="Timber-Pile" pos="-1350 -470 97" />
+  <group name="Coupling" pos="1000 0 1090" />
+  <group name="Rear-Cars" pos="870 0 300" />
 </scene>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The night sky over Metropolis: seventy stars on a dome 850 m out, from 14 to 70 degrees above the horizon,
+     most of them to the north over the city. Unlit emitter points; no shadows. Origin at the observer (the
+     middle of the Mt. Royal lawn). No front. Materials from the scene: star. -->
+<prefab up="z">
+  <sphere pos="62957 42371 38287" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-32217 -8343 78214" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="71383 -10993 44817" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-58572 -25499 56071" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="76515 -18532 32045" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-9171 -44862 71611" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="58048 -8395 61521" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-16759 -56812 60962" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-76171 -7722 36922" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-43150 -2397 73193" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="66227 -22286 48396" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="74959 -26893 29711" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="76724 -5769 36126" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-55612 29636 57042" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="70152 -27698 39196" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="29887 19179 77225" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="41711 -65767 34056" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="28979 -39765 69309" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="8717 -41711 73546" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="45117 -22986 68271" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="71874 -5894 44993" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-52250 54542 38986" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-28690 -72615 33597" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-26208 19552 78459" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-68636 -9722 49188" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="22978 -61450 54044" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="58318 24815 56640" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="33431 -12355 77166" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-7565 75514 38279" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="20377 -76993 29694" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="60850 -17434 56729" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="31057 -57010 54865" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="19930 -54452 62150" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="79005 -4682 31004" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-47801 -61762 33547" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="42405 44851 58439" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-14612 -53984 64008" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="15781 35348 75673" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-13704 -33551 76886" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="12532 75338 37310" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="29307 -74202 29325" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="6798 -36634 76398" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="60954 -17905 56470" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-40034 65012 37358" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="81476 -3810 23917" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-54573 -40291 51218" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="65598 24767 48046" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-3546 59988 60114" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-27593 -63239 49641" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-41063 -9587 73802" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="36396 13023 75701" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="39231 1678 75386" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="29954 38969 69348" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-69887 -8143 47690" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="41927 -45694 58129" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-25372 -34602 73374" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-26986 -46561 65792" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-21450 -46363 67936" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-39928 28491 69418" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="25141 16071 79590" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="32637 67714 39680" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-13639 -28177 79025" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-8809 75894 37248" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="43834 60674 40276" radius="180" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="-22975 19314 79523" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="51607 44648 50676" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="40395 -1926 74762" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="52074 -24524 62544" radius="110" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="72967 1088 43584" radius="140" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+  <sphere pos="76507 12364 34909" radius="90" rings="4" slices="6" material="star" unlit="1" castShadow="0" />
+</prefab>

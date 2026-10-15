@@ -1,0 +1,8 @@
+<!-- A 2 x 4 ft fluorescent troffer in a suspended ceiling: a white frame 62 x 122 x 3 with a glowing diffuser
+     and its light 20 cm below. Origin at the centre of the ceiling's underside (z=0); the fixture hangs down
+     to z=-3.7. Long side along local Y. Materials: troffer_frame, troffer_glow. -->
+<prefab up="z" front="-z">
+  <box pos="0 0 -1.5" size="62 122 3" material="troffer_frame" />
+  <box pos="0 0 -3.2" size="56 116 1" material="troffer_glow" unlit="1" castShadow="0" />
+  <light pos="0 0 -20" color="0.94 0.97 1.0" intensity="0.42" radius="520" castShadows="1" />
+</prefab>

@@ -1,0 +1,28 @@
+<!-- The elevator between the Red Sun Room and the command deck: an open-fronted glass cage 256 cm across
+     and 900 cm tall. A base ring with a glowing platform, six posts, glass in five of the six bays (the
+     open bay faces local -Y) and a top ring that meets the ceiling. Origin on the floor at the cage centre.
+     Scale z to fit a lower room. Attach: floor (platform top). Scene materials: sh_trim, sh_dark,
+     sh_glass. -->
+<prefab up="z" front="-y">
+  <let name="R" value="120" />
+  <let name="H" value="900" />
+  <let name="PR" value="R * cos(rad(30))" />
+  <attach name="floor" pos="0 0 13" />
+  <cylinder pos="0 0 5" rot="90 0 0" radius="{R + 8}" height="10" sides="32" material="sh_trim" />
+  <cylinder pos="0 0 11.5" rot="90 0 0" radius="{R - 14}" height="3" sides="32" material="sh_dark" />
+  <torus pos="0 0 13" rot="90 0 0" majorRadius="{R - 26}" minorRadius="2" majorSegments="40" color="0.35 0.95 1.0" unlit="1" castShadow="0" />
+  <torus pos="0 0 {H - 7}" rot="90 0 0" majorRadius="{R}" minorRadius="7" majorSegments="40" material="sh_trim" />
+  <cylinder pos="{R * cos(rad(0))} {R * sin(rad(0))} {(H + 3) / 2}" rot="90 0 0" radius="5" height="{H - 17}" material="sh_trim" />
+  <cylinder pos="{R * cos(rad(60))} {R * sin(rad(60))} {(H + 3) / 2}" rot="90 0 0" radius="5" height="{H - 17}" material="sh_trim" />
+  <cylinder pos="{R * cos(rad(120))} {R * sin(rad(120))} {(H + 3) / 2}" rot="90 0 0" radius="5" height="{H - 17}" material="sh_trim" />
+  <cylinder pos="{R * cos(rad(180))} {R * sin(rad(180))} {(H + 3) / 2}" rot="90 0 0" radius="5" height="{H - 17}" material="sh_trim" />
+  <cylinder pos="{R * cos(rad(240))} {R * sin(rad(240))} {(H + 3) / 2}" rot="90 0 0" radius="5" height="{H - 17}" material="sh_trim" />
+  <cylinder pos="{R * cos(rad(300))} {R * sin(rad(300))} {(H + 3) / 2}" rot="90 0 0" radius="5" height="{H - 17}" material="sh_trim" />
+  <box pos="{PR * cos(rad(30))} {PR * sin(rad(30))} {(H - 4) / 2}" rot="0 0 120" size="{R - 12} 2 {H - 26}" material="sh_glass" castShadow="0" />
+  <box pos="{PR * cos(rad(90))} {PR * sin(rad(90))} {(H - 4) / 2}" rot="0 0 180" size="{R - 12} 2 {H - 26}" material="sh_glass" castShadow="0" />
+  <box pos="{PR * cos(rad(150))} {PR * sin(rad(150))} {(H - 4) / 2}" rot="0 0 240" size="{R - 12} 2 {H - 26}" material="sh_glass" castShadow="0" />
+  <box pos="{PR * cos(rad(210))} {PR * sin(rad(210))} {(H - 4) / 2}" rot="0 0 300" size="{R - 12} 2 {H - 26}" material="sh_glass" castShadow="0" />
+  <box pos="{PR * cos(rad(330))} {PR * sin(rad(330))} {(H - 4) / 2}" rot="0 0 60" size="{R - 12} 2 {H - 26}" material="sh_glass" castShadow="0" />
+  <!-- Call panel on the post beside the open bay. -->
+  <box pos="{(R + 6) * cos(rad(300))} {(R + 6) * sin(rad(300))} 130" rot="0 0 30" size="16 4 30" color="0.35 0.95 1.0" unlit="1" castShadow="0" />
+</prefab>

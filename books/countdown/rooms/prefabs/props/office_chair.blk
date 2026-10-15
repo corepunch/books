@@ -1,8 +1,26 @@
-<!-- A swivel operator chair: seat 46 cm, back to 95 cm; the sitter faces local -Y. Origin on the floor
-     under the seat's middle. -->
-<prefab>
-  <cylinder pos="0 0 3" rot="90 0 0" radius="28" height="6" material="dark_metal" />
-  <cylinder pos="0 0 24" rot="90 0 0" radius="3" height="40" material="chrome" />
-  <box pos="0 0 46" size="46 46 8" material="chair_cloth" />
-  <box pos="0 22 74" size="44 6 46" material="chair_cloth" />
+<!-- A 1980s swivel operator chair: five-star base on casters, gas column, padded seat and backrest. Footprint a
+     circle of radius 32; seat top at 38.6 cm (the height the book's shared Sit pose rests on), backrest to 89 cm. Baseline z=0 at the floor under the seat's
+     middle; the sitter faces local -Y (backrest on +Y). Attach "seat" is the seat-top centre. -->
+<prefab up="z" front="-y">
+  <let name="SEAT" value="38.6" />
+  <let name="LEG" value="30" />
+  <attach name="seat" pos="0 0 {SEAT}" />
+  <group name="base">
+    <cylinder pos="0 0 13" rot="90 0 0" radius="6" height="8" material="dark_metal" />
+    <box pos="{(LEG + 6)/2*cos(rad(90))} {(LEG + 6)/2*sin(rad(90))} 10" rot="0 0 90" size="{LEG - 6} 5 4" material="dark_metal" />
+    <box pos="{(LEG + 6)/2*cos(rad(162))} {(LEG + 6)/2*sin(rad(162))} 10" rot="0 0 162" size="{LEG - 6} 5 4" material="dark_metal" />
+    <box pos="{(LEG + 6)/2*cos(rad(234))} {(LEG + 6)/2*sin(rad(234))} 10" rot="0 0 234" size="{LEG - 6} 5 4" material="dark_metal" />
+    <box pos="{(LEG + 6)/2*cos(rad(306))} {(LEG + 6)/2*sin(rad(306))} 10" rot="0 0 306" size="{LEG - 6} 5 4" material="dark_metal" />
+    <box pos="{(LEG + 6)/2*cos(rad(18))} {(LEG + 6)/2*sin(rad(18))} 10" rot="0 0 18" size="{LEG - 6} 5 4" material="dark_metal" />
+    <sphere pos="{(LEG - 3)*cos(rad(90))} {(LEG - 3)*sin(rad(90))} 4" radius="4" material="cable" />
+    <sphere pos="{(LEG - 3)*cos(rad(162))} {(LEG - 3)*sin(rad(162))} 4" radius="4" material="cable" />
+    <sphere pos="{(LEG - 3)*cos(rad(234))} {(LEG - 3)*sin(rad(234))} 4" radius="4" material="cable" />
+    <sphere pos="{(LEG - 3)*cos(rad(306))} {(LEG - 3)*sin(rad(306))} 4" radius="4" material="cable" />
+    <sphere pos="{(LEG - 3)*cos(rad(18))} {(LEG - 3)*sin(rad(18))} 4" radius="4" material="cable" />
+    <cylinder pos="0 0 {(17 + SEAT - 10)/2}" rot="90 0 0" radius="2.5" height="{SEAT - 10 - 17}" material="chrome" />
+  </group>
+  <box pos="0 0 {SEAT - 4}" size="48 46 8" material="chair_cloth" />
+  <box pos="0 20 {SEAT - 9}" size="8 6 2" material="dark_metal" />
+  <box pos="0 23.5 {SEAT + 6.5}" size="6 3 31" material="dark_metal" />
+  <box pos="0 28 {SEAT + 32}" size="44 6 38" material="chair_cloth" />
 </prefab>

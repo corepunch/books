@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- A meteorite as X-ray vision sees it, drawn as a cut-away: the stone turns to a pale glassy dome,
+     radius 100 cm round the origin, sliced flat through its middle, and the purple Cybernetic-Bacteria
+     capsule lies half sunk in the cut face. The cut faces local +Y (front +y): turn it to the viewing
+     camera. The capsule is drawn self-lit, as X-ray vision shows it. Built from frustums, not a
+     lathe: a lathe whose <shape> lives in a prefab vanishes in cameras that carry a <transform>.
+     Materials from the scene: xray, capsule, capsule_band. -->
+<prefab up="z" front="+y">
+  <let name="R" value="100"/>
+  <!-- The pale half-stone: three nine-sided frustums from the cut face (y=0) back to a blunt point,
+       each reaching 1 cm into the next so no two caps share a plane. -->
+  <cone pos="0 {-R*0.18} 0" radius="{R*0.88}" radiusTop="{R}" height="{R*0.36}" sides="9" scale="1.15 1 0.9" material="xray"/>
+  <cone pos="0 {-R*0.55} 0" radius="{R*0.55}" radiusTop="{R*0.9}" height="{R*0.42}" sides="9" scale="1.15 1 0.9" material="xray"/>
+  <cone pos="0 {-R*0.87} 0" radius="{R*0.12}" radiusTop="{R*0.58}" height="{R*0.26}" sides="9" scale="1.15 1 0.9" material="xray"/>
+  <!-- The capsule: a purple pill with a brighter band, lying in the cut face. -->
+  <capsule rot="0 0 70" radius="{R*0.2}" height="{R*0.55}" material="capsule" unlit="1" castShadow="0"/>
+  <torus rot="0 0 70" majorRadius="{R*0.21}" minorRadius="{R*0.035}" majorSegments="16" minorSegments="6" material="capsule_band" unlit="1" castShadow="0"/>
+</prefab>

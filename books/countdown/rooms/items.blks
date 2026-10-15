@@ -6,21 +6,16 @@
   <camera name="item-heat" comment="Heat vision: Superman's eyes and two red beams" pos="-38 -52 182" look="-6 -8 172" fov="34" />
   <camera name="item-xray" comment="X-ray vision: Superman's gaze, a pale blue cone" pos="962 -52 182" look="994 -8 172" fov="34" />
   <camera name="item-breath" comment="Super-breath: a white cone of frost from Superman's lips" pos="1962 -52 176" look="1994 -10 166" fov="34" />
-  <camera name="item-hearing" comment="Super-hearing: Superman's head in profile, rings of sound round his ear" pos="3070 -20 178" look="3000 0 174" fov="34" />
+  <camera name="item-hearing" comment="Super-hearing: Superman's head in profile, rings of sound round his ear" pos="3060 -40 180" look="3000 0 174" fov="34" />
   <camera name="item-pass" comment="Clark's press pass" pos="4000 -30 4" look="4000 0 0" fov="34" />
   <camera name="item-cable" comment="A coil of thick computer cable" pos="5000 -110 120" look="5000 0 8" fov="40" />
   <camera name="item-vial" comment="The spent gas grenade with its purple band" pos="6000 -26 24" look="6000 0 4" fov="40" />
   <camera name="item-sprayer" comment="The antidote sprayer: tank, hose and gun" pos="7020 -170 80" look="7020 0 34" fov="40" />
   <camera name="item-drone" comment="One of Brainiac's drones" pos="8000 -34 16" look="8000 0 0" fov="40" />
-  <camera name="item-canister" comment="Brainiac's Bacteria canister" pos="9000 -130 70" look="9000 0 46" fov="40" />
+  <camera name="item-canister" comment="Brainiac's Bacteria canister" pos="9000 -160 74" look="9000 0 42" fov="40" />
 
   <material id="gunmetal" color="0.14 0.14 0.16" shininess="60" />
   <material id="cable" color="0.10 0.10 0.12" shininess="20" />
-  <material id="tank" color="0.82 0.84 0.86" shininess="90" />
-  <material id="strap" color="0.20 0.22 0.20" shininess="5" />
-  <material id="hose" color="0.10 0.10 0.10" shininess="20" />
-  <material id="drone" color="0.56 0.60 0.62" shininess="80" />
-  <material id="canister" color="0.70 0.72 0.74" shininess="90" />
 
   <sun dir="0.5 0.6 -0.6" color="1.0 0.97 0.92" intensity="1.2" castShadows="1" />
 

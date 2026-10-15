@@ -1,0 +1,26 @@
+<!-- Brainiac's canister rack: a 300 cm open steel rack, 44 deep and 268 tall, with a floor shelf and a
+     middle shelf of Bacteria canisters behind two retaining rods. Seven canisters; one cradle on the
+     middle shelf is empty (that canister went down to the Red Sun Room). Its back (local +Y, y = 22)
+     stands against a wall; front -y. Origin on the floor under its centre. Attach: shelf_lower,
+     shelf_upper. Scene materials: sh_dark, sh_rib, sh_trim. -->
+<prefab up="z" front="-y">
+  <let name="W" value="284" />
+  <let name="UP" value="123" />
+  <attach name="shelf_lower" pos="0 -2 6" />
+  <attach name="shelf_upper" pos="0 -2 {UP}" />
+  <box pos="-146 0 130" size="8 44 260" material="sh_rib" />
+  <box pos="146 0 130" size="8 44 260" material="sh_rib" />
+  <box pos="0 20 130" size="{W} 4 260" material="sh_dark" />
+  <box pos="0 -2 3" size="{W} 40 6" material="sh_dark" />
+  <box pos="0 -2 {UP - 3}" size="{W} 40 6" material="sh_dark" />
+  <box pos="0 0 264" size="300 44 8" material="sh_rib" />
+  <cylinder pos="0 -22 56" rot="0 0 90" radius="1.5" height="{W}" material="sh_trim" />
+  <cylinder pos="0 -22 {UP + 50}" rot="0 0 90" radius="1.5" height="{W}" material="sh_trim" />
+  <prefab source="props/canister" pos="-100 -2 6" rot="0 0 4" />
+  <prefab source="props/canister" pos="-34 -2 6" rot="0 0 -6" />
+  <prefab source="props/canister" pos="32 -2 6" rot="0 0 3" />
+  <prefab source="props/canister" pos="98 -2 6" rot="0 0 -2" />
+  <prefab source="props/canister" pos="-100 -2 {UP}" rot="0 0 -4" />
+  <prefab source="props/canister" pos="-34 -2 {UP}" rot="0 0 5" />
+  <prefab source="props/canister" pos="98 -2 {UP}" rot="0 0 -3" />
+</prefab>

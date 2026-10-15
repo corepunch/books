@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mt. Royal Observatory: a limestone hall on a granite plinth with a columned porch, tall lit windows and a
+     cornice, and on its roof a drum carrying the silver observing dome. The dome's shutter slit is open and the
+     big refractor looks out of it; the slit glows with the warm light of the dome room. Footprint 1580 x 1080 cm
+     (local X wide, Y deep, plus the 230 cm porch and steps in front); baseline z=0 on the lawn; roof 600 cm,
+     dome top 1290 cm. Origin on the ground at the centre of the hall. Front -Y: the door faces local -Y; the
+     slit faces local azimuth SLIT (degrees counter-clockwise from local +X; -53 points toward local +X and -Y, which on
+     the Mt. Royal lawn, rot 90, turns it east-north-east toward the city).
+     Materials from the scene: plinth_stone, limestone, cornice_stone, dome_metal, slit_dark, door_wood,
+     window_lit, brass, bench_iron. -->
+<prefab up="z" front="-y">
+  <let name="BW" value="1500" />   <!-- hall width -->
+  <let name="BD" value="1000" />   <!-- hall depth -->
+  <let name="PL" value="40" />     <!-- plinth height -->
+  <let name="BH" value="520" />    <!-- wall height above the plinth -->
+  <let name="ROOF" value="PL + BH + 40" /> <!-- top of cornice -->
+  <let name="DRUM_R" value="476" />
+  <let name="DRUM_H" value="230" />
+  <let name="DOME" value="460" />  <!-- dome radius -->
+  <let name="DZ" value="ROOF + DRUM_H" /> <!-- dome springing line -->
+  <let name="SLIT" value="-53" />  <!-- slit azimuth -->
+  <let name="SW" value="62" />     <!-- slit half-width -->
+  <let name="PD" value="230" />    <!-- porch depth -->
+  <attach name="door" pos="0 {-BD/2 - PD} 0" />
+
+  <!-- Hall: plinth, walls, cornice and a low parapet round the roof. -->
+  <box pos="0 0 {PL/2}" size="{BW + 80} {BD + 80} {PL}" material="plinth_stone" />
+  <box pos="0 0 {PL + BH/2}" size="{BW} {BD} {BH}" material="limestone" />
+  <box pos="0 0 {PL + BH + 14}" size="{BW + 40} {BD + 40} 28" material="cornice_stone" />
+  <box pos="0 0 {PL + BH + 34}" size="{BW - 20} {BD - 20} 12" material="limestone" />
+  <box pos="0 0 {PL + 120}" size="{BW + 12} {BD + 12} 14" material="cornice_stone" />
+
+  <!-- Windows: a stone surround, the lit glass and a sill on each. -->
+  <group pos="{-560} {-BD/2} 0" rot="0 0 0">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="slit_dark" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{-330} {-BD/2} 0" rot="0 0 0">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{330} {-BD/2} 0" rot="0 0 0">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{560} {-BD/2} 0" rot="0 0 0">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{-BW/2} {-250} 0" rot="0 0 -90">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{BW/2} {-250} 0" rot="0 0 90">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{-BW/2} {0} 0" rot="0 0 -90">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="slit_dark" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{BW/2} {0} 0" rot="0 0 90">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{-BW/2} {250} 0" rot="0 0 -90">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{BW/2} {250} 0" rot="0 0 90">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="slit_dark" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{-400} {BD/2} 0" rot="0 0 180">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="slit_dark" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{0} {BD/2} 0" rot="0 0 180">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="window_lit" unlit="1" castShadow="0" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+  <group pos="{400} {BD/2} 0" rot="0 0 180">
+    <box pos="0 -3 {PL + 300}" size="110 10 250" material="cornice_stone" />
+    <box pos="0 -6 {PL + 300}" size="86 8 224" material="slit_dark" />
+    <box pos="0 -14 {PL + 166}" size="130 22 12" material="cornice_stone" />
+  </group>
+
+  <!-- Porch: four columns on a raised floor, an entablature and a pediment, the door and its lamp. -->
+  <box pos="0 {-BD/2 - 40 - (PD - 40)/2} {PL/2}" size="560 {PD - 40} {PL}" material="plinth_stone" />
+  <box pos="0 {-BD/2 - PD - 22} 19.5" size="480 44 13" material="plinth_stone" />
+  <box pos="0 {-BD/2 - PD - 34.5} 6.5" size="520 69 13" material="plinth_stone" />
+  <cylinder pos="-220 {-BD/2 - PD + 30} {PL + 12 + 204}" rot="90 0 0" radius="20" height="408" sides="16" material="limestone"><taper amount="-0.08" /></cylinder>
+  <box pos="-220 {-BD/2 - PD + 30} {PL + 6}" size="50 50 12" material="cornice_stone" />
+  <cylinder pos="-80 {-BD/2 - PD + 30} {PL + 12 + 204}" rot="90 0 0" radius="20" height="408" sides="16" material="limestone"><taper amount="-0.08" /></cylinder>
+  <box pos="-80 {-BD/2 - PD + 30} {PL + 6}" size="50 50 12" material="cornice_stone" />
+  <cylinder pos="80 {-BD/2 - PD + 30} {PL + 12 + 204}" rot="90 0 0" radius="20" height="408" sides="16" material="limestone"><taper amount="-0.08" /></cylinder>
+  <box pos="80 {-BD/2 - PD + 30} {PL + 6}" size="50 50 12" material="cornice_stone" />
+  <cylinder pos="220 {-BD/2 - PD + 30} {PL + 12 + 204}" rot="90 0 0" radius="20" height="408" sides="16" material="limestone"><taper amount="-0.08" /></cylinder>
+  <box pos="220 {-BD/2 - PD + 30} {PL + 6}" size="50 50 12" material="cornice_stone" />
+  <box pos="0 {-BD/2 - PD/2 + 4} {PL + 420 + 22}" size="560 {PD + 8} 44" material="cornice_stone" />
+  <prism pos="0 {-BD/2 - PD/2 + 4} {PL + 420 + 44 + 45}" rot="0 90 90" radius="300" height="{PD}" sides="3" scale="1 0.3 1" material="limestone" />
+  <box pos="0 {-BD/2 - 8} {PL + 150}" size="150 16 300" material="door_wood" />
+  <box pos="0 {-BD/2 - 10} {PL + 330}" size="150 12 40" material="window_lit" unlit="1" castShadow="0" />
+  <group pos="140 {-BD/2 - 24} {PL + 280}">
+    <box pos="0 14 0" size="8 20 8" material="bench_iron" />
+    <sphere pos="0 0 -14" radius="12" color="1.0 0.88 0.62" unlit="1" castShadow="0" />
+    <light pos="0 -4 -18" color="1.0 0.80 0.52" intensity="0.8" radius="650" castShadows="1" />
+  </group>
+
+  <!-- Roof: the drum and its cornice, then the dome, which turns on the drum. -->
+  <cylinder pos="0 0 {ROOF + DRUM_H/2}" rot="90 0 0" radius="{DRUM_R}" height="{DRUM_H}" sides="32" material="limestone" />
+  <torus pos="0 0 {ROOF + DRUM_H - 8}" rot="90 0 0" majorRadius="{DRUM_R + 6}" minorRadius="12" majorSegments="40" material="cornice_stone" />
+  <!-- The dome is a whole sphere whose lower half hides inside the drum and the hall: Scener does not
+       always find a prefab's own <shape> profiles when it renders a scene, so this prefab uses none. -->
+  <sphere pos="0 0 {DZ}" radius="{DOME}" rings="28" slices="48" material="dome_metal" />
+  <!-- The open slit: a dark band over the dome's meridian (the lit dome room glimpsed inside), two shutter
+       rails, and the big refractor's tube poking out toward the sky. -->
+  <group pos="0 0 {DZ}" rot="0 0 {SLIT}">
+    <!-- The band and its two rails are chains of short plates, 6 degrees each, from the drum over the crown. -->
+    <group rot="0 -3 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -9 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -15 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -21 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -27 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -33 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -39 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -45 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -51 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -57 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -63 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -69 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -75 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -81 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -87 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -93 0"><box pos="{DOME + 2} 0 0" size="6 {2*SW - 4} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="18 20 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group rot="0 -99 0"><box pos="{DOME + 2} 0 0" size="5 {2*SW} {2*(DOME + 2)*tan(rad(3)) + 3}" material="slit_dark" unlit="1" /><box pos="{DOME + 6} {-SW - 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /><box pos="{DOME + 6} {SW + 10} 0" size="16 22 {2*(DOME + 6)*tan(rad(3)) + 3}" material="dome_metal" /></group>
+    <group pos="{DOME*cos(rad(38)) - 120} 0 {DOME*sin(rad(38)) - 90}" rot="0 -38 0">
+      <cylinder pos="140 0 0" rot="0 0 90" radius="34" height="300" material="brass"><taper amount="-0.1" /></cylinder>
+      <torus pos="288 0 0" rot="0 0 90" majorRadius="34" minorRadius="5" material="bench_iron" />
+    </group>
+  </group>
+  <cylinder pos="0 0 {DZ + DOME + 10}" rot="90 0 0" radius="26" height="20" material="dome_metal" />
+</prefab>

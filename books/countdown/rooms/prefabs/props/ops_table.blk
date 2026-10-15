@@ -1,10 +1,18 @@
-<!-- The operations table: a wooden desk 180 x 90, top at 76 cm, on four legs. Origin on the floor
-     under its middle. -->
-<prefab>
-  <box pos="0 0 74" size="180 90 5" material="wood" />
-  <box pos="-82 -38 36" size="6 6 72" material="wood" />
-  <box pos="82 -38 36" size="6 6 72" material="wood" />
-  <box pos="-82 38 36" size="6 6 72" material="wood" />
-  <box pos="82 38 36" size="6 6 72" material="wood" />
-  <box pos="0 38 60" size="160 4 24" material="wood" />
+<!-- The operations table: a steel-framed desk 180 x 90 with a walnut-laminate top at 76 cm on four square legs
+     and a back apron between the rear legs. Baseline z=0; origin on the floor under its middle; the user sits
+     on the local -Y side (apron at the back, +Y). Attach "top_surface" is the centre of the top.
+     Materials: wood, dark_metal. -->
+<prefab up="z" front="-y">
+  <let name="W" value="180" />
+  <let name="D" value="90" />
+  <let name="TOP" value="76" />
+  <let name="T" value="4" />
+  <let name="LEG" value="5" />
+  <attach name="top_surface" pos="0 0 {TOP}" />
+  <box pos="0 0 {TOP - T/2}" size="{W} {D} {T}" material="wood" />
+  <box pos="{-(W/2 - 6)} {-(D/2 - 6)} {(TOP - T)/2}" size="{LEG} {LEG} {TOP - T}" material="dark_metal" />
+  <box pos="{W/2 - 6} {-(D/2 - 6)} {(TOP - T)/2}" size="{LEG} {LEG} {TOP - T}" material="dark_metal" />
+  <box pos="{-(W/2 - 6)} {D/2 - 6} {(TOP - T)/2}" size="{LEG} {LEG} {TOP - T}" material="dark_metal" />
+  <box pos="{W/2 - 6} {D/2 - 6} {(TOP - T)/2}" size="{LEG} {LEG} {TOP - T}" material="dark_metal" />
+  <box pos="0 {D/2 - 6} {TOP - T - 10}" size="{W - 12 - LEG} 2 20" material="dark_metal" />
 </prefab>

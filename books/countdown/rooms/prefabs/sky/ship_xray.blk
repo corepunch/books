@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Brainiac's ship as Superman's X-ray vision sees it: the hull reduced to pale glowing hoops (latitudes,
+     meridians and the Brain Net), the internal decks as rings, and the one thing X-ray picks out in colour:
+     the Red Sun Room above the airlock, its frame drawn in pale lines and the red globe burning inside, with the
+     red conduit down to the airlock lens. Everything is unlit emitter geometry with no shadows (a vision, not
+     a solid). Same frame as props/brainiac_ship: origin at the hull centre, R = 2000 cm, front -Y (the skull).
+     The Red Sun Room is 1800 cm square and 900 cm high, its floor at z=-1700; the globe (300 cm across) at
+     (0 0 -1250). Materials from the scene: xray_line, xray_dim, sun_red. -->
+<prefab up="z" front="-y">
+  <let name="R" value="2000" />
+  <let name="T" value="9" />          <!-- line radius -->
+  <let name="ROOM" value="1800" />
+  <let name="RH" value="900" />
+  <let name="RZ" value="-1700" />     <!-- room floor -->
+  <attach name="globe" pos="0 0 {RZ + RH/2 + 0}" />
+  <!-- Hull hoops. -->
+  <torus pos="0 0 {R*sin(rad(-64))}" rot="90 0 0" majorRadius="{R*cos(rad(-64))}" minorRadius="{T}" majorSegments="64" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="0 0 {R*sin(rad(-40))}" rot="90 0 0" majorRadius="{R*cos(rad(-40))}" minorRadius="{T}" majorSegments="64" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="0 0 {R*sin(rad(-17))}" rot="90 0 0" majorRadius="{R*cos(rad(-17))}" minorRadius="{T}" majorSegments="64" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="0 0 {R*sin(rad(0))}" rot="90 0 0" majorRadius="{R*cos(rad(0))}" minorRadius="{T}" majorSegments="64" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="0 0 {R*sin(rad(17))}" rot="90 0 0" majorRadius="{R*cos(rad(17))}" minorRadius="{T}" majorSegments="64" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="0 0 {R*sin(rad(40))}" rot="90 0 0" majorRadius="{R*cos(rad(40))}" minorRadius="{T}" majorSegments="64" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="0 0 {R*sin(rad(64))}" rot="90 0 0" majorRadius="{R*cos(rad(64))}" minorRadius="{T}" majorSegments="64" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus rot="0 0 0" majorRadius="{R}" minorRadius="{T*0.8}" majorSegments="72" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus rot="0 0 30" majorRadius="{R}" minorRadius="{T*0.8}" majorSegments="72" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus rot="0 0 60" majorRadius="{R}" minorRadius="{T*0.8}" majorSegments="72" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus rot="0 0 90" majorRadius="{R}" minorRadius="{T*0.8}" majorSegments="72" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus rot="0 0 120" majorRadius="{R}" minorRadius="{T*0.8}" majorSegments="72" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus rot="0 0 150" majorRadius="{R}" minorRadius="{T*0.8}" majorSegments="72" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <!-- Decks inside the hull, as rings where they meet the hull. -->
+  <torus pos="0 0 -500" rot="90 0 0" majorRadius="{sqrt(R*R - -500*-500) - 40}" minorRadius="{T*0.7}" majorSegments="64" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus pos="0 0 400" rot="90 0 0" majorRadius="{sqrt(R*R - 400*400) - 40}" minorRadius="{T*0.7}" majorSegments="64" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus pos="0 0 1200" rot="90 0 0" majorRadius="{sqrt(R*R - 1200*1200) - 40}" minorRadius="{T*0.7}" majorSegments="64" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <!-- Brain Net and the skull's eyes. -->
+  <torus pos="0 0 1650" rot="90 0 0" majorRadius="1135" minorRadius="{T}" majorSegments="56" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="0 0 1450" rot="0 0 45" scale="1 1 0.75" majorRadius="1150" minorRadius="{T*0.8}" majorSegments="56" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus pos="0 0 1450" rot="0 0 135" scale="1 1 0.75" majorRadius="1150" minorRadius="{T*0.8}" majorSegments="56" minorSegments="6" material="xray_dim" unlit="1" castShadow="0" />
+  <torus pos="-580 -1800 300" rot="0 0 0" majorRadius="300" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <torus pos="580 -1800 300" rot="0 0 0" majorRadius="300" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <sphere pos="-580 -1870 300" radius="120" material="sun_red" unlit="1" castShadow="0" />
+  <sphere pos="580 -1870 300" radius="120" material="sun_red" unlit="1" castShadow="0" />
+  <!-- The airlock collar, lens and the tentacle sockets. -->
+  <torus pos="0 0 -2060" rot="90 0 0" majorRadius="600" minorRadius="{T*1.4}" majorSegments="48" minorSegments="6" material="xray_line" unlit="1" castShadow="0" />
+  <cylinder pos="0 0 -2066" rot="90 0 0" radius="420" height="10" sides="40" material="sun_red" unlit="1" castShadow="0" />
+  <group rot="0 0 247.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <group rot="0 0 292.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <group rot="0 0 337.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <group rot="0 0 22.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <group rot="0 0 67.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <group rot="0 0 112.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <group rot="0 0 157.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <group rot="0 0 202.5"><group rot="0 50 0"><torus pos="{R + 6} 0 0" rot="0 0 90" majorRadius="190" minorRadius="{T}" minorSegments="6" material="xray_line" unlit="1" castShadow="0" /></group></group>
+  <!-- The Red Sun Room: twelve frame edges, the globe and its halo, and the conduit to the lens. -->
+  <group pos="0 0 {RZ}">
+    <box pos="{ROOM/2} {ROOM/2} {RH/2}" size="{T*1.6} {T*1.6} {RH}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="{ROOM/2} {-ROOM/2} {RH/2}" size="{T*1.6} {T*1.6} {RH}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="{-ROOM/2} {ROOM/2} {RH/2}" size="{T*1.6} {T*1.6} {RH}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="{-ROOM/2} {-ROOM/2} {RH/2}" size="{T*1.6} {T*1.6} {RH}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="0 {ROOM/2} 0" size="{ROOM} {T*2} {T*2}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="0 {-ROOM/2} 0" size="{ROOM} {T*2} {T*2}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="{ROOM/2} 0 0" size="{T*2.4} {ROOM} {T*2.4}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="{-ROOM/2} 0 0" size="{T*2.4} {ROOM} {T*2.4}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="0 {ROOM/2} {RH}" size="{ROOM} {T*2} {T*2}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="0 {-ROOM/2} {RH}" size="{ROOM} {T*2} {T*2}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="{ROOM/2} 0 {RH}" size="{T*2.4} {ROOM} {T*2.4}" material="xray_line" unlit="1" castShadow="0" />
+    <box pos="{-ROOM/2} 0 {RH}" size="{T*2.4} {ROOM} {T*2.4}" material="xray_line" unlit="1" castShadow="0" />
+    <sphere pos="0 0 {RH/2}" radius="150" rings="18" slices="24" material="sun_red" unlit="1" castShadow="0" />
+    <torus pos="0 0 {RH/2}" rot="90 0 0" majorRadius="230" minorRadius="10" minorSegments="6" material="sun_red" unlit="1" castShadow="0" />
+    <torus pos="0 0 {RH/2}" rot="0 0 30" majorRadius="230" minorRadius="10" minorSegments="6" material="sun_red" unlit="1" castShadow="0" />
+    <cylinder pos="0 0 {(RH/2 - 150 - 360)/2}" rot="90 0 0" radius="40" height="{RH/2 - 150 + 360}" sides="12" material="sun_red" unlit="1" castShadow="0" />
+  </group>
+</prefab>

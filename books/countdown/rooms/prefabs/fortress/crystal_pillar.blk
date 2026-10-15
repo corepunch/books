@@ -1,0 +1,15 @@
+<!-- A faceted ice pillar of the Fortress hall, floor to ceiling: a hexagonal shaft flaring into a
+     crystal foot and a crystal capital. 1500 tall, about 300 across at the flares.
+     Origin on the floor at the pillar's axis; the top face meets the ceiling at Z 1500.
+     Symmetric, no front (declared -Y). Self-contained materials (the hall's own override them). -->
+<prefab up="z" front="-y">
+  <material id="fortress_crystal" color="0.80 0.93 0.98" shininess="140" />
+  <material id="fortress_ice_deep" color="0.46 0.62 0.78" shininess="90" />
+  <let name="H" value="1500" />
+  <let name="R" value="105" />
+  <let name="F" value="150" />
+  <let name="FH" value="130" />
+  <cone pos="0 0 {FH/2}" rot="90 0 0" radius="{F}" radiusTop="{R}" height="{FH}" sides="6" material="fortress_ice_deep" />
+  <prism pos="0 0 {H/2}" rot="90 0 0" radius="{R}" height="{H - 2*FH}" sides="6" material="fortress_crystal" />
+  <cone pos="0 0 {H - FH/2}" rot="90 0 40" radius="{R}" radiusTop="{F}" height="{FH}" sides="6" material="fortress_ice_deep" />
+</prefab>

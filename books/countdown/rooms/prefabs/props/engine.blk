@@ -1,23 +1,70 @@
-<!-- A 1980s diesel commuter locomotive, 1500 long (local X, the front at +X), 300 wide, 420 tall,
-     standing on its bogies; origin on the rail head under the middle of the engine. -->
-<prefab>
-  <box pos="0 0 70" size="1460 290 40" material="engine_frame" />
-  <box pos="-120 0 250" size="1200 280 320" material="engine_body" />
-  <box pos="580 0 230" size="260 290 280" material="engine_body" />
-  <box pos="660 0 330" size="110 292 70" material="glass" />
-  <box pos="-120 0 412" size="1180 250 10" material="engine_frame" />
-  <box pos="-120 146 210" size="1160 4 30" material="engine_stripe" />
-  <box pos="-120 -146 210" size="1160 4 30" material="engine_stripe" />
-  <box pos="716 0 120" size="20 300 40" material="engine_frame" />
-  <cylinder pos="716 0 190" rot="0 0 90" radius="16" height="6" color="1 0.95 0.75" unlit="1" castShadow="0" />
-  <box pos="-500 0 30" size="300 220 50" material="engine_frame" />
-  <box pos="500 0 30" size="300 220 50" material="engine_frame" />
-  <cylinder pos="-580 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
-  <cylinder pos="-420 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
-  <cylinder pos="420 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
-  <cylinder pos="580 120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
-  <cylinder pos="-580 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
-  <cylinder pos="-420 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
-  <cylinder pos="420 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
-  <cylinder pos="580 -120 30" rot="90 0 0" radius="30" height="10" material="engine_frame" />
+<!-- A 1980s diesel commuter locomotive (F40-style cowl unit), front +x: the cab and short nose lead,
+     the long hood with radiator fans runs back to the rear coupler. Footprint 1560 x 300 (couplers
+     included), 434 tall. Baseline: wheel treads on the rail head at z=0; wheels sit over rails at y=±72.
+     Origin: the rail head under the middle of the engine. Couplers end at x=±780 (half the 60 cm gap
+     between bodies), knuckles 90 above the rail. Materials from the scene: engine_body, engine_frame,
+     engine_stripe, glass, steel, lamp. -->
+<prefab up="z" front="+x">
+  <let name="L" value="1500" />
+  <let name="TRUCK" value="480" />
+  <attach name="front_coupler" pos="780 0 90" />
+  <attach name="rear_coupler" pos="-780 0 90" />
+  <attach name="roof" pos="0 0 424" />
+  <!-- Two B-B trucks: wheel sets, outside side frames, bolster. -->
+  <group name="front_truck" pos="{TRUCK} 0 0">
+    <cylinder pos="-105 72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="105 72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="-105 -72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="105 -72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="-105 0 48" radius="9" height="132" material="steel" />
+    <cylinder pos="105 0 48" radius="9" height="132" material="steel" />
+    <box pos="0 96 58" size="360 14 50" material="engine_frame" />
+    <box pos="0 -96 58" size="360 14 50" material="engine_frame" />
+    <box pos="0 0 96" size="80 206 26" material="engine_frame" />
+  </group>
+  <group name="rear_truck" pos="{-TRUCK} 0 0">
+    <cylinder pos="-105 72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="105 72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="-105 -72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="105 -72 48" radius="48" height="12" material="engine_frame" />
+    <cylinder pos="-105 0 48" radius="9" height="132" material="steel" />
+    <cylinder pos="105 0 48" radius="9" height="132" material="steel" />
+    <box pos="0 96 58" size="360 14 50" material="engine_frame" />
+    <box pos="0 -96 58" size="360 14 50" material="engine_frame" />
+    <box pos="0 0 96" size="80 206 26" material="engine_frame" />
+  </group>
+  <!-- Frame, fuel tank between the trucks, the plough under the nose and the couplers. -->
+  <box pos="0 0 127" size="1460 296 36" material="engine_frame" />
+  <box pos="0 0 82" size="540 236 64" material="engine_frame" />
+  <box pos="712 0 66" size="40 292 70" rot="0 -24 0" material="engine_frame" />
+  <box pos="765 0 90" size="30 30 24" material="steel" />
+  <box pos="-765 0 90" size="30 30 24" material="steel" />
+  <!-- Long hood, cab and short nose; the stripe and grilles stand 1-2 cm proud of the body. -->
+  <box pos="-140 0 278" size="1180 290 264" material="engine_body" />
+  <box pos="580 0 285" size="260 296 278" material="engine_body" />
+  <box pos="731 0 214" size="38 284 136" material="engine_body" />
+  <box pos="731 0 292" size="36 260 20" rot="0 -35 0" material="engine_body" />
+  <box pos="-140 0 210" size="1176 294 26" material="engine_stripe" />
+  <box pos="580 0 210" size="256 300 26" material="engine_stripe" />
+  <box pos="731 0 210" size="40 288 26" material="engine_stripe" />
+  <box pos="-430 0 345" size="520 294 70" material="grille" />
+  <!-- Cab glazing: the windshield on the cab front, side windows, the headlight and ditch lights. -->
+  <box pos="580 0 350" size="200 300 66" material="glass" />
+  <box pos="711 0 350" size="4 252 70" material="glass" />
+  <box pos="711 0 404" size="4 90 22" material="engine_frame" />
+  <sphere pos="713 0 404" radius="8" material="lamp" unlit="1" castShadow="0" />
+  <sphere pos="750 62 250" radius="7" material="lamp" unlit="1" castShadow="0" />
+  <sphere pos="750 -62 250" radius="7" material="lamp" unlit="1" castShadow="0" />
+  <!-- Roof: the cab roof, the long-hood roof with three radiator fans, the exhaust and the horn. -->
+  <box pos="580 0 428" size="250 280 10" material="engine_frame" />
+  <box pos="-140 0 414" size="1160 270 8" material="engine_frame" />
+  <cylinder pos="-640 0 423" rot="90 0 0" radius="48" height="10" material="grille" />
+  <cylinder pos="-520 0 423" rot="90 0 0" radius="48" height="10" material="grille" />
+  <cylinder pos="-400 0 423" rot="90 0 0" radius="48" height="10" material="grille" />
+  <box pos="-60 0 426" size="300 200 16" material="engine_body" />
+  <box pos="220 0 428" size="60 40 20" material="engine_frame" />
+  <cylinder pos="460 60 438" rot="0 0 90" radius="6" height="40" material="steel" />
+  <!-- Cab steps and grab irons below the cab doors. -->
+  <box pos="560 151 160" size="60 8 30" material="steel" />
+  <box pos="560 -151 160" size="60 8 30" material="steel" />
 </prefab>

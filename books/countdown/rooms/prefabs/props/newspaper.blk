@@ -1,6 +1,32 @@
-<!-- The Daily Planet held open: two 38 x 56 cm pages, origin at the fold's lower end; pages face local -Y. -->
-<prefab>
-  <box pos="-19 0 28" size="38 0.6 56" rot="0 0 -10" color="0.90 0.88 0.80" />
-  <box pos="19 0 28" size="38 0.6 56" rot="0 0 10" color="0.88 0.86 0.78" />
-  <box pos="-19 -0.5 50" size="30 0.4 6" rot="0 0 -10" color="0.25 0.25 0.28" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The Daily Planet held open: two 38 x 56 cm broadsheet pages hinged at the fold and opened 40 degrees,
+     so the outer edges swing toward the reader. Footprint 72 x 13 cm, height 56 cm.
+     Origin at the fold's lower end. Front -Y: the printed outside (front page with the masthead on the +X
+     page, back page on the -X page) faces local -Y, away from the reader who stands or sits on the +Y side.
+     Print details stand 0.2 cm proud of the paper so nothing shares a plane. -->
+<prefab up="z" front="-y">
+  <let name="PW" value="38" />   <!-- page width -->
+  <let name="PH" value="56" />   <!-- page height -->
+  <let name="T" value="0.6" />   <!-- page thickness -->
+  <let name="OPEN" value="20" /> <!-- each page's swing from flat -->
+  <let name="INK" value="-T/2 - 0.35" />
+
+  <!-- Front page: masthead band, banner headline, a photograph and the column rules. -->
+  <group rot="0 0 {OPEN}">
+    <box pos="{PW/2} 0 {PH/2}" size="{PW} {T} {PH}" color="0.93 0.91 0.84" />
+    <box pos="{PW/2} {INK} {PH - 4.5}" size="{PW - 4} 0.3 6" color="0.16 0.18 0.24" />
+    <cylinder pos="{PW/2} {INK - 0.2} {PH - 4.5}" radius="2.2" height="0.3" color="0.86 0.70 0.24" />
+    <box pos="{PW/2} {INK} {PH - 11.5}" size="{PW - 4} 0.3 4" color="0.20 0.20 0.22" />
+    <box pos="{PW/2 - 6} {INK} {PH - 23}" size="{PW/2 - 2} 0.3 14" color="0.46 0.46 0.48" />
+    <box pos="{PW - 9} {INK} {PH - 23}" size="12 0.3 14" color="0.66 0.66 0.66" />
+    <box pos="{PW/2} {INK} 15" size="{PW - 4} 0.3 22" color="0.70 0.69 0.66" />
+  </group>
+  <!-- Back page: classified columns and a display advertisement. -->
+  <group rot="0 0 {-OPEN}">
+    <box pos="{-PW/2} 0 {PH/2}" size="{PW} {T} {PH}" color="0.90 0.88 0.80" />
+    <box pos="{-PW/2} {INK} {PH - 4}" size="{PW - 4} 0.3 3" color="0.22 0.22 0.24" />
+    <box pos="{-PW/2 - 8} {INK} {PH/2 - 2}" size="{PW/2 - 4} 0.3 {PH - 14}" color="0.68 0.67 0.64" />
+    <box pos="{-PW/2 + 9} {INK} {PH/2 + 8}" size="{PW/2 - 4} 0.3 20" color="0.72 0.20 0.16" />
+    <box pos="{-PW/2 + 9} {INK} 14" size="{PW/2 - 4} 0.3 18" color="0.68 0.67 0.64" />
+  </group>
 </prefab>

@@ -1,0 +1,13 @@
+<!-- The S.T.A.R. Labs entrance sign: a low granite monolith 420 x 60 x 140 on a plinth, with the chrome
+     S.T.A.R. star, a blue band and four raised steel letter blocks. Baseline z=0; origin on the ground under
+     its middle; the lettered face looks local -Y. Materials: granite, concrete_light, s7_chrome, rack_blue. -->
+<prefab up="z" front="-y">
+  <box pos="0 0 10" size="460 90 20" material="concrete_light" />
+  <box pos="0 0 90" size="420 60 140" material="granite" />
+  <box pos="0 -31 52" size="400 2 16" material="rack_blue" />
+  <star pos="-150 -33 100" rot="90 0 0" outerRadius="34" innerRadius="14" points="5" material="s7_chrome"><extrude amount="6" /></star>
+  <box pos="-60 -31.5 100" size="34 3 44" material="s7_chrome" />
+  <box pos="0 -31.5 100" size="34 3 44" material="s7_chrome" />
+  <box pos="60 -31.5 100" size="34 3 44" material="s7_chrome" />
+  <box pos="120 -31.5 100" size="34 3 44" material="s7_chrome" />
+</prefab>

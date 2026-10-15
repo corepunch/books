@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A soft holdall: a squashed capsule body with a carry loop over the top. Footprint 60 x 26 cm, 26 cm
+     high with the loop. Origin on its underside at the middle; its length runs along local X. Front -Y
+     (the side the zip pull hangs on). Instances tint the body (tint="1"). -->
+<prefab up="z" front="-y">
+  <let name="R" value="13" />
+  <let name="SQ" value="0.75" />
+  <capsule pos="0 0 {R*SQ}" rot="0 0 90" scale="1 1 {SQ}" radius="{R}" height="34" color="0.24 0.32 0.44" tint="1" />
+  <torus pos="0 0 {2*R*SQ - 1}" majorRadius="7" minorRadius="0.9" color="0.12 0.12 0.12" />
+  <box pos="8 {-R + 0.2} {R*SQ + 2}" size="2 1.2 4" color="0.70 0.68 0.62" shininess="60" />
+</prefab>

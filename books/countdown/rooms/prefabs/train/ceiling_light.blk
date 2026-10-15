@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A coach fluorescent light strip: a shallow steel housing screwed to the ceiling with an opal diffuser
+     underneath and its tube light just below the diffuser. Footprint 124 x 16 cm, 7 cm deep.
+     Origin on the ceiling face at the middle of the housing; the fitting hangs down local -Z (front -Z),
+     its length along local X. The diffuser is emitter geometry (unlit, no shadow). The light is a fill:
+     it casts no shadows, so the sun through the windows stays the key. Material from the scene: car_trim. -->
+<prefab up="z" front="-z">
+  <let name="LEN" value="124" />
+  <let name="HD" value="5" />   <!-- housing depth -->
+  <box pos="0 0 {-HD/2}" size="{LEN} 16 {HD}" material="car_trim" />
+  <box pos="0 0 {-HD - 0.75}" size="{LEN - 6} 11 1.5" color="1.0 0.97 0.88" unlit="1" castShadow="0" />
+  <light pos="0 0 {-HD - 8}" color="1.0 0.94 0.82" intensity="0.2" radius="230" castShadows="0" />
+</prefab>

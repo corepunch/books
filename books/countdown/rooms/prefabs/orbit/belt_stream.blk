@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- The far reaches of Brainiac's meteorite belt: 30 brown rocks strung along the orbit ahead of and
+     behind the near cluster, from 25 m to 700 m away. Origin at the belt centre; local +Y runs along
+     the orbit (front +y), +Z points away from the Earth and the orbit curves down round a ball of radius
+     RB (keep it equal to the scene's RE + ALT); SINK makes the orbit decay ahead. Rock k sits at arc
+     length S_k, spread sideways and up by golden-angle sines. Every rock is tint="1", so an instance
+     colour repaints the lot (the X-ray belt). Materials from the scene: meteor. -->
+<prefab up="z" front="+y">
+  <let name="RB" value="170000"/>
+  <let name="SINK" value="0.10"/>
+  <group><let name="S" value="2600"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(0*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(0*97.3))}" rot="0 0 0" scale="1.15 1 0.85" radius="94" rings="5" slices="7" material="meteor" tint="1"><twist angle="20" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="3500"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(1*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(1*97.3))}" rot="47 31 73" scale="1.15 1 0.85" radius="181" rings="6" slices="8" material="meteor" tint="1"><twist angle="33" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="5235"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(2*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(2*97.3))}" rot="94 62 146" scale="1.15 1 0.85" radius="142" rings="5" slices="9" material="meteor" tint="1"><twist angle="46" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="7541"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(3*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(3*97.3))}" rot="141 93 219" scale="1.15 1 0.85" radius="101" rings="6" slices="7" material="meteor" tint="1"><twist angle="59" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="10317"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(4*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(4*97.3))}" rot="188 124 292" scale="1.15 1 0.85" radius="200" rings="5" slices="8" material="meteor" tint="1"><twist angle="32" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="13506"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(5*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(5*97.3))}" rot="235 155 5" scale="1.15 1 0.85" radius="160" rings="6" slices="9" material="meteor" tint="1"><twist angle="45" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="17067"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(6*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(6*97.3))}" rot="282 6 78" scale="1.15 1 0.85" radius="116" rings="5" slices="7" material="meteor" tint="1"><twist angle="58" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="20971"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(7*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(7*97.3))}" rot="329 37 151" scale="1.15 1 0.85" radius="231" rings="6" slices="8" material="meteor" tint="1"><twist angle="31" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="25196"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(8*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(8*97.3))}" rot="16 68 224" scale="1.15 1 0.85" radius="185" rings="5" slices="9" material="meteor" tint="1"><twist angle="44" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="29722"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(9*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(9*97.3))}" rot="63 99 297" scale="1.15 1 0.85" radius="135" rings="6" slices="7" material="meteor" tint="1"><twist angle="57" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="34533"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(10*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(10*97.3))}" rot="110 130 10" scale="1.15 1 0.85" radius="269" rings="5" slices="8" material="meteor" tint="1"><twist angle="30" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="39617"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(11*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(11*97.3))}" rot="157 161 83" scale="1.15 1 0.85" radius="217" rings="6" slices="9" material="meteor" tint="1"><twist angle="43" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="44962"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(12*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(12*97.3))}" rot="204 12 156" scale="1.15 1 0.85" radius="157" rings="5" slices="7" material="meteor" tint="1"><twist angle="56" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="50557"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(13*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(13*97.3))}" rot="251 43 229" scale="1.15 1 0.85" radius="315" rings="6" slices="8" material="meteor" tint="1"><twist angle="29" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="56395"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(14*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(14*97.3))}" rot="298 74 302" scale="1.15 1 0.85" radius="253" rings="5" slices="9" material="meteor" tint="1"><twist angle="42" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="62467"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(15*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(15*97.3))}" rot="345 105 15" scale="1.15 1 0.85" radius="184" rings="6" slices="7" material="meteor" tint="1"><twist angle="55" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="68765"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(16*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(16*97.3))}" rot="32 136 88" scale="1.15 1 0.85" radius="367" rings="5" slices="8" material="meteor" tint="1"><twist angle="28" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="75284"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(17*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(17*97.3))}" rot="79 167 161" scale="1.15 1 0.85" radius="294" rings="6" slices="9" material="meteor" tint="1"><twist angle="41" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="82017"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(18*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(18*97.3))}" rot="126 18 234" scale="1.15 1 0.85" radius="213" rings="5" slices="7" material="meteor" tint="1"><twist angle="54" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="88960"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(19*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(19*97.3))}" rot="173 49 307" scale="1.15 1 0.85" radius="425" rings="6" slices="8" material="meteor" tint="1"><twist angle="27" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="96106"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(20*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(20*97.3))}" rot="220 80 20" scale="1.15 1 0.85" radius="340" rings="5" slices="9" material="meteor" tint="1"><twist angle="40" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="103452"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(21*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(21*97.3))}" rot="267 111 93" scale="1.15 1 0.85" radius="245" rings="6" slices="7" material="meteor" tint="1"><twist angle="53" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-3200"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(22*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(22*97.3))}" rot="314 142 166" scale="1.15 1 0.85" radius="180" rings="5" slices="8" material="meteor" tint="1"><twist angle="26" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-4700"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(23*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(23*97.3))}" rot="1 173 239" scale="1.15 1 0.85" radius="141" rings="6" slices="9" material="meteor" tint="1"><twist angle="39" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-7443"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(24*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(24*97.3))}" rot="48 24 312" scale="1.15 1 0.85" radius="101" rings="5" slices="7" material="meteor" tint="1"><twist angle="52" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-10994"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(25*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(25*97.3))}" rot="95 55 25" scale="1.15 1 0.85" radius="202" rings="6" slices="8" material="meteor" tint="1"><twist angle="25" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-15200"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(26*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(26*97.3))}" rot="142 86 98" scale="1.15 1 0.85" radius="164" rings="5" slices="9" material="meteor" tint="1"><twist angle="38" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-19971"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(27*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(27*97.3))}" rot="189 117 171" scale="1.15 1 0.85" radius="120" rings="6" slices="7" material="meteor" tint="1"><twist angle="51" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-25245"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(28*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(28*97.3))}" rot="236 148 244" scale="1.15 1 0.85" radius="243" rings="5" slices="8" material="meteor" tint="1"><twist angle="24" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+  <group><let name="S" value="-30980"/>
+    <sphere pos="{(300 + abs(S)*0.06)*sin(rad(29*137.5))} {RB*sin(S/RB)} {RB*(cos(S/RB) - 1) - S*SINK + (120 + abs(S)*0.02)*cos(rad(29*97.3))}" rot="283 179 317" scale="1.15 1 0.85" radius="198" rings="6" slices="9" material="meteor" tint="1"><twist angle="37" axis="z"/><skew amount="0.2" axis="x"/></sphere></group>
+</prefab>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A two-axle coach bogie under the car: side frames, four wheels standing on the rails and the bolster
+     with its springs carrying the car floor. Footprint 290 x 230 cm; from the rail top (z=0) up to the car
+     floor's underside at 122 cm. Origin on the rail top between the rails, at the bogie centre; the axles
+     run along local Y, the bogie travels along local X (front +X). Materials from the scene: iron, rail. -->
+<prefab up="z" front="+x">
+  <let name="WR" value="46" />     <!-- wheel radius -->
+  <let name="G2" value="71.75" />  <!-- wheel tread centre from the track centre -->
+  <let name="AX" value="125" />    <!-- half wheelbase -->
+  <let name="TOP" value="122" />    <!-- car floor underside above the rail top -->
+  <cylinder pos="{-AX} {G2} {WR}" radius="{WR}" height="14" material="iron" />
+  <cylinder pos="{AX} {G2} {WR}" radius="{WR}" height="14" material="iron" />
+  <cylinder pos="{-AX} {-G2} {WR}" radius="{WR}" height="14" material="iron" />
+  <cylinder pos="{AX} {-G2} {WR}" radius="{WR}" height="14" material="iron" />
+  <cylinder pos="{-AX} 0 {WR}" radius="8" height="{2*G2 + 30}" material="rail" />
+  <cylinder pos="{AX} 0 {WR}" radius="8" height="{2*G2 + 30}" material="rail" />
+  <box pos="0 {G2 + 24} {WR + 4}" size="{2*AX + 40} 14 40" material="iron" />
+  <box pos="0 {-G2 - 24} {WR + 4}" size="{2*AX + 40} 14 40" material="iron" />
+  <box pos="0 0 {WR + 18}" size="60 230 24" material="iron" />
+  <cylinder pos="0 60 {(WR + 30 + TOP)/2}" rot="90 0 0" radius="14" height="{TOP - WR - 30}" material="rail" />
+  <cylinder pos="0 -60 {(WR + 30 + TOP)/2}" rot="90 0 0" radius="14" height="{TOP - WR - 30}" material="rail" />
+</prefab>

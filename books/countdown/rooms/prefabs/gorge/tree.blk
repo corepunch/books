@@ -1,0 +1,12 @@
+<!-- A broadleaf tree of the rim woods (oak or maple), about 900 cm tall: a trunk, two limbs and a
+     crown of three leaf masses. Footprint about 560 across the crown, 50 at the trunk. Not directional.
+     Baseline: the trunk stands on the ground at z=0. Origin: the trunk's foot. Materials: bark, leaf,
+     leaf_light from the scene. -->
+<prefab up="z" front="+x">
+  <cylinder pos="0 0 230" rot="90 0 0" radius="24" height="460" material="bark"><taper amount="-0.25" /></cylinder>
+  <cylinder pos="60 20 470" rot="90 -28 10" radius="11" height="200" material="bark" />
+  <cylinder pos="-50 -10 480" rot="90 30 -10" radius="10" height="180" material="bark" />
+  <sphere pos="0 0 640" radius="250" rings="7" slices="9" scale="1 1 0.85" material="leaf"><noise strength="0.35" seed="11" /></sphere>
+  <sphere pos="140 60 560" radius="170" rings="6" slices="8" material="leaf_light"><noise strength="0.25" seed="12" /></sphere>
+  <sphere pos="-150 -40 580" radius="160" rings="6" slices="8" material="leaf"><noise strength="0.25" seed="13" /></sphere>
+</prefab>

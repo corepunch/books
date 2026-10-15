@@ -1,0 +1,12 @@
+<!-- A 11 m aluminium flagpole on a concrete footing, with a gilt ball on top and a flag hanging from its
+     halyard clips on the +X side, lifted by a light breeze. Baseline z=0; origin at the foot of the pole.
+     The flag (tint="1") takes the instance colour. Materials: concrete_light, flag_pole, gold. -->
+<prefab up="z" front="+x">
+  <let name="H" value="1100" />
+  <box pos="0 0 15" size="70 70 30" material="concrete_light" />
+  <cylinder pos="0 0 {30 + H/2}" rot="90 0 0" radius="6" height="{H}" material="flag_pole"><taper amount="-0.3" /></cylinder>
+  <sphere pos="0 0 {30 + H + 8}" radius="9" material="gold" />
+  <box pos="4 0 {H - 30}" size="4 3 6" material="flag_pole" />
+  <box pos="4 0 {H - 140}" size="4 3 6" material="flag_pole" />
+  <box pos="{6 + 90} 0 {H - 85}" rot="0 8 0" size="180 1.5 120" color="0.80 0.80 0.80" tint="1" />
+</prefab>

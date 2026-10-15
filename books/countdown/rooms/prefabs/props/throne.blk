@@ -1,14 +1,35 @@
-<!-- Brainiac's command chair: a high-backed metal throne with control slots in its arm ends, cables
-     running into the floor; the sitter faces local -Y. Origin on the floor under the seat. -->
-<prefab>
-  <box pos="0 0 22" size="90 80 44" material="ship_dark" />
-  <box pos="0 0 48" size="80 70 8" material="ship_rib" />
-  <box pos="0 38 140" size="90 14 190" material="ship_dark" />
-  <sphere pos="0 40 230" radius="50" scale="1 0.3 0.6" material="brain_net" />
-  <box pos="-50 -10 74" size="14 70 10" material="ship_rib" />
-  <box pos="50 -10 74" size="14 70 10" material="ship_rib" />
-  <box pos="-50 -44 78" size="16 10 8" color="0.40 1.0 0.80" unlit="1" />
-  <box pos="50 -44 78" size="16 10 8" color="0.40 1.0 0.80" unlit="1" />
-  <cylinder pos="-30 50 10" rot="0 0 0" radius="5" height="80" material="gunmetal" />
-  <cylinder pos="30 50 10" rot="0 0 0" radius="5" height="80" material="gunmetal" />
+<!-- Brainiac's command throne: a swivel chair on a fluted pedestal, 110 cm wide and 250 cm to the top of
+     its crest. A tall ribbed back ends in a purple Brain-Net halo; the arms end in glowing control slots
+     where the sitter's fingers rest; cables run from the back down into the floor. The sitter faces
+     local -Y. Origin on the floor under the seat centre, where a seated 200 cm Brainiac (Throne pose)
+     also stands his origin. up z, front -y. Attach: seat (seat top centre). -->
+<prefab up="z" front="-y">
+  <let name="SEAT" value="41" />
+  <material id="th_frame" color="0.20 0.24 0.24" shininess="60" />
+  <material id="th_trim" color="0.46 0.54 0.52" shininess="80" />
+  <material id="th_net" color="0.58 0.30 0.74" shininess="90" />
+  <attach name="seat" pos="0 -8 {SEAT}" />
+  <!-- Pedestal and swivel ring. -->
+  <cylinder pos="0 0 3" rot="90 0 0" radius="32" height="6" sides="8" material="th_trim" />
+  <cone pos="0 0 {6 + (SEAT - 14)/2}" rot="90 0 0" radius="26" radiusTop="18" height="{SEAT - 14}" sides="8" material="th_frame" />
+  <cylinder pos="0 0 {SEAT - 9}" rot="90 0 0" radius="26" height="6" material="th_trim" />
+  <!-- Seat and back. -->
+  <box pos="0 -6 {SEAT - 4}" size="62 58 8" material="th_frame" />
+  <box pos="0 26 {SEAT + 76}" size="70 16 160" material="th_frame" />
+  <box pos="0 17 {SEAT + 70}" size="50 2 130" material="th_trim" />
+  <box pos="-38 26 {SEAT + 76}" size="6 20 170" material="th_trim" />
+  <box pos="38 26 {SEAT + 76}" size="6 20 170" material="th_trim" />
+  <!-- The Brain-Net crest. -->
+  <sphere pos="0 28 {SEAT + 172}" radius="52" scale="1 0.32 0.62" material="th_net" />
+  <torus pos="0 28 {SEAT + 172}" rot="0 0 0" majorRadius="54" minorRadius="3" scale="1 1 0.64" material="th_trim" />
+  <!-- Arms on posts, ending in the control slots. -->
+  <box pos="-27 -16 {SEAT + 12}" size="10 8 24" material="th_frame" />
+  <box pos="27 -16 {SEAT + 12}" size="10 8 24" material="th_frame" />
+  <box pos="-27 -20 {SEAT + 27}" size="12 60 6" material="th_trim" />
+  <box pos="27 -20 {SEAT + 27}" size="12 60 6" material="th_trim" />
+  <box pos="-27 -40 {SEAT + 30.5}" size="10 14 1" color="0.40 1.0 0.80" unlit="1" castShadow="0" />
+  <box pos="27 -40 {SEAT + 30.5}" size="10 14 1" color="0.40 1.0 0.80" unlit="1" castShadow="0" />
+  <!-- Cables from the back into the floor. -->
+  <cylinder pos="-22 40 {SEAT/2 + 20}" rot="90 0 0" radius="3.5" height="{SEAT + 40}" material="th_frame" />
+  <cylinder pos="22 40 {SEAT/2 + 20}" rot="90 0 0" radius="3.5" height="{SEAT + 40}" material="th_frame" />
 </prefab>

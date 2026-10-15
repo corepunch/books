@@ -1,0 +1,7 @@
+<!-- A grey metal waste-paper bin, 30 across and 36 tall, with crumpled printout in it. Origin on the floor at
+     its centre. Materials: grille_metal, paper. -->
+<prefab up="z">
+  <cylinder pos="0 0 18" rot="90 0 0" radius="15" height="36" tube="0.8" material="grille_metal" />
+  <cylinder pos="0 0 0.5" rot="90 0 0" radius="14.2" height="1" material="grille_metal" />
+  <sphere pos="2 1 30" radius="9" material="paper"><noise strength="0.02" seed="4" /></sphere>
+</prefab>

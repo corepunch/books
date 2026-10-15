@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- One 184 cm bay of the overhead luggage rack: three cast brackets screwed to the side wall, each an arm
+     with a diagonal brace, carrying four aluminium tubes and a raised front rail. Footprint 184 x 35 cm,
+     from 11 cm below to 10 cm above the shelf. Bays butt end to end along the wall.
+     Origin on the wall face at the top of the bracket arms, mid-length. Front -Y: the rack projects from
+     the wall (y=0) into the car along local -Y. Attach: shelf is the top of the tubes at mid-depth.
+     Material from the scene: rack_metal. -->
+<prefab up="z" front="-y">
+  <let name="RL" value="184" />  <!-- bay length -->
+  <let name="RD" value="34" />   <!-- arm reach -->
+  <let name="TR" value="1.2" />  <!-- tube radius -->
+  <let name="BX" value="RL/2 - 12" />
+  <let name="BRY" value="24" />  <!-- brace reaches this far along the arm -->
+  <let name="BRZ" value="10" />  <!-- brace foot below the arm -->
+  <attach name="shelf" pos="0 {-RD/2 - 1} {1.5 + 2*TR}" />
+  <group name="bracket_w" pos="{-BX} 0 0">
+    <box pos="0 -1 -4" size="4 2 14" material="rack_metal" />
+    <box pos="0 {-RD/2 - 1} 0" size="3 {RD - 2} 3" material="rack_metal" />
+    <box pos="0 {-BRY/2 - 1} {-BRZ/2 - 0.5}" rot="{-deg(atan2(BRZ, BRY))} 0 0" size="2.4 {hypot(BRY, BRZ)} 2.4" material="rack_metal" />
+    <box pos="0 {-RD + 1} 4" size="2 2 6" material="rack_metal" />
+  </group>
+  <group name="bracket_m">
+    <box pos="0 -1 -4" size="4 2 14" material="rack_metal" />
+    <box pos="0 {-RD/2 - 1} 0" size="3 {RD - 2} 3" material="rack_metal" />
+    <box pos="0 {-BRY/2 - 1} {-BRZ/2 - 0.5}" rot="{-deg(atan2(BRZ, BRY))} 0 0" size="2.4 {hypot(BRY, BRZ)} 2.4" material="rack_metal" />
+    <box pos="0 {-RD + 1} 4" size="2 2 6" material="rack_metal" />
+  </group>
+  <group name="bracket_e" pos="{BX} 0 0">
+    <box pos="0 -1 -4" size="4 2 14" material="rack_metal" />
+    <box pos="0 {-RD/2 - 1} 0" size="3 {RD - 2} 3" material="rack_metal" />
+    <box pos="0 {-BRY/2 - 1} {-BRZ/2 - 0.5}" rot="{-deg(atan2(BRZ, BRY))} 0 0" size="2.4 {hypot(BRY, BRZ)} 2.4" material="rack_metal" />
+    <box pos="0 {-RD + 1} 4" size="2 2 6" material="rack_metal" />
+  </group>
+  <!-- Tubes lie on the arms; the front rail rides on the arm-end posts. -->
+  <cylinder pos="0 -6 {1.5 + TR}" rot="0 0 90" radius="{TR}" height="{RL}" material="rack_metal" />
+  <cylinder pos="0 -14 {1.5 + TR}" rot="0 0 90" radius="{TR}" height="{RL}" material="rack_metal" />
+  <cylinder pos="0 -22 {1.5 + TR}" rot="0 0 90" radius="{TR}" height="{RL}" material="rack_metal" />
+  <cylinder pos="0 -30 {1.5 + TR}" rot="0 0 90" radius="{TR}" height="{RL}" material="rack_metal" />
+  <cylinder pos="0 {-RD + 1} {7 + TR - 0.5}" rot="0 0 90" radius="{TR}" height="{RL}" material="rack_metal" />
+</prefab>

@@ -1,0 +1,17 @@
+<!-- An aluminium equipment flight case for the WGBS crew's camera gear: 62 x 42 x 38.6 (the seat height of the
+     book's shared Sit pose, so a crewman can sit on it), with dark edge rails, two latches and side handles.
+     Baseline z=0; origin on the floor under its middle; latches on the front (-Y). Attach "top" is the lid
+     centre. Materials: case_alu, dark_metal. -->
+<prefab up="z" front="-y">
+  <let name="W" value="62" />
+  <let name="D" value="42" />
+  <let name="H" value="38.6" />
+  <attach name="top" pos="0 0 {H}" />
+  <box pos="0 0 {H/2}" size="{W} {D} {H}" material="case_alu" />
+  <box pos="0 0 {H - 7}" size="{W + 1} {D + 1} 2" material="dark_metal" />
+  <box pos="0 0 3" size="{W + 1} {D + 1} 2" material="dark_metal" />
+  <box pos="-16 {-D/2 - 1.3} {H - 7}" size="6 1 8" material="dark_metal" />
+  <box pos="16 {-D/2 - 1.3} {H - 7}" size="6 1 8" material="dark_metal" />
+  <box pos="{-W/2 - 1.5} 0 {H - 14}" size="2 14 2" material="dark_metal" />
+  <box pos="{W/2 + 1.5} 0 {H - 14}" size="2 14 2" material="dark_metal" />
+</prefab>

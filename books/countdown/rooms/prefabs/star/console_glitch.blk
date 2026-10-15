@@ -1,0 +1,7 @@
+<!-- The red failure picture that replaces both CRT pictures of props/console after the gas: two unlit red
+     panels the size of the console glass, their back faces on the glass fronts. Place it with exactly the
+     same transform as the console it covers. Footprint 150 x 1 cm; origin as props/console (front -Y). -->
+<prefab up="z" front="-y">
+  <box pos="-58 40.1 122" size="34 1 28" material="glitch_red" unlit="1" castShadow="0" />
+  <box pos="58 40.1 122" size="34 1 28" material="glitch_red" unlit="1" castShadow="0" />
+</prefab>

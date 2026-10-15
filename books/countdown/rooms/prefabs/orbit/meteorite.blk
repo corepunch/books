@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- One of Brainiac's seeded meteorites: a craggy, fist-shaped lump of brown iron-stone, a faceted core
+     twisted and sheared out of round, with three fused knobs and two shallow crater rims. Nominal
+     footprint 250 x 230 x 200 cm round its centre (origin), no baseline: it tumbles in free fall. No
+     natural front; instances vary yaw/pitch and scale. Its purple Cybernetic-Bacteria capsule is sealed
+     inside and only shows through X-ray (orbit/meteorite_xray). Craggy by taper/skew/twist only:
+     Scener's <noise> displaces split vertices apart and tears faceted meshes.
+     Materials from the scene: meteor, meteor_dark. -->
+<prefab up="z">
+  <let name="R" value="100"/>
+  <sphere radius="{R}" rings="6" slices="8" scale="1.15 1 0.9" material="meteor">
+    <taper amount="-0.22" axis="z"/>
+    <skew amount="0.18" axis="z"/>
+    <twist angle="34" axis="z"/>
+  </sphere>
+  <sphere pos="{R*0.62} {-R*0.22} {R*0.34}" rot="20 35 0" radius="{R*0.52}" rings="4" slices="6" material="meteor">
+    <taper amount="0.3" axis="x"/>
+  </sphere>
+  <sphere pos="{-R*0.6} {R*0.34} {-R*0.4}" rot="-30 0 50" radius="{R*0.46}" rings="4" slices="5" material="meteor">
+    <skew amount="0.3" axis="y"/>
+  </sphere>
+  <sphere pos="{R*0.05} {R*0.62} {R*0.48}" rot="0 50 20" radius="{R*0.34}" rings="4" slices="5" material="meteor"/>
+  <!-- Crater rims: low dark rings sunk into the surface. -->
+  <torus pos="{-R*0.18} {-R*0.86} {R*0.1}" rot="12 0 8" majorRadius="{R*0.24}" minorRadius="{R*0.03}" majorSegments="12" minorSegments="6" material="meteor_dark"/>
+  <torus pos="{-R*0.3} {-R*0.1} {R*0.74}" rot="84 0 30" majorRadius="{R*0.18}" minorRadius="{R*0.035}" majorSegments="10" minorSegments="6" material="meteor_dark"/>
+</prefab>

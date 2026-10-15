@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Clark Kent's clothes, left behind on his seat: the grey-blue jacket thrown down with one sleeve hanging
+     over the cushion's front edge, the white shirt crumpled on it, the red tie and the dark-rimmed glasses
+     on top. Footprint 46 x 50 cm (the sleeve hangs 30 cm down at the -Y edge), 9 cm high.
+     Origin on the seat cushion's top at the middle of its front edge; the pile lies on +Y (toward the
+     backrest) and the sleeve hangs over local -Y (front -Y, the seat's front). Colours match clark.blk. -->
+<prefab up="z" front="-y">
+  <rounded-rect size="44 34" radius="6" pos="0 19 1.5" color="0.36 0.40 0.48">
+    <extrude amount="3" />
+    <bevel amount="1" bevelSegments="2" />
+  </rounded-rect>
+  <capsule pos="-15 -5 -10" rot="80 0 0" radius="4.2" height="20" color="0.36 0.40 0.48" />
+  <box pos="4 20 4.5" rot="0 0 18" size="26 22 3" color="0.92 0.92 0.88" />
+  <box pos="-6 28 4.6" rot="0 0 -10" size="10 12 2.6" color="0.92 0.92 0.88" />
+  <box pos="10 17 6.4" rot="0 0 -35" size="4 30 0.8" color="0.70 0.12 0.12" />
+  <group pos="-8 14 6.6" rot="0 0 12">
+    <torus pos="-3.4 0 0.4" rot="90 0 0" majorRadius="2.4" minorRadius="0.4" color="0.08 0.08 0.09" />
+    <torus pos="3.4 0 0.4" rot="90 0 0" majorRadius="2.4" minorRadius="0.4" color="0.08 0.08 0.09" />
+    <box pos="0 0 0.4" size="2.2 0.6 0.6" color="0.08 0.08 0.09" />
+  </group>
+</prefab>

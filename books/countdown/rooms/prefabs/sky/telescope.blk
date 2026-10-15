@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- An amateur refractor on a wooden tripod, set out on the lawn for the Star Watch: three splayed legs, a
+     head plate, an altazimuth fork, the tube raised 30 degrees with a finder scope and the eyepiece at the
+     back. Footprint about 110 cm across the legs; baseline z=0 on the grass; the head plate tops out at 128 cm,
+     the eyepiece is at about 116 cm. Origin on the ground under the head. Front -Y: the tube looks toward
+     local -Y and the observer stands at +Y behind the eyepiece; rot="0 0 180" looks toward +Y.
+     Materials from the scene: tripod_wood, scope_tube, bench_iron, brass. -->
+<prefab up="z" front="-y">
+  <let name="HEAD" value="122" />   <!-- head plate bottom -->
+  <let name="SPREAD" value="52" />  <!-- foot distance from the axis -->
+  <let name="EL" value="30" />      <!-- tube elevation -->
+  <let name="TL" value="124" />     <!-- tube length -->
+  <let name="TZ" value="HEAD + 6 + 16" /> <!-- tube axis height at the fork -->
+  <let name="LEG" value="sqrt(SPREAD*SPREAD + HEAD*HEAD)" />
+  <let name="TILT" value="deg(atan(SPREAD/HEAD))" />
+  <!-- Legs: each a vertical rod leaned in about local Y so its top meets the head. -->
+  <group rot="0 0 90"><cylinder pos="{SPREAD/2} 0 {HEAD/2 + 1}" rot="90 {-TILT} 0" radius="2.6" height="{LEG}" sides="8" material="tripod_wood" /></group>
+  <group rot="0 0 210"><cylinder pos="{SPREAD/2} 0 {HEAD/2 + 1}" rot="90 {-TILT} 0" radius="2.6" height="{LEG}" sides="8" material="tripod_wood" /></group>
+  <group rot="0 0 330"><cylinder pos="{SPREAD/2} 0 {HEAD/2 + 1}" rot="90 {-TILT} 0" radius="2.6" height="{LEG}" sides="8" material="tripod_wood" /></group>
+  <cylinder pos="0 0 {HEAD + 3}" rot="90 0 0" radius="11" height="6" material="bench_iron" />
+  <!-- Fork mount and the tube, pivoting on the fork arms. -->
+  <box pos="0 0 {HEAD + 6 + 3}" size="20 10 6" material="bench_iron" />
+  <box pos="-11 0 {HEAD + 6 + 11}" size="3 8 22" material="bench_iron" />
+  <box pos="11 0 {HEAD + 6 + 11}" size="3 8 22" material="bench_iron" />
+  <group pos="0 0 {TZ}" rot="{-EL} 0 0">
+    <cylinder pos="0 -14 0" radius="8.5" height="{TL}" material="scope_tube"><taper amount="-0.08" /></cylinder>
+    <cylinder pos="0 {-14 - TL/2 - 6} 0" radius="10" height="14" material="scope_tube" />
+    <torus pos="0 {-14 - TL/2 + 1} 0" majorRadius="9" minorRadius="1.5" material="brass" />
+    <cylinder pos="0 {-14 + TL/2 + 5} 0" radius="3.5" height="10" material="brass" />
+    <cylinder pos="0 {-14 + TL/2 + 12} 0" radius="2.4" height="6" material="bench_iron" />
+    <cylinder pos="0 -30 12.5" radius="2.2" height="34" material="scope_tube" />
+    <box pos="0 -20 9.5" size="2 4 3" material="bench_iron" />
+    <box pos="0 -42 9.5" size="2 4 3" material="bench_iron" />
+  </group>
+</prefab>

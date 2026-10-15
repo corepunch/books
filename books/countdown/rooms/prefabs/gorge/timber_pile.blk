@@ -1,0 +1,32 @@
+<!-- The old wooden bridge's stringers, stacked by the railway when the steel trestle replaced it:
+     eleven 1500 cm timbers in three courses on old sleepers, each course on cross battens so the
+     stack can dry. Footprint about 1550 x 260; the timbers lie along local X. Not directional.
+     Baseline: the bearer sleepers stand on the ground at z=0. Origin: the middle of the stack on the
+     ground. Uses props/timber; materials from the scene: sleeper, timber, rust. -->
+<prefab up="z" front="+x">
+  <attach name="top" pos="0 0 141" />
+  <!-- Bearers: three old sleepers across the stack. -->
+  <box pos="-600 0 8" size="24 260 16" rot="0 0 2" material="sleeper" />
+  <box pos="0 0 8" size="24 260 16" rot="0 0 -1" material="sleeper" />
+  <box pos="610 0 8" size="24 260 16" rot="0 0 1.5" material="sleeper" />
+  <!-- First course: five timbers. -->
+  <prefab source="props/timber" pos="12 -96 16" />
+  <prefab source="props/timber" pos="-18 -48 16" rot="0 0 0.3" />
+  <prefab source="props/timber" pos="6 0 16" />
+  <prefab source="props/timber" pos="24 48 16" rot="0 0 -0.3" />
+  <prefab source="props/timber" pos="-10 96 16" />
+  <!-- Battens and the second course: four timbers. -->
+  <box pos="-620 0 56" size="10 250 10" material="timber_dark" />
+  <box pos="-20 0 56" size="10 250 10" material="timber_dark" />
+  <box pos="580 0 56" size="10 250 10" material="timber_dark" />
+  <prefab source="props/timber" pos="-22 -72 61" rot="0 0 0.2" />
+  <prefab source="props/timber" pos="8 -24 61" />
+  <prefab source="props/timber" pos="-4 24 61" rot="0 0 -0.2" />
+  <prefab source="props/timber" pos="30 72 61" />
+  <!-- Battens and the top course: two timbers, one pulled half off by the last crew. -->
+  <box pos="-600 0 101" size="10 200 10" material="timber_dark" />
+  <box pos="0 0 101" size="10 200 10" material="timber_dark" />
+  <box pos="560 0 101" size="10 200 10" material="timber_dark" />
+  <prefab source="props/timber" pos="16 -30 106" />
+  <prefab source="props/timber" pos="-60 34 106" rot="0 0 0.8" />
+</prefab>

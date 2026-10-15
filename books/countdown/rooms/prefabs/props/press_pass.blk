@@ -1,5 +1,5 @@
 <!-- Clark Kent's WGBS press pass on its clip: a 9 x 13 cm card. Origin at its centre; the face looks local -Y. -->
-<prefab>
+<prefab up="z" front="-y">
   <box size="9 0.4 13" color="0.94 0.94 0.92" />
   <box pos="0 -0.3 4.6" size="9 0.2 3" color="0.16 0.28 0.62" />
   <box pos="-2 -0.3 -0.6" size="3.6 0.2 4.4" color="0.70 0.62 0.52" />

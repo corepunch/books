@@ -1,0 +1,27 @@
+<!-- The drone bank: a 420 x 210 cm wall rack where Brainiac's drones charge. Three shelves of seven
+     cradles, each with a glowing charge pad; six drones sit docked, the rest are out swarming. Its back
+     plate (local +Y, y = 0) hangs flat on a wall; front -y. Origin at the bottom centre of the back
+     plate's rear face, so the scene sets it at mounting height on the wall face.
+     Scene materials: sh_rib, sh_dark. -->
+<prefab up="z" front="-y">
+  <let name="W" value="420" />
+  <let name="SH" value="5" />
+  <box pos="0 -4 105" size="{W} 8 210" material="sh_rib" />
+  <!-- Shelves at 30, 100 and 170 with their cradles and pads. -->
+  <box pos="0 -25 30" size="{W} 34 {SH}" material="sh_dark" />
+  <box pos="0 -25 100" size="{W} 34 {SH}" material="sh_dark" />
+  <box pos="0 -25 170" size="{W} 34 {SH}" material="sh_dark" />
+  <box pos="-180 -26 {30 + SH / 2 + 1.5}" size="18 14 3" material="sh_rib"><array count="7" translation="60 0 0" /></box>
+  <box pos="-180 -26 {100 + SH / 2 + 1.5}" size="18 14 3" material="sh_rib"><array count="7" translation="60 0 0" /></box>
+  <box pos="-180 -26 {170 + SH / 2 + 1.5}" size="18 14 3" material="sh_rib"><array count="7" translation="60 0 0" /></box>
+  <box pos="-180 -26 {30 + SH / 2 + 3.3}" size="10 8 0.6" color="0.35 0.95 1.0" unlit="1" castShadow="0"><array count="7" translation="60 0 0" /></box>
+  <box pos="-180 -26 {100 + SH / 2 + 3.3}" size="10 8 0.6" color="0.35 0.95 1.0" unlit="1" castShadow="0"><array count="7" translation="60 0 0" /></box>
+  <box pos="-180 -26 {170 + SH / 2 + 3.3}" size="10 8 0.6" color="0.35 0.95 1.0" unlit="1" castShadow="0"><array count="7" translation="60 0 0" /></box>
+  <!-- Docked drones rest on their cradles (cradle top at shelf + 5.5; a drone's jets reach 3.2 below its centre). -->
+  <prefab source="props/drone" pos="-180 -26 {30 + SH / 2 + 3 + 3.2}" rot="0 0 4" />
+  <prefab source="props/drone" pos="-60 -26 {30 + SH / 2 + 3 + 3.2}" rot="0 0 -3" />
+  <prefab source="props/drone" pos="120 -26 {30 + SH / 2 + 3 + 3.2}" rot="0 0 2" />
+  <prefab source="props/drone" pos="0 -26 {100 + SH / 2 + 3 + 3.2}" rot="0 0 -5" />
+  <prefab source="props/drone" pos="-120 -26 {170 + SH / 2 + 3 + 3.2}" rot="0 0 3" />
+  <prefab source="props/drone" pos="180 -26 {170 + SH / 2 + 3 + 3.2}" rot="0 0 -2" />
+</prefab>

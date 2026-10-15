@@ -1,0 +1,36 @@
+<!-- The kryptonite vault: a lead-lined chamber 360 x 360 x 630 cm that fits a room corner. Its front
+     (local -Y) has a 160 x 260 doorway in a heavy frame, closed by the separate ship/vault_door. Inside,
+     on a lead block, a cluster of green kryptonite crystals and their green point light, which the lead
+     walls and door hold in until the door is torn away. Origin on the floor under the chamber centre.
+     Attach: door (floor centre of the doorway), crystals (block top). Scene materials: sh_lead,
+     sh_lead_dark, sh_dark, gunmetal. -->
+<prefab up="z" front="-y">
+  <let name="S" value="360" />
+  <let name="H" value="600" />
+  <let name="T" value="30" />
+  <let name="DW" value="160" />
+  <let name="DH" value="260" />
+  <attach name="door" pos="0 {-S / 2 + T / 2} 0" />
+  <attach name="crystals" pos="0 40 40" />
+  <!-- Walls, roof and the doorway frame. -->
+  <box pos="0 {S / 2 - T / 2} {H / 2}" size="{S} {T} {H}" material="sh_lead_dark" />
+  <box pos="{-S / 2 + T / 2} 0 {H / 2}" size="{T} {S - 2 * T} {H}" material="sh_lead_dark" />
+  <box pos="{S / 2 - T / 2} 0 {H / 2}" size="{T} {S - 2 * T} {H}" material="sh_lead_dark" />
+  <box pos="0 0 {H + T / 2}" size="{S} {S} {T}" material="sh_lead" />
+  <box pos="{-(S + DW) / 4} {-S / 2 + T / 2} {H / 2}" size="{(S - DW) / 2} {T} {H}" material="sh_lead" />
+  <box pos="{(S + DW) / 4} {-S / 2 + T / 2} {H / 2}" size="{(S - DW) / 2} {T} {H}" material="sh_lead" />
+  <box pos="0 {-S / 2 + T / 2} {(H + DH) / 2}" size="{DW} {T} {H - DH}" material="sh_lead" />
+  <box pos="{-DW / 2 - 12} {-S / 2 - 10} {(DH + 24) / 2}" size="24 20 {DH + 24}" material="sh_dark" />
+  <box pos="{DW / 2 + 12} {-S / 2 - 10} {(DH + 24) / 2}" size="24 20 {DH + 24}" material="sh_dark" />
+  <box pos="0 {-S / 2 - 10} {DH + 12}" size="{DW} 20 24" material="sh_dark" />
+  <!-- Riveted lead bands above the door and a red warning lamp. -->
+  <box pos="0 {-S / 2 - 2} 400" size="{S - 20} 4 12" material="gunmetal"><array count="3" translation="0 0 70" /></box>
+  <box pos="0 {-S / 2 - 23} {DH + 34}" size="30 6 12" color="1.0 0.15 0.10" unlit="1" castShadow="0" />
+  <!-- Inside: the crystal block, the kryptonite and its light. -->
+  <box pos="0 40 20" size="140 140 40" material="sh_lead_dark" />
+  <prism pos="0 40 85" rot="90 0 0" radius="18" height="90" sides="6" color="0.30 1.0 0.40" unlit="1" castShadow="0" />
+  <prism pos="-30 30 70" rot="90 -24 0" radius="12" height="70" sides="6" color="0.36 1.0 0.46" unlit="1" castShadow="0" />
+  <prism pos="28 52 66" rot="90 20 20" radius="11" height="60" sides="6" color="0.26 0.92 0.36" unlit="1" castShadow="0" />
+  <prism pos="10 10 58" rot="70 0 -30" radius="9" height="44" sides="6" color="0.40 1.0 0.50" unlit="1" castShadow="0" />
+  <light pos="0 -20 150" color="0.40 1.0 0.40" intensity="1.6" radius="700" castShadows="1" />
+</prefab>

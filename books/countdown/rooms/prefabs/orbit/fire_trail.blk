@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- A meteorite burning up in the atmosphere: a white-hot head at the origin and a fiery trail that
+     streams behind it along local +Z, orange near the head and deep red toward its 1800 cm tail. The
+     head moves toward local -Z (front -z). Everything is self-lit emitter geometry, so it casts no
+     shadow and needs no support. -->
+<prefab up="z" front="-z">
+  <let name="HEAD" value="46"/>
+  <let name="HOT" value="900"/>
+  <let name="TAIL" value="1800"/>
+  <sphere radius="{HEAD}" rings="12" slices="16" color="1.0 0.96 0.80" unlit="1" castShadow="0"/>
+  <cone pos="0 0 {HOT/2}" rot="90 0 0" radius="{HEAD*0.9}" height="{HOT}" sides="16" color="1.0 0.62 0.18" unlit="1" castShadow="0"/>
+  <cone pos="0 0 {HEAD*0.5 + TAIL/2}" rot="90 0 0" radius="{HEAD*0.62}" height="{TAIL}" sides="16" color="0.78 0.16 0.06" unlit="1" castShadow="0"/>
+</prefab>

@@ -1,0 +1,14 @@
+<!-- Trophy: the dented steel head of a defeated giant robot, 90 wide, its dead red eyes and one bent
+     antenna. Origin on the floor (or pedestal top) under its middle. Front (the face) is -Y.
+     Self-contained materials. -->
+<prefab up="z" front="-y">
+  <material id="trophy_steel" color="0.62 0.60 0.56" shininess="60" />
+  <material id="trophy_dark" color="0.20 0.20 0.22" shininess="40" />
+  <box pos="0 0 6" size="70 60 12" material="trophy_dark" />
+  <sphere pos="0 0 48" radius="44" scale="1 0.9 0.85" material="trophy_steel" />
+  <box pos="0 -36 44" size="56 8 16" material="trophy_dark" />
+  <sphere pos="-15 -37 46" radius="6" color="0.70 0.10 0.08" shininess="30" />
+  <sphere pos="15 -37 46" radius="6" color="0.70 0.10 0.08" shininess="30" />
+  <cylinder pos="20.5 0 100" rot="90 25 0" radius="2.5" height="40" material="trophy_dark" />
+  <sphere pos="29 0 118" radius="5" material="trophy_steel" />
+</prefab>

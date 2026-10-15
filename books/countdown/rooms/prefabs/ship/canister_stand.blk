@@ -1,0 +1,12 @@
+<!-- The canister stand by the Red Solar Generator: a hexagonal foot, a 60 cm column and a cradle plate
+     with three prongs that hold a canister's foot ring. Origin on the floor under its centre; round.
+     Attach: top (cradle plate top, z 70). Scene materials: sh_dark, sh_trim. -->
+<prefab up="z" front="-y">
+  <attach name="top" pos="0 0 70" />
+  <cylinder pos="0 0 2.5" rot="90 0 0" radius="30" height="5" sides="6" material="sh_dark" />
+  <cylinder pos="0 0 35" rot="90 0 0" radius="8" height="60" material="sh_trim" />
+  <cylinder pos="0 0 67.5" rot="90 0 0" radius="22" height="5" material="sh_dark" />
+  <box pos="0 17 76" size="4 4 12" material="sh_trim" />
+  <box pos="14.7 -8.5 76" rot="0 0 -60" size="4 4 12" material="sh_trim" />
+  <box pos="-14.7 -8.5 76" rot="0 0 60" size="4 4 12" material="sh_trim" />
+</prefab>

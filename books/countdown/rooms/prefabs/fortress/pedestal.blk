@@ -1,0 +1,12 @@
+<!-- A hexagonal crystal pedestal for one of Superman's trophies: a dark ice foot, a clear shaft and a
+     wide top plate 100 above the floor. About 160 across. Origin on the floor at its axis; the
+     trophy stands on attach top_surface. No front (declared -Y). Self-contained materials. -->
+<prefab up="z" front="-y">
+  <material id="fortress_crystal" color="0.80 0.93 0.98" shininess="140" />
+  <material id="fortress_ice_deep" color="0.46 0.62 0.78" shininess="90" />
+  <let name="H" value="100" />
+  <attach name="top_surface" pos="0 0 {H}" />
+  <cone pos="0 0 10" rot="90 0 30" radius="80" radiusTop="62" height="20" sides="6" material="fortress_ice_deep" />
+  <prism pos="0 0 {(H - 12 + 20)/2}" rot="90 0 30" radius="52" height="{H - 12 - 20}" sides="6" material="fortress_crystal" />
+  <prism pos="0 0 {H - 6}" rot="90 0 30" radius="72" height="12" sides="6" material="fortress_ice_deep" />
+</prefab>

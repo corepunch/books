@@ -1,0 +1,12 @@
+<!-- A desktop video terminal of the 1980s (VT100 style): a beige CRT case 46 x 40 x 36 on a short plinth with
+     its green screen, and the detached keyboard in front. Baseline z=0 at the desk surface; origin under the
+     middle of the keyboard's front edge; the screen faces local -Y. Materials: beige, beige_dark, dark_metal,
+     screen_glow. -->
+<prefab up="z" front="-y">
+  <box pos="0 46 2" size="30 26 4" material="beige_dark" />
+  <box pos="0 46 22" size="46 40 36" material="beige" />
+  <box pos="0 70 22" size="32 10 26" material="beige" />
+  <box pos="0 25.5 23" size="38 1 28" material="dark_metal" />
+  <box pos="0 24.6 23" size="32 1 22" material="screen_glow" unlit="1" castShadow="0" />
+  <box pos="0 9 1.5" rot="0 0 2" size="44 17 3" material="beige_dark" />
+</prefab>

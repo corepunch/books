@@ -1,0 +1,26 @@
+<!-- A cluster of free-standing ice crystals grown from the hall floor: one tall pointed hexagonal
+     crystal (620) and three smaller ones round it, two leaning outward from a base corner that
+     still meets the floor. About 300 x 260 footprint. Origin on the floor at the tall crystal's
+     axis. No front (declared -Y). Self-contained materials. -->
+<prefab up="z" front="-y">
+  <material id="fortress_crystal" color="0.80 0.93 0.98" shininess="140" />
+  <material id="fortress_ice" color="0.74 0.86 0.94" shininess="100" />
+  <!-- A crystal = prism body + pointed hexagonal tip; a lean of A degrees about local X lifts the
+       base centre by r*sin(A) so the lowest corner just meets the floor. -->
+  <group name="tall">
+    <prism pos="0 0 230" rot="90 0 10" radius="62" height="460" sides="6" material="fortress_crystal" />
+    <cone pos="0 0 540" rot="90 0 10" radius="62" height="160" sides="6" material="fortress_crystal" />
+  </group>
+  <group name="lean_east" pos="88 10 {44*sin(rad(14))}" rot="0 0 80">
+    <prism pos="0 {-150*sin(rad(14))} {150*cos(rad(14))}" rot="{90 + 14} 0 0" radius="44" height="300" sides="6" material="fortress_ice" />
+    <cone pos="0 {-(300 + 50)*sin(rad(14))} {(300 + 50)*cos(rad(14))}" rot="{90 + 14} 0 0" radius="44" height="100" sides="6" material="fortress_ice" />
+  </group>
+  <group name="lean_west" pos="-80 30 {36*sin(rad(18))}" rot="0 0 -75">
+    <prism pos="0 {-110*sin(rad(18))} {110*cos(rad(18))}" rot="{90 + 18} 0 0" radius="36" height="220" sides="6" material="fortress_crystal" />
+    <cone pos="0 {-(220 + 40)*sin(rad(18))} {(220 + 40)*cos(rad(18))}" rot="{90 + 18} 0 0" radius="36" height="80" sides="6" material="fortress_crystal" />
+  </group>
+  <group name="short">
+    <prism pos="20 -112 90" rot="90 0 25" radius="40" height="180" sides="6" material="fortress_ice" />
+    <cone pos="20 -112 215" rot="90 0 25" radius="40" height="70" sides="6" material="fortress_ice" />
+  </group>
+</prefab>

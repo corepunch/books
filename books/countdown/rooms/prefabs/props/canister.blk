@@ -1,10 +1,23 @@
-<!-- Brainiac's Bacteria canister: a 70 cm steel cylinder with a valve, a nozzle and a coiled hose, standing
-     on its base. Origin on the floor under its middle. -->
-<prefab>
-  <capsule pos="0 0 40" rot="90 0 0" radius="14" height="50" material="canister" />
-  <cylinder pos="0 0 76" rot="90 0 0" radius="5" height="10" material="gunmetal" />
-  <box pos="0 -6 82" size="4 14 4" material="gunmetal" />
-  <cylinder pos="0 -14 82" rot="0 0 0" radius="2" height="8" color="0.70 0.30 0.86" />
-  <torus pos="18 0 30" rot="0 0 90" majorRadius="10" minorRadius="2" material="gunmetal" />
-  <box pos="0 -15 40" size="20 2 24" color="0.70 0.30 0.86" />
+<!-- Brainiac's Bacteria canister: a 30 cm steel bottle standing 84 cm to its valve on a dark foot ring. A
+     purple sight window down its front shows the Bacteria inside; on top a valve wheel, and from the neck a
+     thin nozzle points to local -Y (the nozzle a thrown drone knocks off). A coiled hose hangs on its +X
+     side. Origin on the floor under its middle; up z, front -y. Attach: top (valve wheel), nozzle (tip). -->
+<prefab up="z" front="-y">
+  <material id="cn_steel" color="0.72 0.74 0.76" shininess="90" />
+  <material id="cn_dark" color="0.14 0.14 0.16" shininess="60" />
+  <attach name="top" pos="0 0 84" />
+  <attach name="nozzle" pos="0 -21 78" />
+  <cylinder pos="0 0 2.5" rot="90 0 0" radius="13" height="5" material="cn_dark" />
+  <capsule pos="0 0 39" rot="90 0 0" radius="15" height="42" material="cn_steel" />
+  <torus pos="0 0 22" rot="90 0 0" majorRadius="15" minorRadius="1.4" material="cn_dark" />
+  <torus pos="0 0 56" rot="90 0 0" majorRadius="15" minorRadius="1.4" material="cn_dark" />
+  <box pos="0 -14.2 39" size="7 2 26" color="0.72 0.32 0.92" unlit="1" castShadow="0" />
+  <!-- Neck, valve wheel and the nozzle. -->
+  <cylinder pos="0 0 77" rot="90 0 0" radius="5" height="10" material="cn_dark" />
+  <torus pos="0 0 83" rot="90 0 0" majorRadius="5.5" minorRadius="1" material="cn_steel" />
+  <cylinder pos="0 0 82.5" rot="90 0 0" radius="1.2" height="3" material="cn_steel" />
+  <cylinder pos="0 -12 78" radius="1.4" height="14" material="cn_dark" />
+  <cone pos="0 -20 78" rot="0 0 180" radius="2.2" radiusTop="1" height="2.4" color="0.72 0.32 0.92" />
+  <!-- The hose coiled on its side. -->
+  <torus pos="16.5 0 30" rot="0 0 90" majorRadius="9" minorRadius="1.8" material="cn_dark" />
 </prefab>

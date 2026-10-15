@@ -1,9 +1,56 @@
-<!-- A commuter-train double seat: 100 cm wide (local X), seat top at 46 cm, backrest to 110 cm.
-     Origin on the floor under the middle of the seat front edge; the sitter faces local -Y. -->
-<prefab>
-  <box pos="0 20 22" size="96 40 44" material="seat_frame" />
-  <box pos="0 20 46" size="100 46 10" material="seat_cloth" />
-  <box pos="0 44 80" size="100 10 66" rot="-8 0 0" material="seat_cloth" />
-  <box pos="0 46 114" size="100 12 8" material="seat_frame" />
-  <box pos="-49 22 62" size="4 40 6" material="seat_frame" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A 1980s commuter-coach double seat: two places on one cushion, a raked backrest with a moulded shell,
+     a chrome grab rail along the top of the back for standing passengers, white headrest covers, armrests
+     at both ends and two pedestal legs. Footprint 101 x 74 cm (local X across, Y deep; 60 cm at knee height);
+     baseline z=0 on the floor; the cushion top is 46 cm, the grab rail tops out at 114 cm.
+     Origin on the floor under the middle of the cushion's front edge. Front -Y: the sitters face local -Y,
+     the back is at +Y. rot="0 0 90" faces +X, rot="0 0 -90" faces -X.
+     Attach: place_a / place_b are the two sitting places (cushion top, x -/+23), grab is the rail top.
+     Materials from the scene: seat_cloth, seat_shell, seat_frame (chrome), seat_cover. -->
+<prefab up="z" front="-y">
+  <let name="W" value="90" />      <!-- cushion width -->
+  <let name="D" value="46" />      <!-- cushion depth -->
+  <let name="SEAT" value="46" />   <!-- cushion top -->
+  <let name="CT" value="12" />     <!-- cushion thickness -->
+  <let name="PAN" value="4" />
+  <let name="RAKE" value="-12" />  <!-- backrest lean, top toward +Y -->
+  <let name="BH" value="66" />     <!-- back cushion height -->
+  <let name="ARM" value="W/2 + 2.5" />
+  <attach name="place_a" pos="-23 {D/2 + 4} {SEAT}" />
+  <attach name="place_b" pos="23 {D/2 + 4} {SEAT}" />
+  <attach name="grab" pos="0 {D + 2 + 9 + (BH + 8)*sin(rad(-RAKE))} {SEAT - 8 + (BH + 8)*cos(rad(RAKE)) + 2}" />
+
+  <!-- Cushion: a rounded profile in Y-Z swept across the seat. -->
+  <rounded-rect size="{D} {CT}" radius="4" pos="0 {D/2} {SEAT - CT/2}" rot="90 0 90" material="seat_cloth" tint="1">
+    <extrude amount="{W}" />
+    <bevel amount="1.5" bevelSegments="3" />
+  </rounded-rect>
+  <!-- Seat pan and the two pedestal legs on their floor plates. -->
+  <box pos="0 {D/2 + 2} {SEAT - CT - PAN/2}" size="{W - 4} {D - 8} {PAN}" material="seat_shell" />
+  <box pos="-34 {D/2 + 2} 1" size="7 38 2" material="seat_frame" />
+  <box pos="34 {D/2 + 2} 1" size="7 38 2" material="seat_frame" />
+  <cylinder pos="-34 {D/2 + 2} {(2 + SEAT - CT - PAN)/2}" rot="90 0 0" radius="2.2" height="{SEAT - CT - PAN - 2}" material="seat_frame" />
+  <cylinder pos="34 {D/2 + 2} {(2 + SEAT - CT - PAN)/2}" rot="90 0 0" radius="2.2" height="{SEAT - CT - PAN - 2}" material="seat_frame" />
+  <!-- Armrests: a side plate from the pan up, a padded top. -->
+  <box pos="{-ARM} {D/2 + 4} {SEAT - CT + 10}" size="3 32 20" material="seat_shell" />
+  <box pos="{ARM} {D/2 + 4} {SEAT - CT + 10}" size="3 32 20" material="seat_shell" />
+  <box pos="{-ARM} {D/2 + 3} {SEAT - CT + 22.5}" size="6 36 5" material="seat_frame" />
+  <box pos="{ARM} {D/2 + 3} {SEAT - CT + 22.5}" size="6 36 5" material="seat_frame" />
+
+  <!-- Backrest, raked: cushion, the moulded shell behind it, covers, grab rail on its posts. -->
+  <group pos="0 {D + 2} {SEAT - 8}" rot="{RAKE} 0 0">
+    <rounded-rect size="12 {BH}" radius="5" pos="0 0 {BH/2}" rot="90 0 90" material="seat_cloth" tint="1">
+      <extrude amount="{W}" />
+      <bevel amount="1.5" bevelSegments="3" />
+    </rounded-rect>
+    <rounded-rect size="4 {BH + 6}" radius="1.8" pos="0 8 {BH/2 + 1}" rot="90 0 90" material="seat_shell">
+      <extrude amount="{W + 8}" />
+      <bevel amount="0.8" bevelSegments="2" />
+    </rounded-rect>
+    <box pos="-22.5 -6.3 {BH - 13}" size="36 1 18" material="seat_cover" />
+    <box pos="22.5 -6.3 {BH - 13}" size="36 1 18" material="seat_cover" />
+    <cylinder pos="-40 8 {BH + 4 + 3}" rot="90 0 0" radius="1.2" height="6" material="seat_frame" />
+    <cylinder pos="40 8 {BH + 4 + 3}" rot="90 0 0" radius="1.2" height="6" material="seat_frame" />
+    <cylinder pos="0 8 {BH + 4 + 6 + 1.4}" rot="0 0 90" radius="1.5" height="{W - 2}" material="seat_frame" />
+  </group>
 </prefab>

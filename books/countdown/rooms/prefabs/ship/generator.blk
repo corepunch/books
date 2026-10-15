@@ -1,0 +1,40 @@
+<!-- The Red Solar Generator, Red Sun Room centre: a round machine 560 cm across. A low dais, a finned
+     drum and a red emitter disc ringed by four beam nubs; the scene's red beam column rises from the nubs
+     to the globe hanging above. Origin on the floor at its centre; round, front -y by convention.
+     Attach: top (lens centre, z 62), nub_ne / nub_nw / nub_sw / nub_se (top of each nub, z 69).
+     Scene materials: sh_rib, sh_dark, sh_trim. -->
+<prefab up="z" front="-y">
+  <let name="DR" value="280" />
+  <let name="DH" value="16" />
+  <let name="CR" value="180" />
+  <let name="CH" value="44" />
+  <let name="TOP" value="DH + CH" />
+  <let name="NR" value="160" />
+  <let name="ND" value="NR * cos(rad(45))" />
+  <attach name="top" pos="0 0 {TOP + 2}" />
+  <attach name="nub_ne" pos="{ND} {ND} {TOP + 9}" />
+  <attach name="nub_nw" pos="{-ND} {ND} {TOP + 9}" />
+  <attach name="nub_sw" pos="{-ND} {-ND} {TOP + 9}" />
+  <attach name="nub_se" pos="{ND} {-ND} {TOP + 9}" />
+  <!-- Dais and its trim lip. -->
+  <cylinder pos="0 0 {DH / 2}" rot="90 0 0" radius="{DR}" height="{DH}" sides="32" material="sh_rib" />
+  <torus pos="0 0 {DH}" rot="90 0 0" majorRadius="{DR - 6}" minorRadius="3" majorSegments="48" material="sh_trim" />
+  <!-- The drum and eight cooling fins. -->
+  <cylinder pos="0 0 {DH + CH / 2}" rot="90 0 0" radius="{CR}" height="{CH}" sides="32" material="sh_dark" />
+  <box pos="{(CR + 6) * cos(rad(0))} {(CR + 6) * sin(rad(0))} {DH + CH / 2}" rot="0 0 0" size="14 8 {CH - 4}" material="sh_trim" />
+  <box pos="{(CR + 6) * cos(rad(45))} {(CR + 6) * sin(rad(45))} {DH + CH / 2}" rot="0 0 45" size="14 8 {CH - 4}" material="sh_trim" />
+  <box pos="{(CR + 6) * cos(rad(90))} {(CR + 6) * sin(rad(90))} {DH + CH / 2}" rot="0 0 90" size="14 8 {CH - 4}" material="sh_trim" />
+  <box pos="{(CR + 6) * cos(rad(135))} {(CR + 6) * sin(rad(135))} {DH + CH / 2}" rot="0 0 135" size="14 8 {CH - 4}" material="sh_trim" />
+  <box pos="{(CR + 6) * cos(rad(180))} {(CR + 6) * sin(rad(180))} {DH + CH / 2}" rot="0 0 180" size="14 8 {CH - 4}" material="sh_trim" />
+  <box pos="{(CR + 6) * cos(rad(225))} {(CR + 6) * sin(rad(225))} {DH + CH / 2}" rot="0 0 225" size="14 8 {CH - 4}" material="sh_trim" />
+  <box pos="{(CR + 6) * cos(rad(270))} {(CR + 6) * sin(rad(270))} {DH + CH / 2}" rot="0 0 270" size="14 8 {CH - 4}" material="sh_trim" />
+  <box pos="{(CR + 6) * cos(rad(315))} {(CR + 6) * sin(rad(315))} {DH + CH / 2}" rot="0 0 315" size="14 8 {CH - 4}" material="sh_trim" />
+  <!-- The dark emitter lens (the scene lights its core while the red sun burns), its ring and the
+       four beam nubs. -->
+  <cylinder pos="0 0 {TOP + 1}" rot="90 0 0" radius="140" height="2" sides="32" color="0.18 0.06 0.05" shininess="90" />
+  <torus pos="0 0 {TOP + 2}" rot="90 0 0" majorRadius="{NR}" minorRadius="5" majorSegments="48" material="sh_trim" />
+  <cylinder pos="{ND} {ND} {TOP + 4}" rot="90 0 0" radius="9" height="10" material="sh_dark" />
+  <cylinder pos="{-ND} {ND} {TOP + 4}" rot="90 0 0" radius="9" height="10" material="sh_dark" />
+  <cylinder pos="{-ND} {-ND} {TOP + 4}" rot="90 0 0" radius="9" height="10" material="sh_dark" />
+  <cylinder pos="{ND} {-ND} {TOP + 4}" rot="90 0 0" radius="9" height="10" material="sh_dark" />
+</prefab>

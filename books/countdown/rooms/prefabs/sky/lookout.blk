@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The lookout at the north brow of the Mt. Royal lawn: a curved stone parapet of twelve bays between square
+     pillars, with a coping stone on each bay and two coin-operated viewers on pedestals. The arc has radius
+     3900 cm about the origin and runs from 30 to 150 degrees (counter-clockwise from local +X), so it bows
+     toward local +Y. Baseline z=0 on the lawn; the parapet is 84 cm high, the pillars 98 cm. Origin at the
+     centre of the arc (the middle of the lawn). Front +Y: people at the parapet look out toward local +Y.
+     Materials from the scene: parapet_stone, coping_stone, bench_iron, brass. -->
+<prefab up="z" front="+y">
+  <let name="RP" value="3900" />   <!-- arc radius -->
+  <let name="A0" value="30" />     <!-- first pillar angle -->
+  <let name="STEP" value="10" />   <!-- degrees per bay -->
+  <let name="WH" value="76" />     <!-- wall height -->
+  <let name="WT" value="34" />     <!-- wall thickness -->
+  <let name="CH" value="8" />      <!-- coping height -->
+  <let name="PW" value="48" />     <!-- pillar width -->
+  <let name="PH" value="98" />     <!-- pillar height -->
+  <let name="BAY" value="2*RP*sin(rad(STEP/2)) - PW - 6" /> <!-- wall length between pillar faces -->
+  <group rot="0 0 {A0 + 0*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 1*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 2*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 3*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 4*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 5*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 6*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 7*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 8*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 9*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 10*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 11*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 12*STEP}"><box pos="{RP} 0 {PH/2}" size="{PW} {PW} {PH}" material="parapet_stone" /><box pos="{RP} 0 {PH + 3}" size="{PW + 6} {PW + 6} 6" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 0*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 1*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 2*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 3*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 4*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 5*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 6*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 7*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 8*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 9*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 10*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 {A0 + 11*STEP + STEP/2}"><box pos="{RP*cos(rad(STEP/2))} 0 {WH/2}" size="{WT} {BAY} {WH}" material="parapet_stone" /><box pos="{RP*cos(rad(STEP/2))} 0 {WH + CH/2}" size="{WT + 10} {BAY} {CH}" material="coping_stone" /></group>
+  <group rot="0 0 72">
+    <group pos="{RP - 90} 0 0">
+      <cylinder pos="0 0 4" rot="90 0 0" radius="22" height="8" material="bench_iron" />
+      <cylinder pos="0 0 {8 + 55}" rot="90 0 0" radius="6" height="110" sides="12" material="bench_iron" />
+      <box pos="0 0 {118 + 14}" size="26 34 28" material="brass" />
+      <cylinder pos="-16 -7 {118 + 18}" rot="0 0 90" radius="5" height="10" material="bench_iron" />
+      <cylinder pos="-16 7 {118 + 18}" rot="0 0 90" radius="5" height="10" material="bench_iron" />
+    </group>
+  </group>
+  <group rot="0 0 118">
+    <group pos="{RP - 90} 0 0">
+      <cylinder pos="0 0 4" rot="90 0 0" radius="22" height="8" material="bench_iron" />
+      <cylinder pos="0 0 {8 + 55}" rot="90 0 0" radius="6" height="110" sides="12" material="bench_iron" />
+      <box pos="0 0 {118 + 14}" size="26 34 28" material="brass" />
+      <cylinder pos="-16 -7 {118 + 18}" rot="0 0 90" radius="5" height="10" material="bench_iron" />
+      <cylinder pos="-16 7 {118 + 18}" rot="0 0 90" radius="5" height="10" material="bench_iron" />
+    </group>
+  </group>
+</prefab>
