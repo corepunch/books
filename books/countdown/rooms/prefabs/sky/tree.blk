@@ -7,7 +7,7 @@
   <cylinder pos="0 0 {TH/2}" rot="90 0 0" radius="20" height="{TH}" sides="12" material="bark"><taper amount="-0.35" /></cylinder>
   <cylinder pos="60 10 {TH - 20}" rot="90 -35 0" radius="9" height="190" sides="8" material="bark" />
   <cylinder pos="-50 -20 {TH - 40}" rot="90 30 15" radius="8" height="170" sides="8" material="bark" />
-  <sphere pos="0 0 {TH + 190}" radius="230" scale="1.1 1 0.85" rings="10" slices="14" material="foliage"><noise strength="0.22" seed="3" /></sphere>
-  <sphere pos="120 30 {TH + 90}" radius="160" rings="9" slices="12" material="foliage"><noise strength="0.16" seed="7" /></sphere>
-  <sphere pos="-110 -40 {TH + 70}" radius="150" rings="9" slices="12" material="foliage"><noise strength="0.16" seed="11" /></sphere>
+  <sphere pos="0 0 {TH + 190}" radius="230" scale="1.1 1 0.85" rings="10" slices="14" material="foliage"><noise strength="22" seed="3" /></sphere>
+  <sphere pos="120 30 {TH + 90}" radius="160" rings="9" slices="12" material="foliage"><noise strength="16" seed="7" /></sphere>
+  <sphere pos="-110 -40 {TH + 70}" radius="150" rings="9" slices="12" material="foliage"><noise strength="16" seed="11" /></sphere>
 </prefab>

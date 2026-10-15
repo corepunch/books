@@ -3,8 +3,7 @@
      twisted and sheared out of round, with three fused knobs and two shallow crater rims. Nominal
      footprint 250 x 230 x 200 cm round its centre (origin), no baseline: it tumbles in free fall. No
      natural front; instances vary yaw/pitch and scale. Its purple Cybernetic-Bacteria capsule is sealed
-     inside and only shows through X-ray (orbit/meteorite_xray). Craggy by taper/skew/twist only:
-     Scener's <noise> displaces split vertices apart and tears faceted meshes.
+     inside and only shows through X-ray (orbit/meteorite_xray). Craggy by taper, skew and twist.
      Materials from the scene: meteor, meteor_dark. -->
 <prefab up="z">
   <let name="R" value="100"/>

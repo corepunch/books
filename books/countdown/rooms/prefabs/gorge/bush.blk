@@ -2,6 +2,6 @@
      Not directional. Baseline: its lowest leaves rest on the ground at z=0. Origin: the middle of
      its foot. Material: leaf, leaf_light from the scene. -->
 <prefab up="z" front="+x">
-  <sphere pos="0 0 64" radius="100" rings="6" slices="8" scale="1.1 1 0.62" material="leaf"><noise strength="0.12" seed="5" /></sphere>
-  <sphere pos="60 30 70" radius="60" rings="5" slices="7" material="leaf_light"><noise strength="0.08" seed="6" /></sphere>
+  <sphere pos="0 0 64" radius="100" rings="6" slices="8" scale="1.1 1 0.62" material="leaf"><noise strength="12" seed="5" /></sphere>
+  <sphere pos="60 30 70" radius="60" rings="5" slices="7" material="leaf_light"><noise strength="8" seed="6" /></sphere>
 </prefab>

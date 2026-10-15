@@ -33,7 +33,7 @@
   </camera>
   <camera name="gorge-lift-coupling" comment="Superman holds the engine and first car high over the east rim; behind the first car the coupling has snapped to one bent pin and the two rear cars hang down into the gorge" pos="1900 -3300 1500" look="1500 0 700" fov="56" textRect="0.04 0.035 0.92 0.3" textScale="1">
     <transform target="Train" pos="{3340 - ENG} 0 1000" />
-    <transform target="RearCars" rot="0 -80 0" />
+    <transform target="RearCars" pos="-12 0 0" rot="0 -84 0" />
     <transform target="Car3" rot="0 -4 0" />
     <transform target="Superman" pos="{2560} {-10 - SUP_Y} {875 - STORE}" />
     <use-pose instance="Superman" name="Lift" />
@@ -60,9 +60,9 @@
   <camera name="gorge-headon" comment="Ending: Superman braced on the brink has stopped the train with his body; the engine's nose is crushed and the cars behind have jumped the rails" pos="900 -1200 350" look="-900 0 200" fov="54" textRect="0.04 0.035 0.92 0.3" textScale="1">
     <transform target="Train" pos="{-850 - ENG} 0 0" />
     <transform target="EngineNose" pos="0 0 {-STORE}" />
-    <transform target="Car1" pos="0 -70 -12" rot="2 0 6" />
-    <transform target="RearCars" pos="0 40 -20" rot="-3 0 -11" />
-    <transform target="Superman" pos="{-850 + 750 + 40} {-SUP_Y} {-STORE}" rot="0 0 -90" />
+    <transform target="Car1" pos="0 -70 2" rot="2 0 6" />
+    <transform target="RearCars" pos="0 40 -11" rot="-3 0 -11" />
+    <transform target="Superman" pos="{-850 + 750 + 43} {-SUP_Y} {-STORE}" rot="0 0 -90" />
     <use-pose instance="Superman" name="Push" />
   </camera>
   <camera name="gorge-saved" comment="Across the gorge: the whole train stands safe on the east rim beyond the far stub; Superman has landed by the last car near the brink and waves to the passengers at the windows" pos="-100 -1300 350" look="2600 0 -150" fov="54" textRect="0.04 0.035 0.92 0.3" textScale="1">
@@ -716,62 +716,62 @@
     <box pos="{GAP/2 + -9653.5} 15400 {BED + 70}" rot="0 0 38.04" size="400 1260 32" material="water" />
     <box pos="{GAP/2 + -10085} 15950 {BED + 72}" rot="0 0 38.14" size="400 160 32" material="water" />
     <!-- Boulders fallen from the walls: in the river, on the gravel bars and along the wall feet. -->
-    <sphere pos="{GAP/2 + 234.4} -1656.9 {BED + 24.9}" radius="71.2" rings="5" slices="7" scale="1 0.96 0.73" material="rock_dark"><noise strength="0.119" seed="1" /></sphere>
-    <sphere pos="{GAP/2 + -669.7} -2291.4 {BED + 48.2}" radius="137.8" rings="5" slices="7" scale="1 0.98 0.78" material="rock_dark"><noise strength="0.230" seed="2" /></sphere>
-    <sphere pos="{GAP/2 + -669.1} -2559.3 {BED + 16.6}" radius="47.6" rings="5" slices="7" scale="1 0.86 0.84" material="rock"><noise strength="0.079" seed="3" /></sphere>
-    <sphere pos="{GAP/2 + 357.1} -2999.5 {BED + 19.3}" radius="55.2" rings="5" slices="7" scale="1 0.88 0.75" material="rock"><noise strength="0.092" seed="4" /></sphere>
-    <sphere pos="{GAP/2 + 361.8} -472.2 {BED + 17}" radius="48.5" rings="5" slices="7" scale="1 0.92 0.79" material="rock_warm"><noise strength="0.081" seed="5" /></sphere>
-    <sphere pos="{GAP/2 + -392.8} -4061.8 {BED + 31.6}" radius="90.2" rings="5" slices="7" scale="1 0.85 0.56" material="rock_dark"><noise strength="0.150" seed="6" /></sphere>
-    <sphere pos="{GAP/2 + 178.2} -3619 {BED + 20.7}" radius="59.3" rings="5" slices="7" scale="1 1.01 0.60" material="rock_warm"><noise strength="0.099" seed="7" /></sphere>
-    <sphere pos="{GAP/2 + -1539.4} 4415.2 {BED + 51.3}" radius="146.6" rings="5" slices="7" scale="1 1.24 0.77" material="rock_dark"><noise strength="0.244" seed="9" /></sphere>
-    <sphere pos="{GAP/2 + -73.8} 2132.2 {BED + 17.3}" radius="49.5" rings="5" slices="7" scale="1 1.05 0.67" material="rock_warm"><noise strength="0.083" seed="10" /></sphere>
-    <sphere pos="{GAP/2 + -1202.9} 4367.3 {BED + 39.8}" radius="113.6" rings="5" slices="7" scale="1 1.07 0.71" material="rock_warm"><noise strength="0.189" seed="11" /></sphere>
-    <sphere pos="{GAP/2 + 123.7} -506.6 {BED + 31.2}" radius="89" rings="5" slices="7" scale="1 1.29 0.67" material="rock_dark"><noise strength="0.148" seed="12" /></sphere>
-    <sphere pos="{GAP/2 + -1695.3} 3735.1 {BED + 24.5}" radius="70.1" rings="5" slices="7" scale="1 1.05 0.85" material="rock_warm"><noise strength="0.117" seed="13" /></sphere>
-    <sphere pos="{GAP/2 + 474.2} 1298.2 {BED + 40.1}" radius="114.7" rings="5" slices="7" scale="1 0.84 0.74" material="rock"><noise strength="0.191" seed="14" /></sphere>
-    <sphere pos="{GAP/2 + -1913.8} 3976.7 {BED + 40.9}" radius="116.9" rings="5" slices="7" scale="1 1.02 0.75" material="rock_dark"><noise strength="0.195" seed="15" /></sphere>
-    <sphere pos="{GAP/2 + -2372.8} 4544.5 {BED + 33}" radius="94.4" rings="5" slices="7" scale="1 0.97 0.71" material="rock_dark"><noise strength="0.157" seed="16" /></sphere>
-    <sphere pos="{GAP/2 + 72.8} -2090.1 {BED + 51.6}" radius="147.5" rings="5" slices="7" scale="1 0.93 0.75" material="rock_dark"><noise strength="0.246" seed="17" /></sphere>
-    <sphere pos="{GAP/2 + -415} -3552 {BED + 25.4}" radius="72.5" rings="5" slices="7" scale="1 1.22 0.81" material="rock_dark"><noise strength="0.121" seed="18" /></sphere>
-    <sphere pos="{GAP/2 + 361.9} 498.4 {BED + 18.2}" radius="51.9" rings="5" slices="7" scale="1 1.18 0.66" material="rock"><noise strength="0.087" seed="19" /></sphere>
-    <sphere pos="{GAP/2 + 94.5} 547.3 {BED + 46}" radius="131.3" rings="5" slices="7" scale="1 1.03 0.74" material="rock_warm"><noise strength="0.219" seed="20" /></sphere>
-    <sphere pos="{GAP/2 + -964.9} 3610 {BED + 47.5}" radius="135.7" rings="5" slices="7" scale="1 1.01 0.67" material="rock_warm"><noise strength="0.226" seed="21" /></sphere>
-    <sphere pos="{GAP/2 + -192.6} -1936.7 {BED + 35}" radius="99.9" rings="5" slices="7" scale="1 0.95 0.75" material="rock_dark"><noise strength="0.166" seed="22" /></sphere>
-    <sphere pos="{GAP/2 + 454.5} -640.1 {BED + 33.3}" radius="95.2" rings="5" slices="7" scale="1 1.20 0.78" material="rock"><noise strength="0.159" seed="23" /></sphere>
-    <sphere pos="{GAP/2 + 329.9} -4146.7 {BED + 24.5}" radius="70" rings="5" slices="7" scale="1 0.99 0.65" material="rock_dark"><noise strength="0.117" seed="24" /></sphere>
-    <sphere pos="{GAP/2 + -111.9} -1924.2 {BED + 37.5}" radius="107" rings="5" slices="7" scale="1 0.95 0.71" material="rock_dark"><noise strength="0.178" seed="25" /></sphere>
-    <sphere pos="{GAP/2 + 643.1} -1899.4 {BED + 39.1}" radius="111.8" rings="5" slices="7" scale="1 1.23 0.61" material="rock_dark"><noise strength="0.186" seed="26" /></sphere>
-    <sphere pos="{GAP/2 + -566} 4425.3 {BED + 17.4}" radius="49.6" rings="5" slices="7" scale="1 1.02 0.66" material="rock_warm"><noise strength="0.083" seed="27" /></sphere>
-    <sphere pos="{GAP/2 + 587.1} 2577.9 {BED + 25.2}" radius="72" rings="5" slices="7" scale="1 0.92 0.80" material="rock"><noise strength="0.120" seed="28" /></sphere>
-    <sphere pos="{GAP/2 + -1998.8} 4123.4 {BED + 37.1}" radius="105.9" rings="5" slices="7" scale="1 0.83 0.61" material="rock"><noise strength="0.177" seed="29" /></sphere>
-    <sphere pos="{GAP/2 + 459.3} -3480.5 {BED + 34}" radius="97.1" rings="5" slices="7" scale="1 1.25 0.78" material="rock"><noise strength="0.162" seed="30" /></sphere>
-    <sphere pos="{GAP/2 + 923.1} -3229.7 {BED + 31.8}" radius="90.8" rings="5" slices="7" scale="1 1.30 0.60" material="rock"><noise strength="0.151" seed="31" /></sphere>
-    <sphere pos="{GAP/2 + 210.6} -241.5 {BED + 16.1}" radius="46" rings="5" slices="7" scale="1 0.92 0.61" material="rock_warm"><noise strength="0.077" seed="32" /></sphere>
-    <sphere pos="{GAP/2 + 1161.5} -3834.7 {BED + 44}" radius="125.8" rings="5" slices="7" scale="1 0.86 0.62" material="rock"><noise strength="0.210" seed="33" /></sphere>
-    <sphere pos="{GAP/2 + -77.7} 939.2 {BED + 43.4}" radius="124.1" rings="5" slices="7" scale="1 1.08 0.57" material="rock_warm"><noise strength="0.207" seed="34" /></sphere>
+    <sphere pos="{GAP/2 + 234.4} -1656.9 {BED + 24.9}" radius="71.2" rings="5" slices="7" scale="1 0.96 0.73" material="rock_dark"><noise strength="11.9" seed="1" /></sphere>
+    <sphere pos="{GAP/2 + -669.7} -2291.4 {BED + 48.2}" radius="137.8" rings="5" slices="7" scale="1 0.98 0.78" material="rock_dark"><noise strength="23" seed="2" /></sphere>
+    <sphere pos="{GAP/2 + -669.1} -2559.3 {BED + 16.6}" radius="47.6" rings="5" slices="7" scale="1 0.86 0.84" material="rock"><noise strength="7.9" seed="3" /></sphere>
+    <sphere pos="{GAP/2 + 357.1} -2999.5 {BED + 19.3}" radius="55.2" rings="5" slices="7" scale="1 0.88 0.75" material="rock"><noise strength="9.2" seed="4" /></sphere>
+    <sphere pos="{GAP/2 + 361.8} -472.2 {BED + 17}" radius="48.5" rings="5" slices="7" scale="1 0.92 0.79" material="rock_warm"><noise strength="8.1" seed="5" /></sphere>
+    <sphere pos="{GAP/2 + -392.8} -4061.8 {BED + 31.6}" radius="90.2" rings="5" slices="7" scale="1 0.85 0.56" material="rock_dark"><noise strength="15" seed="6" /></sphere>
+    <sphere pos="{GAP/2 + 178.2} -3619 {BED + 20.7}" radius="59.3" rings="5" slices="7" scale="1 1.01 0.60" material="rock_warm"><noise strength="9.9" seed="7" /></sphere>
+    <sphere pos="{GAP/2 + -1539.4} 4415.2 {BED + 51.3}" radius="146.6" rings="5" slices="7" scale="1 1.24 0.77" material="rock_dark"><noise strength="24.4" seed="9" /></sphere>
+    <sphere pos="{GAP/2 + -73.8} 2132.2 {BED + 17.3}" radius="49.5" rings="5" slices="7" scale="1 1.05 0.67" material="rock_warm"><noise strength="8.3" seed="10" /></sphere>
+    <sphere pos="{GAP/2 + -1202.9} 4367.3 {BED + 39.8}" radius="113.6" rings="5" slices="7" scale="1 1.07 0.71" material="rock_warm"><noise strength="18.9" seed="11" /></sphere>
+    <sphere pos="{GAP/2 + 123.7} -506.6 {BED + 31.2}" radius="89" rings="5" slices="7" scale="1 1.29 0.67" material="rock_dark"><noise strength="14.8" seed="12" /></sphere>
+    <sphere pos="{GAP/2 + -1695.3} 3735.1 {BED + 24.5}" radius="70.1" rings="5" slices="7" scale="1 1.05 0.85" material="rock_warm"><noise strength="11.7" seed="13" /></sphere>
+    <sphere pos="{GAP/2 + 474.2} 1298.2 {BED + 40.1}" radius="114.7" rings="5" slices="7" scale="1 0.84 0.74" material="rock"><noise strength="19.1" seed="14" /></sphere>
+    <sphere pos="{GAP/2 + -1913.8} 3976.7 {BED + 40.9}" radius="116.9" rings="5" slices="7" scale="1 1.02 0.75" material="rock_dark"><noise strength="19.5" seed="15" /></sphere>
+    <sphere pos="{GAP/2 + -2372.8} 4544.5 {BED + 33}" radius="94.4" rings="5" slices="7" scale="1 0.97 0.71" material="rock_dark"><noise strength="15.7" seed="16" /></sphere>
+    <sphere pos="{GAP/2 + 72.8} -2090.1 {BED + 51.6}" radius="147.5" rings="5" slices="7" scale="1 0.93 0.75" material="rock_dark"><noise strength="24.6" seed="17" /></sphere>
+    <sphere pos="{GAP/2 + -415} -3552 {BED + 25.4}" radius="72.5" rings="5" slices="7" scale="1 1.22 0.81" material="rock_dark"><noise strength="12.1" seed="18" /></sphere>
+    <sphere pos="{GAP/2 + 361.9} 498.4 {BED + 18.2}" radius="51.9" rings="5" slices="7" scale="1 1.18 0.66" material="rock"><noise strength="8.7" seed="19" /></sphere>
+    <sphere pos="{GAP/2 + 94.5} 547.3 {BED + 46}" radius="131.3" rings="5" slices="7" scale="1 1.03 0.74" material="rock_warm"><noise strength="21.9" seed="20" /></sphere>
+    <sphere pos="{GAP/2 + -964.9} 3610 {BED + 47.5}" radius="135.7" rings="5" slices="7" scale="1 1.01 0.67" material="rock_warm"><noise strength="22.6" seed="21" /></sphere>
+    <sphere pos="{GAP/2 + -192.6} -1936.7 {BED + 35}" radius="99.9" rings="5" slices="7" scale="1 0.95 0.75" material="rock_dark"><noise strength="16.6" seed="22" /></sphere>
+    <sphere pos="{GAP/2 + 454.5} -640.1 {BED + 33.3}" radius="95.2" rings="5" slices="7" scale="1 1.20 0.78" material="rock"><noise strength="15.9" seed="23" /></sphere>
+    <sphere pos="{GAP/2 + 329.9} -4146.7 {BED + 24.5}" radius="70" rings="5" slices="7" scale="1 0.99 0.65" material="rock_dark"><noise strength="11.7" seed="24" /></sphere>
+    <sphere pos="{GAP/2 + -111.9} -1924.2 {BED + 37.5}" radius="107" rings="5" slices="7" scale="1 0.95 0.71" material="rock_dark"><noise strength="17.8" seed="25" /></sphere>
+    <sphere pos="{GAP/2 + 643.1} -1899.4 {BED + 39.1}" radius="111.8" rings="5" slices="7" scale="1 1.23 0.61" material="rock_dark"><noise strength="18.6" seed="26" /></sphere>
+    <sphere pos="{GAP/2 + -566} 4425.3 {BED + 17.4}" radius="49.6" rings="5" slices="7" scale="1 1.02 0.66" material="rock_warm"><noise strength="8.3" seed="27" /></sphere>
+    <sphere pos="{GAP/2 + 587.1} 2577.9 {BED + 25.2}" radius="72" rings="5" slices="7" scale="1 0.92 0.80" material="rock"><noise strength="12" seed="28" /></sphere>
+    <sphere pos="{GAP/2 + -1998.8} 4123.4 {BED + 37.1}" radius="105.9" rings="5" slices="7" scale="1 0.83 0.61" material="rock"><noise strength="17.7" seed="29" /></sphere>
+    <sphere pos="{GAP/2 + 459.3} -3480.5 {BED + 34}" radius="97.1" rings="5" slices="7" scale="1 1.25 0.78" material="rock"><noise strength="16.2" seed="30" /></sphere>
+    <sphere pos="{GAP/2 + 923.1} -3229.7 {BED + 31.8}" radius="90.8" rings="5" slices="7" scale="1 1.30 0.60" material="rock"><noise strength="15.1" seed="31" /></sphere>
+    <sphere pos="{GAP/2 + 210.6} -241.5 {BED + 16.1}" radius="46" rings="5" slices="7" scale="1 0.92 0.61" material="rock_warm"><noise strength="7.7" seed="32" /></sphere>
+    <sphere pos="{GAP/2 + 1161.5} -3834.7 {BED + 44}" radius="125.8" rings="5" slices="7" scale="1 0.86 0.62" material="rock"><noise strength="21" seed="33" /></sphere>
+    <sphere pos="{GAP/2 + -77.7} 939.2 {BED + 43.4}" radius="124.1" rings="5" slices="7" scale="1 1.08 0.57" material="rock_warm"><noise strength="20.7" seed="34" /></sphere>
     <!-- Rim outcrops and stones on the plateaus near the edges. -->
-    <sphere pos="{GAP/2 + -1488.3} -2301.4 {GROUND + 20.1}" radius="100.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.143" seed="100" /></sphere>
-    <sphere pos="{GAP/2 + -1824.7} 2357.4 {GROUND + 10}" radius="49.8" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.071" seed="102" /></sphere>
-    <sphere pos="{GAP/2 + -1495.1} -3574.2 {GROUND + 12.5}" radius="62.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.089" seed="104" /></sphere>
-    <sphere pos="{GAP/2 + 1917.6} -2382.9 {GROUND + 10.6}" radius="53" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.076" seed="105" /></sphere>
-    <sphere pos="{GAP/2 + -1396.3} -3263.8 {GROUND + 17.3}" radius="86.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.124" seed="108" /></sphere>
-    <sphere pos="{GAP/2 + 1434.3} -1460.4 {GROUND + 20.4}" radius="102" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.146" seed="109" /></sphere>
-    <sphere pos="{GAP/2 + -1413.2} 1789 {GROUND + 11.5}" radius="57.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.082" seed="110" /></sphere>
-    <sphere pos="{GAP/2 + 1385} -768.1 {GROUND + 15.6}" radius="77.8" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.111" seed="111" /></sphere>
-    <sphere pos="{GAP/2 + -1257.5} -1407.8 {GROUND + 10.9}" radius="54.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.078" seed="112" /></sphere>
-    <sphere pos="{GAP/2 + 1792.9} 1544.1 {GROUND + 17.2}" radius="85.9" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.123" seed="113" /></sphere>
-    <sphere pos="{GAP/2 + -1332.6} 2033.9 {GROUND + 21}" radius="105.1" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.150" seed="114" /></sphere>
-    <sphere pos="{GAP/2 + 1434.1} -1095.1 {GROUND + 17.9}" radius="89.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="0.128" seed="115" /></sphere>
+    <sphere pos="{GAP/2 + -1488.3} -2301.4 {GROUND + 20.1}" radius="100.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="14.3" seed="100" /></sphere>
+    <sphere pos="{GAP/2 + -1824.7} 2357.4 {GROUND + 10}" radius="49.8" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="7.1" seed="102" /></sphere>
+    <sphere pos="{GAP/2 + -1495.1} -3574.2 {GROUND + 12.5}" radius="62.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="8.9" seed="104" /></sphere>
+    <sphere pos="{GAP/2 + 1917.6} -2382.9 {GROUND + 10.6}" radius="53" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="7.6" seed="105" /></sphere>
+    <sphere pos="{GAP/2 + -1396.3} -3263.8 {GROUND + 17.3}" radius="86.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="12.4" seed="108" /></sphere>
+    <sphere pos="{GAP/2 + 1434.3} -1460.4 {GROUND + 20.4}" radius="102" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="14.6" seed="109" /></sphere>
+    <sphere pos="{GAP/2 + -1413.2} 1789 {GROUND + 11.5}" radius="57.4" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="8.2" seed="110" /></sphere>
+    <sphere pos="{GAP/2 + 1385} -768.1 {GROUND + 15.6}" radius="77.8" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="11.1" seed="111" /></sphere>
+    <sphere pos="{GAP/2 + -1257.5} -1407.8 {GROUND + 10.9}" radius="54.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="7.8" seed="112" /></sphere>
+    <sphere pos="{GAP/2 + 1792.9} 1544.1 {GROUND + 17.2}" radius="85.9" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="12.3" seed="113" /></sphere>
+    <sphere pos="{GAP/2 + -1332.6} 2033.9 {GROUND + 21}" radius="105.1" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="15" seed="114" /></sphere>
+    <sphere pos="{GAP/2 + 1434.1} -1095.1 {GROUND + 17.9}" radius="89.5" rings="5" slices="7" scale="1.2 1 0.6" material="rock_rim"><noise strength="12.8" seed="115" /></sphere>
     <!-- Distant wooded hills ringing the plateau. -->
-    <sphere pos="-9000 14500 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.89" seed="40" /></sphere>
-    <sphere pos="2500 15500 {GROUND - 1400}" radius="5600" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="3.11" seed="41" /></sphere>
-    <sphere pos="12000 13000 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.78" seed="42" /></sphere>
-    <sphere pos="-14500 4000 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="2.89" seed="43" /></sphere>
-    <sphere pos="-14000 -9000 {GROUND - 1200}" radius="4800" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.67" seed="44" /></sphere>
-    <sphere pos="16500 3500 {GROUND - 1350}" radius="5400" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="3.00" seed="45" /></sphere>
-    <sphere pos="15500 -9500 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.78" seed="46" /></sphere>
-    <sphere pos="-3000 -15500 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="2.78" seed="47" /></sphere>
-    <sphere pos="7000 -15000 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="2.89" seed="48" /></sphere>
+    <sphere pos="-9000 14500 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="289" seed="40" /></sphere>
+    <sphere pos="2500 15500 {GROUND - 1400}" radius="5600" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="311" seed="41" /></sphere>
+    <sphere pos="12000 13000 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="278" seed="42" /></sphere>
+    <sphere pos="-14500 4000 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="289" seed="43" /></sphere>
+    <sphere pos="-14000 -9000 {GROUND - 1200}" radius="4800" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="267" seed="44" /></sphere>
+    <sphere pos="16500 3500 {GROUND - 1350}" radius="5400" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="300" seed="45" /></sphere>
+    <sphere pos="15500 -9500 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="278" seed="46" /></sphere>
+    <sphere pos="-3000 -15500 {GROUND - 1250}" radius="5000" rings="10" slices="16" scale="1 1 0.55" material="hill"><noise strength="278" seed="47" /></sphere>
+    <sphere pos="7000 -15000 {GROUND - 1300}" radius="5200" rings="10" slices="16" scale="1 1 0.55" material="hill_far"><noise strength="289" seed="48" /></sphere>
   </group>
 
   <!-- The line: ballasted track on both plateaus up to the abutment backwalls (x=-200 / GAP+200). -->
@@ -802,8 +802,9 @@
   <group name="Train" pos="{ENG} 0 0">
     <group name="Locomotive">
       <prefab source="props/engine" />
-      <!-- The crushed nose for gorge-headon: buckled plates over the cab front. Stored. -->
-      <group name="EngineNose" pos="0 0 {STORE}">
+      <!-- The crushed nose for gorge-headon: buckled plates over the cab front, so they overlap the
+           engine and Superman's hands by design. Stored. -->
+      <group name="EngineNose" pos="0 0 {STORE}" sanityIgnore="1">
         <box pos="738 0 210" size="40 300 150" rot="0 -16 4" material="engine_body" />
         <box pos="742 60 300" size="30 150 70" rot="12 28 -10" material="engine_body" />
         <box pos="740 -70 310" size="26 140 60" rot="-14 -22 12" material="engine_body" />
@@ -823,14 +824,14 @@
 
   <!-- Heat vision for gorge-weld: two beams from Superman's eyes into the coupling pin and the glow of
        the hot metal. Breath for gorge-breath: wind streaks from his mouth to the engine and the gravel
-       it tears from the track. Both stored. -->
-  <group name="HeatBeams" pos="0 0 {STORE}">
+       it tears from the track. Both stored; both end inside what they strike, so the checker skips them. -->
+  <group name="HeatBeams" pos="0 0 {STORE}" sanityIgnore="1">
     <cylinder pos="998.4 -80 1100" rot="-7.49 0 -1.21" radius="2.6" height="153.3" material="beam" unlit="1" castShadow="0" />
     <cylinder pos="1001.6 -80 1100" rot="-7.49 0 1.21" radius="2.6" height="153.3" material="beam" unlit="1" castShadow="0" />
     <sphere pos="1000 -6 1090" radius="16" material="glow" unlit="1" castShadow="0" />
     <sphere pos="1000 -14 1090" radius="30" rings="8" slices="12" material="beam" unlit="1" castShadow="0" scale="1 0.3 1" />
   </group>
-  <group name="Breath" pos="0 0 {STORE}">
+  <group name="Breath" pos="0 0 {STORE}" sanityIgnore="1">
     <cylinder pos="404.6 31.7 300.8" rot="-1.1 0 81.6" radius="2.6" height="319" material="wind" unlit="1" castShadow="0" />
     <cylinder pos="382.4 58.8 255.2" rot="-11.7 0 76.1" radius="2.0" height="394" material="wind" unlit="1" castShadow="0" />
     <cylinder pos="378.4 -68.7 293.6" rot="-2.6 0 105.9" radius="2.6" height="394" material="wind" unlit="1" castShadow="0" />
@@ -938,7 +939,7 @@
     <prefab source="gorge/pine" pos="1300 3950 {GROUND}" rot="0 0 129" scale="0.9 0.9 0.9" />
     <prefab source="gorge/bush" pos="-3600 -300 {GROUND}" rot="0 0 193" scale="0.8 0.8 0.8" />
     <prefab source="gorge/bush" pos="-2500 290 {GROUND}" rot="0 0 244" scale="0.9 0.9 0.9" />
-    <prefab source="gorge/bush" pos="-5200 320 {GROUND}" rot="0 0 275" scale="1.2 1.2 1.2" />
+    <prefab source="gorge/bush" pos="-5200 950 {GROUND}" rot="0 0 275" scale="1.2 1.2 1.2" />
     <prefab source="gorge/bush" pos="-6800 -290 {GROUND}" rot="0 0 105" scale="0.7 0.7 0.7" />
     <prefab source="gorge/bush" pos="-1900 310 {GROUND}" rot="0 0 172" scale="1.1 1.1 1.1" />
     <prefab source="gorge/bush" pos="2300 300 {GROUND}" rot="0 0 154" scale="1.1 1.1 1.1" />
@@ -946,7 +947,8 @@
     <prefab source="gorge/bush" pos="4700 290 {GROUND}" rot="0 0 192" scale="0.8 0.8 0.8" />
   </group>
 
-  <prefab source="characters/superman" name="Superman" pos="0 {SUP_Y} {STORE}" />
+  <!-- Superman flies in gorge-show-train and gorge-breath, so nothing holds him up there. -->
+  <prefab source="characters/superman" name="Superman" pos="0 {SUP_Y} {STORE}" sanityIgnore="1" />
 
   <!-- Anchors: literal world positions on the objects as each page's camera shows them.
        gorge-show-train: Engine, Cars, Timber-Pile. gorge-lift-coupling: Coupling, Rear-Cars. -->

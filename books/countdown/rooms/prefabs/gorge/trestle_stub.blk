@@ -29,14 +29,15 @@
     <box pos="100 0 80" size="6 40 126" material="steel" />
     <box pos="252 0 -22" size="90 40 5" rot="0 62 0" material="rust" />
   </group>
-  <!-- South girder, snapped at x=190; its top flange tears upward. -->
+  <!-- South girder, snapped at x=190; a strip of its top flange hangs down from the break, so the
+       flange top stays a clean bearing for timbers laid across the gap. -->
   <group name="girder_s" pos="0 {-GY} 0">
     <box pos="0 0 {TOP - 3}" size="380 44 6" material="steel" />
     <box pos="0 0 {BOT + 3}" size="380 44 6" material="steel" />
     <box pos="0 0 80" size="376 3 134" material="steel" />
     <box pos="-60 0 80" size="6 40 126" material="steel" />
     <box pos="100 0 80" size="6 40 126" material="steel" />
-    <box pos="214 0 160" size="60 40 5" rot="0 -24 0" material="rust" />
+    <box pos="214 0 134" size="60 40 5" rot="0 24 0" material="rust" />
   </group>
   <!-- Cross frames between the girders. -->
   <box pos="-65 0 80" size="8 {2*GY - 4} 8" rot="35 0 0" material="steel" />
@@ -51,7 +52,7 @@
   <box pos="22 0 {TOP + 8}" size="24 240 16" rot="0 0 7" material="sleeper" />
   <box pos="-80 72 {TOP + 23.5}" size="240 7 15" material="rail" />
   <box pos="-80 -72 {TOP + 23.5}" size="240 7 15" material="rail" />
-  <box pos="282 112 34" size="7 15 250" rot="0 -16 0" material="rail" />
+  <box pos="282 121 34" size="7 15 250" rot="0 -16 0" material="rail" />
   <!-- The first bent at x=BX: cap under the girders, two legs battered out to y=±205, bracing. -->
   <group name="bent" pos="{BX} 0 0">
     <box pos="0 0 {BOT - 12}" size="40 290 24" material="steel" />

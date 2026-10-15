@@ -39,15 +39,13 @@
   <let name="RAIL" value="-130" />  <!-- rail top -->
 
   <camera name="train-show-clark" comment="Over Wirth's shoulder across the window table: Clark faces us behind the open Daily Planet, Chiang across the aisle with the camera on his knees, morning sun through the windows; beyond them the restroom door and the vestibule door at the front end" pos="-245 -32 146" look="-560 -58 114" fov="62" textRect="0.04 0.035 0.92 0.30" textScale="1" />
-  <camera name="train-show-panic" comment="The runaway car from high in the aisle: Clark on his feet in the aisle by his bay, a passenger up and shouting, Chiang filming the panic, the conductor running for the vestibule door; the restroom door behind Clark's seat" pos="-250 15 190" look="-610 -10 100" fov="72" textRect="0.04 0.035 0.92 0.28" textScale="1">
+  <camera name="train-show-panic" comment="The runaway car from high in the aisle: Clark on his feet in the aisle by his bay, Wirth gripping his seat, Chiang filming the panic, the conductor running for the vestibule door; the restroom door behind Clark's seat" pos="-250 15 190" look="-610 -10 100" fov="72" textRect="0.04 0.035 0.92 0.28" textScale="1">
     <use-pose instance="Clark" name="Stand" />
     <transform target="Clark" pos="59 95 -8" rot="0 0 10" />
-    <transform target="Paper" pos="-41 74 -75" rot="0 90 0" />
+    <transform target="Paper" pos="-66 74 -75" rot="0 90 0" />
     <use-pose instance="Chiang" name="Aim" />
     <transform target="Chiang" pos="67 18 -8" />
     <transform target="ChiangCamera" pos="71 9 70" />
-    <use-pose instance="Wirth" name="Panic" />
-    <transform target="Wirth" pos="-17 40 -9" rot="0 0 170" />
     <use-pose instance="Conductor" name="Point" />
     <transform target="Conductor" pos="-800 55 0" />
   </camera>
@@ -55,15 +53,16 @@
     <use-pose instance="Clark" name="TearShirt" />
     <transform target="Clark" pos="-179 -6 -8" rot="0 0 35" />
     <transform target="ClarkShield" pos="0 0 1000" />
+    <transform target="Paper" pos="0 0 -1000" />
   </camera>
   <camera name="train-exposed" comment="Ending: over Chiang's shoulder as he films; Superman stands in the aisle where Clark was, Clark's suit and glasses on the seat, passengers staring" pos="-40 70 160" look="-420 -20 110" fov="60" textRect="0.04 0.035 0.92 0.30" textScale="1">
     <transform target="Clark" pos="0 0 -1000" />
     <transform target="Superman" pos="0 0 1000" />
     <transform target="ClarkClothes" pos="0 0 1000" />
-    <transform target="Paper" pos="-41 74 -75" rot="0 90 0" />
+    <transform target="Paper" pos="-66 74 -75" rot="0 90 0" />
     <use-pose instance="Chiang" name="Aim" />
-    <transform target="Chiang" pos="307 -95 -8" rot="0 0 173" />
-    <transform target="ChiangCamera" pos="239 -83 70" rot="0 0 173" />
+    <transform target="Chiang" pos="307 -78 -8" rot="0 0 173" />
+    <transform target="ChiangCamera" pos="239 -66 77" rot="0 0 173" />
   </camera>
 
   <!-- Clark pulls his shirt open over the S-shield: both hands at the shirt front, drawn apart. A scene
@@ -310,7 +309,7 @@
   <!-- Clark's suit, shirt, tie and glasses on his seat (train-exposed). -->
   <prefab source="train/discarded_suit" name="ClarkClothes" attach="ClarkSeat:place_b" pos="0 -27 -1000" />
   <!-- The S-shield and blue suit under Clark's opened shirt (train-restroom-change). -->
-  <group name="ClarkShield" pos="-636.5 -108 -854.2" rot="0 0 125">
+  <group name="ClarkShield" pos="-636.5 -108 -854.2" rot="0 0 125" sanityIgnore="1">
     <ellipsoid radii="11 1.6 14" color="0.12 0.30 0.78" />
     <rect pos="0 -1.2 1" rot="90 45 0" size="13 13" color="0.80 0.10 0.10"><extrude amount="1.2" /></rect>
     <rect pos="0 -1.9 1" rot="90 45 0" size="9 9" color="0.95 0.78 0.18"><extrude amount="0.6" /></rect>

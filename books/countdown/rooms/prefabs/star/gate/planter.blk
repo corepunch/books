@@ -4,7 +4,7 @@
 <prefab up="z">
   <box pos="0 0 27.5" size="300 110 55" material="concrete_light" />
   <box pos="0 0 51.5" size="284 94 4" material="soil" />
-  <sphere pos="-95 0 82" radius="44" scale="1.1 1 0.8" material="shrub"><noise strength="0.05" seed="2" /></sphere>
-  <sphere pos="0 4 86" radius="50" scale="1.1 1 0.8" material="shrub"><noise strength="0.05" seed="4" /></sphere>
-  <sphere pos="98 -3 80" radius="42" scale="1.1 1 0.8" material="shrub"><noise strength="0.05" seed="6" /></sphere>
+  <sphere pos="-95 0 82" radius="44" scale="1.1 1 0.8" material="shrub"><noise strength="5" seed="2" /></sphere>
+  <sphere pos="0 4 86" radius="50" scale="1.1 1 0.8" material="shrub"><noise strength="5" seed="4" /></sphere>
+  <sphere pos="98 -3 80" radius="42" scale="1.1 1 0.8" material="shrub"><noise strength="5" seed="6" /></sphere>
 </prefab>
