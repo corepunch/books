@@ -90,7 +90,7 @@
   </camera>
   <camera name="orbit-ambush" comment="Above and beside the grey rock as it opens like a clam: the red-sun beam lashes out of it into Superman's chest and he tumbles backwards" pos="-392 -761 1" look="215 -39 47" fov="46" textRect="0.04 0.035 0.92 0.30" textScale="1">
     <transform target="AirC2" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
-    <transform target="Superman" rot="-70 10 0"/>
+    <transform target="Superman" rot="-69.73 -13.52 16.45"/>
     <use-pose instance="Superman" name="Panic"/>
     <transform target="LeadLid" rot="0 115 0"/>
     <transform target="Rocks" pos="0 0 {STORE}"/>
@@ -110,7 +110,7 @@
   <camera name="orbit-falling" comment="Ending: from high above, the meteorites stream down into the atmosphere as fiery trails toward the cities, while Superman dives the other way, toward home" pos="-2120 -1533 1638" look="2207 2556 84" fov="60" textRect="0.04 0.035 0.92 0.30" textScale="1">
     <transform target="AirC4" scale="{1/HIDE} {1/HIDE} {1/HIDE}"/>
     <transform target="SupermanSpot" pos="-754 -1124 2267"/>
-    <transform target="Superman" rot="-156 0 -25"/>
+    <transform target="Superman" rot="-158.03 -9.9 23.07"/>
     <use-pose instance="Superman" name="Fly"/>
     <transform target="Rocks" pos="0 0 {STORE}"/>
     <transform target="LeadRock" pos="0 0 {STORE}"/>
