@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- The Salt Ledger. Projection rig for the photographic plates: Z up, centimetres,
+     X east, Y north. Each location camera is at eye height and looks north.
+     Anchors sit on a plane 4 m in front of that camera so circles land on the plates.
+     Office eyes 120 cm (seated). Wharf and shack eyes 160 cm (standing). -->
+<scene up="z" ambient="0.15 0.16 0.18" background="0.08 0.09 0.10">
+  <camera name="visit" comment="Edith in the client's chair" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <camera name="office" comment="The desk after she has gone" pos="0 0 120" look="0 100 120" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
+  <camera name="office-file" comment="The open folder" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <camera name="window" comment="The streetlamp through the glass" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <camera name="wharf" comment="Berth four" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
+  <camera name="water" comment="Down at the harbor" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <camera name="marsh" comment="Caleb Marsh on the deck" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <camera name="shack" comment="The shack with the ledger" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
+  <camera name="shack-bare" comment="The shack after the ledger is taken" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
+  <camera name="shack-ledger" comment="The open ledger" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <camera name="below" comment="The open trap" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <camera name="street" comment="The lane into the fog" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
+  <!-- Office, seated. -->
+  <group name="folder" pos="-20.8 400.0 -37.0" />
+  <group name="pane" pos="-69.3 400.0 166.2" />
+  <group name="door" pos="249.4 400.0 96.9" />
+  <!-- Wharf, standing. -->
+  <group name="water" pos="2972.3 400.0 49.1" />
+  <group name="mate" pos="3166.3 400.0 113.8" />
+  <group name="shack-door" pos="2722.8 400.0 136.9" />
+  <group name="lane" pos="3006.9 400.0 123.1" />
+  <!-- Shack, standing. The bare plate uses the same camera, so the door and trap stay put. -->
+  <group name="book" pos="6013.9 400.0 178.5" />
+  <group name="trap" pos="6194.0 400.0 39.9" />
+  <group name="out" pos="5764.4 400.0 136.9" />
+</scene>

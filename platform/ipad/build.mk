@@ -27,7 +27,7 @@ BOOK_SOURCE := books/$(BOOK).c
 ifeq ($(wildcard $(BOOK_SOURCE)),)
 $(error No C source for BOOK='$(BOOK)' (expected $(BOOK_SOURCE)))
 endif
-SOURCES := $(filter-out src/main.c src/headless.c,$(wildcard src/*.c)) $(BOOK_SOURCE) src/ipad.m src/metal.m
+SOURCES := $(filter-out src/main.c src/headless.c,$(wildcard src/*.c)) $(BOOK_SOURCE) src/ipad.m src/metal.m src/video.m
 OBJECTS := $(addprefix $(BUILD_ROOT)/,$(SOURCES:.c=.o))
 OBJECTS := $(OBJECTS:.m=.o)
 ICON_SOURCES := $(wildcard assets/AppIcon.xcassets/*/*.png assets/AppIcon.xcassets/*/*.json assets/AppIcon.xcassets/*.json)
@@ -50,7 +50,7 @@ $(BUILD_ROOT)/%.o: %.m $(BUILD_ROOT)/settings platform/ipad/build.mk
 	@mkdir -p "$(@D)"
 	$(COMPILER) $(COMPILE_FLAGS) $(INCLUDES) -fobjc-arc -c "$<" -o "$@"
 $(BUILD_ROOT)/Book: $(OBJECTS)
-	$(COMPILER) -isysroot "$(SDK_PATH)" -arch $(ARCH) $(MIN_FLAG) $^ -lxml2 -lm -framework UIKit -framework Foundation -framework CoreGraphics -framework Metal -framework QuartzCore -o "$@"
+	$(COMPILER) -isysroot "$(SDK_PATH)" -arch $(ARCH) $(MIN_FLAG) $^ -lxml2 -lm -framework UIKit -framework Foundation -framework CoreGraphics -framework Metal -framework QuartzCore -framework AVFoundation -framework CoreMedia -framework CoreVideo -o "$@"
 $(ICON_DIR)/partial.plist: $(ICON_SOURCES) $(BUILD_ROOT)/settings platform/ipad/build.mk
 	@mkdir -p "$(ICON_DIR)"
 	xcrun --sdk $(SDK) actool assets/AppIcon.xcassets --compile "$(ICON_DIR)" --output-partial-info-plist "$@" --app-icon AppIcon --target-device ipad --minimum-deployment-target $(IOS_MIN) --platform $(SDK) --output-format human-readable-text

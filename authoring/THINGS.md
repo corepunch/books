@@ -22,6 +22,12 @@ remain the right tool for "what happened"; things are for "what the hero has".
   the thing's description, and circles appear only where that thing can be
   used on this page. Tapping it again puts it away. A held thing with no use
   here simply shows no circles; that is information, not a failure.
+- Author scene-specific `.item_texts` for powers and investigative tools: what
+  can be heard here, what the scan reveals now, why a forceful action would
+  endanger these people. Keep the response within the camera's reading area.
+  Use `.requires`/`.excludes` for mutually exclusive fact variants, so a scan
+  already performed acknowledges its result. General item descriptions are
+  the fallback, not a substitute for the scene's authored response.
 - Taking a thing is an ordinary choice under its anchor ("Взять кабель?"). The
   next page should show the thing gone from where it lay.
 

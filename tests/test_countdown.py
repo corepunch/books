@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read Обратный отсчёт through its headless page interface: every page, held thing, route, ending and retry."""
 from pathlib import Path
+import ast
 import re
 import sys
 
@@ -45,9 +46,19 @@ assert len(item_ids) == len(set(item_ids)) == 10
 for item in item_ids:
     assert (root / f'books/countdown/rooms/item-{item}.jpg').is_file(), item
 
-# Explore every reachable page. On each room page the reader can hold every carried thing in turn; the
-# probe holds and releases each one in place and records its uses. Hidden facts belong to one act, so
-# a page is explored again whenever it is reached with a different history within its act.
+# Track the passages that set hidden facts, rather than every optional conversation. Hearing and
+# surveying can return to decisions; their order must not multiply identical worlds indefinitely.
+# The exploration still enters every page through published choices, never by setting runtime state.
+fact_passages = {}
+for block in re.split(r'(?=    \{\.id = ")', source):
+    if not re.search(r'\.sets = ', block):
+        continue
+    fact = re.search(r'\.sets = ([^,]+)', block).group(1)
+    prose = re.search(r'\.text = ((?:"(?:[^"\\]|\\.)*"\s*)+)', block).group(1)
+    fact_passages[''.join(ast.literal_eval(t) for t in re.findall(r'"(?:[^"\\]|\\.)*"', prose))] = fact
+
+# On each room page hold and release every carried thing, recording all its uses. Hidden facts
+# belong to one act, so revisit a page for each different fact history within that act.
 seen, explored, endings, frontier = {}, set(), {}, [([], frozenset())]
 while frontier:
     route, past = frontier.pop()
@@ -61,7 +72,8 @@ while frontier:
         continue
     explored.add(key)
     seen.setdefault(state, route)
-    past = past | {(act, state)}
+    if view['text'] in fact_passages:
+        past = past | {(act, fact_passages[view['text']])}
     assert Path(view['image']).is_file(), f'missing picture for {route}: {view["image"]}'
     if view['kind'] == 'ended':
         endings[camera(view)] = (view['ending'], route)
@@ -84,21 +96,21 @@ assert reached == cameras, (cameras - reached, reached - cameras)
 kinds = sorted(kind for kind, _ in endings.values())
 assert kinds.count('success') == 1 and kinds.count('partial') == 3 and kinds.count('failure') == 8, endings
 
-START = ['continue', 'train-lurch', 'continue']
+START = ['continue', 'train-lurch', 'continue', 'continue']
 
 # The first fork: a power held in the inventory opens a way that plain choices do not.
 book = Book()
 follow(book, ['continue'])
-assert commands(book.view) == {'train-lurch', 'train-early'}
+assert commands(book.view) == {'train-lurch', 'train-early', 'train-conductor'}
 assert carried(book.view) == {'heat', 'xray', 'breath', 'hearing', 'pass'}
 book.hold('hearing')
 assert book.view['held'] == 'hearing' and book.view['text'].startswith('Суперслух')
 assert commands(book.view) == {'train-hear'}
 book.hold('hearing')  # tapping it again puts it away
-assert book.view['held'] == '' and commands(book.view) == {'train-lurch', 'train-early'}
+assert book.view['held'] == '' and commands(book.view) == {'train-lurch', 'train-early', 'train-conductor'}
 book.hold('heat')
 assert commands(book.view) == set()  # nothing here to heat
-follow(book, ['hold:heat', 'train-lurch', 'continue', 'hold:xray', 'train-xray', 'continue'])
+follow(book, ['hold:heat', 'train-lurch', 'continue', 'continue', 'hold:xray', 'train-xray', 'continue'])
 assert camera(book.view) == 'train-show-panic' and commands(book.view) == {'restroom', 'end-exposed'}
 book.hold('xray')
 assert commands(book.view) == set()  # already looked ahead
@@ -106,11 +118,23 @@ follow(book, ['hold:xray', 'restroom', 'continue'])
 assert commands(book.view) == {'gorge-bridge', 'end-headon', 'gorge-lift'}  # the timbers are now a way
 book.close()
 
-# Without that look ahead there is no bridge to build.
+# Without a survey there is no bridge choice; surveying from outside still opens it.
+book = Book()
+follow(book, START + ['hold:hearing'])
+panic_hearing = book.view['text']
+assert commands(book.view) == {'train-hear-panic'}
+follow(book, ['train-hear-panic', 'continue', 'restroom', 'continue', 'hold:hearing'])
+assert commands(book.view) == {'gorge-hear'} and book.view['text'] != panic_hearing
+follow(book, ['gorge-hear', 'continue', 'hold:xray', 'gorge-survey', 'continue'])
+assert 'gorge-bridge' in commands(book.view)
+book.close()
+
 book = Book()
 follow(book, START + ['restroom', 'continue'])
 assert commands(book.view) == {'end-headon', 'gorge-lift'}
-follow(book, ['gorge-lift', 'continue', 'hold:heat', 'gorge-weld', 'continue', 'continue'])
+follow(book, ['gorge-lift', 'continue', 'hold:hearing'])
+assert 'сцепки' in book.view['text'] and commands(book.view) == set()
+follow(book, ['hold:heat', 'gorge-weld', 'continue', 'continue', 'train-report', 'continue', 'continue'])
 assert camera(book.view) == 'star-show-gate'
 # The press pass is the way in; it stays with the guard.
 assert commands(book.view) == {'end-gate'}
@@ -176,6 +200,18 @@ for viewport in ((1024, 768), (1133, 744), (1366, 1024)):
     for route in longest:
         book = Book(viewport)
         follow(book, route)
+        book.close()
+    # Inspection responses without a target are not part of those routes. Check every train decision
+    # and fact variant with every carried power at each crop, including releasing it to restore prose.
+    for state, route in seen.items():
+        if state[0] != 'room' or Path(state[1]).stem.split('-')[0] not in ('train', 'gorge'):
+            continue
+        book = Book(viewport)
+        normal = follow(book, route)
+        for item in sorted(carried(normal)):
+            held = book.hold(item)
+            assert held['text'] != normal['text']
+            assert book.hold(item) == normal
         book.close()
 
 print(f'Countdown: {len(seen)} page states, {len(cameras)} pictures, {len(endings)} endings, things and retries passed')

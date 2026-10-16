@@ -28,6 +28,7 @@ static void dump(fsize2_t viewport)
     printf(",\"kind\":"); json_string(book_page_kind_name(page->kind));
     printf(",\"ending\":"); json_string(book_ending_kind_name(page->ending));
     printf(",\"image\":"); json_string(page->image);
+    printf(",\"clip\":"); json_string(page->clip);
     printf(",\"text\":"); json_string(page->text);
     printf(",\"choices\":[");
     for (int i = 0; i < page->choice_count; ++i) {

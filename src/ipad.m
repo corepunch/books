@@ -96,7 +96,7 @@
 }
 - (void)dealloc
 {
-    if (self.initialized) { text_shutdown(); renderer_shutdown(); scene_shutdown(); book_shutdown(); }
+    if (self.initialized) { video_close(); text_shutdown(); renderer_shutdown(); scene_shutdown(); book_shutdown(); }
 }
 @end
 

@@ -47,6 +47,7 @@ static void capture_page(struct PageView *view)
 static void navigate(int action, fvec2_t origin, float radius)
 {
     if (!book_action(action)) return;
+    video_close();
     outgoing_page = current_page;
     /* Resolve and upload the new page before the animation clock starts. */
     capture_page(&current_page);
@@ -72,8 +73,12 @@ static void draw_image(const char *path,frect_t viewport)
     } else renderer_rect(viewport,0x211C18FF);
 }
 
-static void draw_page_image(const struct PageView *view, frect_t viewport)
+static void draw_page_image(const struct PageView *view, frect_t viewport, bool live)
 {
+    if (live && *view->content.clip) {
+        video_open(view->content.clip);
+        if (video_frame(viewport)) return;
+    } else if (live) video_close();
     draw_image(view->content.image, viewport);
 }
 
@@ -159,11 +164,11 @@ void ui_draw(void)
     if (frame.revealing) {
         if (outgoing_page.viewport.width!=window.width || outgoing_page.viewport.height!=window.height)
             layout_view(&outgoing_page,window);
-        draw_page_image(&outgoing_page,viewport);
+        draw_page_image(&outgoing_page, viewport, false);
         draw_overlays(&outgoing_page);
         renderer_reveal_begin(frame.center,frame.radius);
     }
-    draw_page_image(&current_page,viewport);
+    draw_page_image(&current_page, viewport, !frame.revealing);
     renderer_reveal_end();
     /* Same-art responses crossfade their overlays without an empty-text frame. */
     if (frame.active && !transition.reveal) {
@@ -179,6 +184,7 @@ void ui_draw(void)
 
 void ui_reload(void)
 {
+    video_close();
     transition.active=false;
     page_ready=false;
     preview_time=-1;
@@ -201,7 +207,7 @@ void ui_scroll(float delta)
     if (!transition.active) current_page.scroll=MIN(current_page.layout.max_scroll,MAX(0,(int)roundf(current_page.scroll-delta)));
 }
 
-bool ui_animating(void) { return transition.active; }
+bool ui_animating(void) { return transition.active || video_playing(); }
 
 void ui_preview(double seconds)
 {

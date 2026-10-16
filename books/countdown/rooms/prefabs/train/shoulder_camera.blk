@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A 1980s ENG shoulder camera (WGBS): body with a shoulder pad underneath, battery pack at the back, zoom
+     lens with a flared hood, viewfinder on the operator's left (+X) side, carry handle and a shotgun
+     microphone on top. Footprint 19 x 58 cm, height 27 cm.
+     Origin on the underside of the shoulder pad, under the body's middle. Front -Y: the lens points to
+     local -Y, the operator's eye is at the +Y end of the viewfinder. Train variant: lowered viewfinder meets the operator’s eye while the pad bears on his shoulder.
+     Uses only camera_body and camera_lens
+     from the scene (star.blks and train.blks both define them); other parts carry explicit colours. -->
+<prefab up="z" front="-y">
+  <let name="BW" value="13" />  <!-- body width -->
+  <let name="BL" value="30" />  <!-- body length -->
+  <let name="BH" value="18" />  <!-- body height -->
+  <let name="PAD" value="2" />
+  <let name="LZ" value="PAD + 10" />  <!-- lens axis height -->
+  <let name="FRONT" value="2 - BL/2" />
+
+  <box pos="0 4 {PAD/2}" size="9 16 {PAD}" color="0.20 0.20 0.21" />
+  <box pos="0 2 {PAD + BH/2}" size="{BW} {BL} {BH}" material="camera_body" />
+  <box pos="0 {2 + BL/2 + 3.5} {PAD + 2 + 6.5}" size="11 7 13" color="0.28 0.28 0.30" />
+  <box pos="{-BW/2 - 0.1} 6 {PAD + 10}" size="0.4 10 5" color="0.74 0.16 0.12" />
+
+  <!-- Zoom lens along -Y: barrel, grip ring, flared hood and the front element. -->
+  <cylinder pos="0 {FRONT - 8} {LZ}" radius="4.5" height="16" material="camera_lens" />
+  <cylinder pos="0 {FRONT - 9} {LZ}" radius="5" height="3" color="0.32 0.32 0.34" />
+  <cone pos="0 {FRONT - 18.5} {LZ}" radius="6.5" radiusTop="5" height="5" material="camera_body" />
+  <cylinder pos="0 {FRONT - 20.9} {LZ}" radius="5.6" height="0.4" color="0.18 0.24 0.34" shininess="90" />
+
+  <!-- Viewfinder on its arm, eyepiece toward the operator. -->
+  <box pos="{BW/2 + 0.5} -6 {PAD + BH - 6}" size="3 3 3" material="camera_body" />
+  <box pos="{BW/2 + 4} -6 {PAD + BH - 6}" size="5 12 6" material="camera_body" />
+  <cylinder pos="{BW/2 + 4} 1.5 {PAD + BH - 6}" radius="2.4" height="3" color="0.08 0.08 0.09" />
+
+  <box pos="-9 -11 7" size="4 8 12" material="camera_body" />
+  <attach name="right_grip" pos="-11 -11 7" />
+  <attach name="lens_support" pos="0 -21 7.5" />
+  <attach name="eyepiece" pos="10.5 3 14" />
+
+  <!-- Carry handle on two posts; shotgun microphone on its clip. -->
+  <box pos="0 -7 {PAD + BH + 2.5}" size="3 2 6" material="camera_body" />
+  <box pos="0 10.5 {PAD + BH + 2.5}" size="3 2 6" material="camera_body" />
+  <box pos="0 2 {PAD + BH + 6}" size="3 20 2" material="camera_body" />
+  <box pos="-4.5 -9 {PAD + BH + 1.5}" size="2 2 3" color="0.30 0.30 0.32" />
+  <cylinder pos="-4.5 -14 {PAD + BH + 3.6}" radius="1.3" height="18" color="0.36 0.36 0.38" />
+</prefab>

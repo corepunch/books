@@ -51,6 +51,9 @@ def main():
     shutil.copy2(back_button, destination)
     stage('books/' + adventure + '/rooms', {'.jpg', '.jpeg', '.blks', '.blk'})
     stage('books/' + adventure + '/illustrations', {'.png'})
+    clips = book_dir / 'clips'
+    if clips.is_dir():
+        stage('books/' + adventure + '/clips', {'.mp4'})
     shutil.copy2(args.binary, target / 'Book')
     for icon in args.icons.iterdir():
         if icon.suffix in ('.car', '.png'):

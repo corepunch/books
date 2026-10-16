@@ -1,8 +1,9 @@
 # Book Engine Guide
 
-Book is a native C engine for visual interactive adventures. The built-in
-adventure is «Обратный отсчёт», a table of pages in `books/countdown.c` run by
-the story runtime in `src/story.c`. There is no ZIL or Lua runtime.
+Book is a native C engine for visual interactive adventures. The default book
+is The Salt Ledger, a table of pages in `books/salt.c` run by the story runtime
+in `src/story.c`: first-person stills and full-motion clips. «Обратный отсчёт»
+remains in `books/countdown.c`. There is no ZIL or Lua runtime.
 Keep module internals private and shared declarations in the single
 `src/book.h` header. Compile stb_image in `renderer.c` and stb_truetype in
 `text.c`.
@@ -33,7 +34,9 @@ in places, are taken, carried, held and used); see
   choices, facts, endings) and `book_story()`. `src/story.c` validates it at
   launch and keeps all mutable story state private. Consumers read
   `book_page()`; pages are built through its constructors and
-  `publish_page()`. Create whole choice values with explicit `ChoiceKind`;
+  `publish_page()`. A page `.clip` names `books/<name>/clips/<clip>.mp4`, played in
+  the picture; the camera still is the poster, and headless play stays on the
+  poster. Create whole choice values with explicit `ChoiceKind`;
   never partially overwrite a reused choice or infer its action from text or
   empty strings. Story pages always get Continue and endings exactly one
   retry choice. See README's "Extending the adventure".

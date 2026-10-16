@@ -1,0 +1,183 @@
+<!-- Train contact variant of characters/person: articulated mitten fingers and thumb; the body and shared chapters are unchanged. -->
+<!-- A passenger or bystander; instances tint the shirt (tint="1") to tell people apart.
+     Adapted from Scener's CAT biped preset: body frame Z up, facing local -Y, left at +X; centimetres.
+     Every human in the book shares these joint names and the pose library below. -->
+<prefab fingers="1">
+  <material id="pp_skin" color="0.86 0.66 0.54" shininess="6" />
+  <material id="pp_hair" color="0.30 0.20 0.12" shininess="6" />
+  <material id="pp_eye" color="0.08 0.08 0.10" shininess="6" />
+  <material id="pp_trousers" color="0.24 0.24 0.28" shininess="6" />
+  <material id="pp_shoes" color="0.14 0.10 0.08" shininess="20" />
+  <material id="pp_shirt" color="0.70 0.56 0.36" shininess="6" />
+  <hub name="pelvis" aim="0 90" length="14.0" radius="18.0 11.5" material="pp_trousers">
+    <ellipsoid on="120 -15" at="0.25" radii="9.0 8.0 10.0" sink="4.5" material="pp_trousers" />
+    <ellipsoid on="-120 -15" at="0.25" radii="9.0 8.0 10.0" sink="4.5" material="pp_trousers" />
+    <limb name="left_leg" type="leg" at="0.25" from="90 0" sink="3.8" mirror="1">
+      <bone name="left_thigh" aim="0 -90" length="44.0" radius="10.5 11.0" taper="0.78" overlap="6" material="pp_trousers">
+        <bone name="left_calf" aim="0 -90" length="43.0" radius="7.5 8.0" taper="0.65" overlap="4" material="pp_trousers">
+          <ellipsoid on="0 0" at="0" radii="6.5 6.0 6.5" sink="2" material="pp_trousers" />
+          <ankle name="left_foot" aim="0 -12" length="18" radius="5.5 4.6" overlap="3" material="pp_shoes">
+            <digit name="left_toe" at="1" from="0 -30" aim="0 -6" links="2" length="4" radius="5 3.5" taper="0.9" overlap="3" material="pp_shoes" />
+          </ankle>
+        </bone>
+      </bone>
+    </limb>
+    <spine name="spine" links="3" aim="0 90" aimEnd="0 86" length="24.0" radius="13.0 9.5" taper="1.1" volume="0" material="pp_shirt" tint="1">
+      <ellipsoid on="0 0" at="0.5" radii="13.5 8.8 23.0" sink="9.8" material="pp_shirt" tint="1" />
+      <hub name="ribcage" aim="0 90" length="20.0" radius="17.0 10.5" material="pp_shirt" tint="1">
+        <ellipsoid on="40 0" at="0.68" radii="10.5 4.5 9.5" sink="2.5" material="pp_shirt" tint="1" />
+        <ellipsoid on="-40 0" at="0.68" radii="10.5 4.5 9.5" sink="2.5" material="pp_shirt" tint="1" />
+        <limb name="left_arm" type="arm" at="0.9" from="90 0" mirror="1">
+          <collarbone name="left_collarbone" aim="90 0" length="8.0" radius="4" material="pp_shirt" tint="1">
+            <bone name="left_upperarm" aim="90 -82" length="29.0" radius="6.5 7.0" taper="0.78" overlap="4" material="pp_shirt" tint="1">
+              <ellipsoid on="90 20" at="0.08" radii="7.0 7.0 8.0" sink="6.5" material="pp_shirt" tint="1" />
+              <bone name="left_forearm" aim="0 -86" length="26.0" radius="4.6 4.8" taper="0.75" material="pp_shirt" tint="1">
+                <palm name="left_palm" aim="0 -90" length="7" radius="3.2 2.3" overlap="2" material="pp_skin">
+                  <bone name="left_wrist" at="0" from="0 0" sink="2.3" aim="0 -90" length="2" radius="3.4" overlap="2" material="pp_skin" />
+                  <digit name="left_fingers" aim="0 -90" links="2" length="5.5" radius="3 1.5" taper="0.8" overlap="1" material="pp_skin" />
+                  <digit name="left_thumb" at="0.45" from="-90 0" sink="0.6" aim="-60 -40" links="2" length="4.5" radius="1.5" taper="0.8" overlap="1" material="pp_skin" />
+                </palm>
+              </bone>
+            </bone>
+          </collarbone>
+        </limb>
+        <spine name="neck" aim="0 90" aimEnd="0 80" length="9.0" radius="5.5" material="pp_skin">
+          <hub name="head" aim="0 90" length="21" radius="8 9.5" material="pp_skin">
+            <sphere on="28 5" at="0.45" radius="1.3" material="pp_eye" />
+            <sphere on="-28 5" at="0.45" radius="1.3" material="pp_eye" />
+            <ellipsoid on="0 -5" at="0.35" radii="1.4 2 2.6" sink="0.5" material="pp_skin" />
+            <ellipsoid on="90 0" at="0.45" radii="1 2 3" sink="0.5" material="pp_skin" />
+            <ellipsoid on="-90 0" at="0.45" radii="1 2 3" sink="0.5" material="pp_skin" />
+            <bone name="hair" at="0.7" from="180 50" aim="0 90" length="8" radius="8.5 9.5" sink="6" material="pp_hair" />
+          </hub>
+        </spine>
+      </hub>
+    </spine>
+  </hub>
+
+  <!-- Shared pose library: IK goals are body-frame offsets from each hand's or foot's rest point. -->
+  <pose name="Stand" />
+  <pose name="Sit">
+    <joint target="pelvis" pos="0 0 -44" />
+    <ik limb="left_leg" offset="0 -40 2" />
+    <ik limb="right_leg" offset="0 -40 2" />
+    <ik limb="left_arm" offset="-6 -24 -36" bend="150 -30" />
+    <ik limb="right_arm" offset="6 -24 -36" bend="-150 -30" />
+  </pose>
+  <pose name="Read">
+    <joint target="pelvis" pos="0 0 -44" />
+    <ik limb="left_leg" offset="0 -40 2" />
+    <ik limb="right_leg" offset="0 -40 2" />
+    <ik limb="left_arm" offset="-8 -36 -6" bend="150 -40" />
+    <ik limb="right_arm" offset="8 -36 -6" bend="-150 -40" />
+    <joint target="head" rot="18 0 0" />
+  </pose>
+  <pose name="Sleep">
+    <joint target="pelvis" pos="0 0 -44" />
+    <ik limb="left_leg" offset="2 -42 2" />
+    <ik limb="right_leg" offset="-4 -38 2" />
+    <ik limb="left_arm" offset="4 -18 -40" bend="150 -30" />
+    <ik limb="right_arm" offset="-2 -18 -34" bend="-150 -30" />
+    <joint target="neck" rot="25 0 8" />
+    <joint target="head" rot="20 0 10" />
+  </pose>
+  <pose name="Lift">
+    <ik limb="left_arm" offset="-4 -6 104" bend="90 0" />
+    <ik limb="right_arm" offset="4 -6 104" bend="-90 0" />
+    <joint target="head" rot="-20 0 0" />
+  </pose>
+  <pose name="Hold">
+    <ik limb="left_arm" offset="-8 -44 44" bend="150 -60" />
+    <ik limb="right_arm" offset="8 -44 44" bend="-150 -60" />
+  </pose>
+  <pose name="Push">
+    <joint target="pelvis" pos="0 8 -6" />
+    <ik limb="left_arm" offset="-6 -42 40" bend="150 -60" />
+    <ik limb="right_arm" offset="6 -42 40" bend="-150 -60" />
+    <ik limb="left_leg" offset="0 -22 2" />
+    <ik limb="right_leg" offset="0 34 0" />
+  </pose>
+  <pose name="Fly">
+    <ik limb="left_arm" offset="-8 -10 106" bend="90 0" />
+    <ik limb="right_arm" offset="2 -6 6" bend="-150 0" />
+    <ik limb="right_leg" offset="0 10 6" />
+    <joint target="head" rot="-35 0 0" />
+  </pose>
+  <pose name="FlyReach">
+    <ik limb="left_arm" offset="-6 -16 100" bend="90 0" />
+    <ik limb="right_arm" offset="6 -16 100" bend="-90 0" />
+    <joint target="head" rot="-35 0 0" />
+  </pose>
+  <pose name="Float">
+    <ik limb="left_arm" offset="40 4 42" bend="0 -90" />
+    <ik limb="right_arm" offset="-40 4 42" bend="0 -90" />
+    <ik limb="left_leg" offset="10 0 4" />
+    <ik limb="right_leg" offset="-8 0 10" />
+    <joint target="head" rot="-12 0 -14" />
+  </pose>
+  <pose name="Point">
+    <ik limb="right_arm" offset="8 -50 52" bend="-150 -40" />
+    <joint target="head" rot="0 0 -10" />
+  </pose>
+  <pose name="Aim">
+    <ik limb="left_arm" offset="-16 -46 40" bend="150 -60" />
+    <ik limb="right_arm" offset="12 -48 42" bend="-150 -60" />
+  </pose>
+  <pose name="Throw">
+    <ik limb="right_arm" offset="2 26 86" bend="-90 0" />
+    <ik limb="left_arm" offset="-2 -40 46" bend="150 -60" />
+    <joint target="ribcage" rot="0 0 -18" />
+  </pose>
+  <pose name="Reveal">
+    <ik limb="left_arm" offset="-6 -22 36" bend="150 -20" />
+    <ik limb="right_arm" offset="6 -22 36" bend="-150 -20" />
+    <joint target="head" rot="-8 0 0" />
+  </pose>
+  <pose name="Crouch">
+    <joint target="pelvis" pos="0 6 -34" />
+    <ik limb="left_leg" offset="0 -10 0" />
+    <ik limb="right_leg" offset="0 8 0" />
+    <ik limb="left_arm" offset="-4 -30 10" bend="150 -40" />
+    <ik limb="right_arm" offset="4 -36 16" bend="-150 -40" />
+  </pose>
+  <pose name="Kneel">
+    <joint target="pelvis" pos="0 10 -40" />
+    <ik limb="left_leg" offset="0 -36 0" />
+    <ik limb="right_leg" offset="0 30 8" />
+    <ik limb="left_arm" offset="-4 -20 20" bend="150 -40" />
+    <ik limb="right_arm" offset="2 -10 -10" bend="-150 -40" />
+    <joint target="head" rot="20 0 0" />
+  </pose>
+  <pose name="Blow">
+    <joint target="pelvis" rot="-10 0 0" />
+    <ik limb="left_arm" offset="-2 2 24" bend="130 0" />
+    <ik limb="right_arm" offset="2 2 24" bend="-130 0" />
+    <joint target="head" rot="-6 0 0" />
+  </pose>
+  <pose name="HandsOnHips">
+    <ik limb="left_arm" offset="-2 2 24" bend="130 0" />
+    <ik limb="right_arm" offset="2 2 24" bend="-130 0" />
+  </pose>
+  <pose name="Wave">
+    <ik limb="right_arm" offset="-4 -8 72" bend="-150 -20" />
+    <joint target="head" rot="0 0 -15" />
+  </pose>
+  <pose name="Panic">
+    <ik limb="left_arm" offset="-10 -20 80" bend="150 -20" />
+    <ik limb="right_arm" offset="10 -20 80" bend="-150 -20" />
+    <joint target="head" rot="-15 0 0" />
+  </pose>
+  <pose name="Throne">
+    <joint target="pelvis" pos="0 0 -44" />
+    <ik limb="left_leg" offset="0 -40 2" />
+    <ik limb="right_leg" offset="0 -40 2" />
+    <ik limb="left_arm" offset="6 -34 -16" bend="150 -30" />
+    <ik limb="right_arm" offset="-6 -34 -16" bend="-150 -30" />
+  </pose>
+  <pose name="Lie">
+    <ik limb="left_arm" offset="12 -6 6" bend="150 0" />
+    <ik limb="right_arm" offset="-10 -14 30" bend="-150 0" />
+    <ik limb="left_leg" offset="4 -10 4" />
+    <joint target="head" rot="0 0 25" />
+  </pose>
+</prefab>

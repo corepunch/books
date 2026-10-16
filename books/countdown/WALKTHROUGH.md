@@ -5,11 +5,11 @@ Commands are what `tests/test_countdown.py` types: a choice's target page,
 
 ## The best ending
 
-1. Train: `continue`, read on (`train-lurch`), `continue`; hold **Рентген** and
+1. Train: `continue`, read on (`train-lurch`), `continue`, `continue`; hold **Рентген** and
    look ahead (`train-xray`), `continue`; hide in the restroom (`restroom`),
    `continue`.
 2. Gorge: build the bridge from the timbers (`gorge-bridge`), `continue`,
-   `continue`.
+   `continue`; explain the absence (`train-alibi`), `continue`, `continue`.
 3. S.T.A.R.: hold **Пресс-карта** on the guard (`star-arrive`), `continue`,
    `continue`; hold **Рентген** on the floor (`star-xray-floor`), `continue`;
    stand on the panels (`star-pin`), `continue`, `continue`; take the grenade
@@ -44,9 +44,22 @@ Commands are what `tests/test_countdown.py` types: a choice's target page,
 
 ## Other ways through
 
-- Super-hearing on the cab door before the runaway hears the engineer.
+- Ask the conductor (`train-conductor`) or use super-hearing (`train-hear`)
+  during the stop; both lead to the restart and then the warning sign.
+- Super-hearing during the panic (`train-hear-panic`) hears the rerouting and
+  failed brakes. Beside the engine (`gorge-hear`) it confirms that the motor
+  is already off. Both return to the rescue decision.
+- X-ray beside the train (`gorge-survey`) discovers the old bridge material
+  even if Clark did not look ahead from his seat. The earlier scan remains a
+  shortcut; missing it no longer permanently hides a visible solution.
+- Holding each power at the coupling explains the actual damage and risks;
+  super-hearing also detects the crack during the initial lift.
 - At the gorge: lift the train, then weld the coupling with heat vision or catch
   the rear cars; or blow the train to a stop with super-breath.
+- After any successful rescue, Clark repairs his exit and returns to the
+  crew. Explain motion sickness (`train-alibi`) or record the WGBS story
+  (`train-report`); `continue`, `continue` reaches S.T.A.R. A functioning old
+  hauling engine takes the defective train onward on every successful route.
 - At S.T.A.R.: blow the gas back, warn Rafferty, or sleep through the gas; then
   take the cable and tie the men, melt their pistols, or let them go.
 - Without the grenade the Fortress cannot make the antidote; the best ending

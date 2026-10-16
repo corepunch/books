@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := run
 
 BUILD_DIR ?= build
-BOOK ?= countdown
+BOOK ?= salt
 SCENE ?= train
 SCENER ?= $(shell command -v scener 2>/dev/null || printf '%s/.local/bin/scener' "$$HOME")
 WIDTH ?= 1920
@@ -22,7 +22,7 @@ ifeq ($(wildcard $(BOOK_SOURCE)),)
 $(error No C source for BOOK='$(BOOK)' (expected $(BOOK_SOURCE)))
 endif
 SOURCES := $(wildcard src/*.c) $(BOOK_SOURCE)
-NATIVE_SOURCES := src/macos.m src/metal.m
+NATIVE_SOURCES := src/macos.m src/metal.m src/video.m
 OBJECTS := $(patsubst %.c,$(BOOK_BUILD_ROOT)/%.o,$(SOURCES)) $(patsubst %.m,$(BOOK_BUILD_ROOT)/%.o,$(NATIVE_SOURCES))
 CPPFLAGS += -Isrc -Ivendor $(shell pkg-config --cflags libxml-2.0)
 CFLAGS += -std=c11 -Wall -Wextra -Werror=switch-enum -MMD -MP
@@ -31,7 +31,7 @@ ifneq ($(shell uname -s),Darwin)
 $(error Book requires macOS with AppKit and Metal)
 endif
 CPPFLAGS += -I$(shell xcrun --show-sdk-path)/usr/include/libxml2
-LDLIBS += -framework AppKit -framework Metal -framework QuartzCore
+LDLIBS += -framework AppKit -framework Metal -framework QuartzCore -framework AVFoundation -framework CoreMedia -framework CoreVideo
 
 .PHONY: all run mac check check-ui render layout clean ipad ipad-simulator ipad-mac ipad-run ipad-deploy list-devices
 # The AppKit executable remains a development/headless harness.

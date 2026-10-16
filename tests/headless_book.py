@@ -39,6 +39,7 @@ class Book:
         choices, controls = view['choices'], view['controls']
         indices = [c['choice'] for c in controls]
         assert len(indices) == len(set(indices)) and all(0 <= i < len(choices) for i in indices), view
+        assert not view['clip'] or Path(view['clip']).is_file(), view['clip']
         for control in controls:
             choice = choices[control['choice']]
             assert (control['kind'], control['label']) == (choice['kind'], choice['label'])
@@ -88,7 +89,8 @@ class Book:
             assert view['held'] in [''] + [c['object'] for c in items], view['held']
             assert len(objects) + len(items) == len(choices), (view['image'], view['held'], choices, indices)
         elif view['kind'] == 'beat':
-            assert choices == [{'kind': 'continue', 'label': 'Дальше', 'command': '', 'object': ''}]
+            assert len(choices) == 1 and choices[0]['kind'] == 'continue' and choices[0]['label']
+            assert choices[0]['command'] == '' and choices[0]['object'] == ''
             assert not view['hotspots'] and len(controls) == 1
         else:
             # An ending offers exactly one button: try again, or start over after the success.

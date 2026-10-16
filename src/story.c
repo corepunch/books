@@ -135,11 +135,27 @@ static void validate_story(void)
         if (shown && (!page->location || !*page->location || !page->camera || !*page->camera ||
                       !page->text || !*page->text))
             fail("page %s needs a location, a camera and text", page->id);
+        if (page->clip && (page->kind == STORY_CHECK || !*page->clip || strpbrk(page->clip, "/.\\")))
+            fail("page %s clip must be a bare file name", page->id);
         if (page->kind != STORY_ENDING && page->ending != ENDING_NONE) fail("page %s is not an ending", page->id);
         check_items(page->gives, page->id, "gives");
         check_items(page->removes, page->id, "removes");
         if (page->gives & page->removes) fail("page %s both gives and removes a thing", page->id);
         if (page->kind != STORY_CHECK && page->holds) fail("page %s is not a check", page->id);
+        for (int t = 0; t < MAX_PAGE_ITEM_TEXTS; ++t) {
+            const struct StoryItemText *response = &page->item_texts[t];
+            if (!response->item && !response->text && !response->requires && !response->excludes) continue;
+            valid_item(response->item, page->id, "item text");
+            if (page->kind != STORY_DECISION || !response->text || !*response->text ||
+                (response->requires & response->excludes))
+                fail("page %s has invalid item text %d", page->id, t);
+            for (int u = 0; u < t; ++u) {
+                const struct StoryItemText *other = &page->item_texts[u];
+                if (other->item == response->item &&
+                    !(other->requires & response->excludes) && !(response->requires & other->excludes))
+                    fail("page %s has overlapping item texts", page->id);
+            }
+        }
         switch (page->kind) {
         case STORY_DECISION: {
             int count = 0;
@@ -225,6 +241,23 @@ static void select_image(struct BookPage *page, const char *camera)
     find_image(camera, page->image);
 }
 
+static void clip_file(const char *clip, char *dest, size_t size)
+{
+    int length = snprintf(dest, size, "%s/books/%s/clips/%s.mp4", game.root, story->name, clip);
+    if (length < 0 || (size_t)length >= size) fail("clip path is too long");
+}
+
+static void check_clips(void)
+{
+    for (int i = 0; i < story->page_count; ++i) {
+        const char *clip = story->pages[i].clip;
+        if (!clip) continue;
+        filePath_t path;
+        clip_file(clip, path, sizeof(path));
+        if (access(path, R_OK)) fail("missing clip %s", path);
+    }
+}
+
 static void append_choice(enum ChoiceKind kind, const char *label, const char *command, int object, int source)
 {
     if (draft.choice_count >= MAX_CHOICES) fail("too many page choices");
@@ -297,7 +330,20 @@ static void build_room(void)
     const struct StoryPage *page = &story->pages[game.page];
     draft.kind = PAGE_ROOM;
     draft.held = game.held ? game.item_object[game.held - 1] : 0;
-    copy(draft.text, sizeof(draft.text), game.held ? story->items[game.held - 1].text : page->text);
+    const char *text = page->text;
+    if (game.held) {
+        storyItems_t item = story->items[game.held - 1].item;
+        text = story->items[game.held - 1].text;
+        for (int t = 0; t < MAX_PAGE_ITEM_TEXTS; ++t) {
+            const struct StoryItemText *response = &page->item_texts[t];
+            if (response->item == item && (game.world.facts & response->requires) == response->requires &&
+                !(game.world.facts & response->excludes)) {
+                text = response->text;
+                break;
+            }
+        }
+    }
+    copy(draft.text, sizeof(draft.text), text);
     for (int c = 0; c < MAX_PAGE_CHOICES; ++c) {
         const struct StoryChoice *choice = &page->choices[c];
         if (choice->label && offered(choice, page))
@@ -329,8 +375,11 @@ static void show(int index)
     memset(&draft, 0, sizeof(draft));
     draft.room = game.room;
     copy(draft.text, sizeof(draft.text), page->text);
-    /* Every page is one whole picture: the painting for its camera, else the camera's render. */
+    /* Every page is one whole picture: the painting for its camera, else the camera's render.
+     * A clip plays in that picture; the still is the poster until the first frame. */
     select_image(&draft, page->camera);
+    draft.clip[0] = 0;
+    if (page->clip) clip_file(page->clip, draft.clip, sizeof(draft.clip));
     switch (page->kind) {
     case STORY_DECISION:
         game.snapshot[index] = *world;
@@ -391,6 +440,7 @@ void book_init(const char *root)
     length = snprintf(game.illustrations, sizeof(game.illustrations),
                       "%s/books/%s/illustrations", game.root, story->name);
     if (length < 0 || (size_t)length >= sizeof(game.illustrations)) fail("illustration path is too long");
+    check_clips();
     restart();
 }
 

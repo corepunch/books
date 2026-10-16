@@ -1,8 +1,11 @@
 # Book
 
 Book is a native C engine for illustrated adventure gamebooks in the manner of
-the Zork books. Its built-in story, **Обратный отсчёт**, is a Superman
-adventure after the DC Heroes module *Countdown to Armageddon*: a runaway train,
+the Zork books. `make run` launches **The Salt Ledger**, a short Lovecraftian
+detective fragment: first-person stills you can tap, and full-motion clips for
+the people and the harbor. **Обратный отсчёт**, the Superman
+adventure after the DC Heroes module *Countdown to Armageddon*, remains available
+with `make run BOOK=countdown`: a runaway train,
 S.T.A.R. Labs, the Fortress of Solitude, a belt of meteorites in orbit and
 Brainiac's ship, with things in rooms, an inventory and twelve endings. Each book is a table
 of pages in C run by `src/story.c`. There is no ZIL or Lua runtime; things
@@ -75,7 +78,9 @@ Each book is one C file in `books/`, such as `books/countdown.c`, holding a
 - `STORY_ENDING`: success, partial or failure. Failures retry from the reader's
   last decision (or `.retry`) with the facts they had there; success restarts.
 
-Pages set facts with `.sets`.
+Pages set facts with `.sets`. A page may set `.clip` to a bare file name. The
+app plays `books/<name>/clips/<clip>.mp4` in the picture; the camera's still is
+the poster, and headless play uses the poster. Circles stay on the still pages.
 
 ### Things and the inventory
 
@@ -87,6 +92,11 @@ check's `.holds` tests what is carried. Every room page publishes the carried
 things as `CHOICE_ITEM` choices, drawn as round icons in the bottom-left row;
 tapping one holds it (the prose becomes its description and only its uses are
 offered), tapping again puts it away. "Try again" restores every thing's place.
+A decision page can supply `.item_texts` entries `{.item, .text}` to describe
+what a held thing reveals or could do in that scene. Entries may use
+`.requires`/`.excludes` for fact variants; variants for the same thing must be
+mutually exclusive. A thing's general `.text` remains the fallback on pages
+without a matching entry.
 A thing's icon is the picture for camera `item-<id>`. See
 [authoring/THINGS.md](authoring/THINGS.md).
  `src/story.c` validates the table at launch, keeps

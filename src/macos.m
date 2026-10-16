@@ -136,6 +136,7 @@ void ui_run(bool smoke, const char *screenshot, double smoke_transition)
         app.window.contentView = app.view;
         [app.window makeFirstResponder:app.view];
         if (!renderer_init((__bridge void *)app.view.layer)) fail("cannot initialize Metal");
+        video_use_poster(smoke);
         ui_init();
         [app.window center];
         [app.window makeKeyAndOrderFront:nil];
@@ -145,6 +146,7 @@ void ui_run(bool smoke, const char *screenshot, double smoke_transition)
         [app.frameLink addToRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
         [NSApp run];
         [app.frameLink invalidate];
+        video_close();
         text_shutdown();
         renderer_shutdown();
         app.window.delegate = nil;

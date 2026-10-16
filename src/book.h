@@ -117,7 +117,7 @@ struct BookPage {
     int choice_count, room;
     int held; /* object of the carried thing the reader is holding, or zero */
     enum EndingKind ending;
-    filePath_t image;
+    filePath_t image, clip; /* clip is empty when the page is only a still */
     assetName_t camera;
     storyText_t text;
 };
@@ -126,6 +126,7 @@ struct BookPage {
  * validates, publishes and navigates. Page IDs are unique; targets name page IDs. */
 #define MAX_STORY_PAGES 512
 #define MAX_PAGE_CHOICES 6
+#define MAX_PAGE_ITEM_TEXTS 8
 /* Facts and things are bit sets; one bit names one fact or one thing. */
 #define MAX_STORY_ITEMS 32
 typedef unsigned int storyFacts_t;
@@ -155,13 +156,21 @@ struct StoryChoice {
     storyItems_t take;  /* pick up this thing; offered only while it lies in the page's location */
     storyItems_t with;  /* use this carried thing; offered only while the reader holds it */
 };
+/* A scene-specific response while holding a thing. Fact variants must be mutually exclusive. */
+struct StoryItemText {
+    storyItems_t item;
+    storyFacts_t requires, excludes;
+    const char *text;
+};
 struct StoryPage {
     const char *id;
     enum StoryNode kind;
     const char *location; /* the place the page is in; a scene anchor key or a plain name */
     const char *camera;   /* consecutive pages of one moment may share a camera */
+    const char *clip;     /* bare file name of books/<name>/clips/<clip>.mp4, or NULL; the camera still is the poster */
     const char *text;
     struct StoryChoice choices[MAX_PAGE_CHOICES];
+    struct StoryItemText item_texts[MAX_PAGE_ITEM_TEXTS];
     const char *next;      /* passage: Continue target; check: target when the test passes */
     storyFacts_t sets;     /* facts set when the page is shown */
     storyItems_t gives;    /* things handed to the hero when the page is shown */
@@ -230,6 +239,17 @@ isize2_t renderer_image_size(const char *path);
 bool renderer_image(const char *path, frect_t bounds);
 /* Draw a carried thing's icon, reduced once at load and cropped to cover bounds. */
 bool renderer_icon(const char *path, frect_t bounds);
+/* Upload one BGRA frame, or redraw the last uploaded frame when pixels are NULL. */
+bool renderer_video(const void *bgra, isize2_t size, int stride, frect_t bounds);
+void renderer_video_discard(void);
+
+/* Full-motion clip in the picture. Headless play never calls these and shows the poster. */
+void video_use_poster(bool poster);
+bool video_open(const char *path);
+void video_close(void);
+bool video_playing(void);
+/* Cover-crop the current frame into the viewport. False until the first decoded frame. */
+bool video_frame(frect_t viewport);
 /* Drop the path cache so the next draw reloads replaced raster artwork. */
 void renderer_invalidate_image(void);
 

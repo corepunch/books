@@ -33,6 +33,9 @@ static struct {
     float scale, opacity, radius;
     fvec2_t center;
     bool reveal, clipped_out;
+    id<MTLTexture> video_texture;
+    isize2_t video_size;
+    bool video_ready;
 } m;
 
 bool renderer_init(void *layer)
@@ -261,10 +264,42 @@ bool renderer_screenshot(const char *path)
     return ok;
 }
 
+void renderer_video_discard(void)
+{
+    m.video_texture = nil;
+    m.video_size = isize2(0, 0);
+    m.video_ready = false;
+}
+
+bool renderer_video(const void *bgra, isize2_t size, int stride, frect_t bounds)
+{
+    if (!m.encoder || !m.device) return false;
+    if (bgra && !isize2_is_empty(size) && stride >= size.width * 4) {
+        /* The previous frame may still be reading this texture. */
+        if (m.last_command) [m.last_command waitUntilCompleted];
+        if (!m.video_texture || m.video_size.width != size.width || m.video_size.height != size.height) {
+            MTLTextureDescriptor *desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:
+                MTLPixelFormatBGRA8Unorm width:(NSUInteger)size.width height:(NSUInteger)size.height mipmapped:NO];
+            desc.usage = MTLTextureUsageShaderRead;
+            desc.storageMode = MTLStorageModeShared;
+            m.video_texture = [m.device newTextureWithDescriptor:desc];
+            if (!m.video_texture) return false;
+            m.video_size = size;
+        }
+        [m.video_texture replaceRegion:MTLRegionMake2D(0, 0, (NSUInteger)size.width, (NSUInteger)size.height)
+                           mipmapLevel:0 withBytes:bgra bytesPerRow:(NSUInteger)stride];
+        m.video_ready = true;
+    }
+    if (!m.video_ready || !m.video_texture) return false;
+    renderer_quad(bounds, 0xffffffff, (__bridge void *)m.video_texture, 0);
+    return true;
+}
+
 void metal_shutdown(void)
 {
     [m.last_command waitUntilCompleted];
     check_command(m.last_command);
+    renderer_video_discard();
     m.encoder = nil; m.command = nil; m.last_command = nil; m.drawable = nil;
     m.white = nil; m.pipeline = nil; m.queue = nil; m.layer = nil; m.device = nil;
 }
