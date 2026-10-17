@@ -20,11 +20,15 @@
     "  play   BOOK [STEP ...]      a transcript; STEP is a choice's command, continue, retry,\n" \
     "                              hold:ICON or a choice number (commas also split)\n" \
     "  assets BOOK [--missing] [--json]\n" \
-    "                              stills, clips, icons and photos, with the prose each one shows\n"
+    "                              stills, clips, icons and photos, with the prose each one shows;\n" \
+    "                              a placeholder is a file tools/placeholder.py made\n"
 #define ILLUSTRATION_SUFFIX ".png"
 #define RENDER_SUFFIX ".jpg"
 #define CLIP_SUFFIX ".mp4"
 #define ITEM_ICON_PREFIX "item-"
+/* tools/placeholder.py stamps its stills and clips; the stamp sits near the start of the file. */
+#define PLACEHOLDER_MARKER "book-placeholder "
+#define PLACEHOLDER_SCAN_BYTES 65536
 #define MAX_STORY_EDGES (MAX_STORY_HOTSPOTS + MAX_STORY_ACTIONS + MAX_STORY_PAGES * 2 + MAX_STORY_RECORDS)
 #define MAX_WALK_DEPTH 64
 
@@ -33,8 +37,8 @@ static const char *root = ".", *name;
 static bool json, dot, missing_only;
 static int problems;
 
-enum Asset { ASSET_PAINTING, ASSET_RENDER, ASSET_PRESENT, ASSET_MISSING };
-static const char *const asset_names[] = {"painting", "render", "present", "missing"};
+enum Asset { ASSET_PAINTING, ASSET_RENDER, ASSET_PRESENT, ASSET_PLACEHOLDER, ASSET_MISSING };
+static const char *const asset_names[] = {"painting", "render", "present", "placeholder", "missing"};
 static const char *const record_names[] = {"note", "email", "photo", "phone", "interface"};
 static const char *const type_names[] = {"bool", "int", "char", "string"};
 
@@ -152,19 +156,35 @@ static void file_path(filePath_t path, const char *directory, const char *file, 
     if (length < 0 || (size_t)length >= sizeof(filePath_t)) fail("asset path is too long");
 }
 
+/* A file tools/placeholder.py made, to be replaced by finished art. */
+static bool placeholder(const char *path)
+{
+    static char head[PLACEHOLDER_SCAN_BYTES];
+    FILE *file = fopen(path, "rb");
+    if (!file) return false;
+    size_t length = fread(head, 1, sizeof(head), file);
+    fclose(file);
+    size_t marker = strlen(PLACEHOLDER_MARKER);
+    for (size_t i = 0; i + marker <= length; ++i)
+        if (!memcmp(head + i, PLACEHOLDER_MARKER, marker)) return true;
+    return false;
+}
+
 /* A camera's picture: its painting, else its render; the same order the runtime uses. */
 static enum Asset still(const char *camera, filePath_t path)
 {
     file_path(path, "illustrations", camera, ILLUSTRATION_SUFFIX);
     if (!access(path, R_OK)) return ASSET_PAINTING;
     file_path(path, "rooms", camera, RENDER_SUFFIX);
-    return access(path, R_OK) ? ASSET_MISSING : ASSET_RENDER;
+    if (access(path, R_OK)) return ASSET_MISSING;
+    return placeholder(path) ? ASSET_PLACEHOLDER : ASSET_RENDER;
 }
 
 static enum Asset clip(const char *name_of_clip, filePath_t path)
 {
     file_path(path, "clips", name_of_clip, CLIP_SUFFIX);
-    return access(path, R_OK) ? ASSET_MISSING : ASSET_PRESENT;
+    if (access(path, R_OK)) return ASSET_MISSING;
+    return placeholder(path) ? ASSET_PLACEHOLDER : ASSET_PRESENT;
 }
 
 static void problem(int page, const char *format, const char *detail)
@@ -938,13 +958,16 @@ static void query(const char *term)
 static void print_page(void)
 {
     const struct BookPage *page = book_page();
-    const struct StoryPage *source = page_at(find_page(page->id));
-    printf("[%s] %s", role(source), page->id);
+    int index = find_page(page->id);
+    /* The map's own pages (its home, lists, records and keypad) have no story page. */
+    const struct StoryPage *source = index >= 0 ? page_at(index) : NULL;
+    printf("[%s] %s", source ? role(source) : "map", page->id);
     if (page->ending != ENDING_NONE) printf(" (%s)", book_ending_kind_name(page->ending));
-    printf("  in %s, camera %s", story->locations[source->location].id, page->camera);
-    if (source->clip) printf(", clip %s", source->clip);
+    if (source) printf("  in %s,", story->locations[source->location].id);
+    printf("  camera %s", page->camera);
+    if (source && source->clip) printf(", clip %s", source->clip);
     if (page->held) printf(", holding %s", book_object(page->held)->key);
-    printf("\n  \"%s\"\n", *page->text ? page->text : source->text);
+    printf("\n  \"%s\"\n", *page->text || !source ? page->text : source->text);
     for (int i = 0; i < page->choice_count; ++i) {
         const struct Choice *choice = &page->choices[i];
         printf("  %d %-8s \"%s\"", i, book_choice_kind_name(choice->kind), choice->label);
@@ -1089,9 +1112,10 @@ static void assets(void)
         printf("]}\n");
         return;
     }
-    printf("\nstills: %d painted, %d rendered, %d missing; clips: %d present, %d missing\n",
-           counts[0][ASSET_PAINTING], counts[0][ASSET_RENDER], counts[0][ASSET_MISSING],
-           counts[1][ASSET_PRESENT], counts[1][ASSET_MISSING]);
+    printf("\nstills: %d painted, %d rendered, %d placeholders, %d missing; "
+           "clips: %d present, %d placeholders, %d missing\n",
+           counts[0][ASSET_PAINTING], counts[0][ASSET_RENDER], counts[0][ASSET_PLACEHOLDER], counts[0][ASSET_MISSING],
+           counts[1][ASSET_PRESENT], counts[1][ASSET_PLACEHOLDER], counts[1][ASSET_MISSING]);
 }
 
 int main(int argc, char **argv)

@@ -1,5 +1,8 @@
 # Story state
 
+> Written for the screens before the X-Files structure. [GDD.md](../GDD.md) is the
+> game now; this file is kept for its reasoning.
+
 Facts only ever turn on. Retry restores the snapshot taken when that decision
 was entered, so a failed reading does not spend a fact and does not un-see a
 clip. Nothing queues, and nothing moves on its own.

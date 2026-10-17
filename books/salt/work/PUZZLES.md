@@ -1,5 +1,8 @@
 # Puzzles
 
+> Written for the screens before the X-Files structure. [GDD.md](../GDD.md) is the
+> game now; this file is kept for its reasoning.
+
 The case is one puzzle. The hour is a summons. The only fair place to speak
 it is the dry room, onto Edith's folder. Everything else is a mouth he can
 answer.

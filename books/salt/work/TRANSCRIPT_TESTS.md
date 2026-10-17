@@ -1,5 +1,8 @@
 # Transcript tests
 
+> Written for the screens before the X-Files structure. [GDD.md](../GDD.md) is the
+> game now; this file is kept for its reasoning.
+
 The book has no parser. A step is a published choice. `continue` and `retry`
 are the buttons. `hold:ledger` taps the carried book. Any other token is the
 choice's target page, which is what the headless test sends. Checks are

@@ -23,8 +23,9 @@ def run(*args, at=root, ok=True):
 title = ET.parse(book / 'title.xml').getroot()
 locations = [location.get('id') for location in title.iter('location')]
 files = {location: book / 'locations' / f'{location}.xml' for location in locations}
+# A choice with an id is an enable flag, not a page.
 pages = [page for location in locations for page in ET.parse(files[location]).getroot().iter() if page.get('id')
-         and page.tag not in ('location', 'viewpoint')]
+         and page.tag not in ('location', 'viewpoint', 'nav', 'explorable', 'destination')]
 
 assert run('check').endswith(': ok\n')
 stats = json.loads(run('stats', '--json'))
@@ -37,7 +38,7 @@ assert 'findings' in run('graph') and run('graph', '--dot').startswith('digraph'
 start = title.get('start')
 assert f'] {start}' in run('play').splitlines()[0]
 assert 'reached from' in run('query', start)
-variable = title.find('variable').get('id')
+variable = next(v.get('id') for v in title.iter('variable') if v.get('type', 'bool') == 'bool')
 assert run('query', variable).startswith('variable\n')
 assert 'nothing called' in run('query', 'no-such-name', ok=False)
 
@@ -81,7 +82,7 @@ error = broken(lambda copy: replace(copy / path, f'id="{asset.get("id")}"', f'id
 assert 'read must be true or false' in error, error
 
 # <region/> begins the next reading region: a form feed, with no space beside it.
-words = (asset.text or '').split()
+words = ' '.join([asset.text or ''] + [child.tail or '' for child in asset]).split()
 output = edited(lambda copy: replace(copy / path, f'{words[0]} {words[1]}', f'{words[0]} <region/> {words[1]}'),
                 'query', asset.get('id'), ok=True)
 assert f'{words[0]}\f{words[1]}' in output, output

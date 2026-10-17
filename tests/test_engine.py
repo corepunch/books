@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Play tests/fixture, a book that uses every X-Files feature the runtime plays, on The Salt
-Ledger's pictures and clips; then read it with the book tool."""
+"""Play tests/fixture, a book that uses every X-Files feature the runtime plays, on placeholder
+pictures and clips made from its own rig by tools/placeholder.py; then read it with the book tool."""
 from pathlib import Path
 import json
 import os
@@ -10,9 +10,8 @@ import tempfile
 
 from headless_book import Book
 
-binary, cli, root = (Path(value).resolve() for value in sys.argv[1:4])
+binary, cli, root, stillclip = (Path(value).resolve() for value in sys.argv[1:5])
 fixture = Path(__file__).resolve().parent / 'fixture'
-salt = root / 'books/salt'
 
 
 def labels(view):
@@ -36,11 +35,10 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as directory:
         target.write_text(source.read_text())
     rooms = book_dir / 'rooms'
     rooms.mkdir()
-    for picture in (salt / 'rooms').iterdir():
-        os.symlink(picture, rooms / picture.name)
-    for icon in ('peg', 'hour', 'calm', 'badge'):
-        os.symlink(salt / 'rooms/item-ledger.jpg', rooms / f'item-{icon}.jpg')
-    os.symlink(salt / 'clips', book_dir / 'clips')
+    (rooms / 'fixture.blks').write_text((fixture / 'rooms/fixture.blks').read_text())
+    made = subprocess.run([sys.executable, str(root / 'tools/placeholder.py'), '--root', directory, '--book', 'fixture',
+                           '--stillclip', str(stillclip)], capture_output=True, text=True, check=True).stdout
+    assert 'placeholders made' in made and 'no pose' not in made, made
     for shared in ('fonts', 'assets'):
         os.symlink(root / shared, Path(directory) / shared)
 
@@ -197,8 +195,12 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as directory:
     assert 'facing e' in tool('query', 'desk-spot')
     played = tool('play', 'continue', 'desk:2')
     assert '-> harbour-map' in played.split('\n> desk:2\n')[1], played
+    # Every picture and clip is a placeholder, and the map's own pages print without a story page.
+    statuses = {asset['status'] for asset in json.loads(tool('assets', '--json'))['assets']}
+    assert statuses == {'placeholder'}, statuses
+    assert '[map] map:home' in tool('play', 'continue', 'desk:2', 'map:open')
     graph = tool('graph')
     assert 'variable arrivals is set but never tested' in graph and 'icon badge can never be had' in graph, graph
 
 print('Engine: slices, loops, turns, flags, triggers, action lists, charviews, topics, tones, evidence, '
-      'travel, retry, the map (destinations, notes, email, photos, phone, interfaces) and the book tool passed')
+      'travel, retry, the map (destinations, notes, email, photos, phone, interfaces), placeholders and the book tool passed')

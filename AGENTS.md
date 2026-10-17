@@ -3,7 +3,9 @@
 Book is a native C engine for visual interactive adventures. The default book
 is The Salt Ledger, XML in `books/salt/title.xml` and
 `books/salt/locations/*.xml`, read at launch by `src/storyxml.c` and run by the
-story runtime in `src/story.c`: first-person stills and full-motion clips. The
+story runtime in `src/story.c`: first-person stills and full-motion clips,
+built like *The X-Files Game* (places you turn in, people you question with
+what you carry, a town map and a telephone) and played on placeholders. The
 format follows the Virtual Cinema database of *The X-Files Game* (HyperBole,
 1998), name for name; [authoring/XML.md](authoring/XML.md) is its reference.
 «Обратный отсчёт» is in `books/countdown/` in the same form. There is no ZIL
@@ -132,4 +134,8 @@ the C adventure, inferred asset names and projection without a display. For
 display changes, run a graphical smoke capture and inspect the JPEG with its
 hotspot/UI overlays. Do not rerender unchanged artwork just to test C code.
 Use `make render BOOK=countdown SCENE=train` for artwork changes; render and
-inspect affected cameras, keeping source and images synchronized.
+inspect affected cameras, keeping source and images synchronized. A book not
+yet drawn plays on placeholders: run `make placeholders BOOK=<name>` after
+adding or changing a camera, an anchor, a clip or the prose a clip shows, and
+commit the stamped stills and clips it writes. Finished art replaces a
+placeholder at the same path, or as `illustrations/<camera>.png`.

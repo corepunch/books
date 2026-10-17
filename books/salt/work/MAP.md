@@ -1,5 +1,8 @@
 # Map
 
+> Written for the screens before the X-Files structure. [GDD.md](../GDD.md) is the
+> game now; this file is kept for its reasoning.
+
 Grayhaven is the office, the harbor, and three screens between the pier and
 the office door. The office looks down a rainy street. The street ends at
 berth four. The shack sits on that dock, over the water. Going back up the

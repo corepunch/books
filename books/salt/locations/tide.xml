@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The harbour office, where Thomas kept the tide. Face the counter (the tide book, the
+     telephone, the window over berth four) or turn to the wall (the roster, the door).
+     The telephone rings when you reach it; with the ledger open it is a mouth. -->
+<location id="tide" name="The harbour office">
+  <trigger event="enter"><set var="here" value="4"/></trigger>
+
+  <viewpoint id="counter">
+    <view id="tide-office" camera="tide-office" direction="n">
+      <text>The harbour office. A high desk, the tide book open, a telephone, a window over the berths.</text>
+      <explorable label="The tide book" anchor="tide-book" target="tide-book"/>
+      <explorable label="The telephone" anchor="tide-phone" target="tide-phone"/>
+      <explorable label="The window" anchor="tide-window" target="tide-window"/>
+      <explorable label="Into the receiver" anchor="tide-phone" target="ending-line" with="ledger"/>
+      <nav label="The wall" edge="right" target="tide-wall"/>
+    </view>
+    <view id="tide-wall" camera="tide-wall" direction="e">
+      <text>The wall: the duty roster under a nail, the door to the pier.</text>
+      <explorable label="The roster" anchor="tide-roster" target="tide-roster"/>
+      <nav label="The pier" anchor="tide-door" target="pier-head"/>
+      <nav label="The counter" edge="left" target="tide-office"/>
+    </view>
+  </viewpoint>
+  <asset id="tide-book" camera="tide-book" read="true" sets="tide" next="tide-office">
+    Tonight's page is in Thomas's hand. The turn of the tide, and beside it his own name and an hour, written twice: once in the column, once in the margin, small.
+  </asset>
+  <asset id="tide-roster" camera="tide-roster" read="true" next="tide-wall">
+    <trigger event="enter"><enable target="roster"/><enable target="to-alley"/></trigger>
+    Night duty: T. Voss, tide clerk. Board-keeper: A. Penry, Bakery Row, who chalks the tide board and keeps the sluice chain.
+  </asset>
+  <asset id="tide-phone" camera="receiver" clip="tide-phone" sets="rang" next="tide-office">
+    It rings as you reach it. You lift it. Water on the line, and under the water a slow breath that is not a breath. You put it down.
+  </asset>
+  <asset id="tide-window" camera="harbour-view" clip="tide-window" next="tide-office">
+    Berth four below. Marsh stands on the Patience with his back to the shack, and the shack window burns for nobody.
+  </asset>
+  <ending id="ending-line" kind="failure" camera="receiver" clip="ending-line" retry="tide-office">
+    You read his hour into the receiver. The water on the line goes still to listen, and every telephone in Grayhaven begins to ring.
+  </ending>
+</location>

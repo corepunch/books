@@ -6,9 +6,12 @@ shack floor at berth four shut.
 
 Read this file before adding a page, a fact, a picture, or a clip. The played
 prose is `title.xml` and `locations/*.xml`. The screens and the circles are [GDD.md](GDD.md).
-When this file and that one disagree about a plate, follow GDD.md and fix
-this file. The routes are [WALKTHROUGH.md](WALKTHROUGH.md). The map, the one
-object, the puzzle, and the facts are in `work/`.
+When this file and that one disagree about a place, a plate or a route,
+follow GDD.md and fix this file. "The plot, as played" below is the night
+as the earlier screens told it: its beats and lines hold, its route is
+GDD.md's now. The routes are
+[WALKTHROUGH.md](WALKTHROUGH.md). `work/` keeps the notes from the earlier
+pass: the map, the objects, the puzzle and the facts.
 
 ## Premise
 
@@ -154,27 +157,32 @@ the win. The glass is the last wrong mouth. The door only goes back down.
 
 ## Size
 
-What is built: the office, the wharf, Marsh's deck, the shack, the alley, the
-sluice, the landing, the dry room, and the bend where the hill starts. A hub
-is a still with circles. A close-up or a clip is one beat, then back to the
-hub. No two of those beats chain. Eleven endings (two successes, one partial,
-eight failures). One scene. Sixteen clips.
+What is built: seven places of *The X-Files Game*'s kind (the office, berth
+four, the shack, the harbour office, Bakery Row, the sluice, the landing),
+the town map, and the bend where the hill starts. A place is one spot with
+one to three facings; you turn on the picture's edge and walk on its
+anchors. Four people talk: Edith (twice), Marsh, Penry and the baker. Twelve
+endings (two successes, one partial, nine failures). Every still and clip
+is a placeholder until it is painted or filmed. [GDD.md](GDD.md) has the
+counts beside the original game's.
 
 A new place is a new camera and a new still. This night does not grow by
-pointing a new page at an existing JPEG.
+pointing a new page at an existing picture.
 
 ## Structure
 
-A hub inside one night, then a short walk. The office, the wharf, the shack,
-the alley, the sluice, and the landing can be revisited. Facts change what
-they say. The lane with the book shut is the only way into the last choice,
-and it is three screens: alley, sluice, landing. Reading the hour on the
-dock, under the lamp, or to the sluice spends it and ends the night.
+A small open town inside one night. Places are reached on foot or by the
+town map once the case has found them. Progress is gated by what you carry
+and what people have said: the folder opens the door, Marsh's answer opens
+the floor and his key the padlock, the board or Marsh's word opens Penry's
+chain, the card opens the baker. With the ledger in the coat the office is
+off the map. The book goes up the hill on foot: Bakery Row, the sluice, the
+landing. Reading the hour anywhere but onto Edith's folder spends it and
+ends the night.
 
-Two captions that lead to the same page are one choice. Holding the ledger
-replaces the circles; both sets are never on screen together. On the wharf
-the open book offers the lane and the fog at once, so those two circles use
-two anchors.
+Holding the ledger replaces a view's circles with its mouths. Holding a
+topic or a piece of evidence in a conversation replaces the lines with what
+it opens. Both sets are never on screen together.
 
 ## The plot, as played
 

@@ -1,100 +1,75 @@
 # The Salt Ledger — walkthrough
 
-Commands are what `tests/test_salt.py` types. A choice's command is its target
-page. `continue` finishes a shot: the clip has ended, or the picture was tapped.
-On a document (the folder, the ledger, the board, the peg, the folder again) it
-taps Continue. `retry` is Try again or Start over. `hold:ledger` taps the carried
-book. Checks are invisible: choosing one publishes the page they resolve to.
-Hubs and shots show no prose.
-
-Labels the reader sees are in quotes. The office door is absent until the
-folder has been read. Holding the ledger replaces the circles on that screen.
+Commands are what `tests/test_salt.py` and `build/cli/book play salt` type. A
+choice's command is the page it leads to. `continue` finishes a shot (the
+clip ended, or the picture was tapped) or puts down a document. `retry` is
+Try again or Start over. `hold:ICON` taps a carried thing, and tapping it
+again puts it away. `map:open` opens the notebook. Checks are invisible:
+choosing one publishes the page it resolves to. Labels the reader sees are
+in quotes.
 
 ## Best ending
 
-The lamp, the face, and Marsh, then the book, then the three screens home.
-
-1. `continue` — Edith has gone. The office. The door is absent.
-2. "The folder" (`office-file`), `continue` — the margin. The door is offered.
-3. "The telephone" and "The lamp" are optional and set nothing.
-4. "The window" (`window-seen`), `continue` — the man under the lamp. Sets SEEN.
-5. "The door" (`office-door`), `continue` — berth four.
-6. "The water" (`water-seen`), `continue` — the face turns. Sets GLIMPSED.
-7. "The mate" (`marsh-intro`), `continue` — his approach, then the deck.
-   "Thomas", "The Patience", and "The floor" (`marsh-floor`). The floor sets HEARD.
-8. "The dock" (`dock-back`). "The shack". "The coat" is optional.
-   "The ledger" (`shack-ledger`), `continue` — the name and the hour. The book is in the coat.
-9. "The door" — the wharf with the book. "The lane" (`lane-shut`), `continue` — the alley.
-10. "The window" (`alley-window`) — the blind. "The board" (`alley-board`) sets BOARD.
-    "The man" (`penry-greet`), `continue` — he speaks to you. "The chalk" (`penry-chalk`) requires the board and sets PENRY.
-11. "The bridge" (`sluice-entry`). Penry's line is in the arrival.
-    "The grating" (`sluice-grate`) sets PEG. "The stair" (`landing-entry`).
-12. He is under the lamp. "The lamp" (`lamp-meet`), `continue` — he goes down into the fog.
-    "The door" (`hall`), `continue` — the dry room. Edith is in the chair.
-13. "The folder" (`office-remind`), `continue` — the hour is still shut.
-14. `hold:ledger`, "To the folder" (`best-check`).
-
-Edith closes the locket. The streetlamp stays empty, and the floor left shut
-does not answer. The visit plate stays a still. Success offers Start over.
+1. `continue` — Edith in the chair. Ask "Your brother?" (`edith-thomas`),
+   then "The floor?" (`edith-floor`) and "Where will you be?" (`edith-hotel`),
+   `continue` after each. "I'll take the case" (`edith-leaves`), `continue`.
+2. The desk. Turn right, "The window" (`window-side`). "The window"
+   (`window-seen`), `continue`: the man under the lamp. Sets `seen`, gives
+   *The coat*. Turn back, "The desk" (`desk`).
+3. "The folder" (`office-file`), `continue`. Sets `read` and gives the
+   Photograph. "The telephone" is optional: the operator opens the harbour
+   office on the map.
+4. Turn left, "The door" (`door-side`). "The door" (`town`): the town map.
+   "Berth four" (`berth`).
+5. "The water" (`water-seen`), `continue`: the face. Sets `glimpsed`.
+6. "Marsh" (`marsh-intro`), `continue`. "Thomas?" (`marsh-thomas-check`),
+   `continue`: *The floor*. `hold:floor`, "The floor" (`marsh-floor`),
+   `continue`: the warning and the key. "The Patience?" (`marsh-patience`),
+   `continue`: *A dry room*. "That's all" (`berth`).
+7. `hold:key`, "The padlock" (`shack-unlock`), `continue`: the shack. "The
+   ledger" (`shack-ledger`), `continue`. Turn round (`shack-door-side`),
+   "Outside" (`berth`).
+8. Turn round, "The pier head" (`pier-head`). "The lane" (`alley`).
+9. "Penry" (`penry-intro`), `continue`. `hold:dry-room`, "A dry room"
+   (`penry-dry`), `continue`. "The bridge?" (`penry-rail`), `continue`: he
+   unhooks the chain. "That's all" (`alley`).
+10. "The bridge" (`bridge-check`): the sluice. "The stair" (`landing-entry`):
+    the man under the lamp.
+11. "The lamp" (`lamp-check`), `continue`: he goes. "The door" (`door-check`),
+    `continue` (the hall), `continue` (midnight): the dry room.
+12. `hold:ledger`, "To the folder" (`best-check`): **E7 Best**.
 
 ## Quiet ending
 
-Skip the window, the water, and Marsh. Exits only.
+Skip the window and the water. At Bakery Row take the board instead of
+Marsh's word: "The board" (`alley-board`), `continue`, then Penry's "The
+chalk?" (`penry-wash`). The landing lamp is empty and the door is open at
+once. To the folder: **E8 Quiet**.
 
-1. `continue`, "The folder", `continue`, "The door", `continue`.
-2. "The shack", "The ledger", `continue`, "The door".
-3. "The lane", `continue` — the alley. "The bridge". "The stair". The lamp is empty.
-4. "The door", `continue`. `hold:ledger`, "To the folder".
+## Optional
 
-Edith closes the locket. Outside, the rain is only rain. This is also a win.
+- The harbour office (from the pier head, or the map): "The tide book" opens
+  Edith's "He wrote it twice"; "The telephone" answers with water; turn
+  right for "The roster" (Penry's name, Bakery Row on the map).
+- The baker, down the row: "Good evening" gets the blind. `hold:card`,
+  "Your card": what came down the sluice. Then at the sluice "The grating"
+  is the peg, which changes Edith's locket and the lamp close-up.
+- Marsh holding *The coat* names the coat. Penry's "Thomas?" then says where
+  the man went, and the lamp clip says "Where Penry said".
+- The telephone: `map:open`, `map:phone`, dial `3071` (Edith, until the
+  ledger is taken) or `214` (the harbour office).
 
-## The other endings
+## Every other ending
 
-- **Home.** From the first wharf, before the book, "The lane" (`ending-home`).
-  Morning, and the folder is still on the desk. No clip. Retry returns to that
-  wharf with empty hands.
-- **The floor, unread.** In the shack, "The trapdoor" (`ending-below`) before
-  taking the book. The face rises. Clip `below`. Retry returns to the shack.
-  The book is on the table.
-- **The floor, after the hour.** Take the ledger, then "The trapdoor"
-  (`ending-below-knew`). Retry returns to the bare shack with the book carried.
-- **The harbor.** On the wharf with the book, `hold:ledger`, "To the water"
-  (`ending-tide`). The face turns up and stays. Clip `water`. Retry returns
-  to that wharf. The book is put away.
-- **The stair.** On the same wharf, `hold:ledger`, "To the fog" (`fog-spent`).
-  Clip `street`. `continue`. At the bend, "The hill" (`ending-stair`). Edith
-  does not open the locket. Partial. Retry returns to the wharf with the book.
-- **The coat.** The same bend, "The coat" (`ending-face`). The face from the
-  folder looks back. Failure. Retry returns to that same wharf.
-- **The sluice.** On the footbridge, `hold:ledger`, "To the water"
-  (`ending-sluice`, or `ending-sluice-heard` after Penry). A pale face turns
-  up. The plate stays a still. Retry returns to the bridge you stood on.
-- **The lamp.** On the landing, `hold:ledger`, "To the lamp". He is beside you
-  before the line is done. No clip. Retry returns to that landing, occupied
-  or empty as it was when you entered it.
-- **The glass.** In the dry room, `hold:ledger`, "To the glass"
-  (`ending-glass`). The latch rises under a hand that is not yours. Retry
-  returns to the dry room with the book.
-
-## Not endings
-
-- The dry room's "The door", book shut or open, goes back to the wharf.
-- `hold:ledger` and "The mate" on the wharf is Marsh's refusal. `continue`
-  returns to the wharf. The hour is unspent. On his deck, "The hour" is the
-  same refusal and returns to him.
-- A second "The water", after the face has been seen, is a still. The clip
-  does not play again. A second "The window" is a still: nothing stands there.
-- "The chalk" is absent until the board has been read.
-- After the face, holding the book on the wharf mentions the tide beside his
-  name. Before the face, it mentions the hour and the dry room.
-- The alley, the shack, Penry's doorway, and the bend have no reading circle.
-  Open the book there and the circles go away until it is shut again.
-  The sluice, the landing, and the dry room keep a way out while it is open.
-
-## Clips
-
-`visit` when Edith gives the rule. `window` on the first look. `water` on the
-first look down, and again if the hour is read to the harbor. `marsh` the
-first time you go to him. `below` on either trap. `street` when the hour is
-read to the fog. `bakery` when the alley window is tapped. Everything else
-on the walk home is a still.
+| Ending | From | Commands |
+|---|---|---|
+| E1 Home | the office door side | `ending-home` |
+| E2 The harbour | berth four with the ledger | `hold:ledger`, `ending-tide` |
+| E3 The floor, unread | the shack table | `ending-below` |
+| E4 The floor, read | the bare table | `ending-below-knew` |
+| E5 The sluice | the bridge with the ledger | `hold:ledger`, `ending-sluice` |
+| E6 The lamp | the landing with the ledger | `hold:ledger`, `ending-lamp` |
+| E9 The glass | the dry room | `hold:ledger`, `ending-glass` |
+| E10 The stair | the pier head with the ledger | `hold:ledger`, `fog-spent`, `continue`, `ending-stair` |
+| E11 The coat | the same | `hold:ledger`, `fog-spent`, `continue`, `ending-face` |
+| E12 The line | the harbour office with the ledger | `hold:ledger`, `ending-line` |

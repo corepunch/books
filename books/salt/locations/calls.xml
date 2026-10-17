@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Calls from the telephone keypad in the map, as The X-Files Game kept each call in a
+     location of its own. Calling sets nothing about where you are: `here` still names the
+     place you dialled from, and the call goes back there. -->
+<location id="calls" name="The telephone">
+  <asset id="call-edith" camera="phone" clip="call-edith" next="phone-back">
+    The hotel puts you through. "Mr. Crowe." Edith's voice, careful. "Have you been to the harbour office? He kept his own book there."
+    <trigger event="enter"><enable target="to-tide"/></trigger>
+  </asset>
+  <actionlist id="call-tide">
+    <if test="rang"><goto target="call-tide-water"/></if>
+    <goto target="call-tide-ring"/>
+  </actionlist>
+  <asset id="call-tide-ring" camera="phone" clip="call-tide-ring" next="phone-back">
+    It rings in an empty room down at the harbour. Nine times. Ten. The tide clerk is the one who would have answered.
+  </asset>
+  <asset id="call-tide-water" camera="phone" clip="call-tide-water" next="phone-back">
+    Somebody lifts it at the first ring. Water on the line again, close, as if the receiver were lying in it. You put it down first.
+  </asset>
+  <actionlist id="phone-back">
+    <if test="here == 1"><goto target="office-entry"/></if>
+    <if test="here == 2"><goto target="berth"/></if>
+    <if test="here == 3"><goto target="shack-entry"/></if>
+    <if test="here == 4"><goto target="tide-office"/></if>
+    <if test="here == 5"><goto target="alley"/></if>
+    <if test="here == 6"><goto target="bridge"/></if>
+    <if test="here == 7"><goto target="landing-entry"/></if>
+    <goto target="town"/>
+  </actionlist>
+</location>

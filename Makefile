@@ -30,6 +30,8 @@ CLI_ROOT := $(BUILD_ROOT)/cli
 CLI := $(CLI_ROOT)/book
 CLI_SOURCES := src/cli.c src/story.c src/storyxml.c src/scene.c src/hotspots.c src/geometry.c src/common.c
 CLI_OBJECTS := $(patsubst %.c,$(CLI_ROOT)/%.o,$(CLI_SOURCES))
+# Placeholder clips: one still held for a while, encoded with AVFoundation.
+STILLCLIP := $(BUILD_ROOT)/tools/stillclip
 CPPFLAGS += -Isrc -Ivendor $(shell pkg-config --cflags libxml-2.0)
 CFLAGS += -std=c11 -Wall -Wextra -Werror=switch-enum -MMD -MP
 XML_LIBS := $(filter-out -lm,$(shell pkg-config --libs libxml-2.0))
@@ -40,7 +42,7 @@ endif
 CPPFLAGS += -I$(shell xcrun --show-sdk-path)/usr/include/libxml2
 LDLIBS += -framework AppKit -framework Metal -framework QuartzCore -framework AVFoundation -framework CoreMedia -framework CoreVideo
 
-.PHONY: all cli run mac check check-ui render layout clean ipad ipad-simulator ipad-mac ipad-run ipad-deploy list-devices
+.PHONY: all cli run mac check check-ui render layout placeholders clean ipad ipad-simulator ipad-mac ipad-run ipad-deploy list-devices
 # The AppKit executable remains a development/headless harness.
 # The shipping app is compiled directly with the iOS SDK, without an IDE project.
 ipad:
@@ -88,15 +90,22 @@ $(BOOK_BUILD_ROOT)/test_hotspots: $(BOOK_BUILD_ROOT)/test_hotspots.o $(BOOK_BUIL
 	$(CC) $(LDFLAGS) $^ -lm -o "$@"
 mac run: $(BOOK_BUILD_ROOT)/book
 	"$(BOOK_BUILD_ROOT)/book" --root "$(CURDIR)" --book "$(BOOK)"
-check: $(BOOK_BUILD_ROOT)/book $(BOOK_BUILD_ROOT)/test_geometry $(BOOK_BUILD_ROOT)/test_transition $(BOOK_BUILD_ROOT)/test_hotspots $(CLI)
+check: $(BOOK_BUILD_ROOT)/book $(BOOK_BUILD_ROOT)/test_geometry $(BOOK_BUILD_ROOT)/test_transition $(BOOK_BUILD_ROOT)/test_hotspots $(CLI) $(STILLCLIP)
 	python3 tests/test_cli.py "$(CLI)" "$(CURDIR)" "$(BOOK)"
-	python3 tests/test_engine.py "$(BOOK_BUILD_ROOT)/book" "$(CLI)" "$(CURDIR)"
+	python3 tests/test_engine.py "$(BOOK_BUILD_ROOT)/book" "$(CLI)" "$(CURDIR)" "$(STILLCLIP)"
 	"$(BOOK_BUILD_ROOT)/test_geometry"
 	"$(BOOK_BUILD_ROOT)/test_transition"
 	"$(BOOK_BUILD_ROOT)/test_hotspots"
 	python3 "$(BOOK_TEST)" "$(BOOK_BUILD_ROOT)/book" "$(CURDIR)"
 check-ui: $(BOOK_BUILD_ROOT)/book
 	python3 tests/test_ui.py "$(BOOK_BUILD_ROOT)/book" "$(CURDIR)" "$(BOOK)"
+$(STILLCLIP): tools/stillclip.m
+	mkdir -p "$(@D)"
+	$(CC) $(CFLAGS) -fobjc-arc "$<" -framework AVFoundation -framework CoreMedia -framework CoreVideo -framework CoreGraphics -framework ImageIO -framework Foundation -o "$@"
+# Solid-colour stills and clips with their names, briefs, anchors and prose, for playing a
+# book before it is drawn. Finished art (illustrations/, or files without the marker) is kept.
+placeholders: $(STILLCLIP)
+	python3 tools/placeholder.py --book "$(BOOK)" --stillclip "$(STILLCLIP)"
 render:
 	python3 tools/render.py --book "$(BOOK)" --scene "$(SCENE)" --scener "$(SCENER)" --width $(WIDTH) --height $(HEIGHT)
 layout:

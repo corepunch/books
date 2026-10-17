@@ -1,5 +1,8 @@
 # Objects
 
+> Written for the screens before the X-Files structure. [GDD.md](../GDD.md) is the
+> game now; this file is kept for its reasoning.
+
 The engine has no parser. A thing the reader can touch is either a choice
 anchor or the one carried object. Nouns in the prose that are not anchors are
 the picture. They are not a second ledger.

@@ -1,99 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 3. The wharf. Holding the ledger replaces the circles with the mouths. -->
-<!-- 4. Marsh. Questions on the man, the shack, the boat, and the deck. -->
-<!-- 14. The bend, only after the hour was read to the fog. -->
-<location id="wharf">
-  <view id="wharf" camera="wharf">
-    <text>Berth four. The Patience knocks the pilings. The shack window is lit. The lane home is a guess in the fog.</text>
-    <explorable label="The water" anchor="water" target="water-seen"/>
-    <explorable label="The mate" anchor="mate" target="marsh-intro"/>
-    <nav label="The shack" anchor="shack-door" target="shack-check"/>
-    <explorable label="The lane" anchor="lane" target="ending-home"/>
-  </view>
-  <view id="wharf-book" camera="wharf">
-    <text>The ledger is in your coat. The lane, with the book shut, climbs to the office. Hold it open only to spend the hour on the dock.</text>
-    <holding icon="ledger" if="glimpsed">Tonight's tide is circled beside his name. The face under the pilings is that name.</holding>
-    <holding icon="ledger" if="not glimpsed">His name, and an hour already passed. The lane would carry it to a dry room.</holding>
-    <explorable label="The water" anchor="water" target="water-seen"/>
-    <explorable label="The mate" anchor="mate" target="marsh-intro"/>
-    <nav label="The shack" anchor="shack-door" target="shack-check"/>
-    <explorable label="The lane" anchor="lane" target="lane-shut"/>
-    <explorable label="To the water" anchor="water" target="ending-tide" with="ledger"/>
-    <explorable label="To the fog" anchor="fog" target="fog-spent" with="ledger"/>
-    <explorable label="The lane" anchor="lane" target="lane-shut" with="ledger"/>
-    <explorable label="The mate" anchor="mate" target="wharf-refuse" with="ledger"/>
-  </view>
+<!-- Berth four. One spot on the pier, two ways to face: the berth (the water, Marsh on
+     the Patience, the padlocked shack) and the pier head (the harbour office, the lane
+     up the hill). Marsh is a conversation: his answers give the topics, the key and the
+     word Penry wants. With the ledger in hand the water and the fog are mouths. -->
+<location id="wharf" name="Berth four">
+  <trigger event="enter"><set var="here" value="2"/></trigger>
+
+  <viewpoint id="pier">
+    <view id="berth" camera="wharf" direction="n">
+      <text>Berth four. The Patience knocks the pilings. The shack window is lit.</text>
+      <explorable label="The water" anchor="wharf-water" target="water-seen"/>
+      <charview id="marsh" character="marsh" camera="marsh" anchor="wharf-mate" label="Marsh" target="marsh-intro">
+        <text>Marsh keeps his clear eye on you and the clouded one on the shack.</text>
+        <conversation label="Thomas?" if="not asked" target="marsh-thomas-check"/>
+        <conversation id="marsh-floor" label="The floor" with="floor" if="not heard" clip="marsh-floor" sets="heard" gives="key">
+          <trigger event="enter"><enable target="warning"/></trigger>
+          "The book is on the table. Leave the floor. Read the hour to the woman up the hill." His key goes into your hand. "The rain is not a room."
+        </conversation>
+        <conversation id="marsh-short" label="The floor" with="floor" if="heard" clip="marsh-short">
+          He does not turn. "You heard me. The table, not the floor."
+        </conversation>
+        <conversation id="marsh-coat" label="The coat" with="coat" if="not walker" clip="marsh-coat" sets="walker">
+          <trigger event="enter"><enable target="to-alley"/></trigger>
+          "Olive, with brass buttons? A tide clerk's coat. He's still wearing his, then." He looks up the lane. "Penry at the board will have seen him go up."
+        </conversation>
+        <conversation id="marsh-patience" label="The Patience?" if="not told" clip="marsh-patience" sets="told" gives="dry-room">
+          <trigger event="enter"><enable target="to-alley"/></trigger>
+          "She stays tied till his name's read somewhere dry." He pats the rail. "Penry keeps the sluice chain up on Bakery Row. Tell him: a dry room."
+        </conversation>
+        <conversation id="marsh-photo" label="This man" with="photograph" clip="marsh-photo">
+          <trigger event="enter"><enable target="to-tide"/></trigger>
+          "Voss. Kept the tide at the harbour office. Ask there what hour he wrote down."
+        </conversation>
+        <conversation id="marsh-hour" label="The hour" with="ledger" clip="marsh-hour">
+          Marsh puts a palm between the ledger and the deck. "Dry room. Her voice waiting. Not this boat, and not this fog."
+        </conversation>
+        <conversation label="That's all" ends="true" target="berth"/>
+        <conversation label="That's all" with="floor" ends="true" target="berth"/>
+        <conversation label="That's all" with="coat" ends="true" target="berth"/>
+        <conversation label="That's all" with="photograph" ends="true" target="berth"/>
+        <conversation label="That's all" with="ledger" ends="true" target="berth"/>
+        <conversation label="That's all" with="key" ends="true" target="berth"/>
+        <conversation label="That's all" with="peg" ends="true" target="berth"/>
+        <conversation label="That's all" with="dry-room" ends="true" target="berth"/>
+        <conversation label="That's all" with="card" ends="true" target="berth"/>
+      </charview>
+      <explorable label="The shack" anchor="wharf-shack" target="shack-check"/>
+      <explorable label="The padlock" anchor="wharf-shack" target="shack-unlock" with="key"/>
+      <explorable label="To the water" anchor="wharf-water" target="ending-tide" with="ledger"/>
+      <nav label="The pier head" edge="back" target="pier-head"/>
+    </view>
+    <view id="pier-head" camera="pier-head" direction="s">
+      <text>The pier head. The harbour office has one lit window. The lane climbs into fog.</text>
+      <nav label="The harbour office" anchor="pier-office" target="tide-office">
+        <enable target="to-tide"/>
+      </nav>
+      <nav label="The lane" anchor="pier-lane" target="alley">
+        <enable target="to-alley"/>
+      </nav>
+      <explorable label="To the fog" anchor="pier-lane" target="fog-spent" with="ledger"/>
+      <nav label="Berth four" edge="back" target="berth"/>
+    </view>
+  </viewpoint>
+
   <actionlist id="water-seen">
     <if test="glimpsed"><goto target="water-again"/></if>
     <goto target="wharf-water"/>
   </actionlist>
-  <asset id="wharf-water" camera="water" clip="water" sets="glimpsed" next="dock-back">
+  <asset id="wharf-water" camera="water" clip="wharf-water" sets="glimpsed" next="berth">
     You kneel at the edge. Between the pilings something pale turns, the size of a face, and the tide takes it.
   </asset>
-  <asset id="water-again" camera="water" next="dock-back">
-    You look again. The harbor keeps what it turned. The name is in the book, not in the tide.
+  <asset id="water-again" camera="water" clip="water-again" next="berth">
+    You look again. The harbour keeps what it turned.
   </asset>
-  <actionlist id="dock-back">
-    <if test="has(ledger)"><goto target="wharf-book"/></if>
-    <goto target="wharf"/>
-  </actionlist>
-  <asset id="lane-shut" camera="street" next="alley">
-    You take the lane with the book shut. The fog lets you pass. The town begins where the planks end.
-  </asset>
-  <asset id="wharf-refuse" camera="marsh-talk" clip="marsh-dry" next="dock-back">
-    Marsh puts a palm between the ledger and the deck. "Dry room," he says. "Her voice waiting. Not this boat, and not this fog."
-  </asset>
-  <ending id="ending-tide" kind="failure" camera="water" clip="water" retry="wharf-book">
-    You read his hour to the harbor. The pale face turns up between the pilings and does not go back under.
+  <ending id="ending-tide" kind="failure" camera="water" clip="ending-tide" retry="berth">
+    You read his hour to the harbour. The pale face turns up between the pilings and does not go back under.
   </ending>
-  <ending id="ending-home" kind="failure" camera="street" retry="wharf">
-    You take the lane with empty hands. The fog lets you go. In the morning the folder is still on the desk, and Thomas Voss is a wet line on a washed board.
-  </ending>
+
   <actionlist id="marsh-intro">
-    <if test="met"><goto target="marsh-entry"/></if>
+    <if test="met"><goto target="marsh"/></if>
     <goto target="wharf-marsh"/>
   </actionlist>
-  <asset id="wharf-marsh" camera="marsh" clip="marsh" sets="met" next="marsh-entry">
-    Marsh turns his clear eye on you and his clouded one on the shack.
+  <asset id="wharf-marsh" camera="marsh" clip="wharf-marsh" sets="met" next="marsh">
+    Marsh turns on the deck. His clear eye takes you in; the clouded one stays on the shack. "You're the one she hired."
   </asset>
-  <actionlist id="marsh-entry">
-    <if test="heard"><goto target="marsh-later"/></if>
-    <goto target="marsh"/>
+  <actionlist id="marsh-thomas-check">
+    <if test="glimpsed"><goto target="marsh-face"/></if>
+    <goto target="marsh-thomas"/>
   </actionlist>
-  <view id="marsh" camera="marsh">
-    <text>Marsh keeps his clear eye on you and the clouded one on the shack. He knows why you are here. He waits to see which question you start with.</text>
-    <holding icon="ledger">Dry room. Her voice waiting. Not this boat, and not this fog.</holding>
-    <explorable label="Thomas" anchor="marsh-face" target="marsh-thomas"/>
-    <explorable label="The floor" anchor="marsh-floor" target="marsh-floor"/>
-    <explorable label="The Patience" anchor="marsh-boat" target="marsh-boat"/>
-    <nav label="The dock" anchor="marsh-deck" target="dock-back"/>
-    <explorable label="The hour" anchor="marsh-hour" target="marsh-refuse" with="ledger"/>
-  </view>
-  <view id="marsh-later" camera="marsh">
-    <text>Marsh does not turn. He has said what he has to say, but he will answer what is asked.</text>
-    <holding icon="ledger">Dry room. Her voice waiting. Not this boat, and not this fog.</holding>
-    <explorable label="Thomas" anchor="marsh-face" target="marsh-thomas"/>
-    <explorable label="The floor" anchor="marsh-floor" target="marsh-short"/>
-    <explorable label="The Patience" anchor="marsh-boat" target="marsh-boat"/>
-    <nav label="The dock" anchor="marsh-deck" target="dock-back"/>
-    <explorable label="The hour" anchor="marsh-hour" target="marsh-refuse" with="ledger"/>
-  </view>
-  <asset id="marsh-thomas" camera="marsh-talk" clip="marsh-voss" next="marsh-entry">
-    "He kept the tide. He came down for his hour and did not come up." He nods at the shack without looking at it. "Nothing went in the water from this deck."
+  <asset id="marsh-thomas" camera="marsh" clip="marsh-thomas" sets="asked" gives="floor" next="marsh">
+    "He kept the tide. He came down for his hour and did not come up." He nods at the shack without looking at it. "Nothing went in the water from this deck. Ask me about the floor if you want the rest."
   </asset>
-  <asset id="marsh-floor" camera="marsh-talk" clip="marsh-floor" sets="heard" next="marsh-entry">
-    "The book is on the table. Leave the floor. Read the hour to the woman up the hill." He spits over the rail. "The rain is not a room."
+  <asset id="marsh-face" camera="marsh" clip="marsh-face" sets="asked" gives="floor" next="marsh">
+    "You looked, then. Then you know what the floor in there opens on. Same water. Nearer." He does not say the name. "Ask me about the floor."
   </asset>
-  <asset id="marsh-short" camera="marsh" next="marsh-later">
-    You heard him. The table, not the floor, and not a word of the hour where the water can listen.
+
+  <actionlist id="shack-check">
+    <if test="open"><goto target="shack-entry"/></if>
+    <goto target="shack-door"/>
+  </actionlist>
+  <asset id="shack-door" camera="padlock" clip="shack-door" next="berth">
+    A brass padlock through the hasp, the kind the Patience uses on her lockers. The window is lit for nobody. The mate has the key.
   </asset>
-  <asset id="marsh-boat" camera="marsh-talk" clip="marsh-boat" next="marsh-entry">
-    "She stays tied till his name is read somewhere dry. Not my rule." He pats the rail like a horse that will not be ridden tonight.
+  <asset id="shack-unlock" camera="padlock" clip="shack-unlock" sets="open" removes="key" next="shack-entry">
+    Marsh's key turns stiffly. The padlock drops open in your hand, and the door gives onto lamplight.
   </asset>
-  <asset id="marsh-refuse" camera="marsh-talk" clip="marsh-dry" next="marsh-entry">
-    Marsh puts a palm between the ledger and the deck. "Dry room," he says. "Her voice waiting. Not this boat, and not this fog."
-  </asset>
-  <asset id="fog-spent" camera="street" clip="street" next="corner">
+
+  <asset id="fog-spent" camera="street" clip="fog-spent" next="corner">
     You read his hour to the lane. The fog takes the words. Something matches your step and does not fall behind.
   </asset>
+  <view id="corner" camera="corner">
+    <text>The hill lamp is a smear in the fog. A man in a wet coat keeps a few planks ahead.</text>
+    <explorable label="The hill" anchor="corner-hill" target="ending-stair"/>
+    <explorable label="The coat" anchor="corner-coat" target="ending-face"/>
+  </view>
+  <ending id="ending-stair" kind="partial" camera="midnight-edith" clip="ending-stair" retry="pier-head">
+    You pass him and climb. Edith waits in the chair. The hour was spoken in the rain, and she does not open the locket. He is still on the stair.
+  </ending>
+  <ending id="ending-face" kind="failure" camera="coat" clip="ending-face" retry="pier-head">
+    You go to him. The face from the folder looks back through the rain, and he does not speak. The hill does not take you.
+  </ending>
 </location>

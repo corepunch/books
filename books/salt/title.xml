@@ -1,37 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- The Salt Ledger. Grayhaven, 1924. The screen list is GDD.md.
-     Edith Voss hires the detective to read her brother Thomas's hour in the dry
-     office and to leave the shack floor shut. A screen is a still with circles.
-     A shot plays and returns: the clip ends, or the picture is tapped. Continue
-     is only a document being put down: the folder, the ledger, the board, the
-     peg, and the folder again. The detective is not in the frame. -->
+<!-- The Salt Ledger. Grayhaven, 1924. The game is GDD.md; the premise and voice are DESIGN.md.
+     Edith Voss hires the detective to read her brother Thomas's hour in the dry office and
+     to leave the shack floor shut. Built the way The X-Files Game is built: locations of
+     views and turns, travel by the town map, things carried and shown, topics held in
+     conversation, a notebook and a telephone. Every picture and clip starts as a
+     placeholder (`make placeholders BOOK=salt`); paintings in illustrations/ and
+     filmed clips replace them one by one. -->
 <title name="salt" start="visit" fmv="true" continue="Continue" retry="Try again" restart="Start over">
-  <variable id="read">the margin: to her, in this room, not the water, not the rain</variable>
+  <!-- Where the reader stands, so a call from the telephone keypad returns there. -->
+  <variable id="here" type="int">0 the town map, 1 office, 2 berth four, 3 shack, 4 harbour office, 5 Bakery Row, 6 sluice, 7 landing</variable>
+
+  <variable id="asked-edith">Edith has said who Thomas was</variable>
+  <variable id="edith-floor">Edith has said why the floor stays shut</variable>
+  <variable id="edith-hotel">Edith has said where she waits</variable>
+  <variable id="read">the folder's margin: to her, in this room, not the water, not the rain</variable>
   <variable id="seen">Thomas stood under the streetlamp</variable>
   <variable id="glimpsed">a face turned under the pilings</variable>
-  <variable id="heard">Marsh gave the warning</variable>
-  <variable id="knew">the ledger showed the name, the hour, and her line</variable>
+  <variable id="met">Marsh's approach has played</variable>
+  <variable id="asked">Marsh has answered about Thomas</variable>
+  <variable id="heard">Marsh gave the warning and the key</variable>
+  <variable id="walker">Marsh named the coat; Penry saw him go up</variable>
+  <variable id="told">Marsh said what Penry wants to hear</variable>
+  <variable id="open">the shack padlock is open</variable>
+  <variable id="tide">the tide book has his hour, written twice</variable>
+  <variable id="rang">the harbour office telephone answered with water</variable>
   <variable id="board">the tide board is a wash</variable>
-  <variable id="penry">Abel Penry washed the name off the board; his bridge line opens</variable>
-  <variable id="peg">a peg cut VOSS is in the sluice grating</variable>
-  <variable id="met">Marsh's approach has played; later visits skip the clip</variable>
+  <variable id="sight">the baker saw something come down the sluice</variable>
+  <variable id="met-penry">Penry's greeting has played</variable>
+  <variable id="named">Penry has answered about Thomas</variable>
+  <variable id="warned">Penry said the walker went up to the lamp</variable>
+  <variable id="penry">Penry knows where the hour will be read</variable>
+  <variable id="chain">Penry has dropped the chain on the footbridge</variable>
   <variable id="left">the man under the landing lamp has walked off</variable>
-  <variable id="named">Penry has answered about Thomas; that line is spent</variable>
-  <variable id="rail">Penry has answered about the bridge; that line is spent</variable>
+  <variable id="midnight">Edith is back in the chair</variable>
 
-  <character id="penry" name="Abel Penry">The board-keeper. He keeps his hands in a towel and his doorway lit.</character>
+  <character id="edith" name="Edith Voss">Thomas's sister. Warm and plain; she wears the locket and trusts the room.</character>
+  <character id="marsh" name="Caleb Marsh">Mate of the Patience. Dry, one clouded eye, will not touch the book.</character>
+  <character id="baker" name="Ruth Kell">The baker on Bakery Row. Speaks through a door open a hand's width.</character>
+  <character id="penry" name="Abel Penry">The board-keeper. Hands in a towel, his doorway lit, the bridge chain his.</character>
 
   <inventory id="ledger" name="Ledger" where="shack">
     Thomas's name, and an hour already passed. It is meant to be read where the floor is dry.
   </inventory>
+  <inventory id="key" name="Brass key">Marsh's key to the shack padlock.</inventory>
+  <evidence id="photograph" name="Photograph">Thomas Voss, from Edith's folder. A clerk's coat, a careful face.</evidence>
+  <evidence id="peg" name="Peg">A tide-board peg cut VOSS, from the sluice grating.</evidence>
+  <idea id="floor" name="The floor">What is under the shack, which Marsh would not name at first.</idea>
+  <idea id="coat" name="The coat">The man under the streetlamp: an olive coat with brass buttons.</idea>
+  <idea id="dry-room" name="A dry room">Marsh's word for Penry: where the hour will be read.</idea>
+  <action-icon id="card" name="Your card" carried="true">Harlan Crowe, private inquiries. Shown, it opens doors.</action-icon>
 
-  <node id="grayhaven" name="Grayhaven, the night of the hour">
+  <note id="rule" title="Edith's rule" enabled="false">Read his hour to her, in the office, at midnight. Leave the floor at berth four shut.</note>
+  <note id="berth" title="Thomas Voss" enabled="false">Tide clerk, twenty-eight. Berth four, the trawler Patience. Not to the water. Not in the rain.</note>
+  <note id="hotel" title="The Harbor Hotel" enabled="false">Edith waits there until midnight. Grayhaven 3071.</note>
+  <note id="exchange" title="The harbour office" enabled="false">Rang off at the turn of the tide and has not answered since. Grayhaven 214.</note>
+  <note id="roster" title="The board-keeper" enabled="false">A. Penry, Bakery Row. Chalks the tide board and keeps the sluice chain.</note>
+  <note id="warning" title="Marsh's warning" enabled="false">The book is on the table. Leave the floor. The rain is not a room.</note>
+  <note id="hour" title="The ledger" enabled="false">His name, an hour already passed, and her line: say it where the floor is dry.</note>
+  <phone number="3071" target="call-edith" if="not has(ledger)"/>
+  <phone number="214" target="call-tide"/>
+
+  <node id="evening" name="Nine o'clock: the client">
     <location id="office"/>
+    <location id="town"/>
+    <location id="calls"/>
+  </node>
+  <node id="harbour" name="Berth four">
     <location id="wharf"/>
     <location id="shack"/>
+    <location id="tide"/>
+  </node>
+  <node id="hill" name="The hill">
     <location id="alley"/>
     <location id="sluice"/>
     <location id="landing"/>
-    <location id="lane"/>
   </node>
 </title>

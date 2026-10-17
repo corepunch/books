@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The town map: the plan of Grayhaven on the office wall, and the notebook's travel.
+     Destinations open as the case finds them. With the ledger in the coat the office is
+     off the map: the book goes up the hill on foot. -->
+<location id="town" name="Grayhaven">
+  <trigger event="enter"><set var="here" value="0"/></trigger>
+
+  <map id="town" camera="town-map">
+    <text>Grayhaven on a wet night. The hill, the row, the harbour.</text>
+    <destination label="Your office" anchor="map-office" target="desk" if="not has(ledger)"/>
+    <destination label="Berth four" anchor="map-berth" target="berth"/>
+    <destination id="to-tide" label="The harbour office" anchor="map-tide" target="tide-office" enabled="false"/>
+    <destination id="to-alley" label="Bakery Row" anchor="map-alley" target="alley" enabled="false"/>
+  </map>
+</location>

@@ -199,11 +199,27 @@ build/cli/book check salt
 - `play BOOK [STEP ...]`: a transcript through the real runtime. A step is a
   choice's command, `continue`, `retry`, `hold:ICON` or a choice number.
 - `assets BOOK [--missing] [--json]`: every still, clip, icon picture and photo
-  with its status (painting, render, present, missing) and the prose of each
-  page that shows it: the list of pictures and clips still to make.
+  with its status (painting, render, present, placeholder, missing) and the
+  prose of each page that shows it: the list of pictures and clips still to make.
+
+### Placeholders
+
+A book can be played before it is drawn. `make placeholders BOOK=<name>` runs
+`tools/placeholder.py`, which writes a solid-colour `rooms/<camera>.jpg` for
+every camera a page shows, `rooms/item-<icon>.jpg` for every icon, and a
+`clips/<clip>.mp4` for every clip (encoded by `tools/stillclip.m`). A still
+carries the camera's name, its brief (the camera's `comment` in the `.blks`
+scene) and a labelled mark on each anchor a circle uses. A clip carries the
+prose of the pages that play it, held long enough to read, so an fmv book's
+shots, replies and endings can be followed with no film. Each placeholder is
+stamped; finished art (a painting in `illustrations/`, or a file without the
+stamp) is never overwritten, and placeholders nothing names are removed.
+The Salt Ledger is all placeholders, on the projection rig in
+`books/salt/rooms/grayhaven.blks`.
 
 `tests/test_engine.py` plays `tests/fixture/`, a small book that uses every
-feature the reader plays, on The Salt Ledger's pictures.
+feature the reader plays, on placeholders made from its own rig in
+`tests/fixture/rooms/`.
 
 `publish_page()` checks the contract before exposing a page: rooms have object
 actions, a prose passage has exactly one Continue with no object or command, an
@@ -223,7 +239,7 @@ switches as errors so those sites are identified by the compiler.
 ## Source layout
 
 ```text
-books/salt/title.xml           The Salt Ledger: variables, Penry, the ledger, and its node of locations
+books/salt/title.xml           The Salt Ledger: variables, people, icons, notes, phone numbers and three nodes
 books/salt/locations/          one XML file per location
 books/countdown/title.xml      Обратный отсчёт: variables, Superman's powers and things, four act nodes
 books/countdown/locations/     one XML file per location

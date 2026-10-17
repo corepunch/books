@@ -1,85 +1,125 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- The Salt Ledger. Projection rig for the photographic plates: Z up, centimetres,
-     X east, Y north. Each location camera is at eye height and looks north.
-     Anchors sit on a plane 4 m in front of that camera so circles land on the plates.
-     Office eyes 120 cm (seated). Wharf and shack eyes 160 cm (standing). -->
+<!-- The Salt Ledger. Projection rig for the placeholder plates: Z up, centimetres, X east,
+     Y north. Every camera of a location stands at the same spot, eyes 160 cm, looking north
+     with a 60 degree vertical field; its anchors lie on a plane 4 m ahead, as children of the
+     location's group. On that plane the 3:2 frame is 693 cm wide and 462 cm tall, centred
+     on the eye: an anchor at x 0 z 0 is the middle of the picture, x 346 the right edge,
+     z 231 the top. A camera's comment is its brief: what the finished plate shows, and what
+     `make placeholders` prints on the placeholder. -->
 <scene up="z" ambient="0.15 0.16 0.18" background="0.08 0.09 0.10">
-  <camera name="visit" comment="Edith in the client's chair" pos="0 0 120" look="0 100 120" fov="60" textRect="0.05 0.03 0.56 0.30" textScale="1" />
-  <camera name="office" comment="The desk after she has gone" pos="0 0 120" look="0 100 120" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
-  <camera name="office-file" comment="The open folder" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="office-phone" comment="The telephone on the desk" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="office-lamp" comment="The green glass lamp" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="locket" comment="Edith opens the locket" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="window" comment="The streetlamp through the glass" pos="0 0 120" look="0 100 120" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="wharf" comment="Berth four" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
-  <camera name="water" comment="Down at the harbor" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="marsh" comment="Caleb Marsh on the deck" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.48 0.04 0.47 0.40" textScale="1" />
-  <camera name="marsh-talk" comment="Marsh speaks to the lens" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="shack" comment="The shack with the ledger" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
-  <camera name="shack-bare" comment="The shack after the ledger is taken" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
-  <camera name="shack-ledger" comment="The open ledger" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="shack-coat" comment="The coat on the hook" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="below" comment="The open trap" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="street" comment="The lane into the fog" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="corner" comment="The bend where the hill starts" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.05 0.03 0.56 0.22" textScale="1" />
-  <camera name="coat" comment="The man ahead has turned" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="steps" comment="Stone steps off the pier" pos="12000 0 160" look="12000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="chapel" comment="The chapel porch" pos="13000 0 160" look="13000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="yard" comment="The churchyard" pos="14000 0 160" look="14000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="alley" comment="Penry's door, the board, the bakery, the rail" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.05 0.03 0.56 0.28" textScale="1" />
-  <camera name="penry" comment="Penry in the lit doorway" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="bakery" comment="The bakery window" pos="16000 0 160" look="16000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="board" comment="The tide board" pos="17000 0 160" look="17000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="sluice" comment="The footbridge" pos="18000 0 160" look="18000 100 160" fov="60" textRect="0.05 0.03 0.56 0.28" textScale="1" />
-  <camera name="sluice-grate" comment="The peg in the grating" pos="18000 0 160" look="18000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="stair" comment="The long stair" pos="19000 0 160" look="19000 100 160" fov="60" textRect="0.06 0.68 0.52 0.22" textScale="1" />
-  <camera name="landing" comment="The streetlamp at the office door" pos="20000 0 160" look="20000 100 160" fov="60" textRect="0.05 0.03 0.56 0.28" textScale="1" />
-  <camera name="lamp" comment="Thomas under the streetlamp" pos="20000 0 160" look="20000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="landing-window" comment="The dark window opposite" pos="20000 0 160" look="20000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <camera name="hall" comment="The hall outside the office" pos="21000 0 160" look="21000 100 160" fov="60" textRect="0.06 0.55 0.70 0.36" textScale="1" />
-  <!-- Office, seated. -->
-  <group name="folder" pos="-20.8 400.0 -37.0" />
-  <group name="pane" pos="-69.3 400.0 166.2" />
-  <group name="door" pos="249.4 400.0 96.9" />
-  <group name="phone" pos="181 400 12" />
-  <group name="desk-lamp" pos="98 400 73" />
-  <group name="locket" pos="0 400 101" />
-  <!-- Wharf, standing. -->
-  <group name="water" pos="2972.3 400.0 49.1" />
-  <group name="mate" pos="3166.3 400.0 113.8" />
-  <group name="shack-door" pos="2722.8 400.0 136.9" />
-  <group name="lane" pos="3006.9 400.0 123.1" />
-  <group name="fog" pos="3000 400 224" />
-  <!-- Marsh's plate shares the wharf pose. These land on his picture, not the wide dock. -->
-  <group name="marsh-face" pos="2876 400 236" />
-  <group name="marsh-floor" pos="2765 400 291" />
-  <group name="marsh-boat" pos="3153 400 102" />
-  <group name="marsh-deck" pos="3042 400 -9" />
-  <group name="marsh-hour" pos="2809 400 80" />
-  <!-- Shack, standing. The bare plate uses the same camera, so the door and trap stay put. -->
-  <group name="book" pos="6013.9 400.0 178.5" />
-  <group name="trap" pos="6194.0 400.0 39.9" />
-  <group name="out" pos="5764.4 400.0 136.9" />
-  <group name="coat-hook" pos="5942 400 236" />
-  <!-- The bend above the dock. Its own camera, so these anchors do not land on the wharf. -->
-  <group name="hill" pos="8920 400 191" />
-  <group name="coat" pos="9020 400 80" />
-  <!-- Alley reshoot: board left, bakery window, rail in the fog, Penry in the door. -->
-  <group name="alley-man" pos="15209 400 141" />
-  <group name="alley-window" pos="14898 400 158" />
-  <group name="alley-board" pos="14748 400 152" />
-  <group name="alley-bridge" pos="15020 400 130" />
-  <group name="penry-face" pos="15231 400 224" />
-  <group name="penry-chalk" pos="14759 400 113" />
-  <group name="penry-street" pos="14931 400 2" />
-  <!-- Sluice. -->
-  <group name="sluice-water" pos="17942 400 80" />
-  <group name="sluice-grate" pos="18087 400 36" />
-  <group name="sluice-stair" pos="18000 400 191" />
-  <group name="sluice-back" pos="17776 400 58" />
-  <!-- Landing. -->
-  <group name="landing-lamp" pos="19965 400 191" />
-  <group name="landing-window" pos="19742 400 180" />
-  <group name="landing-door" pos="20209 400 125" />
-  <group name="landing-stair" pos="19820 400 58" />
+  <!-- office -->
+  <camera name="visit" comment="Edith Voss in the client&apos;s chair across the desk, gloves in her lap, the green lamp between you" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="office" comment="The desk: the folder on the blotter, the black telephone, the green glass lamp" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="office-window" comment="The window side: rain on the glass, the streetlamp across the street, the client&apos;s chair empty" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="office-door" comment="The door side: frosted glass lettered CROWE backwards, the hat on its hook" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="office-file" comment="Close: the open folder, typed particulars, her pencil in the margin, a photograph clipped inside" pos="0 0 160" look="0 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <camera name="phone" comment="Close: the black telephone, the receiver in your hand" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="lamp-glass" comment="Close: the green glass lamp over a dry blotter" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="window" comment="Through the wet glass: the streetlamp, and under it a man in an olive coat" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="chair" comment="Close: the client&apos;s chair, still warm" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="morning" comment="Grey morning: the folder still on the desk" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="midnight" comment="Midnight, from the door: Edith back in the chair, the folder on the blotter, the window black with rain" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="midnight-edith" comment="Edith close, in the chair, the locket at her throat" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="locket" comment="Close: the locket open in her palm; Thomas, younger, dry" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <!-- town -->
+  <camera name="town-map" comment="The plan of Grayhaven on the office wall: the hill and the office, Bakery Row, the sluice, the harbour office, berth four" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <!-- wharf -->
+  <camera name="wharf" comment="Berth four at night: the Patience at her pilings with Marsh on deck, the shack with its lit window and padlocked door, black water in front" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="pier-head" comment="The pier head looking back: the harbour office with one lit window, the lane climbing into fog" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="water" comment="Kneeling at the dock edge: black water between the pilings, something pale under it" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="marsh" comment="Caleb Marsh on the deck of the Patience: oilskin, knit cap, one clouded eye, the shack over his shoulder" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="padlock" comment="Close: a brass padlock through the hasp of the shack door" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="street" comment="The lane into the fog, a step behind yours" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="corner" comment="Where the hill starts: a hill lamp in fog, a man in a wet olive coat a few planks ahead" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="coat" comment="The man ahead has turned: the face from the folder, changed" pos="6000 0 160" look="6000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <!-- shack -->
+  <camera name="shack" comment="Inside the shack: lamp, table, the ledger blotched with tidewater, a rope ring in the floorboards" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="shack-bare" comment="The same table without the ledger: lamp, rope ring in the floor" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="shack-door" comment="The shack door, and beside it a clerk&apos;s coat on a hook" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="shack-ledger" comment="Close: the ledger open, the ink taken by the tide" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <camera name="coat-hook" comment="Close: an olive clerk&apos;s coat with brass buttons, dry, his hat under it" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="below" comment="The trapdoor open: black water, a face rising" pos="9000 0 160" look="9000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <!-- tide -->
+  <camera name="tide-office" comment="The harbour office at night: a high desk with the tide book open, a candlestick telephone, a window over the berths" pos="12000 0 160" look="12000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="tide-wall" comment="The harbour office wall: the duty roster under a nail, the door to the pier" pos="12000 0 160" look="12000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="tide-book" comment="Close: tonight&apos;s page of the tide book in Thomas&apos;s hand" pos="12000 0 160" look="12000 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <camera name="tide-roster" comment="Close: the duty roster" pos="12000 0 160" look="12000 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <camera name="receiver" comment="Close: the harbour office receiver at your ear" pos="12000 0 160" look="12000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="harbour-view" comment="From the harbour office window: berth four below, Marsh on deck, the shack lit" pos="12000 0 160" look="12000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <!-- alley -->
+  <camera name="alley" comment="Bakery Row looking up: the tide board under a porch, Penry in his lit doorway, the footbridge chained at the end" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="alley-down" comment="Bakery Row looking down: the bakery window behind a blind, the lane falling to the harbour" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="board" comment="Close: the tide board, a wash of chalk, pegs for the boats" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <camera name="penry" comment="Abel Penry in his lit doorway: grey beard, no cap, a towel over his shoulder" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="bakery" comment="The bakery door open a hand&apos;s width, Ruth Kell behind it" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="chain" comment="Close: a chain across the bridgehead, padlocked to the rail" pos="15000 0 160" look="15000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <!-- sluice -->
+  <camera name="sluice" comment="The footbridge over the black sluice: the iron grating below, the stair beyond, Bakery Row behind" pos="18000 0 160" look="18000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="grate" comment="Close: a board peg cut VOSS wedged in the grating" pos="18000 0 160" look="18000 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <!-- landing -->
+  <camera name="landing" comment="The top of the stair: the streetlamp, the office door behind it, the dark window opposite, the stair down" pos="21000 0 160" look="21000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="lamp" comment="Thomas under the streetlamp, olive coat, turning" pos="21000 0 160" look="21000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="opposite" comment="Close: a dark window, the curtain drawn back a hand&apos;s width" pos="21000 0 160" look="21000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="hall" comment="The hall: wet prints, green light under the office door" pos="21000 0 160" look="21000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <group name="office-rig" pos="0 400 160">
+    <group name="office-folder" pos="-55 0 -46" />
+    <group name="office-phone" pos="139 0 18" />
+    <group name="office-lamp" pos="-180 0 83" />
+    <group name="office-pane" pos="42 0 74" />
+    <group name="office-chair" pos="-139 0 -46" />
+    <group name="office-door" pos="55 0 46" />
+    <group name="office-hat" pos="-152 0 92" />
+    <group name="dry-edith" pos="-125 0 46" />
+    <group name="dry-folder" pos="42 0 -65" />
+    <group name="dry-pane" pos="208 0 92" />
+    <group name="dry-door" pos="-249 0 92" />
+  </group>
+  <group name="town-rig" pos="3000 400 160">
+    <group name="map-office" pos="-180 0 18" />
+    <group name="map-alley" pos="-28 0 55" />
+    <group name="map-tide" pos="166 0 9" />
+    <group name="map-berth" pos="42 0 -74" />
+  </group>
+  <group name="wharf-rig" pos="6000 400 160">
+    <group name="wharf-water" pos="0 0 -74" />
+    <group name="wharf-mate" pos="180 0 55" />
+    <group name="wharf-shack" pos="-194 0 46" />
+    <group name="pier-office" pos="-139 0 65" />
+    <group name="pier-lane" pos="125 0 18" />
+    <group name="corner-hill" pos="-111 0 92" />
+    <group name="corner-coat" pos="111 0 18" />
+  </group>
+  <group name="shack-rig" pos="9000 400 160">
+    <group name="shack-book" pos="-42 0 18" />
+    <group name="shack-trap" pos="69 0 -83" />
+    <group name="shack-lamp" pos="-180 0 92" />
+    <group name="shack-coat" pos="139 0 46" />
+    <group name="shack-out" pos="-139 0 28" />
+  </group>
+  <group name="tide-rig" pos="12000 400 160">
+    <group name="tide-book" pos="-69 0 -28" />
+    <group name="tide-phone" pos="111 0 9" />
+    <group name="tide-window" pos="208 0 120" />
+    <group name="tide-roster" pos="-83 0 65" />
+    <group name="tide-door" pos="139 0 28" />
+  </group>
+  <group name="alley-rig" pos="15000 400 160">
+    <group name="alley-board" pos="-194 0 55" />
+    <group name="alley-penry" pos="-14 0 74" />
+    <group name="alley-bridge" pos="194 0 -9" />
+    <group name="alley-bakery" pos="-69 0 46" />
+    <group name="alley-lane" pos="139 0 -9" />
+  </group>
+  <group name="sluice-rig" pos="18000 400 160">
+    <group name="sluice-water" pos="-14 0 -74" />
+    <group name="sluice-grate" pos="-194 0 0" />
+    <group name="sluice-stair" pos="180 0 83" />
+    <group name="sluice-back" pos="-222 0 120" />
+  </group>
+  <group name="landing-rig" pos="21000 400 160">
+    <group name="landing-lamp" pos="0 0 102" />
+    <group name="landing-window" pos="222 0 92" />
+    <group name="landing-door" pos="-166 0 37" />
+    <group name="landing-stair" pos="55 0 -74" />
+  </group>
 </scene>

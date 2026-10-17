@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- The fixture's projection rig, in The Salt Ledger's manner: each location's cameras stand
+     at one spot, eyes 160 cm, looking north; anchors lie on a plane 4 m ahead, where the 3:2
+     frame is 693 cm wide and 462 cm tall. test_engine.py makes placeholder stills and clips
+     from it with tools/placeholder.py. -->
+<scene up="z" ambient="0.15 0.16 0.18" background="0.08 0.09 0.10">
+  <camera name="visit" comment="Edith in the client's chair" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="office" comment="The desk" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="office-file" comment="The open folder" pos="0 0 160" look="0 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <camera name="office-lamp" comment="The green lamp" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="office-phone" comment="The telephone" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="window" comment="The streetlamp through the glass" pos="0 0 160" look="0 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="wharf" comment="Berth four" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="shack" comment="The shack" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.06 0.62 0.70 0.30" textScale="1" />
+  <camera name="shack-ledger" comment="The open ledger" pos="3000 0 160" look="3000 100 160" fov="60" textRect="0.08 0.08 0.80 0.70" textScale="1" />
+  <group name="office-rig" pos="0 400 160">
+    <group name="folder" pos="-69 0 -46" />
+    <group name="desk-lamp" pos="-194 0 83" />
+    <group name="phone" pos="139 0 18" />
+    <group name="door" pos="14 0 65" />
+    <group name="pane" pos="-69 0 92" />
+    <group name="locket" pos="83 0 -9" />
+  </group>
+  <group name="dock-rig" pos="3000 400 160">
+    <group name="water" pos="0 0 -65" />
+    <group name="lane" pos="166 0 46" />
+    <group name="book" pos="-55 0 18" />
+    <group name="trap" pos="83 0 -74" />
+    <group name="out" pos="-194 0 65" />
+  </group>
+</scene>
