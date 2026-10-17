@@ -117,10 +117,12 @@ Pages, as published:
 - `<ending kind="success|partial|failure">`. Failures retry from the reader's
   last view (or `retry`) with the world they had there; success restarts.
 
-A book that declares notes, email, photos, phone numbers or interfaces gives
-every view a PDA: a disc beside the carried icons, opening lists in the talk
-band, records as documents, and a phone keypad (`CHOICE_PDA` and `CHOICE_KEY`;
-the keypad page sets `keypad`). See [authoring/XML.md](authoring/XML.md).
+A book with `<map>` pages, notes, email, photos, phone numbers or interfaces
+gives every view the map, where *The X-Files Game* had its PDA: a disc beside
+the carried icons, opening lists in the talk band of the destinations the
+reader has seen and the records the story has enabled, records as documents,
+and a phone keypad (`CHOICE_MAP` and `CHOICE_KEY`; the keypad page sets
+`keypad`). See [authoring/XML.md](authoring/XML.md).
 
 State is X-Files state: `<variable type="bool|int|char|string">`, enable flags
 on any choice or record with an `id`, and carried icons. Conditions (`if`,
@@ -156,8 +158,9 @@ A published page has one kind: room, intermediate (`PAGE_BEAT`) or ending. Each
 choice has an explicit kind: object action, talk line (`ask` or `end`), Continue or retry. Consumers must
 use these kinds, rather than infer behaviour from labels, command strings or
 flags. A choice's command is the id of the page it leads to (or the choice's own
-id, when its actions decide), used by tests and headless play; PDA choices use
-`pda` commands (`pda`, `pda:phone`, `pda:key:5`, `pda:dial`, `pda:close`). A choice on a
+id, when its actions decide), used by tests and headless play; the map's choices
+use `map:` commands (`map:open`, `map:phone`, `map:key:5`, `map:dial`,
+`map:close`), and its pages `map:` ids (`map:home`, `map:notes`). A choice on a
 picture edge carries its `edge`, and a page its clip slice and `loop`.
 
 To add another book, add `books/<name>/title.xml`, its locations and assets

@@ -29,7 +29,7 @@ element, attribute or name stops the book with its file and line.
 | VCAction: SetVariable, SetEnabled, GoTo, PlayAssets, ShowInterface, CallScript | `<set>`, `<enable>`, `<goto>`, `<asset>`, `<show>`, `<script>` | 14247 |
 | DoActionList | `<actionlist>`, `<call>` | 176 calls |
 | VCAssetRef (a clip slice, a loop) | `clip`, `from`, `to`, `loop` | 6410 |
-| VCPDANotes, VCEmail, VCPhoto, phone numbers | `<note>`, `<email>`, `<photo>`, `<phone>` | — |
+| the PDA (travel, VCPDANotes, VCEmail, VCPhoto, phone numbers) | the map: `<map>` destinations, `<note>`, `<email>`, `<photo>`, `<phone>` | — |
 | VCIFaceLayout, VCInterfaceItem | `<interface>`, `<item>` | 278, 2828 |
 | EndGame | `<ending kind>` | 14 calls |
 
@@ -57,7 +57,7 @@ reader runs no named engine scripts (`<script>` is kept for tools).
   <email id="wong" from="Cook" title="Background" enabled="false">No record.</email>
   <photo id="lamp-man" camera="window" title="The lamp" enabled="false">The man under the lamp.</photo>
   <phone number="206-555-0182" target="cook-call" if="met-cook"/>
-  <interface id="pda" title="PDA"><item label="Notes" target="notes-view"/></interface>
+  <interface id="case-file" title="Case file"><item label="Suspects" target="suspects"/></interface>
 
   <node id="act-1" name="Act 1: the runaway train">
     <trigger event="enter"><set var="day" value="1"/></trigger>
@@ -75,15 +75,18 @@ reader runs no named engine scripts (`<script>` is kept for tools).
   conversation. An icon's picture is camera `item-<id>`.
 - Records start disabled unless `enabled="true"`; `<enable target="berth"/>`
   delivers a note, an email or a photo.
-- A book with any record gives every view and map a PDA, a disc beside the
-  carried icons. Its home lists Notes, Email and Photos with their counts
-  (unread ones marked new), the Phone, and each interface an action has
-  shown. Notes and email open as documents over the view; a photo opens on its
-  own camera still, captioned. The phone is a keypad: dialling a declared
-  number, enabled and with its `if` holding, goes to its target page; any
-  other number is not answered. An interface lists its enabled items as lines;
-  choosing one runs its actions and goes to its target, putting the PDA away.
-  The PDA is not offered in a conversation.
+- A book with any `<map>` page or record gives every view and map page the
+  map: a disc beside the carried icons, where *The X-Files Game* had its PDA.
+  Its home lists, as lines, every destination of each map page the reader has
+  seen (but those in the location they stand in), then Notes, Email and Photos
+  with their counts (unread ones marked new), the Phone, and each interface an
+  action has shown. Choosing a destination travels there. Notes and email open
+  as documents over the view; a photo opens on its own camera still, captioned.
+  The phone is a keypad: dialling a declared number, enabled and with its `if`
+  holding, goes to its target page; any other number is not answered. An
+  interface lists its enabled items as lines; choosing one runs its actions and
+  goes to its target, folding the map. The map is not offered in a
+  conversation.
 - Every location file is listed in exactly one node, in reading order.
 
 ## locations/&lt;id&gt;.xml

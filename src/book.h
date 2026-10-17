@@ -108,8 +108,8 @@ enum ChoiceKind {
     CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE, CHOICE_RETRY, CHOICE_ITEM,
     CHOICE_ASK, /* a talk line: choosing it plays that reply */
     CHOICE_END, /* the talk's last line: always under the questions */
-    CHOICE_PDA, /* the PDA, a disc beside the carried icons on a view */
-    CHOICE_KEY  /* a key on the PDA's phone keypad */
+    CHOICE_MAP, /* the map, a disc beside the carried icons on a view */
+    CHOICE_KEY  /* a key on the map's phone keypad */
 };
 /* How an ending resolves the quest; only ending pages carry one. */
 enum EndingKind { ENDING_NONE, ENDING_SUCCESS, ENDING_PARTIAL, ENDING_FAILURE };
@@ -269,8 +269,8 @@ struct StoryLocation {
     struct StoryTriggers triggers;
 };
 struct StoryViewpoint { const char *id; int location; };
-/* The PDA's records: notes, email, photos, phone numbers and interface screens. They load,
- * validate and change state; the PDA over a view shows them, and dials the phone. */
+/* The map's records, after The X-Files Game's PDA: notes, email, photos, phone numbers and
+ * interface screens. The map over a view lists them, opens them and dials the phone. */
 enum StoryRecordKind { RECORD_NOTE, RECORD_EMAIL, RECORD_PHOTO, RECORD_PHONE, RECORD_INTERFACE };
 struct StoryRecord {
     enum StoryRecordKind kind;
@@ -437,7 +437,7 @@ int scene_text_regions(isize2_t image, fsize2_t viewport, textRegionList_t regio
 #define ITEM_GAP 22.0f
 #define ITEM_CAPTION_TEXT_SIZE 18.0f
 #define ITEM_CAPTION_MAX_WIDTH 120.0f
-/* The PDA's phone: three keys a row, above the line that puts it away. */
+/* The map's phone: three keys a row, above the line that puts it away. */
 #define KEYPAD_COLUMNS 3
 #define KEY_WIDTH 150.0f
 #define KEY_GAP 12.0f

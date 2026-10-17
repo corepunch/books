@@ -64,21 +64,22 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as directory:
     assert view['id'] == 'desk'
     assert labels(view) == ['The folder', 'The lamp', 'The telephone', 'The ledger', 'Turn right', 'To the harbour']
     assert items(view) == ['peg'], items(view)
-    # The PDA: the telephone delivered an email and a photo; the phone does not answer yet.
-    assert [c['kind'] for c in view['choices']].count('pda') == 1
-    view = book.tap_choice(next(i for i, c in enumerate(view['choices']) if c['kind'] == 'pda'))
-    assert view['id'] == 'pda' and view['talk'], view
+    # The map: the telephone delivered an email and a photo; the phone does not answer yet.
+    # No map page has been seen, so the map offers no travel yet.
+    assert [c['kind'] for c in view['choices']].count('map') == 1
+    view = book.tap_choice(next(i for i, c in enumerate(view['choices']) if c['kind'] == 'map'))
+    assert view['id'] == 'map:home' and view['talk'], view
     assert labels(view) == ['Notes (0)', 'Email (1 new)', 'Photos (1 new)', 'Phone', 'Close'], labels(view)
     view = choose(book, 'Email (1 new)')
-    assert view['id'] == 'pda-email' and labels(view) == ['New: Background, from Cook', 'Back'], labels(view)
+    assert view['id'] == 'map:email' and labels(view) == ['New: Background, from Cook', 'Back'], labels(view)
     view = choose(book, 'New: Background, from Cook')
-    assert view['id'] == 'mail' and view['read'] and view['text'] == 'From Cook: Background\nWong has no record.', view
+    assert view['id'] == 'map:mail' and view['read'] and view['text'] == 'From Cook: Background\nWong has no record.', view
     view = book.continue_page()
-    assert view['id'] == 'pda-email' and labels(view) == ['Background, from Cook', 'Back'], labels(view)
+    assert view['id'] == 'map:email' and labels(view) == ['Background, from Cook', 'Back'], labels(view)
     view = choose(book, 'Back')
     view = choose(book, 'Photos (1 new)')
     view = choose(book, 'New: The lamp')
-    assert view['id'] == 'snap' and Path(view['image']).stem == 'window', view['image']
+    assert view['id'] == 'map:snap' and Path(view['image']).stem == 'window', view['image']
     assert view['text'] == 'The lamp\nThe man under the lamp.', view['text']
     view = book.continue_page()
     view = choose(book, 'Back')
@@ -86,10 +87,10 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as directory:
     assert view['keypad'] and [c['label'] for c in view['choices'] if c['kind'] == 'key'] == \
         ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'Clear', '0', 'Dial'], view['choices']
     for digit in '2065550182':
-        view = book.choose(f'pda:key:{digit}')
+        view = book.choose(f'map:key:{digit}')
     assert view['text'] == 'Dial 2065550182', view['text']
-    view = book.choose('pda:dial')
-    assert view['id'] == 'pda-phone' and view['text'] == 'No one answers.', view['text']
+    view = book.choose('map:dial')
+    assert view['id'] == 'map:phone' and view['text'] == 'No one answers.', view['text']
     view = choose(book, 'Back')
     view = choose(book, 'Close')
     assert view['id'] == 'desk' and 'The lamp' in labels(view), labels(view)
@@ -137,14 +138,17 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as directory:
     # Travel by map into the next node; leaving the office calms the reader again.
     view = choose(book, 'To the harbour')
     assert view['id'] == 'harbour-map' and view['kind'] == 'room' and labels(view) == ['Berth four', 'The office']
-    # Entering the harbour's node showed the organizer; its item enables a note and goes home.
-    view = book.choose('pda')
-    assert labels(view) == ['Notes (0)', 'Email (1)', 'Photos (1)', 'Phone', 'Organizer', 'Close'], labels(view)
+    # Entering the harbour's node showed the organizer. The map now knows the harbour map's
+    # destinations, all but the one in the location the reader stands in.
+    view = book.choose('map:open')
+    assert labels(view) == ['The office', 'Notes (0)', 'Email (1)', 'Photos (1)', 'Phone', 'Organizer', 'Close'], \
+        labels(view)
+    # The organizer's item enables a note and goes home.
     view = choose(book, 'Organizer')
-    assert view['id'] == 'organizer' and labels(view) == ['Notes', 'Back'], labels(view)
+    assert view['id'] == 'map:organizer' and labels(view) == ['Notes', 'Back'], labels(view)
     view = choose(book, 'Notes')
     assert view['id'] == 'desk', view['id']
-    view = book.choose('pda')
+    view = book.choose('map:open')
     view = choose(book, 'Notes (1 new)')
     view = choose(book, 'New: Berth four')
     assert view['text'] == 'Berth four\nThomas kept the tide at berth four.', view['text']
@@ -155,15 +159,17 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as directory:
     view = book.continue_page()
     assert view['id'] == 'desk', 'the dock should have calmed the reader'
     # Edith has talked about Thomas, so the number answers now.
-    view = book.choose('pda')
+    view = book.choose('map:open')
     view = choose(book, 'Phone')
     for digit in '2065550182':
-        view = book.choose(f'pda:key:{digit}')
-    view = book.choose('pda:dial')
+        view = book.choose(f'map:key:{digit}')
+    view = book.choose('map:dial')
     assert view['id'] == 'phone-call', view['id']
     view = book.continue_page()
     assert view['id'] == 'desk'
-    view = choose(book, 'To the harbour')
+    # Travel by the map's own list: the harbour's berth, from the desk.
+    view = book.choose('map:open')
+    assert labels(view)[0] == 'Berth four' and 'The office' not in labels(view), labels(view)
     view = choose(book, 'Berth four')
     # visited() and has() together open the last circle.
     assert view['id'] == 'berth' and 'The book' in labels(view), labels(view)
@@ -195,4 +201,4 @@ with tempfile.TemporaryDirectory(prefix='book-engine-') as directory:
     assert 'variable arrivals is set but never tested' in graph and 'icon badge can never be had' in graph, graph
 
 print('Engine: slices, loops, turns, flags, triggers, action lists, charviews, topics, tones, evidence, '
-      'travel, retry, the PDA (notes, email, photos, phone, interfaces) and the book tool passed')
+      'travel, retry, the map (destinations, notes, email, photos, phone, interfaces) and the book tool passed')

@@ -138,18 +138,22 @@ static void draw_item(const struct PageControl *control, const struct Choice *ch
     text_draw_centered(choice->label, control->caption, ITEM_CAPTION_TEXT_SIZE, 0xF4E6CAFF);
 }
 
-/* The PDA: a disc holding a small lit screen, named underneath like a carried icon. */
-static void draw_pda(const struct PageControl *control, const struct Choice *choice)
+/* The map: a disc holding a folded sheet, named underneath like a carried icon. */
+static void draw_map(const struct PageControl *control, const struct Choice *choice)
 {
     frect_t disc = control->bounds;
     renderer_ring(frect_translate(disc, fvec2(0, 2)), 0x120B0780);
     renderer_reveal_begin(frect_center(disc), disc.size.width / 2);
     renderer_rect(disc, 0x211C18E8);
     renderer_reveal_end();
-    frect_t screen = frect_center_at(frect_from_size(fsize2(disc.size.width * .42f, disc.size.height * .56f)),
-                                     frect_center(disc));
-    renderer_round_rect(screen, 4, 0, 0x3A6B5CFF);
-    renderer_round_rect(screen, 4, 1.5f, 0xF4E6CAFF);
+    frect_t sheet = frect_center_at(frect_from_size(fsize2(disc.size.width * .56f, disc.size.height * .42f)),
+                                    frect_center(disc));
+    renderer_round_rect(sheet, 3, 0, 0xD9C9A0FF);
+    for (int fold = 1; fold < 3; ++fold) {
+        float x = sheet.origin.x + sheet.size.width * fold / 3;
+        renderer_line(fvec2(x, sheet.origin.y), fvec2(x, frect_bottom_right(sheet).y), 0x5A4310C0);
+    }
+    renderer_round_rect(sheet, 3, 1.5f, 0xF4E6CAFF);
     renderer_ring(disc, 0xF4E6CAFF);
     renderer_round_rect(control->caption, CAPTION_CORNER_RADIUS, 0, 0x211C18C8);
     text_draw_centered(choice->label, control->caption, ITEM_CAPTION_TEXT_SIZE, 0xF4E6CAFF);
@@ -209,7 +213,7 @@ static void draw_overlays(const struct PageView *view)
         case CHOICE_CONTINUE:
         case CHOICE_RETRY: draw_continue(control, choice->label); break;
         case CHOICE_ITEM: draw_item(control, choice, choice->object == view->content.held); break;
-        case CHOICE_PDA: draw_pda(control, choice); break;
+        case CHOICE_MAP: draw_map(control, choice); break;
         case CHOICE_KEY: draw_key(control, choice->label, talk_type_size(view->viewport.height)); break;
         case CHOICE_ASK:
         case CHOICE_END:

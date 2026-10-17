@@ -36,7 +36,7 @@ static frect_t layout_items(struct PageLayout *layout, const struct BookPage *pa
     float x = margin, caption_height = 0;
     fvec2_t padding = fvec2(CAPTION_PADDING, CAPTION_PADDING / 2);
     for (int i = 0; i < page->choice_count; ++i)
-        if (page->choices[i].kind == CHOICE_ITEM || page->choices[i].kind == CHOICE_PDA)
+        if (page->choices[i].kind == CHOICE_ITEM || page->choices[i].kind == CHOICE_MAP)
             caption_height = fmaxf(caption_height, text_label_box(page->choices[i].label, ITEM_CAPTION_TEXT_SIZE,
                                                                   ITEM_CAPTION_MAX_WIDTH, padding).size.height);
     /* Discs share one row; each name hangs from the top of the caption band below them.
@@ -45,7 +45,7 @@ static frect_t layout_items(struct PageLayout *layout, const struct BookPage *pa
                             : viewport.height - margin - caption_height;
     for (int i = 0; i < page->choice_count; ++i) {
         const struct Choice *choice = &page->choices[i];
-        if (choice->kind != CHOICE_ITEM && choice->kind != CHOICE_PDA) continue;
+        if (choice->kind != CHOICE_ITEM && choice->kind != CHOICE_MAP) continue;
         fsize2_t caption = text_label_box(choice->label, ITEM_CAPTION_TEXT_SIZE, ITEM_CAPTION_MAX_WIDTH, padding).size;
         float width = fmaxf(ITEM_DIAMETER, caption.width);
         fvec2_t center = fvec2(x + width / 2, caption_top - CAPTION_GAP / 2 - ITEM_DIAMETER / 2);
@@ -125,7 +125,7 @@ static void layout_talk(struct PageLayout *layout, const struct BookPage *page, 
         case CHOICE_OBJECT:
         case CHOICE_CONTINUE:
         case CHOICE_RETRY:
-        case CHOICE_PDA:
+        case CHOICE_MAP:
         case CHOICE_INVALID: fail("camera %s lays a talk line out as something else", page->camera);
         }
     }
@@ -246,7 +246,7 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
             break;
         }
         case CHOICE_ITEM:
-        case CHOICE_PDA: break;
+        case CHOICE_MAP: break;
         case CHOICE_ASK:
         case CHOICE_END:
         case CHOICE_KEY: fail("camera %s lays out a talk line without a talk", page->camera);

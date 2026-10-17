@@ -15,7 +15,7 @@
 #define MAX_TERM_STACK 256
 #define ITEM_ICON_PREFIX "item-"
 #define MAX_DIALED 32
-#define PDA_COMMAND "pda"
+#define MAP_COMMAND "map"
 #define BITS(count) (((count) + 7) / 8)
 
 /* Everything "try again" restores: variables, flags, icons, where the reader stands. */
@@ -48,15 +48,17 @@ static int choice_source[MAX_CHOICES];
  * Keep these large snapshots off the iPad main-thread stack. */
 static struct BookPage current, draft;
 
-/* The PDA opens over the view the reader stands on: its home, the notes, email and photos
- * the story has enabled, the phone, and each interface an action has shown. */
-enum PdaScreen { PDA_CLOSED, PDA_HOME, PDA_NOTES, PDA_EMAIL, PDA_PHOTOS, PDA_PHONE, PDA_INTERFACE, PDA_RECORD };
+/* The map opens over the view the reader stands on: its home lists the destinations of
+ * every map page the reader has seen, then the notes, email and photos the story has
+ * enabled, the phone, and each interface an action has shown. Like the PDA of The X-Files
+ * Game, it is how the reader travels and what they keep; here it is simply the map. */
+enum MapScreen { MAP_CLOSED, MAP_HOME, MAP_NOTES, MAP_EMAIL, MAP_PHOTOS, MAP_PHONE, MAP_INTERFACE, MAP_RECORD };
 static struct {
-    enum PdaScreen screen, list; /* list: the screen the open record was chosen from */
+    enum MapScreen screen, list; /* list: the screen the open record was chosen from */
     int record;                  /* the open record or interface */
     char dialed[MAX_DIALED];
     bool unanswered;
-} pda;
+} map;
 
 static bool bit(const unsigned char *bits, int index) { return bits[index / 8] & (1u << (index % 8)); }
 static void set_bit(unsigned char *bits, int index, bool on)
@@ -406,9 +408,9 @@ static void publish_page(void)
             if (!draft.talk || draft.kind != PAGE_ROOM || !*choice->command || choice->object)
                 fail("invalid talk line %d", i);
             break;
-        case CHOICE_PDA:
+        case CHOICE_MAP:
             if (draft.talk || draft.kind != PAGE_ROOM || !*choice->command || choice->object)
-                fail("invalid PDA choice %d", i);
+                fail("invalid map choice %d", i);
             break;
         case CHOICE_KEY:
             if (!draft.keypad || !draft.talk || draft.kind != PAGE_ROOM || !*choice->command || choice->object)
@@ -455,6 +457,15 @@ static void hotspot_command(const struct StoryPage *page, int index, command_t c
     else snprintf(command, sizeof(command_t), "%s:%d", page->id, index);
 }
 
+/* A book with map pages or records gives every view the map. */
+static bool has_map(void)
+{
+    if (story->record_count) return true;
+    for (int i = 0; i < story->page_count; ++i)
+        if (page_at(i)->kind == STORY_MAP) return true;
+    return false;
+}
+
 /* Fill a room page: the choices the reader can take, or the held icon's uses, then the
  * carried icons. A view shows inventory and evidence; a charview shows every icon. */
 static void build_room(void)
@@ -494,7 +505,16 @@ static void build_room(void)
         if (world.carried[i] && (talk || everywhere))
             append_choice(CHOICE_ITEM, icon->name, icon->id, game.icon_object[i], -1);
     }
-    if (!talk && story->record_count) append_choice(CHOICE_PDA, "PDA", PDA_COMMAND, 0, -1);
+    if (!talk && has_map()) append_choice(CHOICE_MAP, "Map", MAP_COMMAND ":open", 0, -1);
+}
+
+/* A destination on a map page the reader has seen, somewhere other than where they stand. */
+static bool known_destination(int page, const struct StoryHotspot *destination)
+{
+    if (!bit(world.seen, page) || (destination->flag >= 0 && !bit(world.enabled, destination->flag)) ||
+        !evaluate(&destination->test))
+        return false;
+    return destination->target < 0 || page_at(destination->target)->location != page_at(game.page)->location;
 }
 
 static bool record_enabled(int index)
@@ -518,15 +538,15 @@ static const char *record_title(const struct StoryRecord *record)
     return record->title ? record->title : record->id;
 }
 
-static void pda_line(const char *label, const char *format, int value)
+static void map_line(const char *label, const char *format, int value)
 {
     command_t command;
     snprintf(command, sizeof(command), format, value);
     append_choice(CHOICE_ASK, label, command, 0, -1);
 }
 
-/* A PDA list: one line per enabled record of a kind, newest unread marked. */
-static void pda_list(enum StoryRecordKind kind, const char *heading, storyText_t text)
+/* A map list: one line per enabled record of a kind, newest unread marked. */
+static void map_list(enum StoryRecordKind kind, const char *heading, storyText_t text)
 {
     copy(text, sizeof(storyText_t), heading);
     if (!count_records(kind, true, false)) copy(text, sizeof(storyText_t), "Nothing here yet.");
@@ -536,11 +556,11 @@ static void pda_list(enum StoryRecordKind kind, const char *heading, storyText_t
         choiceLabel_t label;
         snprintf(label, sizeof(label), "%s%s%s%s", bit(world.read, i) ? "" : "New: ", record_title(record),
                  record->from ? ", from " : "", record->from ? record->from : "");
-        pda_line(label, PDA_COMMAND ":record:%d", i);
+        map_line(label, MAP_COMMAND ":record:%d", i);
     }
 }
 
-static void publish_pda(void)
+static void publish_map(void)
 {
     const struct StoryPage *page = page_at(game.page);
     memset(&draft, 0, sizeof(draft));
@@ -549,13 +569,23 @@ static void publish_pda(void)
     draft.talk = true;
     select_image(&draft, page->camera);
     storyText_t text = "";
-    const char *id = PDA_COMMAND;
-    switch (pda.screen) {
-    case PDA_HOME: {
-        copy(text, sizeof(text), "PDA");
+    identifier_t id = MAP_COMMAND ":home";
+    switch (map.screen) {
+    case MAP_HOME: {
+        copy(text, sizeof(text), "Map");
+        for (int p = 0; p < story->page_count; ++p) {
+            const struct StoryPage *chart = page_at(p);
+            if (chart->kind != STORY_MAP) continue;
+            for (int h = 0; h < chart->hotspot_count; ++h)
+                if (known_destination(p, hotspot_at(chart, h))) {
+                    command_t command;
+                    snprintf(command, sizeof(command), MAP_COMMAND ":go:%d", chart->hotspot_first + h);
+                    append_choice(CHOICE_ASK, hotspot_at(chart, h)->label, command, 0, chart->hotspot_first + h);
+                }
+        }
         static const struct { enum StoryRecordKind kind; const char *label, *command; } lists[] = {
-            {RECORD_NOTE, "Notes", PDA_COMMAND ":notes"}, {RECORD_EMAIL, "Email", PDA_COMMAND ":email"},
-            {RECORD_PHOTO, "Photos", PDA_COMMAND ":photos"},
+            {RECORD_NOTE, "Notes", MAP_COMMAND ":notes"}, {RECORD_EMAIL, "Email", MAP_COMMAND ":email"},
+            {RECORD_PHOTO, "Photos", MAP_COMMAND ":photos"},
         };
         for (size_t l = 0; l < sizeof(lists) / sizeof(lists[0]); ++l) {
             if (!count_records(lists[l].kind, false, false)) continue;
@@ -565,49 +595,49 @@ static void publish_pda(void)
             else snprintf(label, sizeof(label), "%s (%d)", lists[l].label, count_records(lists[l].kind, true, false));
             append_choice(CHOICE_ASK, label, lists[l].command, 0, -1);
         }
-        if (count_records(RECORD_PHONE, false, false)) append_choice(CHOICE_ASK, "Phone", PDA_COMMAND ":phone", 0, -1);
+        if (count_records(RECORD_PHONE, false, false)) append_choice(CHOICE_ASK, "Phone", MAP_COMMAND ":phone", 0, -1);
         for (int i = 0; i < story->record_count; ++i)
             if (story->records[i].kind == RECORD_INTERFACE && record_enabled(i))
-                pda_line(record_title(&story->records[i]), PDA_COMMAND ":interface:%d", i);
-        append_choice(CHOICE_END, "Close", PDA_COMMAND ":close", 0, -1);
+                map_line(record_title(&story->records[i]), MAP_COMMAND ":interface:%d", i);
+        append_choice(CHOICE_END, "Close", MAP_COMMAND ":close", 0, -1);
         break;
     }
-    case PDA_NOTES: id = "pda-notes"; pda_list(RECORD_NOTE, "Notes", text); break;
-    case PDA_EMAIL: id = "pda-email"; pda_list(RECORD_EMAIL, "Email", text); break;
-    case PDA_PHOTOS: id = "pda-photos"; pda_list(RECORD_PHOTO, "Photos", text); break;
-    case PDA_INTERFACE: {
-        const struct StoryRecord *record = &story->records[pda.record];
-        id = record->id;
+    case MAP_NOTES: copy(id, sizeof(id), MAP_COMMAND ":notes"); map_list(RECORD_NOTE, "Notes", text); break;
+    case MAP_EMAIL: copy(id, sizeof(id), MAP_COMMAND ":email"); map_list(RECORD_EMAIL, "Email", text); break;
+    case MAP_PHOTOS: copy(id, sizeof(id), MAP_COMMAND ":photos"); map_list(RECORD_PHOTO, "Photos", text); break;
+    case MAP_INTERFACE: {
+        const struct StoryRecord *record = &story->records[map.record];
+        snprintf(id, sizeof(id), MAP_COMMAND ":%s", record->id);
         copy(text, sizeof(text), record_title(record));
         for (int h = 0; h < record->hotspot_count; ++h) {
             int index = record->hotspot_first + h;
             const struct StoryHotspot *item = &story->hotspots[index];
             if ((item->flag >= 0 && !bit(world.enabled, item->flag)) || !evaluate(&item->test)) continue;
             command_t command;
-            snprintf(command, sizeof(command), PDA_COMMAND ":item:%d", index);
+            snprintf(command, sizeof(command), MAP_COMMAND ":item:%d", index);
             append_choice(CHOICE_ASK, item->label, command, 0, index);
         }
         break;
     }
-    case PDA_PHONE: {
-        id = "pda-phone";
+    case MAP_PHONE: {
+        copy(id, sizeof(id), MAP_COMMAND ":phone");
         draft.keypad = true;
-        if (pda.unanswered) copy(text, sizeof(text), "No one answers.");
-        else snprintf(text, sizeof(text), "Dial %s", *pda.dialed ? pda.dialed : "a number.");
+        if (map.unanswered) copy(text, sizeof(text), "No one answers.");
+        else snprintf(text, sizeof(text), "Dial %s", *map.dialed ? map.dialed : "a number.");
         static const char *const keys[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "Clear", "0", "Dial"};
         for (size_t k = 0; k < sizeof(keys) / sizeof(keys[0]); ++k) {
             command_t command;
-            if (!strcmp(keys[k], "Clear")) copy(command, sizeof(command), PDA_COMMAND ":clear");
-            else if (!strcmp(keys[k], "Dial")) copy(command, sizeof(command), PDA_COMMAND ":dial");
-            else snprintf(command, sizeof(command), PDA_COMMAND ":key:%s", keys[k]);
+            if (!strcmp(keys[k], "Clear")) copy(command, sizeof(command), MAP_COMMAND ":clear");
+            else if (!strcmp(keys[k], "Dial")) copy(command, sizeof(command), MAP_COMMAND ":dial");
+            else snprintf(command, sizeof(command), MAP_COMMAND ":key:%s", keys[k]);
             append_choice(CHOICE_KEY, keys[k], command, 0, -1);
         }
         break;
     }
-    case PDA_RECORD: {
+    case MAP_RECORD: {
         /* A record reads like a document: a photo on its own picture, the rest over the view. */
-        const struct StoryRecord *record = &story->records[pda.record];
-        id = record->id;
+        const struct StoryRecord *record = &story->records[map.record];
+        snprintf(id, sizeof(id), MAP_COMMAND ":%s", record->id);
         draft.kind = PAGE_BEAT;
         draft.talk = false;
         draft.read = true;
@@ -619,9 +649,9 @@ static void publish_pda(void)
         append_choice(CHOICE_CONTINUE, story->continue_label, NULL, 0, -1);
         break;
     }
-    case PDA_CLOSED: fail("the PDA is closed");
+    case MAP_CLOSED: fail("the map is closed");
     }
-    if (draft.talk && pda.screen != PDA_HOME) append_choice(CHOICE_END, "Back", PDA_COMMAND ":back", 0, -1);
+    if (draft.talk && map.screen != MAP_HOME) append_choice(CHOICE_END, "Back", MAP_COMMAND ":back", 0, -1);
     copy(draft.id, sizeof(draft.id), id);
     copy(draft.text, sizeof(draft.text), text);
     publish_page();
@@ -630,8 +660,8 @@ static void publish_pda(void)
 /* Publish the page the reader stands on, from the current world. */
 static void publish(void)
 {
-    if (pda.screen != PDA_CLOSED) {
-        publish_pda();
+    if (map.screen != MAP_CLOSED) {
+        publish_map();
         return;
     }
     const struct StoryPage *page = page_at(game.page);
@@ -701,7 +731,7 @@ static int arrive(int location)
 /* Show a page by index: action lists and enter triggers may send the reader on. */
 static void show(int index)
 {
-    pda.screen = PDA_CLOSED;
+    map.screen = MAP_CLOSED;
     for (int steps = 0;; ++steps) {
         if (steps >= MAX_REDIRECTS) fail("the story redirects in a loop at %s", page_at(index)->id);
         const struct StoryPage *page = page_at(index);
@@ -737,7 +767,7 @@ static void go(int index)
 static void restart(void)
 {
     memset(&world, 0, sizeof(world));
-    memset(&pda, 0, sizeof(pda));
+    memset(&map, 0, sizeof(map));
     world.location = world.node = -1;
     for (int i = 0; i < story->variable_count; ++i) world.values[i] = story->variables[i].initial;
     for (int i = 0; i < story->flag_count; ++i) set_bit(world.enabled, i, story->flags[i].initial);
@@ -774,7 +804,7 @@ static void digits(const char *number, char *out, size_t size)
 static int dial(void)
 {
     char wanted[MAX_DIALED], number[MAX_DIALED];
-    digits(pda.dialed, wanted, sizeof(wanted));
+    digits(map.dialed, wanted, sizeof(wanted));
     for (int i = 0; *wanted && i < story->record_count; ++i) {
         const struct StoryRecord *record = &story->records[i];
         if (record->kind != RECORD_PHONE || !record_enabled(i) || !evaluate(&record->test)) continue;
@@ -784,7 +814,7 @@ static int dial(void)
     return -1;
 }
 
-static bool pda_command(const char *command, const char *name, const char **rest)
+static bool map_command(const char *command, const char *name, const char **rest)
 {
     size_t length = strlen(name);
     if (strncmp(command, name, length)) return false;
@@ -792,44 +822,44 @@ static bool pda_command(const char *command, const char *name, const char **rest
     return true;
 }
 
-static bool pda_action(const char *command)
+static bool map_action(const char *command)
 {
     const char *rest;
-    if (!strcmp(command, PDA_COMMAND ":close")) pda.screen = PDA_CLOSED;
-    else if (!strcmp(command, PDA_COMMAND ":back")) pda.screen = PDA_HOME;
-    else if (!strcmp(command, PDA_COMMAND ":notes")) pda.screen = PDA_NOTES;
-    else if (!strcmp(command, PDA_COMMAND ":email")) pda.screen = PDA_EMAIL;
-    else if (!strcmp(command, PDA_COMMAND ":photos")) pda.screen = PDA_PHOTOS;
-    else if (!strcmp(command, PDA_COMMAND ":phone")) {
-        pda.screen = PDA_PHONE;
-        pda.dialed[0] = 0;
-        pda.unanswered = false;
-    } else if (pda_command(command, PDA_COMMAND ":interface:", &rest)) {
-        pda.screen = PDA_INTERFACE;
-        pda.record = atoi(rest);
-    } else if (pda_command(command, PDA_COMMAND ":record:", &rest)) {
-        pda.list = pda.screen;
-        pda.screen = PDA_RECORD;
-        pda.record = atoi(rest);
-        set_bit(world.read, pda.record, true);
-    } else if (pda_command(command, PDA_COMMAND ":key:", &rest)) {
-        size_t length = strlen(pda.dialed);
-        if (pda.unanswered) length = 0;
-        pda.unanswered = false;
-        if (length + strlen(rest) < sizeof(pda.dialed)) copy(pda.dialed + length, sizeof(pda.dialed) - length, rest);
-    } else if (!strcmp(command, PDA_COMMAND ":clear")) {
-        pda.dialed[0] = 0;
-        pda.unanswered = false;
-    } else if (!strcmp(command, PDA_COMMAND ":dial")) {
+    if (!strcmp(command, MAP_COMMAND ":close")) map.screen = MAP_CLOSED;
+    else if (!strcmp(command, MAP_COMMAND ":back")) map.screen = MAP_HOME;
+    else if (!strcmp(command, MAP_COMMAND ":notes")) map.screen = MAP_NOTES;
+    else if (!strcmp(command, MAP_COMMAND ":email")) map.screen = MAP_EMAIL;
+    else if (!strcmp(command, MAP_COMMAND ":photos")) map.screen = MAP_PHOTOS;
+    else if (!strcmp(command, MAP_COMMAND ":phone")) {
+        map.screen = MAP_PHONE;
+        map.dialed[0] = 0;
+        map.unanswered = false;
+    } else if (map_command(command, MAP_COMMAND ":interface:", &rest)) {
+        map.screen = MAP_INTERFACE;
+        map.record = atoi(rest);
+    } else if (map_command(command, MAP_COMMAND ":record:", &rest)) {
+        map.list = map.screen;
+        map.screen = MAP_RECORD;
+        map.record = atoi(rest);
+        set_bit(world.read, map.record, true);
+    } else if (map_command(command, MAP_COMMAND ":key:", &rest)) {
+        size_t length = strlen(map.dialed);
+        if (map.unanswered) length = 0;
+        map.unanswered = false;
+        if (length + strlen(rest) < sizeof(map.dialed)) copy(map.dialed + length, sizeof(map.dialed) - length, rest);
+    } else if (!strcmp(command, MAP_COMMAND ":clear")) {
+        map.dialed[0] = 0;
+        map.unanswered = false;
+    } else if (!strcmp(command, MAP_COMMAND ":dial")) {
         int target = dial();
-        pda.dialed[0] = 0;
+        map.dialed[0] = 0;
         if (target >= 0) {
             go(target);
             return true;
         }
-        pda.unanswered = true;
-    } else if (pda_command(command, PDA_COMMAND ":item:", &rest)) {
-        /* An interface item runs its actions; going somewhere puts the PDA away. */
+        map.unanswered = true;
+    } else if (map_command(command, MAP_COMMAND ":item:", &rest) || map_command(command, MAP_COMMAND ":go:", &rest)) {
+        /* A destination or an interface item runs its actions; going somewhere folds the map. */
         const struct StoryHotspot *item = &story->hotspots[atoi(rest)];
         int next = run(item->click, 0);
         if (next < 0) next = item->target;
@@ -906,7 +936,7 @@ const char *book_choice_kind_name(enum ChoiceKind kind)
     case CHOICE_ITEM: return "item";
     case CHOICE_ASK: return "ask";
     case CHOICE_END: return "end";
-    case CHOICE_PDA: return "pda";
+    case CHOICE_MAP: return "map";
     case CHOICE_KEY: return "key";
     case CHOICE_INVALID: break;
     }
@@ -928,11 +958,11 @@ bool book_action(int index)
 {
     if (index < 0 || index >= current.choice_count) return false;
     const struct Choice choice = current.choices[index];
-    if (pda.screen != PDA_CLOSED && choice.kind != CHOICE_CONTINUE) return pda_action(choice.command);
+    if (map.screen != MAP_CLOSED && choice.kind != CHOICE_CONTINUE) return map_action(choice.command);
     switch (choice.kind) {
-    case CHOICE_PDA:
+    case CHOICE_MAP:
         game.held = 0;
-        pda.screen = PDA_HOME;
+        map.screen = MAP_HOME;
         publish();
         return true;
     case CHOICE_KEY: break;
@@ -964,8 +994,8 @@ bool book_action(int index)
         return true;
     }
     case CHOICE_CONTINUE:
-        if (pda.screen == PDA_RECORD) {
-            pda.screen = pda.list;
+        if (map.screen == MAP_RECORD) {
+            map.screen = map.list;
             publish();
         } else finish();
         return true;
@@ -1018,7 +1048,7 @@ bool book_command(const char *input)
     for (int i = 0; i < current.choice_count; ++i)
         if ((current.choices[i].kind == CHOICE_OBJECT || current.choices[i].kind == CHOICE_ITEM ||
              current.choices[i].kind == CHOICE_ASK || current.choices[i].kind == CHOICE_END ||
-             current.choices[i].kind == CHOICE_PDA || current.choices[i].kind == CHOICE_KEY) &&
+             current.choices[i].kind == CHOICE_MAP || current.choices[i].kind == CHOICE_KEY) &&
             !strcmp(input, current.choices[i].command))
             return book_action(i);
     return false;

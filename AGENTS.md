@@ -68,7 +68,7 @@ in places, are taken, carried, held and used); see
   reader as the app; use it rather than reading the XML by eye, and run
   `check` and `graph` after editing a book. See README's "The book tool".
   `tests/test_engine.py` plays `tests/fixture/`, which uses every feature the
-  reader plays, the PDA's notes, email, photos, phone and interfaces among
+  reader plays, the map's destinations, notes, email, photos, phone and interfaces among
   them; extend it with each new element or action.
 - Route all input through `book_action()`. Drawing and headless input share
   `page_layout()` and `page_hit_test()`; keep control bounds and labels there and
