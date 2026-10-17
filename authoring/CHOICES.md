@@ -51,6 +51,15 @@ So a decision page has:
 - the page text, which sets up the options as *Krill* does;
 - one circle with a caption per option, placed on its object.
 
+A charview, The X-Files Game's conversation with a character, is the other
+shape. The picture stays full frame. A soft darkening covers the bottom, the
+page text sits in it, and each question is a `<conversation>` line. One line,
+marked `ends="true"`, is always last and leaves the conversation. A line has no
+anchor. `if` shows a question once something has been done, and hides it once
+it has been asked; `with` offers it only while the reader holds a topic (an
+idea), a tone (an emotion) or a gesture (an action icon). Choosing a line plays
+that reply, then returns to the same charview.
+
 ## Writing the options
 
 1. **Set them up in the text.** Every option's object or direction is named or
@@ -101,21 +110,27 @@ Placement rules:
 
 ## Implementing an option
 
-In the book's story table (`books/<name>.c`, see stage 8):
+In the location file that holds the view (`books/<name>/locations/<location>.xml`,
+see stage 8 and [XML.md](XML.md)):
 
-1. Give the decision page up to three choices, each
-   `{.label = "Перейти мост?", .anchor = "bridge", .target = "bridge"}`: the
-   caption, the scene anchor its circle sits on, and the page it leads to. The
+1. Give the view up to three plain circles, each
+   `<nav label="Перейти мост?" anchor="bridge" target="bridge"/>` to go
+   somewhere or `<explorable …/>` to look at or use something: the caption,
+   the scene anchor its circle sits on, and the page it leads to. The
    anchor is a named group in that camera's scene (lowercase, `_` becomes `-`),
    so the `Bridge` group is the `bridge` anchor.
 2. Anchors must be unique names in their scene. Name the actor prefab
    differently from its anchor (`AgafyaActor` and the `Agafya` anchor group),
    or the anchor lookup stops at the duplicate.
-3. The target page tells what happens: usually a story page with the outcome,
-   whose Continue moves on.
-4. Offer an option only when it is possible: limit it with `.requires` or
-   `.excludes`, or send the reader through a `STORY_CHECK` to a page variant
-   (the ferryman is only asked once).
+3. The target page tells what happens: usually an asset with the outcome,
+   which returns. Actions inside the circle (`<set>`, `<enable>`, `<give>`)
+   change the world when it is chosen; without a target the reader stays and
+   the view shows what changed.
+4. Offer an option only when it is possible: limit it with `if`, give it an
+   `id` and `enabled="false"` until an action enables it, or send the reader
+   through an `<actionlist>` to a page variant (the ferryman is only asked
+   once). `build/cli/book query <name> bridge` lists
+   every choice on that anchor, and `check` reports an anchor its scene lacks.
 
 ## Checking options
 

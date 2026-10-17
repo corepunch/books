@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Обратный отсчёт: Superman against Brainiac, after Mayfair's DC Heroes module
+     "Countdown to Armageddon" (1986). A runaway train, a raid on S.T.A.R. Labs, the
+     Fortress of Solitude, a belt of meteorites in orbit and Brainiac's ship over
+     Metropolis. Superman carries his powers like things in an inventory: hold one
+     and the page shows where it can be used. The red sun takes two of them away.
+     The design lives in DESIGN.md. -->
+<title name="countdown" start="start" continue="Дальше" retry="Попробовать снова" restart="Начать сначала">
+  <variable id="saw-bridge">X-ray showed the washed-out bridge and the old timbers</variable>
+  <variable id="saw-mercs">X-ray showed the men crawling under the floor</variable>
+  <variable id="mercs-caught">Brock and his men are tied up</variable>
+  <variable id="lead-found">X-ray found the lead-shelled weapon in the belt</variable>
+  <variable id="saw-airlock">X-ray found the red-sun emitter in the ship's airlock</variable>
+  <variable id="seeding-stopped">the antidote is in Brainiac's seeding tanks</variable>
+
+  <inventory id="heat" name="Тепловое зрение" carried="true">
+    Тепловое зрение: взгляд, который плавит сталь и сваривает железо. Куда посмотреть?
+  </inventory>
+  <inventory id="xray" name="Рентген" carried="true">
+    Рентген: Супермен видит сквозь стены, полы и обшивку. Не видно только того, что за свинцом. Куда заглянуть?
+  </inventory>
+  <inventory id="breath" name="Супердыхание" carried="true">
+    Супердыхание: выдох сильнее урагана. Им можно остановить, задуть, заморозить. На что подуть?
+  </inventory>
+  <inventory id="hearing" name="Суперслух" carried="true">
+    Суперслух: Супермен слышит шёпот за километр и стук сердца за стеной. Кого послушать?
+  </inventory>
+  <inventory id="pass" name="Пресс-карта" carried="true">
+    Пресс-карта WGBS: «Кларк Кент, ведущий новостей». С ней пускают туда, куда зевак не пускают.
+  </inventory>
+  <inventory id="cable" name="Кабель" where="lab">
+    Толстый компьютерный кабель, метров десять. Крепче любой верёвки, если тянет Супермен.
+  </inventory>
+  <inventory id="vial" name="Граната" where="lab">
+    Пустая газовая граната. На донышке фиолетовый осадок. Кажется, он шевелится.
+  </inventory>
+  <inventory id="sprayer" name="Распылитель">
+    Ранец с антидотом из Крепости. Одна струя, и бактерии засыпают.
+  </inventory>
+  <inventory id="drone" name="Дрон" where="red-room">
+    Дрон Брэйниака размером с колоду карт. Жужжит и рвётся из пальцев. Хватит сил на один бросок.
+  </inventory>
+  <inventory id="canister" name="Баллон" where="command">
+    Баллон с бактериями Брэйниака. Того, что внутри, хватит на целый город. Или на одну машину.
+  </inventory>
+
+  <node id="act-1" name="Act 1: the runaway train">
+    <location id="train"/>
+    <location id="gorge"/>
+  </node>
+  <node id="act-2" name="Act 2: S.T.A.R. Labs">
+    <location id="gate"/>
+    <location id="lab"/>
+  </node>
+  <node id="act-3" name="Act 3: the Fortress and the belt">
+    <location id="fortress"/>
+    <location id="orbit"/>
+  </node>
+  <node id="act-4" name="Act 4: the Star Watch and Brainiac's ship">
+    <location id="observatory"/>
+    <location id="sky"/>
+    <location id="red-room"/>
+    <location id="command"/>
+  </node>
+</title>

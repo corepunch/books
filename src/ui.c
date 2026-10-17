@@ -44,9 +44,8 @@ static void capture_page(struct PageView *view)
     layout_view(view, window_size());
 }
 
-static void navigate(int action, fvec2_t origin, float radius)
+static void present_next(fvec2_t origin, float radius)
 {
-    if (!book_action(action)) return;
     video_close();
     outgoing_page = current_page;
     /* Resolve and upload the new page before the animation clock starts. */
@@ -54,6 +53,24 @@ static void navigate(int action, fvec2_t origin, float radius)
     transition_start(&transition, now(), origin, window_size(), radius,
                      strcmp(outgoing_page.content.image, current_page.content.image) != 0);
     preview_time = -1;
+}
+
+static void navigate(int action, fvec2_t origin, float radius)
+{
+    if (!book_action(action)) return;
+    present_next(origin, radius);
+}
+
+/* A shot has no Next. Leaving it is the clip ending, or a tap on the picture. */
+static bool shot_page(const struct BookPage *page)
+{
+    return page->kind == PAGE_BEAT && !page->read;
+}
+
+static void follow_shot(fvec2_t origin)
+{
+    if (!book_continue()) return;
+    present_next(origin, 0);
 }
 
 static float story_text(const char *text,fvec2_t origin,float size,float width)
@@ -76,10 +93,21 @@ static void draw_image(const char *path,frect_t viewport)
 static void draw_page_image(const struct PageView *view, frect_t viewport, bool live)
 {
     if (live && *view->content.clip) {
-        video_open(view->content.clip);
+        video_open(view->content.clip, view->content.clip_from, view->content.clip_to, view->content.loop);
         if (video_frame(viewport)) return;
     } else if (live) video_close();
     draw_image(view->content.image, viewport);
+}
+
+static void draw_ask_line(const char *label, frect_t row, float size)
+{
+    struct TextMetrics metrics = text_metrics(size);
+    fsize2_t content = text_size(label, size, row.size.width);
+    int lines = (int)lroundf(content.height / metrics.line);
+    float band = (lines > 0 ? lines - 1 : 0) * metrics.line + metrics.cap_height;
+    fvec2_t origin = fvec2(row.origin.x,
+                           row.origin.y + (row.size.height - band) / 2 + metrics.cap_height - metrics.baseline);
+    story_text(label, origin, size, row.size.width);
 }
 
 static void draw_continue(const struct PageControl *control, const char *label)
@@ -110,9 +138,46 @@ static void draw_item(const struct PageControl *control, const struct Choice *ch
     text_draw_centered(choice->label, control->caption, ITEM_CAPTION_TEXT_SIZE, 0xF4E6CAFF);
 }
 
+/* The PDA: a disc holding a small lit screen, named underneath like a carried icon. */
+static void draw_pda(const struct PageControl *control, const struct Choice *choice)
+{
+    frect_t disc = control->bounds;
+    renderer_ring(frect_translate(disc, fvec2(0, 2)), 0x120B0780);
+    renderer_reveal_begin(frect_center(disc), disc.size.width / 2);
+    renderer_rect(disc, 0x211C18E8);
+    renderer_reveal_end();
+    frect_t screen = frect_center_at(frect_from_size(fsize2(disc.size.width * .42f, disc.size.height * .56f)),
+                                     frect_center(disc));
+    renderer_round_rect(screen, 4, 0, 0x3A6B5CFF);
+    renderer_round_rect(screen, 4, 1.5f, 0xF4E6CAFF);
+    renderer_ring(disc, 0xF4E6CAFF);
+    renderer_round_rect(control->caption, CAPTION_CORNER_RADIUS, 0, 0x211C18C8);
+    text_draw_centered(choice->label, control->caption, ITEM_CAPTION_TEXT_SIZE, 0xF4E6CAFF);
+}
+
+/* A keypad key: a framed button in the talk band. */
+static void draw_key(const struct PageControl *control, const char *label, float size)
+{
+    renderer_round_rect(control->bounds, BUTTON_CORNER_RADIUS, 0, 0x211C18E8);
+    renderer_round_rect(control->bounds, BUTTON_CORNER_RADIUS, 1.5f, 0xF4E6CAFF);
+    text_draw_centered(label, control->bounds, size, 0xF4E6CAFF);
+}
+
 static void draw_overlays(const struct PageView *view)
 {
     const struct PageLayout *layout = &view->layout;
+    /* The talk band: a soft falloff, then a dark field the lines sit on. */
+    if (!fsize2_is_empty(layout->feather.size)) renderer_shade(layout->feather, 0x100C09F0);
+    if (!fsize2_is_empty(layout->veil.size)) renderer_rect(layout->veil, 0x100C09F0);
+    if (layout->rule > 0) {
+        const struct PageControl *end = NULL;
+        for (int i = 0; i < layout->control_count; ++i)
+            if (view->content.choices[layout->controls[i].choice].kind == CHOICE_END)
+                end = &layout->controls[i];
+        if (end)
+            renderer_line(fvec2(end->bounds.origin.x, layout->rule),
+                          fvec2(frect_bottom_right(end->bounds).x, layout->rule), 0xF4E6CA66);
+    }
     for (int i = 0; i < layout->spot_count; ++i) {
         struct Hotspot spot = layout->spots[i];
         fvec2_t delta = fvec2_sub(spot.anchor, spot.center);
@@ -144,6 +209,12 @@ static void draw_overlays(const struct PageView *view)
         case CHOICE_CONTINUE:
         case CHOICE_RETRY: draw_continue(control, choice->label); break;
         case CHOICE_ITEM: draw_item(control, choice, choice->object == view->content.held); break;
+        case CHOICE_PDA: draw_pda(control, choice); break;
+        case CHOICE_KEY: draw_key(control, choice->label, talk_type_size(view->viewport.height)); break;
+        case CHOICE_ASK:
+        case CHOICE_END:
+            draw_ask_line(choice->label, control->bounds, talk_type_size(view->viewport.height));
+            break;
         case CHOICE_INVALID: fail("cannot draw an uninitialized choice");
         }
     }
@@ -157,6 +228,9 @@ void ui_draw(void)
         capture_page(&current_page);
         page_ready=true;
     }
+    /* The clip has finished. Follow .next before this frame draws the next page. */
+    if (!transition.active && shot_page(&current_page.content) && video_ended())
+        follow_shot(fvec2(window.width / 2, window.height / 2));
     if (current_page.viewport.width!=window.width || current_page.viewport.height!=window.height)
         layout_view(&current_page,window);
     struct TransitionFrame frame=transition_sample(&transition,
@@ -200,6 +274,7 @@ void ui_click(fvec2_t point)
     bool round = control && (control->circle || control->item);
     if (control) navigate(control->choice, round ? frect_center(control->bounds) : point,
                           round ? fminf(control->bounds.size.width, control->bounds.size.height) / 2 : 0);
+    else if (shot_page(&current_page.content)) follow_shot(point);
 }
 
 void ui_scroll(float delta)
@@ -207,7 +282,11 @@ void ui_scroll(float delta)
     if (!transition.active) current_page.scroll=MIN(current_page.layout.max_scroll,MAX(0,(int)roundf(current_page.scroll-delta)));
 }
 
-bool ui_animating(void) { return transition.active || video_playing(); }
+bool ui_animating(void)
+{
+    bool shot = page_ready && shot_page(&current_page.content);
+    return transition.active || video_playing() || (shot && video_ended());
+}
 
 void ui_preview(double seconds)
 {
@@ -220,6 +299,12 @@ void ui_preview(double seconds)
             preview_time = seconds;
             return;
         }
+    if (page_ready && shot_page(&current_page.content)) {
+        fsize2_t window = window_size();
+        ui_click(fvec2(window.width / 2, window.height / 2));
+        preview_time = seconds;
+        return;
+    }
     fail("transition smoke requires a control on the first page");
 }
 

@@ -184,6 +184,16 @@ static bool project(struct Camera cam, struct Vec point, isize2_t image, fsize2_
     return frect_covers_point(frect_from_size(viewport),*screen);
 }
 
+bool scene_has_camera(void)
+{
+    return scene_doc != NULL;
+}
+
+bool scene_has_anchor(const char *key)
+{
+    return scene_doc && find_node(xmlDocGetRootElement(scene_doc),key,false);
+}
+
 bool scene_project_anchor(const char *key, isize2_t image, fsize2_t viewport, fvec2_t *screen)
 {
     struct Vec point;

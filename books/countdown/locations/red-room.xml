@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 4: the red-sun room. -->
+<location id="red-room">
+  <asset id="red-brainiac" camera="red-show-brainiac" next="red-decide">
+    Он висит в столбе красного света. Скрипят когти: входит Брэйниак с баллоном. «Мои бактерии. Новая жизнь, моя жизнь». Он ставит баллон на подставку и уходит засевать Землю.
+  </asset>
+  <view id="red-decide" camera="red-show-room">
+    <text>Пальцы двигаются на сантиметр за раз. Дроны кружат рядом, один почти у ладони. Шар гудит под потолком, в углу ниша за свинцовой дверью. На подставке баллон с тонким соплом.</text>
+    <explorable label="Поймать дрон?" anchor="drone" target="red-catch" take="drone"/>
+    <explorable label="Ждать?" anchor="globe" target="end-drain"/>
+    <explorable label="Бросить дрон в шар?" anchor="globe" target="red-globe" with="drone"/>
+    <explorable label="Сбить сопло баллона?" anchor="stand-canister" target="red-escape" with="drone"/>
+    <explorable label="Заглянуть за дверь?" anchor="vault" target="red-vault-xray" with="xray"/>
+  </view>
+  <asset id="red-catch" camera="red-catch" next="red-decide">
+    Рывок, и дрон в кулаке. Он жужжит и бьётся, как пойманный шмель. Сил хватит только на один бросок. Куда его бросить, чтобы не зря?
+  </asset>
+  <asset id="red-vault-xray" camera="red-show-room" next="red-decide">
+    Рентген скользит сквозь пульты и трубы и упирается в дверь ниши. Свинец, как у ловушки на орбите. Брэйниак прячет за свинцом то, к чему Супермену лучше не подходить.
+  </asset>
+  <asset id="red-globe" camera="red-show-room" removes="drone" next="end-drain">
+    Дрон бьётся о красный шар, как муха о стекло. Шар даже не мигнул: он толще брони. Другие дроны держатся подальше. А под потолком уже гудят, выдвигаясь, пушки.
+  </asset>
+  <ending id="end-drain" kind="failure" camera="red-drain">
+    Четыре пушки бьют в Супермена белыми лучами, и его сила утекает в двигатели корабля. «Спасибо за энергию», — говорит Брэйниак. Земля на экране всё меньше. Нужно было действовать.
+  </ending>
+  <asset id="red-escape" camera="red-chaos" gives="heat breath" removes="drone" next="red-free">
+    Дрон бьёт по соплу. Шипение! Облако бактерий вырывается прямо в машины. Дроны падают, экраны несут чепуху, красный шар гаснет. Сила возвращается горячей волной, и Супермен встаёт.
+  </asset>
+  <view id="red-free" camera="red-show-free">
+    <text>Горит только аварийный свет. Супермен снова Супермен. Лифт ведёт наверх, в рубку, где Брэйниак засевает Землю. Свинцовая дверь в углу манит. А можно пробить стену и вырваться.</text>
+    <explorable label="Открыть свинцовую дверь?" anchor="vault" target="end-kryptonite"/>
+    <explorable label="Подняться на лифте?" anchor="elevator" target="command"/>
+    <explorable label="Пробить обшивку?" anchor="hull-wall" target="end-leave"/>
+  </view>
+  <ending id="end-kryptonite" kind="failure" camera="red-kryptonite">
+    Супермен срывает свинцовую дверь, и из ниши льётся зелёный свет. Криптонит! Ноги подгибаются. Ловушка ждала его, и он сам её открыл. Брэйниак спускается не спеша.
+  </ending>
+  <ending id="end-leave" kind="partial" camera="orbit-ship-escapes">
+    Супермен вырывается в ночное небо. Корабль вздрагивает, втягивает щупальца и уходит за Луну. Брэйниак жив, его бактерии ждут в баллонах. Земля спасена сегодня, но он вернётся.
+  </ending>
+</location>

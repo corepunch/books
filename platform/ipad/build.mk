@@ -23,11 +23,11 @@ COMPILER := xcrun --sdk $(SDK) clang
 MIN_FLAG := $(if $(filter iphoneos,$(SDK)),-miphoneos-version-min,-mios-simulator-version-min)=$(IOS_MIN)
 COMPILE_FLAGS := -isysroot "$(SDK_PATH)" -arch $(ARCH) $(MIN_FLAG) -std=c11 -O2 -g -Wall -Wextra -Werror=switch-enum -MMD -MP
 INCLUDES := -Isrc -Ivendor -I"$(SDK_PATH)/usr/include/libxml2"
-BOOK_SOURCE := books/$(BOOK).c
-ifeq ($(wildcard $(BOOK_SOURCE)),)
-$(error No C source for BOOK='$(BOOK)' (expected $(BOOK_SOURCE)))
+# The book is XML, read at launch from the bundle.
+ifeq ($(wildcard books/$(BOOK)/title.xml),)
+$(error No book '$(BOOK)' (expected books/$(BOOK)/title.xml))
 endif
-SOURCES := $(filter-out src/main.c src/headless.c,$(wildcard src/*.c)) $(BOOK_SOURCE) src/ipad.m src/metal.m src/video.m
+SOURCES := $(filter-out src/main.c src/headless.c src/cli.c,$(wildcard src/*.c)) src/ipad.m src/metal.m src/video.m
 OBJECTS := $(addprefix $(BUILD_ROOT)/,$(SOURCES:.c=.o))
 OBJECTS := $(OBJECTS:.m=.o)
 ICON_SOURCES := $(wildcard assets/AppIcon.xcassets/*/*.png assets/AppIcon.xcassets/*/*.json assets/AppIcon.xcassets/*.json)

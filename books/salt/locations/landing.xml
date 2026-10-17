@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 11 and 13. The landing. Seen puts him under the lamp until he walks off.
+     The hall is one still. -->
+<location id="landing">
+  <actionlist id="landing-entry">
+    <if test="left"><goto target="landing-empty"/></if>
+    <goto target="landing-seen-check"/>
+  </actionlist>
+  <actionlist id="landing-seen-check">
+    <if test="seen"><goto target="landing-man"/></if>
+    <goto target="landing-empty"/>
+  </actionlist>
+  <view id="landing-man" camera="landing">
+    <text>The streetlamp at the top of the stair has a man under it. He is not looking up at the office. He is looking at you.</text>
+    <holding icon="ledger">The lamp is rain. She was plain about that.</holding>
+    <explorable label="The lamp" anchor="landing-lamp" target="lamp-meet"/>
+    <explorable label="The window" anchor="landing-window" target="landing-window"/>
+    <explorable label="The door" anchor="landing-door" target="hall"/>
+    <nav label="The stair" anchor="landing-stair" target="sluice-entry"/>
+    <explorable label="To the lamp" anchor="landing-lamp" target="ending-lamp" with="ledger"/>
+    <explorable label="The door" anchor="landing-door" target="hall" with="ledger"/>
+    <nav label="The stair" anchor="landing-stair" target="sluice-entry" with="ledger"/>
+  </view>
+  <view id="landing-empty" camera="landing">
+    <text>The streetlamp burns over empty cobbles. The office door is shut. The rain has the step to itself.</text>
+    <holding icon="ledger">The lamp is rain. She was plain about that.</holding>
+    <explorable label="The lamp" anchor="landing-lamp" target="lamp-still"/>
+    <explorable label="The window" anchor="landing-window" target="landing-window"/>
+    <explorable label="The door" anchor="landing-door" target="hall"/>
+    <nav label="The stair" anchor="landing-stair" target="sluice-entry"/>
+    <explorable label="To the lamp" anchor="landing-lamp" target="ending-lamp-clear" with="ledger"/>
+    <explorable label="The door" anchor="landing-door" target="hall" with="ledger"/>
+    <nav label="The stair" anchor="landing-stair" target="sluice-entry" with="ledger"/>
+  </view>
+  <asset id="lamp-meet" camera="lamp" clip="lamp" sets="left" next="landing-entry">
+    He turns away as you come up. He goes down into the fog without hurry. The lamp has the cobbles to itself.
+  </asset>
+  <actionlist id="lamp-still">
+    <if test="peg"><goto target="lamp-peg"/></if>
+    <goto target="lamp-plain"/>
+  </actionlist>
+  <asset id="lamp-peg" camera="landing" next="landing-entry">
+    You stand under the lamp. His name is not on the board, and not in the chalk. It is in your coat, and nowhere else tonight.
+  </asset>
+  <asset id="lamp-plain" camera="landing" next="landing-entry">
+    You stand under the lamp. The cobbles stay empty. The office door waits.
+  </asset>
+  <asset id="landing-window" camera="landing-window" next="landing-entry">
+    A dark window with the curtain drawn back a hand's width. Somebody watched the lamp tonight and has gone to bed.
+  </asset>
+  <asset id="hall" camera="hall" next="office-return">
+    Wet prints come in with you. Green light lies under the office door. The dry room is on the other side.
+  </asset>
+  <ending id="ending-lamp" kind="failure" camera="landing" retry="landing-man">
+    You read his hour under the lamp. He is beside you before the line is done, and the office door at the top of the stair is further than it was.
+  </ending>
+  <ending id="ending-lamp-clear" kind="failure" camera="landing" retry="landing-empty">
+    You read his hour under the lamp. He is beside you before the line is done, and the office door at the top of the stair is further than it was.
+  </ending>
+</location>

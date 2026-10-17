@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 4: the Star Watch. -->
+<location id="observatory">
+  <asset id="observatory" camera="obs-show-lana" next="obs-decide">
+    Вечер на горе Ройал: телескопы на лужайке, пары на скамейках. Лана Лэнг берёт Кларка под руку: «Смотри, падающая звезда! Загадай желание». Кларк хмурится. Звёзды не тормозят.
+  </asset>
+  <view id="obs-decide" camera="obs-show-ship">
+    <text>Над городом висит корабль: череп с щупальцами. Голос гремит над холмом: «Супермен! Сдавайся, или Земля умрёт». Люди бегут, кто-то падает у телескопов.</text>
+    <explorable label="Успокоить толпу?" anchor="crowd-spot" target="obs-calm"/>
+    <nav label="Сразу лететь к кораблю?" anchor="ship-spot" target="ship-fight"/>
+    <explorable label="Просветить корабль?" anchor="ship-spot" target="obs-xray" if="not saw-airlock" with="xray"/>
+  </view>
+  <asset id="obs-xray" camera="ship-show-belly" sets="saw-airlock" next="obs-decide">
+    Под днищем корабля шлюз, а над ним комната с огромным красным шаром. Красное солнце! Его луч отнимет у Супермена силы. К шлюзу нельзя подлетать, его надо выжечь издалека.
+  </asset>
+  <asset id="obs-calm" camera="obs-calm" next="ship-fight">
+    Кларк вскакивает на скамейку: «Спокойно! Отходите к обсерватории, не бегите!» Люди останавливаются. Лана изумлена: тихоня Кент командует толпой. А потом он исчезает.
+  </asset>
+</location>

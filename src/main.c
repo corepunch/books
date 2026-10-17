@@ -35,9 +35,7 @@ int main(int argc,char **argv)
         else if (!strcmp(argv[i],"--screenshot") && i+1<argc) screenshot_path=argv[++i];
         else fail("usage: book [--root PATH] [--book NAME] [--check | --headless | --smoke | --smoke-transition MS | --catalog] [--viewport W H] [--smoke-route STEP,...] [--screenshot PATH]");
     }
-    if (requested_book && strcmp(requested_book, book_name()))
-        fail("this executable was compiled for book '%s', not '%s'", book_name(), requested_book);
-    book_init(root);
+    book_init(root, requested_book);
     if (smoke_route) {
         command_t route; copy(route, sizeof(route), smoke_route);
         for (char *step = strtok(route, ","); step; step = strtok(NULL, ","))

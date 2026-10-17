@@ -46,7 +46,7 @@ class Book:
             assert 0 <= control['x'] < control['x'] + control['width'] <= self.width
             assert 0 <= control['y'] < control['y'] + control['height'] <= self.height
             assert control['circle'] == (choice['kind'] == 'object')
-            assert control['item'] == (choice['kind'] == 'item')
+            assert control['item'] == (choice['kind'] in ('item', 'pda'))
         # Every circle shows its label as a caption that collides with nothing else.
         def box(r):
             return (r['x'], r['y'], r['x'] + r['width'], r['y'] + r['height'])
@@ -81,17 +81,46 @@ class Book:
         if view['kind'] == 'room':
             assert choices
             # Art determines which object anchors project into this camera; carried things sit in a row.
+            # A talk has no circles: ask-lines, one end line under them, and the carried things.
             objects = [i for i in indices if choices[i]['kind'] == 'object']
-            assert sorted(objects) == sorted(h['choice'] for h in view['hotspots'])
-            assert all(c['kind'] in ('object', 'item') and c['object'] and c['command'] for c in choices)
-            items = [c for c in choices if c['kind'] == 'item']
-            assert all(Path(c['icon']).is_file() for c in items), items
+            items = [c for c in choices if c['kind'] in ('item', 'pda')]
+            lines = [c for c in choices if c['kind'] in ('ask', 'end')]
+            keys = [c for c in choices if c['kind'] == 'key']
+            assert sum(c['kind'] == 'pda' for c in choices) <= 1 and not (keys and not view['keypad'])
+            if lines:
+                assert not objects and not view['hotspots'] and view['talk']
+                assert not any(c['kind'] == 'pda' for c in choices), 'the PDA is put away in a conversation'
+                assert sum(c['kind'] == 'end' for c in lines) == 1
+                assert all(c['command'] and c['object'] == '' for c in lines + keys)
+                assert len(lines) + len(items) + len(keys) == len(choices)
+                end = next(c for c in controls if c['kind'] == 'end')
+                for key in (c for c in controls if c['kind'] == 'key'):
+                    assert key['y'] + key['height'] <= end['y'] + 0.5, (key, end)
+                asked = [c for c in controls if c['kind'] == 'ask']
+                for line in asked:
+                    assert line['y'] + line['height'] <= end['y'] + 0.5, (line, end)
+                    assert not overlaps(box(line), box(end)), (line['label'], end['label'])
+                for i, line in enumerate(asked):
+                    for other in asked[:i]:
+                        assert not overlaps(box(line), box(other)), (line['label'], other['label'])
+            else:
+                assert sorted(objects) == sorted(h['choice'] for h in view['hotspots'])
+                assert all(c['kind'] in ('object', 'item') and c['object'] and c['command'] or
+                           c['kind'] == 'pda' and c['command'] for c in choices)
+                assert len(objects) + len(items) == len(choices), (view['image'], view['held'], choices, indices)
+            assert all(Path(c['icon']).is_file() for c in items if c['kind'] == 'item'), items
             assert view['held'] in [''] + [c['object'] for c in items], view['held']
-            assert len(objects) + len(items) == len(choices), (view['image'], view['held'], choices, indices)
         elif view['kind'] == 'beat':
-            assert len(choices) == 1 and choices[0]['kind'] == 'continue' and choices[0]['label']
-            assert choices[0]['command'] == '' and choices[0]['object'] == ''
-            assert not view['hotspots'] and len(controls) == 1
+            if choices:
+                # A document, or a prose-book passage: one Continue, and the text is on the page.
+                assert len(choices) == 1 and choices[0]['kind'] == 'continue' and choices[0]['label']
+                assert choices[0]['command'] == '' and choices[0]['object'] == ''
+                assert not view['hotspots'] and len(controls) == 1
+                assert view['text']
+            else:
+                # A shot. The clip ends, or a tap on the picture, and there is no Next.
+                assert not view['read'] and view['text'] == ''
+                assert not view['hotspots'] and not controls
         else:
             # An ending offers exactly one button: try again, or start over after the success.
             assert view['kind'] == 'ended' and view['ending'] in ('success', 'partial', 'failure'), view
@@ -121,8 +150,11 @@ class Book:
         return self.tap_choice(index)
 
     def continue_page(self):
+        """Dismiss a document by its Continue button, or finish a shot."""
         assert self.view['kind'] == 'beat'
-        return self.tap_choice(0)
+        if self.view['choices']:
+            return self.tap_choice(0)
+        return self.send(':continue')
 
     def retry(self):
         assert self.view['kind'] == 'ended'

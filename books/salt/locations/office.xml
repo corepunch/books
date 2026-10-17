@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 1–2. Edith's visit, then the office: four circles, and the door after the folder. -->
+<!-- 12. The dry room is Edith's chair again. -->
+<!-- 14. The bend, only after the hour was read to the fog. -->
+<location id="office">
+  <asset id="visit" camera="visit" clip="visit" next="office">
+    Edith Voss has come about her brother. Read his hour to her in this room, she says, and leave the floor at berth four shut. She will be back at midnight.
+  </asset>
+  <view id="office" camera="office">
+    <text>She has gone. The lamp is warm, the folder still shut, and the streetlamp across the rain burns in the dark.</text>
+    <explorable label="The folder" anchor="folder" target="office-file"/>
+    <explorable label="The window" anchor="pane" target="window-seen"/>
+    <explorable label="The telephone" anchor="phone" target="office-phone"/>
+    <explorable label="The lamp" anchor="desk-lamp" target="office-lamp"/>
+    <explorable label="The door" anchor="door" target="office-door" if="read"/>
+  </view>
+  <asset id="office-file" camera="office-file" read="true" sets="read" next="office">
+    Thomas Voss, tide clerk, twenty-eight. Berth four, the trawler Patience. In the margin her pencil reads: the hour, to her, in this room. Not to the water. Not in the rain.
+  </asset>
+  <actionlist id="window-seen">
+    <if test="seen"><goto target="window-again"/></if>
+    <goto target="office-window"/>
+  </actionlist>
+  <asset id="office-window" camera="window" clip="window" sets="seen" next="office">
+    You cross to the glass. A man in a wet wool coat stands under the lamp, too still for the rain. Your hand finds the latch. The pavement is empty.
+  </asset>
+  <asset id="window-again" camera="window" next="office">
+    Rain on the glass. The lamp over empty cobbles. Nothing stands there now.
+  </asset>
+  <asset id="office-phone" camera="office-phone" next="office">
+    The exchange gives you the harbor office. It rings in an empty room. The tide clerk is the one who would have answered.
+  </asset>
+  <asset id="office-lamp" camera="office-lamp" next="office">
+    Green glass, a dry blotter, a room with a door that shuts. This is the room she meant.
+  </asset>
+  <asset id="office-door" camera="office" next="wharf">
+    You take your hat from the hook and open the door. The rain takes you down the hill to berth four.
+  </asset>
+  <view id="office-return" camera="visit">
+    <text>Midnight. Edith is in the chair. Her folder is on the blotter and the window is rain. She does not ask. She waits.</text>
+    <holding icon="ledger">Read it onto her folder. The window is rain. She was plain about that.</holding>
+    <explorable label="The folder" anchor="folder" target="office-remind"/>
+    <explorable label="The locket" anchor="locket" target="locket"/>
+    <explorable label="The window" anchor="pane" target="office-look"/>
+    <nav label="The door" anchor="door" target="dock-back"/>
+    <explorable label="To the folder" anchor="folder" target="best-check" with="ledger"/>
+    <explorable label="To the glass" anchor="pane" target="ending-glass" with="ledger"/>
+    <nav label="The door" anchor="door" target="dock-back" with="ledger"/>
+  </view>
+  <asset id="office-remind" camera="office-file" read="true" next="office-return">
+    The folder waits. The hour is still shut in your coat. Open the ledger, and read it here.
+  </asset>
+  <asset id="locket" camera="locket" next="office-return">
+    She opens the locket for you. The photograph is the face from the folder, younger, dry, and smiling at whoever held the camera. She shuts it again.
+  </asset>
+  <asset id="office-look" camera="window" next="office-return">
+    The lamp burns over empty cobbles. Rain works the glass. The hour has not been spoken in this room yet.
+  </asset>
+  <actionlist id="best-check">
+    <if test="seen and glimpsed and heard"><goto target="ending-best"/></if>
+    <goto target="ending-quiet"/>
+  </actionlist>
+  <ending id="ending-best" kind="success" camera="visit">
+    You read Thomas's hour here. Edith closes the locket. The streetlamp stays empty, and the floor you left shut does not answer.
+  </ending>
+  <ending id="ending-quiet" kind="success" camera="visit">
+    You read the hour here. Edith closes the locket. Outside, the rain is only rain, and the floor at berth four stays shut.
+  </ending>
+  <ending id="ending-glass" kind="failure" camera="window" retry="office-return">
+    You read his hour to the wet glass. The man under the lamp steps in close, and the latch rises under a hand that is not yours.
+  </ending>
+  <ending id="ending-stair" kind="partial" camera="visit" retry="wharf-book">
+    You pass him and climb. Edith waits in the chair. The hour was spoken in the rain, and she does not open the locket. He is still on the stair.
+  </ending>
+</location>

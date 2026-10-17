@@ -77,9 +77,11 @@ bool frect_ellipse_contains_point(frect_t rect, fvec2_t point);
 _Noreturn void fail(const char *format, ...);
 void copy(char *dst, size_t size, const char *src);
 void lower(char *s);
+/* Print a quoted, escaped JSON string to stdout; NULL prints "". */
+void json_string(const char *s);
 
-/* Read-only adventure pages. Mutable story state stays private to book.c. */
-#define MAX_OBJECTS 256
+/* Read-only adventure pages. Mutable story state stays private to story.c. */
+#define MAX_OBJECTS 4096
 #define MAX_CHOICES 512
 /* String capacities include the terminating null byte. */
 #define MAX_IDENTIFIER 128
@@ -102,99 +104,218 @@ struct Object {
 enum PageKind { PAGE_INVALID, PAGE_ROOM, PAGE_BEAT, PAGE_ENDED };
 /* An ending page offers one RETRY choice: back to a decision page, or to the start.
  * A room page lists every carried thing as an ITEM choice: tapping it holds or releases it. */
-enum ChoiceKind { CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE, CHOICE_RETRY, CHOICE_ITEM };
+enum ChoiceKind {
+    CHOICE_INVALID, CHOICE_OBJECT, CHOICE_CONTINUE, CHOICE_RETRY, CHOICE_ITEM,
+    CHOICE_ASK, /* a talk line: choosing it plays that reply */
+    CHOICE_END, /* the talk's last line: always under the questions */
+    CHOICE_PDA, /* the PDA, a disc beside the carried icons on a view */
+    CHOICE_KEY  /* a key on the PDA's phone keypad */
+};
 /* How an ending resolves the quest; only ending pages carry one. */
 enum EndingKind { ENDING_NONE, ENDING_SUCCESS, ENDING_PARTIAL, ENDING_FAILURE };
+/* Where a circle without a scene anchor sits: a turn at the picture's edge. */
+enum ChoiceEdge { CHOICE_EDGE_NONE, CHOICE_EDGE_LEFT, CHOICE_EDGE_RIGHT, CHOICE_EDGE_BACK };
 struct Choice {
     enum ChoiceKind kind;
     choiceLabel_t label;
     command_t command;
     int object;
+    enum ChoiceEdge edge;
 };
 struct BookPage {
     enum PageKind kind;
+    bool talk; /* questions are lines in a bottom band, and one of them ends the talk */
+    bool keypad; /* a talk whose keys sit in a grid above its last line: the phone */
+    bool read; /* a document: prose in the reading region, and Continue to put it down.
+                  A beat without it is a shot: no prose and no Next. */
+    identifier_t id;
     struct Choice choices[MAX_CHOICES];
     int choice_count, room;
     int held; /* object of the carried thing the reader is holding, or zero */
     enum EndingKind ending;
     filePath_t image, clip; /* clip is empty when the page is only a still */
+    int clip_from, clip_to;  /* milliseconds; zero clip_to plays to the end */
+    bool loop;               /* the clip repeats behind a room's circles */
     assetName_t camera;
     storyText_t text;
 };
 
-/* Story definition. Each books/<name>.c is data: a table of pages that src/story.c
- * validates, publishes and navigates. Page IDs are unique; targets name page IDs. */
-#define MAX_STORY_PAGES 512
-#define MAX_PAGE_CHOICES 6
-#define MAX_PAGE_ITEM_TEXTS 8
-/* Facts and things are bit sets; one bit names one fact or one thing. */
-#define MAX_STORY_ITEMS 32
-typedef unsigned int storyFacts_t;
-typedef uint32_t storyItems_t;
-enum StoryNode {
-    STORY_INVALID,
-    STORY_DECISION, /* a room page: choices, each a circle on its scene anchor, and the carried things */
-    STORY_PASSAGE,  /* a beat page: text, picture and Continue to .next */
-    STORY_CHECK,    /* invisible: goes to .next when .fact is set and .holds are carried, else .otherwise */
-    STORY_ENDING    /* success, partial or failure, with a retry target */
-};
-/* A thing in the world, after ZIL's objects: at any moment it lies in one location, is carried by
- * the hero, or is gone. A decision choice with .take picks it up where it lies; one with .with is
- * offered only while the reader holds that carried thing, so tapping a thing in the inventory shows
- * what it is (.text) and where it can be used. Pages hand things over with .gives and use them up
- * with .removes. A thing's id is its scene anchor where it lies, and its icon is the picture for
- * camera "item-<id>". */
-struct StoryItem {
-    storyItems_t item;  /* its single bit */
+/* Story definition, after the Virtual Cinema database of The X-Files Game (1998).
+ * A title holds nodes (chapters) of locations. A location holds viewpoints of views
+ * (stills with circles: navs, explorables and charviews), charviews (a character in
+ * frame, with conversation lines), assets (shots and documents), endings, maps for
+ * travel and action lists. Variables, enable flags and carried icons are the state;
+ * triggers run actions on enter, leave and end, and every circle or line may run actions
+ * when chosen. src/storyxml.c reads books/<name>/title.xml and
+ * books/<name>/locations/<location>.xml into these tables; src/story.c validates,
+ * publishes and runs them. Indices name rows of the story's tables; -1 is none. */
+#define MAX_STORY_PAGES 2048
+#define MAX_STORY_HOTSPOTS 8192
+#define MAX_STORY_RESPONSES 4096
+#define MAX_STORY_ACTIONS 16384
+#define MAX_STORY_TERMS 32768
+#define MAX_STORY_VARIABLES 1024
+#define MAX_STORY_STRINGS 1024
+#define MAX_STORY_ICONS 256
+#define MAX_STORY_CHARACTERS 128
+#define MAX_STORY_NODES 64
+#define MAX_STORY_LOCATIONS 256
+#define MAX_STORY_VIEWPOINTS 1024
+#define MAX_STORY_RECORDS 1024
+#define MAX_STORY_FLAGS MAX_STORY_HOTSPOTS
+/* Plain circles and held-icon circles share one page. At most five are on screen. */
+#define MAX_PAGE_CHOICES 16
+
+/* A variable is a boolean, an integer, a character or a string (its value indexes
+ * story->strings). Booleans are 0 or 1. */
+enum StoryVariableType { VARIABLE_BOOL, VARIABLE_INT, VARIABLE_CHAR, VARIABLE_STRING };
+struct StoryVariable { const char *id, *text; enum StoryVariableType type; int initial; };
+/* Icons the reader can carry and hold, as X-Files's inventory, evidence, idea (a topic),
+ * emotion (a tone of voice) and action icons. Holding one offers only its uses. Views
+ * show carried inventory and evidence; charviews show every carried icon. */
+enum StoryIconKind { ICON_INVENTORY, ICON_EVIDENCE, ICON_IDEA, ICON_EMOTION, ICON_ACTION };
+struct StoryIcon {
     const char *id, *name, *text;
-    const char *where;  /* location it lies in at the start; NULL until a page gives it */
-    bool carried;       /* the hero starts with it */
+    enum StoryIconKind kind;
+    int where;    /* location it lies in at the start, or -1 */
+    bool carried; /* the reader starts with it */
 };
-struct StoryChoice {
-    const char *label, *anchor, *target;
-    storyFacts_t requires, excludes; /* offered only when all requires and no excludes are set */
-    storyItems_t take;  /* pick up this thing; offered only while it lies in the page's location */
-    storyItems_t with;  /* use this carried thing; offered only while the reader holds it */
+struct StoryCharacter { const char *id, *name, *text; };
+
+/* A condition, compiled to postfix terms over variables, icons, flags and pages. */
+enum StoryTermKind {
+    TERM_VARIABLE, TERM_NUMBER, TERM_STRING, TERM_HAS, TERM_HOLDING, TERM_ENABLED, TERM_VISITED,
+    TERM_NOT, TERM_AND, TERM_OR, TERM_EQ, TERM_NE, TERM_LT, TERM_LE, TERM_GT, TERM_GE
 };
-/* A scene-specific response while holding a thing. Fact variants must be mutually exclusive. */
-struct StoryItemText {
-    storyItems_t item;
-    storyFacts_t requires, excludes;
-    const char *text;
+struct StoryTerm { enum StoryTermKind kind; int value; };
+struct StoryCondition { int first, count; const char *source; }; /* no terms: always true */
+
+/* X-Files's action ops: SetVariable, SetEnabled, GoTo, DoActionList, ShowInterface and
+ * CallScript, with conditions; giving and removing icons; and if/else blocks. */
+enum StoryActionOp {
+    ACTION_INVALID, ACTION_SET, ACTION_ADD, ACTION_ENABLE, ACTION_DISABLE, ACTION_GIVE,
+    ACTION_REMOVE, ACTION_GOTO, ACTION_CALL, ACTION_IF, ACTION_SHOW, ACTION_HIDE, ACTION_SCRIPT
+};
+struct StoryActions { int first, count; };
+struct StoryAction {
+    enum StoryActionOp op;
+    int target;          /* variable, flag, icon, page or interface record */
+    int value;           /* SET: a literal, or a variable when from_variable; ADD: the amount */
+    bool from_variable;
+    struct StoryCondition test;       /* IF */
+    struct StoryActions then, otherwise;
+    const char *name, *args;          /* SCRIPT: a named engine script, kept for tools */
+};
+enum StoryEvent { EVENT_ENTER, EVENT_LEAVE, EVENT_END, EVENT_COUNT };
+struct StoryTriggers { struct StoryActions on[EVENT_COUNT]; };
+
+/* Something the reader chooses: a circle on a view or map, or a line on a charview. */
+enum StoryHotspotKind {
+    HOTSPOT_INVALID, HOTSPOT_NAV, HOTSPOT_EXPLORABLE, HOTSPOT_CHARVIEW, HOTSPOT_CONVERSATION,
+    HOTSPOT_DESTINATION, HOTSPOT_ITEM /* an interface item */
+};
+/* A nav may sit on a picture edge instead of an anchor: turning within a viewpoint. */
+enum StoryEdge { EDGE_NONE, EDGE_LEFT, EDGE_RIGHT, EDGE_BACK };
+struct StoryHotspot {
+    enum StoryHotspotKind kind;
+    const char *id;        /* names its enable flag, or NULL */
+    const char *label, *anchor;
+    enum StoryEdge edge;
+    int target;            /* the page it leads to, or -1 when its actions decide */
+    struct StoryCondition test;
+    int with, take;        /* icons: offered only while holding with; take picks up an icon lying here */
+    bool ends;             /* a conversation line pinned under the others; one per held state */
+    int flag;              /* enable flag, or -1 */
+    struct StoryActions click;
+};
+/* A scene-specific response while holding an icon. The first that applies is shown. */
+struct StoryResponse { int icon; struct StoryCondition test; const char *text; };
+
+enum StoryPageKind {
+    STORY_INVALID,
+    STORY_VIEW,         /* a still with circles: navs, explorables, charviews */
+    STORY_CHARVIEW,     /* a character in frame; conversation lines in a band */
+    STORY_ASSET,        /* a shot, or a document with .read; then .next */
+    STORY_CONVERSATION, /* a conversation line's reply; then back to its charview */
+    STORY_ENDING,       /* success, partial or failure, with a retry */
+    STORY_MAP,          /* travel: destinations as circles on a map picture */
+    STORY_ACTIONLIST    /* invisible: runs its actions, which must go somewhere */
 };
 struct StoryPage {
     const char *id;
-    enum StoryNode kind;
-    const char *location; /* the place the page is in; a scene anchor key or a plain name */
-    const char *camera;   /* consecutive pages of one moment may share a camera */
-    const char *clip;     /* bare file name of books/<name>/clips/<clip>.mp4, or NULL; the camera still is the poster */
+    enum StoryPageKind kind;
+    int location, viewpoint;  /* viewpoint is -1 outside one */
+    int character, parent;    /* a charview's character; a conversation's charview, a charview's view */
+    const char *direction;    /* a view's compass direction within its viewpoint */
+    const char *camera;       /* consecutive pages of one moment may share a camera */
+    const char *clip;         /* bare file name in books/<name>/clips/, or NULL; the still is the poster */
+    int clip_from, clip_to;   /* a slice of the clip in milliseconds; zero to is the whole clip */
+    bool loop;                /* a view's clip loops behind its circles */
+    const char *sound;        /* an ambient sound, kept for tools */
+    bool read;                /* fmv asset only: the reader is reading. Text stays, and Continue dismisses it. */
     const char *text;
-    struct StoryChoice choices[MAX_PAGE_CHOICES];
-    struct StoryItemText item_texts[MAX_PAGE_ITEM_TEXTS];
-    const char *next;      /* passage: Continue target; check: target when the test passes */
-    storyFacts_t sets;     /* facts set when the page is shown */
-    storyItems_t gives;    /* things handed to the hero when the page is shown */
-    storyItems_t removes;  /* things used up or lost when the page is shown */
-    storyFacts_t fact;     /* check only: facts that must all be set */
-    storyItems_t holds;    /* check only: things that must all be carried */
-    const char *otherwise; /* check only */
+    int hotspot_first, hotspot_count;
+    int response_first, response_count;
+    struct StoryTriggers triggers;
+    int next;                 /* asset: where it goes; conversation: -1 returns to the charview */
     enum EndingKind ending;
-    const char *retry;     /* failure or partial ending: an earlier decision page to try again
-                              from; by default the reader retries their last decision */
+    int retry;                /* failure or partial ending: an earlier view to try again from, or -1 */
+    struct StoryActions actions; /* action list body */
 };
+struct StoryNode { const char *id, *name, *text; struct StoryTriggers triggers; };
+struct StoryLocation {
+    const char *id, *name, *text, *file, *sound;
+    int node, first, count; /* its pages: pages[first] to pages[first + count - 1] */
+    struct StoryTriggers triggers;
+};
+struct StoryViewpoint { const char *id; int location; };
+/* The PDA's records: notes, email, photos, phone numbers and interface screens. They load,
+ * validate and change state; the PDA over a view shows them, and dials the phone. */
+enum StoryRecordKind { RECORD_NOTE, RECORD_EMAIL, RECORD_PHOTO, RECORD_PHONE, RECORD_INTERFACE };
+struct StoryRecord {
+    enum StoryRecordKind kind;
+    const char *id, *title, *from, *camera, *number, *text;
+    int target;            /* a phone number's page */
+    struct StoryCondition test;
+    int flag;
+    int hotspot_first, hotspot_count; /* an interface's items */
+};
+struct StoryFlag { const char *id; bool initial; };
 struct Story {
-    const char *name, *start;
+    const char *name;
+    int start;
     const char *continue_label, *retry_label, *restart_label;
-    const struct StoryPage *pages;
-    int page_count;
-    const struct StoryItem *items; /* optional */
-    int item_count;
+    bool fmv; /* the picture is the page. Views, shots and endings draw no prose.
+                 Continue exists only on an asset with .read. */
+    const struct StoryPage *pages;          int page_count;
+    const struct StoryHotspot *hotspots;    int hotspot_count;
+    const struct StoryResponse *responses;  int response_count;
+    const struct StoryAction *actions;      int action_count;
+    const struct StoryTerm *terms;          int term_count;
+    const struct StoryVariable *variables;  int variable_count;
+    const char *const *strings;             int string_count;
+    const struct StoryIcon *icons;          int icon_count;
+    const struct StoryCharacter *characters; int character_count;
+    const struct StoryNode *nodes;          int node_count;
+    const struct StoryLocation *locations;  int location_count;
+    const struct StoryViewpoint *viewpoints; int viewpoint_count;
+    const struct StoryRecord *records;      int record_count;
+    const struct StoryFlag *flags;          int flag_count;
 };
-/* The one story compiled into this build, defined by books/<name>.c. */
-const struct Story *book_story(void);
+/* A book: books/<name>/title.xml declares its variables, characters, icons, records and
+ * nodes of locations, and books/<name>/locations/<location>.xml holds that location's
+ * pages. Errors name file and line. Strings stay valid until story_unload(). */
+const struct Story *story_load(const char *root, const char *name);
+void story_unload(void);
+/* The XML line where a loaded page begins, or zero. */
+int story_line(int page);
+const char *story_icon_kind_name(enum StoryIconKind kind);
+const char *story_page_kind_name(enum StoryPageKind kind);
+const char *story_hotspot_kind_name(enum StoryHotspotKind kind);
 
 const char *book_name(void);
-void book_init(const char *root);
+/* Read books/<name>/ under root, validate it and show the start page. */
+void book_init(const char *root, const char *name);
 void book_shutdown(void);
 /* Borrowed until the next accepted action/reload. Copy to retain an outgoing page. */
 const struct BookPage *book_page(void);
@@ -227,6 +348,8 @@ bool renderer_screenshot(const char *path);
 bool renderer_begin(isize2_t size, float scale);
 void renderer_present(void);
 void renderer_rect(frect_t bounds, uint32_t rgba);
+/* Vertical darkening: clear at the top of bounds, the colour's alpha at the bottom. */
+void renderer_shade(frect_t bounds, uint32_t rgba);
 void renderer_ring(frect_t bounds, uint32_t rgba);
 /* Rounded rectangle, filled when stroke is zero, else an inner outline of that width. */
 void renderer_round_rect(frect_t bounds, float corner, float stroke, uint32_t rgba);
@@ -245,9 +368,12 @@ void renderer_video_discard(void);
 
 /* Full-motion clip in the picture. Headless play never calls these and shows the poster. */
 void video_use_poster(bool poster);
-bool video_open(const char *path);
+/* Play a slice from from_ms to to_ms (zero: the end), repeating it when loop is set. */
+bool video_open(const char *path, int from_ms, int to_ms, bool loop);
 void video_close(void);
 bool video_playing(void);
+/* True after the open clip has played to the end. Smoke captures stay on the poster. */
+bool video_ended(void);
 /* Cover-crop the current frame into the viewport. False until the first decoded frame. */
 bool video_frame(frect_t viewport);
 /* Drop the path cache so the next draw reloads replaced raster artwork. */
@@ -281,6 +407,9 @@ float text_draw_centered(const char *text, frect_t box, float size, uint32_t rgb
 /* Read fixed cameras, reading regions and anchors from the book's .blks files. */
 void scene_load(const char *rooms, const char *camera_name);
 void scene_shutdown(void);
+/* True when the loaded camera exists, and when its scene names this anchor. */
+bool scene_has_camera(void);
+bool scene_has_anchor(const char *key);
 bool scene_project_anchor(const char *key, isize2_t image, fsize2_t viewport, fvec2_t *point);
 struct TextRegion {
     frect_t bounds; /* Returned in logical page coordinates after the image crop. */
@@ -308,6 +437,19 @@ int scene_text_regions(isize2_t image, fsize2_t viewport, textRegionList_t regio
 #define ITEM_GAP 22.0f
 #define ITEM_CAPTION_TEXT_SIZE 18.0f
 #define ITEM_CAPTION_MAX_WIDTH 120.0f
+/* The PDA's phone: three keys a row, above the line that puts it away. */
+#define KEYPAD_COLUMNS 3
+#define KEY_WIDTH 150.0f
+#define KEY_GAP 12.0f
+/* A talk band: prose, then the ask-lines, then the line that ends it. Type tracks the window. */
+#define ASK_MARGIN 36.0f
+#define ASK_ROW_PAD 14.0f
+#define ASK_TOP_PAD 20.0f
+#define ASK_PROSE_GAP 16.0f
+#define ASK_LINE_GAP 8.0f
+#define ASK_END_GAP 18.0f
+#define ASK_VEIL_FEATHER 72.0f
+#define talk_type_size(height) (TEXT_BASE_SIZE * (height) / (float)UI_HEIGHT)
 struct Hotspot { fvec2_t anchor, center; int choice; };
 typedef struct Hotspot hotspotList_t[MAX_CHOICES];
 /* Returns false if the viewport cannot accommodate every marker. */
@@ -331,6 +473,9 @@ struct PageLayout {
     int spot_count;
     struct PageControl controls[MAX_CHOICES];
     int control_count;
+    frect_t veil;    /* solid dark band behind the lines; empty on other pages */
+    frect_t feather; /* soft falloff above the veil */
+    float rule;      /* hairline above the line that ends the talk; zero when there is none */
 };
 void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
                  struct PageLayout *layout);

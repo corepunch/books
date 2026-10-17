@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 8. The alley: the board, the bakery window, and the man in the doorway. -->
+<!-- 9. Abel Penry. His doorway is a talk: lines in a darkened band. A line leaves
+     once he has answered it. The chalk waits on the board, and the bridge waits on
+     that answer. "That's all" is always the last line. -->
+<location id="alley">
+  <view id="alley" camera="alley">
+    <text>The lane becomes an alley. A man stands in a lit doorway and will not look at you. Under the porch across from him a tide board runs with chalk.</text>
+    <holding icon="ledger">The rain is not a room. He said so.</holding>
+    <explorable label="The board" anchor="alley-board" target="alley-board"/>
+    <explorable label="The window" anchor="alley-window" target="alley-window"/>
+    <explorable label="The man" anchor="alley-man" target="penry-greet"/>
+    <nav label="The bridge" anchor="alley-bridge" target="sluice-entry"/>
+  </view>
+  <asset id="alley-board" camera="board" read="true" sets="board" next="alley">
+    The board is a wash of chalk. Pegs for the boats, lines for the hours, and nothing left in either. Patience has a peg. Its line is wet wood.
+  </asset>
+  <asset id="alley-window" camera="bakery" clip="bakery" next="alley">
+    Through the bakery glass a woman draws the blind. The loaves stay in the light. She did not look at you either.
+  </asset>
+  <asset id="penry-greet" camera="penry" clip="penry" next="penry">
+    He stands in his light and keeps his hands in the towel. "Board-keeper," he says before you ask. "Say what you want and go up."
+  </asset>
+  <charview id="penry" character="penry" camera="penry">
+    <text>He stands in his light, hands in the towel.</text>
+    <holding icon="ledger">He shuts the door on the book. The light goes with him.</holding>
+    <conversation id="penry-thomas" label="Thomas?" if="not named" clip="penry-voss" sets="named">
+      "Voss chalked his own hour. Clerks don't do that." He looks at the board. "He was letting the street read it."
+    </conversation>
+    <conversation id="penry-chalk" label="The chalk?" if="board and not penry" clip="penry-wash" sets="penry">
+      "I washed it. A name on a board at night is a name said out loud." He steps back into the room. "Chalk washes off. A dry room does not."
+    </conversation>
+    <conversation id="penry-bridge" label="The bridge?" if="penry and not rail" clip="penry-rail" sets="rail">
+      "Don't stop on it. The sluice is harbor water with a lid on."
+    </conversation>
+    <conversation label="That's all" target="alley" ends="true"/>
+    <conversation label="That's all" target="alley" with="ledger" ends="true"/>
+  </charview>
+</location>

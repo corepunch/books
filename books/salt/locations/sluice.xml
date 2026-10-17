@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 10. The sluice. Penry changes the arrival line. The peg is the road's find. -->
+<location id="sluice">
+  <actionlist id="sluice-entry">
+    <if test="penry"><goto target="sluice-warned"/></if>
+    <goto target="sluice"/>
+  </actionlist>
+  <view id="sluice" camera="sluice">
+    <text>A footbridge crosses a black sluice. The water is empty. The far rail disappears into the fog.</text>
+    <holding icon="ledger">The hour was for a dry room. This water can hear.</holding>
+    <explorable label="The water" anchor="sluice-water" target="sluice-look"/>
+    <explorable label="The grating" anchor="sluice-grate" target="sluice-grate"/>
+    <nav label="The stair" anchor="sluice-stair" target="landing-entry"/>
+    <nav label="The alley" anchor="sluice-back" target="alley"/>
+    <explorable label="To the water" anchor="sluice-water" target="ending-sluice" with="ledger"/>
+    <nav label="The stair" anchor="sluice-stair" target="landing-entry" with="ledger"/>
+    <nav label="The alley" anchor="sluice-back" target="alley" with="ledger"/>
+  </view>
+  <view id="sluice-warned" camera="sluice">
+    <text>A footbridge crosses a black sluice. Penry said not to stop on it. The far rail disappears into the fog.</text>
+    <holding icon="ledger">The hour was for a dry room. This water can hear.</holding>
+    <explorable label="The water" anchor="sluice-water" target="sluice-look"/>
+    <explorable label="The grating" anchor="sluice-grate" target="sluice-grate"/>
+    <nav label="The stair" anchor="sluice-stair" target="landing-entry"/>
+    <nav label="The alley" anchor="sluice-back" target="alley"/>
+    <explorable label="To the water" anchor="sluice-water" target="ending-sluice-heard" with="ledger"/>
+    <nav label="The stair" anchor="sluice-stair" target="landing-entry" with="ledger"/>
+    <nav label="The alley" anchor="sluice-back" target="alley" with="ledger"/>
+  </view>
+  <actionlist id="sluice-look">
+    <if test="penry"><goto target="sluice-look-penry"/></if>
+    <goto target="sluice-look-plain"/>
+  </actionlist>
+  <asset id="sluice-look-plain" camera="sluice" next="sluice-entry">
+    You look down. The sluice keeps what it has. No face turns.
+  </asset>
+  <asset id="sluice-look-penry" camera="sluice" next="sluice-entry">
+    You look down. The sluice keeps what it has. No face turns. Harbor water, Penry said, with a lid on.
+  </asset>
+  <asset id="sluice-grate" camera="sluice-grate" read="true" sets="peg" next="sluice-entry">
+    A board peg is wedged in the grating, the kind that holds a boat's name. The letters cut in it are VOSS. It came down from the board on the water, not in a pocket.
+  </asset>
+  <ending id="ending-sluice" kind="failure" camera="sluice" retry="sluice">
+    You read his hour to the sluice. The black water rises to the boards, and a pale face turns up where the water was empty.
+  </ending>
+  <ending id="ending-sluice-heard" kind="failure" camera="sluice" retry="sluice-warned">
+    You read his hour to the sluice. The black water rises to the boards, and a pale face turns up where the water was empty.
+  </ending>
+</location>

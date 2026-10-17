@@ -11,7 +11,10 @@ button.
 Read [CRAFT.md](CRAFT.md) first: it explains what makes these books
 interesting. [books/countdown](../books/countdown/) («Обратный отсчёт») is the
 worked example: its design and walkthrough, seven Scener scenes with a shared
-cast and inventory icons, the story table with things, and its test. Then run the stages in order, one at a time. Each stage file lists
+cast and inventory icons, the story table with things, and its test.
+[books/salt](../books/salt/) (The Salt Ledger) is the worked mystery: read its
+`DESIGN.md` before continuing that case. It holds the premise, the mood, the
+plot, and the rules for a new page. Then run the stages in order, one at a time. Each stage file lists
 its inputs, required actions, outputs and acceptance checks. Do not start a
 stage until the previous stage's acceptance checks pass. When a later stage
 exposes a problem in an earlier artifact, fix that artifact first and record
@@ -28,7 +31,7 @@ the change there.
 | 5 | [05-shot-list.md](05-shot-list.md) | `work/SHOTS.md` |
 | 6 | [06-page-text.md](06-page-text.md) | `work/TEXT.md` |
 | 7 | [07-blockout.md](07-blockout.md) | Scener scene, prefabs, reference renders, model sheets, plan view |
-| 8 | [08-implementation.md](08-implementation.md) | `books/<name>.c`, `WALKTHROUGH.md`, tests |
+| 8 | [08-implementation.md](08-implementation.md) | `title.xml`, `locations/*.xml`, `WALKTHROUGH.md`, tests |
 | 9 | [09-illustration.md](09-illustration.md) | `work/ILLUSTRATION.md`, sheets, key art, painted pages |
 | 10 | [10-packaging.md](10-packaging.md) | `package/`: title, synopsis, cover, metadata, map, parent notes |
 | 11 | [11-review.md](11-review.md) | `work/REVIEW.md`, fixes |
@@ -69,8 +72,9 @@ Paths are relative to `books/<name>/` unless they start with `books/` or
 ## Book folder
 
 ```text
-books/<name>.c                   story facts, pages, choices, prose
 books/<name>/
+├── title.xml                    stage 8: variables, characters, icons, records, nodes
+├── locations/<location>.xml     stage 8: one location's views, charviews, assets, prose
 ├── DESIGN.md                    stage 1
 ├── WALKTHROUGH.md               stage 8
 ├── work/
@@ -99,7 +103,7 @@ books/<name>/
 
 A finished book has all of these:
 
-- **Story:** `DESIGN.md`, `STORY_MAP.md`, `TEXT.md`, `books/<name>.c`,
+- **Story:** `DESIGN.md`, `STORY_MAP.md`, `TEXT.md`, `title.xml`, `locations/`,
   `WALKTHROUGH.md`, tests that reach every ending.
 - **World:** `ROOMS.md` (with the painted-detail registry), `CHARACTERS.md`,
   `SHOTS.md` (with the colour script).
@@ -117,9 +121,11 @@ A finished book has all of these:
 - Page kinds: room pages (decision pages: each choice is a circle on its
   object with its label as a caption, tappable on either), beat pages (story
   pages with one Continue button) and ending pages. State lives in the book's
-  C file as named facts.
-- Books are data: a table of pages in `books/<name>.c` (decision, story,
-  ending and invisible check pages) that `src/story.c` runs (stage 8).
+  `title.xml` as named variables.
+- Books are data: XML locations in `books/<name>/locations/` (views,
+  charviews, assets, maps, endings and invisible action lists) that
+  `src/story.c` runs (stage 8); [XML.md](XML.md) is the reference. The
+  book tool, `build/cli/book`, checks, measures, queries and plays them.
 - Every ending has one button. Failure and partial endings offer "try again"
   back to the reader's last decision (or a named earlier one) with the facts
   they had there; the success ending offers "start again" (CRAFT §6).
@@ -132,7 +138,7 @@ A finished book has all of these:
   radius of clear space, and appear on named anchors in the scene.
 - Page text uses a base size of 38 at viewport height 800, scaled by each
   camera's `textScale`. `textRect2` / `textScale2` provide a second reading area;
-  `\f` in the C prose selects it. Headless `text_regions` reports each block's
+  `<region/>` in the prose selects it. Headless `text_regions` reports each block's
   fit. Type keeps its authored size.
 - Each page shows one whole picture: its camera's painting, or the camera's
   render until the painting exists. Nothing is layered on top of a picture.

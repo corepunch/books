@@ -49,6 +49,13 @@ def main():
     destination = target / back_button.relative_to(root)
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(back_button, destination)
+    title = book_dir / 'title.xml'
+    if not title.is_file():
+        raise SystemExit('Missing book title: ' + str(title))
+    destination = target / title.relative_to(root)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(title, destination)
+    stage('books/' + adventure + '/locations', {'.xml'})
     stage('books/' + adventure + '/rooms', {'.jpg', '.jpeg', '.blks', '.blk'})
     stage('books/' + adventure + '/illustrations', {'.png'})
     clips = book_dir / 'clips'

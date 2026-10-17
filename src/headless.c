@@ -5,30 +5,23 @@
 #include <string.h>
 #include <stb_image.h>
 
-static void json_string(const char *s)
-{
-    putchar('"');
-    for (const unsigned char *p=(const unsigned char *)s; *p; ++p) {
-        if (*p=='"' || *p=='\\') printf("\\%c",*p);
-        else if (*p<32) printf("\\u%04x",*p);
-        else putchar(*p);
-    }
-    putchar('"');
-}
-
 static struct PageLayout layout;
 
 /* The same immutable page, layout and dispatcher used by the native UI. */
 static void dump(fsize2_t viewport)
 {
     const struct BookPage *page = book_page();
-    printf("{\"room\":"); json_string(book_object(page->room)->key);
+    printf("{\"id\":"); json_string(page->id);
+    printf(",\"read\":%s", page->read ? "true" : "false");
+    printf(",\"talk\":%s,\"keypad\":%s", page->talk ? "true" : "false", page->keypad ? "true" : "false");
+    printf(",\"room\":"); json_string(book_object(page->room)->key);
     printf(",\"focus\":\"\""); /* Compatibility with earlier snapshots. */
     printf(",\"held\":"); json_string(page->held ? book_object(page->held)->key : "");
     printf(",\"kind\":"); json_string(book_page_kind_name(page->kind));
     printf(",\"ending\":"); json_string(book_ending_kind_name(page->ending));
     printf(",\"image\":"); json_string(page->image);
     printf(",\"clip\":"); json_string(page->clip);
+    printf(",\"clip_from\":%d,\"clip_to\":%d,\"loop\":%s", page->clip_from, page->clip_to, page->loop ? "true" : "false");
     printf(",\"text\":"); json_string(page->text);
     printf(",\"choices\":[");
     for (int i = 0; i < page->choice_count; ++i) {
@@ -37,6 +30,8 @@ static void dump(fsize2_t viewport)
         printf(",\"label\":"); json_string(choice->label);
         printf(",\"command\":"); json_string(choice->command);
         printf(",\"object\":"); json_string(book_object(choice->object)->key);
+        static const char *const edges[] = {"", "left", "right", "back"};
+        printf(",\"edge\":"); json_string(edges[choice->edge]);
         if (choice->kind == CHOICE_ITEM) {
             filePath_t icon;
             book_item_image(choice->object, icon);
@@ -122,6 +117,7 @@ void headless_run(bool interactive, fsize2_t viewport)
             if (sscanf(line + 5, "%f %f", &point.x, &point.y) == 2) {
                 const struct PageControl *control = page_hit_test(&layout, point);
                 if (control) book_action(control->choice);
+                else if (book_page()->kind == PAGE_BEAT && !book_page()->read) book_continue();
             }
         }
         else if (!strncmp(line,":focus ",7)) book_choose_object(line + 7);

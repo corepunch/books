@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 4: the command deck. -->
+<location id="command">
+  <asset id="command" camera="cmd-show-brainiac" next="cmd-decide">
+    Рубка. Брэйниак сидит в кресле, пальцы в гнёздах управления. На экране Земля, а насосы гонят из баков фиолетовую жижу к соплам под днищем. У стены стойка с баллонами.
+  </asset>
+  <view id="cmd-decide" camera="cmd-show-brainiac">
+    <text>Брэйниак не встаёт: в ближнем бою он слаб. Но если его разбить, его разум сбежит в космос и однажды вернётся. Насосы стучат, засевая Землю.</text>
+    <explorable label="Взять баллон?" anchor="canister" target="cmd-took" take="canister"/>
+    <explorable label="Разбить Брэйниака?" anchor="brainiac-throne" target="end-essence"/>
+    <explorable label="Залить антидот в баки?" anchor="seeding-tanks" target="cmd-spray" if="not seeding-stopped" with="sprayer"/>
+    <explorable label="Впрыснуть ему бактерии?" anchor="brainiac-throne" target="cmd-trap" with="canister"/>
+  </view>
+  <asset id="cmd-spray" camera="cmd-spray" sets="seeding-stopped" removes="sprayer" next="cmd-decide">
+    Супермен вскрывает горловину бака и пускает струю антидота. Жижа бледнеет и замирает: бактерии уснули. Насосы качают пустую воду. «Что ты сделал?!» — дёргается Брэйниак.
+  </asset>
+  <asset id="cmd-took" camera="cmd-show-brainiac" next="cmd-decide">
+    Супермен снимает со стойки тяжёлый баллон. Брэйниак впервые за весь день замолкает. Он слишком хорошо знает, что внутри.
+  </asset>
+  <actionlist id="cmd-trap">
+    <if test="seeding-stopped"><goto target="end-victory"/></if>
+    <goto target="end-frozen"/>
+  </actionlist>
+  <ending id="end-essence" kind="partial" camera="cmd-essence">
+    Один удар, и панцирь трескается. Из черепа вырывается светящийся клубок — разум Брэйниака. Он уходит сквозь купол к звёздам. Корабль мёртв, но где-то далеко Брэйниак уже собирает себя.
+  </ending>
+  <ending id="end-frozen" kind="partial" camera="cmd-frozen">
+    Супермен вгоняет сопло в трещину панциря, и Брэйниак застывает, запертый в своих бактериях. Но насосы успели: над Землёй плывут фиолетовые облака. Если бы залить баки антидотом…
+  </ending>
+  <ending id="end-victory" kind="success" camera="cmd-victory">
+    Сопло входит в трещину панциря, и бактерии заполняют машину. Брэйниак скрипит и замирает, запертый в своём творении. Земля чиста. Утром Кларк сдаст статью и, может, успеет к Лане.
+  </ending>
+</location>

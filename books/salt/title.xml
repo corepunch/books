@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The Salt Ledger. Grayhaven, 1924. The screen list is GDD.md.
+     Edith Voss hires the detective to read her brother Thomas's hour in the dry
+     office and to leave the shack floor shut. A screen is a still with circles.
+     A shot plays and returns: the clip ends, or the picture is tapped. Continue
+     is only a document being put down: the folder, the ledger, the board, the
+     peg, and the folder again. The detective is not in the frame. -->
+<title name="salt" start="visit" fmv="true" continue="Continue" retry="Try again" restart="Start over">
+  <variable id="read">the margin: to her, in this room, not the water, not the rain</variable>
+  <variable id="seen">Thomas stood under the streetlamp</variable>
+  <variable id="glimpsed">a face turned under the pilings</variable>
+  <variable id="heard">Marsh gave the warning</variable>
+  <variable id="knew">the ledger showed the name, the hour, and her line</variable>
+  <variable id="board">the tide board is a wash</variable>
+  <variable id="penry">Abel Penry washed the name off the board; his bridge line opens</variable>
+  <variable id="peg">a peg cut VOSS is in the sluice grating</variable>
+  <variable id="met">Marsh's approach has played; later visits skip the clip</variable>
+  <variable id="left">the man under the landing lamp has walked off</variable>
+  <variable id="named">Penry has answered about Thomas; that line is spent</variable>
+  <variable id="rail">Penry has answered about the bridge; that line is spent</variable>
+
+  <character id="penry" name="Abel Penry">The board-keeper. He keeps his hands in a towel and his doorway lit.</character>
+
+  <inventory id="ledger" name="Ledger" where="shack">
+    Thomas's name, and an hour already passed. It is meant to be read where the floor is dry.
+  </inventory>
+
+  <node id="grayhaven" name="Grayhaven, the night of the hour">
+    <location id="office"/>
+    <location id="wharf"/>
+    <location id="shack"/>
+    <location id="alley"/>
+    <location id="sluice"/>
+    <location id="landing"/>
+    <location id="lane"/>
+  </node>
+</title>

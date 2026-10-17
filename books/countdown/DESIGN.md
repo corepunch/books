@@ -24,7 +24,7 @@ meteorites in orbit, and Brainiac's ship over Metropolis.
 ## The engine's things (inventory)
 
 This book uses the item layer of the story runtime (see the repository
-README, "Things and the inventory"). Things are listed in `books/countdown.c`
+README, "Things and the inventory"). Things are icons listed in `title.xml`
 and shown as round icons in the bottom-left row of every decision page. Tap one
 to hold it: the page text becomes its description and circles appear only where
 it can be used. Tap it again to put it away.

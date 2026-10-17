@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 3: the Fortress of Solitude. -->
+<location id="fortress">
+  <asset id="fortress" camera="fortress-show-door" next="fortress-lab">
+    Арктика. Супермен поднимает ключ, который не сдвинет никто другой, и отпирает дверь в ледяной скале. Внутри Крепость Одиночества: трофеи, хрусталь и компьютер, который не ошибается.
+  </asset>
+  <view id="fortress-lab" camera="fortress-show-computer">
+    <text>Компьютер гудит так низко, что ухо этого не слышит. На экране карта мира, и на ней мигают огоньки: поле Райли, Токио, Саудовская Аравия. Метеориты. Все упали сегодня.</text>
+    <explorable label="Посмотреть на экран?" anchor="screen" target="fortress-alarm"/>
+    <explorable label="Дать компьютеру пробу?" anchor="computer" target="fortress-analysis" with="vial"/>
+  </view>
+  <asset id="fortress-analysis" camera="fortress-analysis" gives="sprayer" removes="vial" next="fortress-alarm">
+    Под увеличением осадок оживает: крошечные машины на паучьих ножках. Они вгрызаются в электронику и растут. Такую форму делает лишь один мастер — Брэйниак. Из люка выезжает ранец с антидотом.
+  </asset>
+  <asset id="fortress-alarm" camera="fortress-alarm" next="orbit-decide">
+    Экран вспыхивает красным. Над Землёй кружит пояс метеоритов, и один уже падает на Англию. В каждом камне бактерии. Брэйниак не бомбит планету. Он её засевает.
+  </asset>
+</location>

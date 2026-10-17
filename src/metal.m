@@ -78,6 +78,7 @@ bool renderer_init(void *layer)
         "float along=clamp(dot(p,delta)/max(dot(delta,delta),.001),0.0,1.0);"
         "float a=1-smoothstep(.5,1.5,length(p-along*delta));"
         "return float4(d.color.rgb,d.color.a*a); }"
+        "if(d.mode==5) { float t=smoothstep(0.0,1.0,v.uv.y); return float4(d.color.rgb,d.color.a*t); }\n"
         "constexpr sampler linear_sampler(coord::normalized,address::clamp_to_edge,filter::linear);"
         "float4 s=image.sample(linear_sampler,v.uv);"
         "return d.color*(d.mode==1?float4(1,1,1,s.r):s); }\n";
@@ -204,6 +205,7 @@ void renderer_line(fvec2_t start, fvec2_t end, uint32_t rgba)
 }
 
 void renderer_rect(frect_t bounds, uint32_t rgba) { renderer_quad(bounds, rgba, NULL, 0); }
+void renderer_shade(frect_t bounds, uint32_t rgba) { renderer_quad(bounds, rgba, NULL, 5); }
 void renderer_ring(frect_t bounds, uint32_t rgba) { renderer_quad(bounds, rgba, NULL, 2); }
 void renderer_round_rect(frect_t bounds, float corner, float stroke, uint32_t rgba)
 {

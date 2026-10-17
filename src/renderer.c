@@ -7,7 +7,7 @@
 #include <stb_image.h>
 
 #define MAX_RENDERER_IMAGES 2 /* Both sides of a page transition stay resident. */
-#define MAX_RENDERER_ICONS MAX_STORY_ITEMS /* Every carried thing's icon stays resident. */
+#define MAX_RENDERER_ICONS MAX_STORY_ICONS /* Every carried thing's icon stays resident. */
 /* Icons are reduced to this shortest side, enough for an item disc on a 4x display. */
 #define ICON_TEXTURE_PIXELS ((int)(ITEM_DIAMETER * 4))
 

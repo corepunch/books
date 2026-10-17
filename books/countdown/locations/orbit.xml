@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 3: the belt of meteorites. -->
+<location id="orbit">
+  <view id="orbit-decide" camera="orbit-show-belt">
+    <text>Супермен висит среди кувыркающихся камней. Внизу синеет океан. Среди бурых метеоритов один серый и тусклый, как слиток. Если разбивать их по одному, то с какого начать?</text>
+    <explorable label="Вернуться на Землю?" anchor="earth" target="end-meteors"/>
+    <explorable label="Просветить камни?" anchor="belt" target="orbit-xray" if="not lead-found" with="xray"/>
+    <explorable label="Сжечь метеориты по очереди?" anchor="belt" target="orbit-ambush" if="not lead-found" with="heat"/>
+    <explorable label="Сжечь серый камень?" anchor="lead-rock" target="orbit-clear" if="lead-found" with="heat"/>
+  </view>
+  <asset id="orbit-xray" camera="orbit-xray" sets="lead-found" next="orbit-decide">
+    Камни бледнеют, как стекло, и в каждом видны фиолетовые капсулы. Только серый остаётся чёрным: свинец. Что-то в нём не хотят показывать рентгену. Это не метеорит. Это ловушка.
+  </asset>
+  <asset id="orbit-ambush" camera="orbit-ambush" next="red-beam">
+    Первый камень рассыпается, второй, третий. И тут серый камень раскрывается, как раковина. Красный луч бьёт Супермену в грудь, и он кувыркается вниз, к огромному кораблю над Метрополисом.
+  </asset>
+  <asset id="orbit-clear" camera="orbit-clear" next="observatory">
+    Луч бьёт в серый камень, свинец лопается, внутри искрит разбитый излучатель. Остальные метеориты сгорают в атмосфере огненными нитями. А внизу Кларка ждёт Лана: сегодня Звёздная ночь.
+  </asset>
+  <ending id="end-meteors" kind="failure" camera="orbit-falling">
+    Внизу столько бед, нужно помогать! Супермен ныряет к Земле, а пояс остаётся над головой. К ночи камни падают на Лондон, Сан-Франциско, Сидней, и в каждом городе гаснет свет.
+  </ending>
+</location>

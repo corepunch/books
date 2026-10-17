@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<location id="office" name="The office">
+  <trigger event="leave"><set var="left-office"/></trigger>
+
+  <asset id="arrive" camera="visit" clip="visit" from="500" to="2500" next="desk">
+    Edith comes in out of the rain.
+  </asset>
+
+  <viewpoint id="desk-spot">
+    <view id="desk" camera="office" direction="n" clip="window" loop="true">
+      <text>The desk, the lamp, the telephone.</text>
+      <trigger event="enter">
+        <set var="visits" add="1"/>
+        <if test="visits == 3"><set var="mood" value="t"/></if>
+      </trigger>
+      <explorable label="The folder" anchor="folder" target="folder"/>
+      <explorable id="lamp" label="The lamp" anchor="desk-lamp" target="lamp-shot" enabled="false"/>
+      <explorable label="The telephone" anchor="phone">
+        <enable target="lamp"/>
+        <set var="caller" value="Cook"/>
+        <give icon="peg"/>
+        <enable target="mail"/>
+        <enable target="snap"/>
+      </explorable>
+      <explorable label="The ledger" anchor="door" take="ledger" target="desk"/>
+      <nav label="Turn right" edge="right" target="window-side"/>
+      <nav label="To the harbour" anchor="pane" target="harbour-map" if="has(peg)"/>
+    </view>
+    <view id="window-side" camera="visit" direction="e">
+      <text>The window side of the room. Edith sits by it.</text>
+      <nav label="Turn left" edge="left" target="desk"/>
+      <explorable label="The folder" anchor="folder" target="folder"/>
+      <charview id="edith-talk" character="edith" anchor="locket" label="Edith" camera="visit" target="edith-greet">
+        <text>Edith waits for you to speak.</text>
+        <holding icon="hour">She looks up at the word.</holding>
+        <conversation id="ask-thomas" label="Thomas?" if="not talked" clip="marsh-voss" sets="talked">
+          "He kept the tide," she says.
+        </conversation>
+        <conversation id="ask-hour" label="His hour" with="hour" clip="marsh-floor" from="1000">
+          "Read it here," she says.
+        </conversation>
+        <conversation label="Calmly" with="calm" target="calm-list"/>
+        <conversation label="Goodbye" ends="true" target="window-side"/>
+        <conversation label="Goodbye" with="hour" ends="true" target="window-side"/>
+        <conversation label="Goodbye" with="calm" ends="true" target="window-side"/>
+        <conversation label="Goodbye" with="peg" ends="true" target="window-side"/>
+        <conversation label="Goodbye" with="ledger" ends="true" target="window-side"/>
+      </charview>
+    </view>
+  </viewpoint>
+
+  <asset id="edith-greet" camera="visit" clip="visit" next="edith-talk">
+    She turns from the window.
+  </asset>
+  <asset id="folder" camera="office-file" read="true" next="desk">
+    Thomas Voss, tide clerk.
+
+    Berth four.
+  </asset>
+  <asset id="lamp-shot" camera="office-lamp" next="desk">
+    <trigger event="end">
+      <if test="mood == 't'"><goto target="ending-tense"/></if>
+      <else><call list="calm-list"/></else>
+    </trigger>
+    Green glass and a dry blotter.
+  </asset>
+  <actionlist id="calm-list">
+    <set var="copy" from="caller"/>
+    <if test="copy == 'Cook'"><goto target="desk"/></if>
+    <goto target="window-side"/>
+  </actionlist>
+  <asset id="phone-call" camera="office-phone" next="desk">The exchange rings.</asset>
+  <ending id="ending-tense" kind="failure" camera="window" retry="desk">
+    Your voice shakes, and the lamp goes out.
+  </ending>
+</location>

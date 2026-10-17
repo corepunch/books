@@ -12,11 +12,13 @@ static AVPlayerItemVideoOutput *output;
 static id endObserver;
 static filePath_t openPath;
 static isize2_t frameSize;
-static bool posterOnly, primed, ended;
+static int sliceFrom, sliceTo;
+static bool posterOnly, primed, ended, looping;
 
 void video_use_poster(bool poster) { posterOnly = poster; }
 
 bool video_playing(void) { return !posterOnly && player && !ended; }
+bool video_ended(void) { return !posterOnly && player && ended; }
 
 void video_close(void)
 {
@@ -34,11 +36,14 @@ void video_close(void)
     renderer_video_discard();
 }
 
-bool video_open(const char *path)
+bool video_open(const char *path, int from_ms, int to_ms, bool loop)
 {
     if (posterOnly || !path || !*path) return false;
-    if (player && !strcmp(openPath, path)) return true;
+    if (player && !strcmp(openPath, path) && sliceFrom == from_ms && sliceTo == to_ms && looping == loop) return true;
     video_close();
+    sliceFrom = from_ms;
+    sliceTo = to_ms;
+    looping = loop;
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:path]];
     AVPlayerItem *item = [AVPlayerItem playerItemWithURL:url];
     output = [[AVPlayerItemVideoOutput alloc] initWithPixelBufferAttributes:@{
@@ -46,6 +51,8 @@ bool video_open(const char *path)
     }];
     output.suppressesPlayerRendering = YES;
     [item addOutput:output];
+    /* A slice ends at its out point; reaching it posts the same end notification. */
+    if (to_ms > 0) item.forwardPlaybackEndTime = CMTimeMake(to_ms, 1000);
     player = [AVPlayer playerWithPlayerItem:item];
     player.actionAtItemEnd = AVPlayerActionAtItemEndPause;
     copy(openPath, sizeof(openPath), path);
@@ -57,8 +64,13 @@ bool video_open(const char *path)
         addObserverForName:AVPlayerItemDidPlayToEndTimeNotification object:item
         queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
             (void)note;
-            ended = true;
+            if (looping) {
+                [player seekToTime:CMTimeMake(sliceFrom, 1000) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+                [player play];
+            } else ended = true;
         }];
+    if (from_ms > 0)
+        [player seekToTime:CMTimeMake(from_ms, 1000) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
     [player play];
     return true;
 }

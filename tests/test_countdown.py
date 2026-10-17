@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Read Обратный отсчёт through its headless page interface: every page, held thing, route, ending and retry."""
 from pathlib import Path
-import ast
-import re
 import sys
+import xml.etree.ElementTree as ET
 
 from headless_book import Book as HeadlessBook
 
 binary, root = (Path(value).resolve() for value in sys.argv[1:3])
-source = (root / 'books/countdown.c').read_text()
-cameras = set(re.findall(r'\.camera = "([^"]+)"', source))
-item_ids = re.findall(r'\{\.item = \w+, \.id = "([^"]+)"', source)
+book_dir = root / 'books/countdown'
+title = ET.parse(book_dir / 'title.xml').getroot()
+pages = [page for location in title.iter('location')
+         for page in ET.parse(book_dir / 'locations' / f"{location.get('id')}.xml").getroot().iter() if page.get('id')]
+cameras = {page.get('camera') for page in pages if page.get('camera')}
+item_ids = [icon.get('id') for icon in title if icon.tag in ('inventory', 'evidence', 'idea', 'emotion', 'action-icon')]
 ACTS = {'train': 1, 'gorge': 1, 'star': 2, 'fortress': 3, 'orbit': 3, 'obs': 4, 'ship': 4, 'red': 4, 'cmd': 4}
 
 
@@ -49,13 +51,7 @@ for item in item_ids:
 # Track the passages that set hidden facts, rather than every optional conversation. Hearing and
 # surveying can return to decisions; their order must not multiply identical worlds indefinitely.
 # The exploration still enters every page through published choices, never by setting runtime state.
-fact_passages = {}
-for block in re.split(r'(?=    \{\.id = ")', source):
-    if not re.search(r'\.sets = ', block):
-        continue
-    fact = re.search(r'\.sets = ([^,]+)', block).group(1)
-    prose = re.search(r'\.text = ((?:"(?:[^"\\]|\\.)*"\s*)+)', block).group(1)
-    fact_passages[''.join(ast.literal_eval(t) for t in re.findall(r'"(?:[^"\\]|\\.)*"', prose))] = fact
+fact_passages = {page.get('id'): page.get('sets') for page in pages if page.get('sets')}
 
 # On each room page hold and release every carried thing, recording all its uses. Hidden facts
 # belong to one act, so revisit a page for each different fact history within that act.
@@ -72,8 +68,8 @@ while frontier:
         continue
     explored.add(key)
     seen.setdefault(state, route)
-    if view['text'] in fact_passages:
-        past = past | {(act, fact_passages[view['text']])}
+    if view['id'] in fact_passages:
+        past = past | {(act, fact_passages[view['id']])}
     assert Path(view['image']).is_file(), f'missing picture for {route}: {view["image"]}'
     if view['kind'] == 'ended':
         endings[camera(view)] = (view['ending'], route)

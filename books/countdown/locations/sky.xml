@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 4: Brainiac's ship over Metropolis. -->
+<location id="sky">
+  <view id="ship-fight" camera="ship-show-tentacles">
+    <text>Щупальце обвивает Супермена, другие хлещут воздух. Шлюз под днищем наливается красным. «Иди ко мне, ангел смерти», — гудит Брэйниак из динамиков.</text>
+    <explorable label="Сдаться?" anchor="airlock" target="red-beam"/>
+    <explorable label="Рвать щупальца?" anchor="tentacles" target="ship-tentacles"/>
+    <explorable label="Улететь от корабля?" anchor="down-city" target="end-starbolts"/>
+    <explorable label="Выжечь излучатель?" anchor="airlock" target="ship-breach" if="saw-airlock" with="heat"/>
+  </view>
+  <asset id="ship-tentacles" camera="ship-tentacles" next="red-beam">
+    Супермен рвёт щупальце, как канат, обрывок падает в реку. Второе, третье! Но корабль терпелив. Шлюз разворачивается к Супермену, и красный свет заливает всё вокруг.
+  </asset>
+  <asset id="ship-breach" camera="ship-breach" next="command">
+    Супермен не подлетает к шлюзу. Он бьёт взглядом издалека, и излучатель взрывается, не успев зажечься. Потом Супермен прожигает в обшивке дыру и ныряет прямо в рубку.
+  </asset>
+  <ending id="end-starbolts" kind="failure" camera="ship-starbolts">
+    Супермен уводит бой подальше от холма. Но Брэйниаку не нужен бой: пушки корабля бьют по набережной, и башни горят одна за другой. «Ты выбрал бегство, — гремит голос. — Смотри, чего оно стоит».
+  </ending>
+  <asset id="red-beam" camera="ship-red-beam" removes="heat breath" next="red-brainiac">
+    Красный луч хлещет из шлюза. Боль! Силы утекают, как вода из ведра. Супермена тянет вверх, и створки захлопываются под ним. Под красным солнцем остались лишь зрение и слух.
+  </asset>
+</location>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 2: S.T.A.R. Labs. -->
+<location id="lab">
+  <asset id="star-arrive" camera="star-show-room" removes="pass" next="star-interview">
+    Охранник оставляет пресс-карту у себя до вечера. Наверху их встречает говорун Норман Рафферти. В хромированном зале гудит «Звезда-7», компьютер, который учится, как человек.
+  </asset>
+  <asset id="star-interview" camera="star-show-vent" next="star-decide">
+    «Четыре миллиарда таких машин, и люди станут не нужны! — хохочет Рафферти в камеру. — Шучу, конечно».
+
+    Кларк чует сладкий запах. Из решётки у пола ползёт фиолетовая струйка.
+  </asset>
+  <view id="star-decide" camera="star-show-vent">
+    <text>Струйка густеет. Никто её не замечает: Рафферти говорит, Вирт снимает. Сладкий запах — это газ. А под полом, кажется, что-то скребётся.</text>
+    <explorable label="Предупредить Рафферти?" anchor="rafferty-spot" target="star-rafferty"/>
+    <explorable label="Притвориться спящим?" anchor="clark-spot" target="star-gas"/>
+    <explorable label="Встать на люки?" anchor="floor-panels" target="star-pin" if="saw-mercs"/>
+    <explorable label="Задуть газ обратно?" anchor="vent" target="star-blowback" with="breath"/>
+    <explorable label="Заглянуть под пол?" anchor="floor-panels" target="star-xray-floor" if="not saw-mercs" with="xray"/>
+  </view>
+  <asset id="star-xray-floor" camera="star-xray-floor" sets="saw-mercs" next="star-decide">
+    Пол становится прозрачным. Под панелями, среди кабелей, ползут трое в масках. Они подбираются к трём люкам перед «Звездой-7». Газ усыпит зал, и тогда они вылезут.
+  </asset>
+  <asset id="star-rafferty" camera="star-show-vent" next="star-gas">
+    «Мистер Рафферти, из вентиляции идёт дым!»
+
+    «Новый освежитель воздуха, мистер Кент!» Рафферти отмахивается, говорит дальше и вдруг зевает посреди фразы.
+  </asset>
+  <asset id="star-gas" camera="star-gas" next="star-mercs">
+    Фиолетовый туман ползёт по полу. Техники клюют носом, Рафферти оседает. Кларк тоже падает, подальше от камеры. Сквозь ресницы он видит, как поднимаются три панели пола.
+  </asset>
+  <asset id="star-blowback" camera="star-blowback" next="star-mercs">
+    Кларк будто кашляет и дует в решётку. Газ уходит обратно в трубы, техники чихают, но не спят. Тут поднимаются три панели пола, и из люков лезут люди в масках: «Всем на пол!»
+  </asset>
+  <asset id="star-pin" camera="star-caught" sets="mercs-caught" next="star-after">
+    «Я за водой!» Кларк выскальзывает за дверь, и в зал влетает Супермен. Он встаёт прямо на люки. Снизу толкают, ругаются, без толку. Потом он вытаскивает налётчиков по одному.
+  </asset>
+  <view id="star-mercs" camera="star-show-mercs">
+    <text>Кларк исчез за пультом, и перед налётчиками стоит Супермен. Бородатый поднимает пистолет: «Шаг, и мы стреляем. Не в тебя». У люка валяется моток кабеля.</text>
+    <explorable label="Взять кабель?" anchor="cable" target="star-cable" take="cable"/>
+    <explorable label="Отпустить их?" anchor="panel-hole" target="star-letgo"/>
+    <explorable label="Связать их кабелем?" anchor="mercs-group" target="star-lasso" with="cable"/>
+    <explorable label="Расплавить пистолеты?" anchor="mercs-group" target="star-melt" with="heat"/>
+  </view>
+  <asset id="star-cable" camera="star-show-mercs" next="star-mercs">
+    Супермен поддевает моток носком сапога и ловит его рукой. Налётчики переглядываются: что он задумал? Бородатый крепче сжимает пистолет.
+  </asset>
+  <asset id="star-lasso" camera="star-caught" sets="mercs-caught" removes="cable" next="star-after">
+    Кабель свистит, как лассо. Три петли, и налётчики стоят спина к спине, а пистолеты звякают об пол. «Нас наняли, — бормочет бородатый. — Голос по радио, будто из железной бочки».
+  </asset>
+  <asset id="star-melt" camera="star-caught" sets="mercs-caught" next="star-after">
+    Взгляд вспыхивает красным, пистолеты раскаляются, и налётчики с воплями их бросают. Пока они дуют на пальцы, Супермен связывает их проводами. «Нас наняли, — хрипит бородатый. — Голос по радио, как из бочки».
+  </asset>
+  <asset id="star-letgo" camera="star-show-mercs" next="star-after">
+    Супермен отступает, и налётчики ныряют в люк. Позже их найдут у сломанной машины на поле Райли. Заказчик, обещавший им деньги, так и не пришёл.
+  </asset>
+  <asset id="star-after" camera="star-show-sample" removes="cable" next="star-sample">
+    Люди трут глаза. Рафферти машет журналом: «Они хотели украсть это? Его же печатают в газетах!» Кража была для отвода глаз. А «Звезда-7» мигает красным, будто в ней что-то живое.
+  </asset>
+  <view id="star-sample" camera="star-show-sample">
+    <text>У решётки валяется пустая газовая граната с фиолетовым осадком. Газ был не для людей, а для машины. Вирт зовёт Кларка: пора в студию, к одиннадцатичасовому эфиру.</text>
+    <explorable label="Взять гранату?" anchor="vial" target="star-took-vial" take="vial"/>
+    <explorable label="Лететь в Крепость?" anchor="east-window" target="fortress"/>
+    <explorable label="Ехать на эфир?" anchor="crew" target="end-newscast"/>
+  </view>
+  <asset id="star-took-vial" camera="star-show-sample" next="fortress">
+    Кларк прячет гранату в карман. В Крепости Одиночества есть компьютер, который разберётся с этим осадком. «Мне нужно позвонить», — говорит он и выходит. Над холмом проносится синяя молния.
+  </asset>
+  <ending id="end-newscast" kind="failure" camera="star-leave-crew">
+    В одиннадцать Кларк читает новости о странном налёте. К вечеру в Метрополисе сходят с ума светофоры, банкоматы и поезда. Кто-то в небе доволен. Кларк был рядом с разгадкой и уехал.
+  </ending>
+</location>

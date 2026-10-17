@@ -20,6 +20,17 @@ void copy(char *dst, size_t size, const char *src)
     memcpy(dst, src, strlen(src) + 1);
 }
 
+void json_string(const char *s)
+{
+    putchar('"');
+    for (const unsigned char *p = (const unsigned char *)(s ? s : ""); *p; ++p) {
+        if (*p == '"' || *p == '\\') printf("\\%c", *p);
+        else if (*p < 32) printf("\\u%04x", *p);
+        else putchar(*p);
+    }
+    putchar('"');
+}
+
 void lower(char *s)
 {
     for (; *s; ++s) *s = (char)tolower((unsigned char)*s);

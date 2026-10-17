@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Act 2: the gate of S.T.A.R. Labs. -->
+<location id="gate">
+  <view id="star-gate" camera="star-show-gate">
+    <text>Лаборатории S.T.A.R. стоят на холме: пять этажей стекла. У дверей два охранника. Вирт и Чан показывают удостоверения. Охранник смотрит на Кларка. Пресс-карта у него где-то в кармане.</text>
+    <explorable label="Показать пресс-карту?" anchor="guard" target="star-arrive" with="pass"/>
+    <explorable label="Пройти мимо охраны?" anchor="gate-door" target="end-gate"/>
+  </view>
+  <ending id="end-gate" kind="failure" camera="star-show-gate">
+    Кларк Кент не Супермен, чтобы проходить сквозь охрану. Его крепко берут под локти и выводят за ворота. Через час в лабораториях что-то случается, и никто не знает что. А ведь хватило бы одной карточки.
+  </ending>
+</location>

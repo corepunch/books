@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<location id="dock" name="Berth four">
+  <trigger event="enter">
+    <if test="left-office"><set var="mood" value="a"/></if>
+  </trigger>
+
+  <map id="harbour-map" camera="wharf">
+    <text>The harbour, from the hill.</text>
+    <destination label="Berth four" anchor="water" target="berth"/>
+    <destination label="The office" anchor="lane" target="desk"/>
+  </map>
+  <view id="berth" camera="shack">
+    <text>The shack at berth four.</text>
+    <explorable label="The book" anchor="book" target="ending-best" if="visited(folder) and has(ledger)"/>
+    <explorable label="The trapdoor" anchor="trap" target="ending-tense"/>
+    <nav label="The door" anchor="out" target="harbour-map"/>
+  </view>
+  <ending id="ending-best" kind="success" camera="shack-ledger">
+    You read the hour where the floor is dry.
+  </ending>
+</location>

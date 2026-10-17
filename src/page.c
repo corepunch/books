@@ -29,20 +29,23 @@ static frect_t frect_union(frect_t a, frect_t b)
 
 /* Carried things line up from the bottom-left corner: a disc with its name underneath. Returns
    the row's bounds, which prose and scene circles keep clear of. */
-static frect_t layout_items(struct PageLayout *layout, const struct BookPage *page, fsize2_t viewport, float margin)
+static frect_t layout_items(struct PageLayout *layout, const struct BookPage *page, fsize2_t viewport,
+                            float margin, bool top)
 {
     frect_t row = frect_from_size(fsize2(0, 0));
     float x = margin, caption_height = 0;
     fvec2_t padding = fvec2(CAPTION_PADDING, CAPTION_PADDING / 2);
     for (int i = 0; i < page->choice_count; ++i)
-        if (page->choices[i].kind == CHOICE_ITEM)
+        if (page->choices[i].kind == CHOICE_ITEM || page->choices[i].kind == CHOICE_PDA)
             caption_height = fmaxf(caption_height, text_label_box(page->choices[i].label, ITEM_CAPTION_TEXT_SIZE,
                                                                   ITEM_CAPTION_MAX_WIDTH, padding).size.height);
-    /* Discs share one row; each name hangs from the top of the caption band below them. */
-    float caption_top = viewport.height - margin - caption_height;
+    /* Discs share one row; each name hangs from the top of the caption band below them.
+       A talk keeps that row in the top corner, clear of the questions. */
+    float caption_top = top ? margin + ITEM_DIAMETER + CAPTION_GAP / 2
+                            : viewport.height - margin - caption_height;
     for (int i = 0; i < page->choice_count; ++i) {
         const struct Choice *choice = &page->choices[i];
-        if (choice->kind != CHOICE_ITEM) continue;
+        if (choice->kind != CHOICE_ITEM && choice->kind != CHOICE_PDA) continue;
         fsize2_t caption = text_label_box(choice->label, ITEM_CAPTION_TEXT_SIZE, ITEM_CAPTION_MAX_WIDTH, padding).size;
         float width = fmaxf(ITEM_DIAMETER, caption.width);
         fvec2_t center = fvec2(x + width / 2, caption_top - CAPTION_GAP / 2 - ITEM_DIAMETER / 2);
@@ -96,11 +99,105 @@ static bool place_caption(struct PageLayout *layout, int index, const char *labe
     return false;
 }
 
+/* Questions stack in a darkened band. The line that ends the talk is always last.
+   The carried-thing row stays in the top corner so it does not cover the lines. */
+static void layout_talk(struct PageLayout *layout, const struct BookPage *page, fsize2_t viewport)
+{
+    float scale = viewport.height / (float)UI_HEIGHT;
+    float margin = fminf(ASK_MARGIN * scale, viewport.width * .04f);
+    float width = viewport.width - 2 * margin;
+    float type = talk_type_size(viewport.height);
+    struct TextMetrics metrics = text_metrics(type);
+    float min_row = fmaxf(44 * scale, metrics.line + ASK_ROW_PAD * scale);
+    int asks[MAX_CHOICES], ask_count = 0, end_choice = -1, keys[MAX_CHOICES], key_count = 0;
+    for (int i = 0; i < page->choice_count; ++i) {
+        switch (page->choices[i].kind) {
+        case CHOICE_ASK: asks[ask_count++] = i; break;
+        case CHOICE_KEY:
+            if (!page->keypad) fail("camera %s lays out a key without a keypad", page->camera);
+            keys[key_count++] = i;
+            break;
+        case CHOICE_END:
+            if (end_choice >= 0) fail("camera %s has two ways to end the talk", page->camera);
+            end_choice = i;
+            break;
+        case CHOICE_ITEM: break;
+        case CHOICE_OBJECT:
+        case CHOICE_CONTINUE:
+        case CHOICE_RETRY:
+        case CHOICE_PDA:
+        case CHOICE_INVALID: fail("camera %s lays a talk line out as something else", page->camera);
+        }
+    }
+    if (end_choice < 0) fail("camera %s has no way to end the talk", page->camera);
+    if (width <= 0) fail("camera %s has no room for a question", page->camera);
+
+    float line_gap = ASK_LINE_GAP * scale;
+    float lines = 0, row_h[MAX_CHOICES];
+    /* The keypad's grid takes the place of the question lines. */
+    float key_gap = KEY_GAP * scale, key_h = min_row * 1.2f;
+    float key_w = fminf(KEY_WIDTH * scale, (width - (KEYPAD_COLUMNS - 1) * key_gap) / KEYPAD_COLUMNS);
+    int key_rows = (key_count + KEYPAD_COLUMNS - 1) / KEYPAD_COLUMNS;
+    if (key_rows) lines = key_rows * key_h + (key_rows - 1) * key_gap;
+    for (int i = 0; i < ask_count; ++i) {
+        float height = text_height(page->choices[asks[i]].label, type, width);
+        row_h[i] = fmaxf(min_row, height + ASK_ROW_PAD * scale);
+        lines += row_h[i];
+        if (i + 1 < ask_count) lines += line_gap;
+    }
+    const char *closing = page->choices[end_choice].label;
+    float end_h = fmaxf(min_row, text_height(closing, type, width) + ASK_ROW_PAD * scale);
+    bool has_prose = page->text[0] != 0;
+    float prose_h = has_prose ? text_height(page->text, type, width) : 0;
+    float top_pad = ASK_TOP_PAD * scale, end_gap = ASK_END_GAP * scale;
+    float prose_gap = has_prose ? ASK_PROSE_GAP * scale : 0;
+    float solid = top_pad + prose_h + prose_gap + lines + end_gap + end_h + margin;
+    float solid_top = viewport.height - solid;
+    if (solid_top < margin) fail("camera %s cannot fit the questions", page->camera);
+    float feather_h = fminf(ASK_VEIL_FEATHER * scale, solid_top);
+    layout->feather = frect(fvec2(0, solid_top - feather_h), fsize2(viewport.width, feather_h));
+    layout->veil = frect(fvec2(0, solid_top), fsize2(viewport.width, solid));
+
+    if (has_prose) {
+        struct ProseLayout *block = &layout->prose[layout->prose_count++];
+        block->region.bounds = frect(fvec2(margin, solid_top + top_pad), fsize2(width, prose_h));
+        block->region.font_size = type;
+        block->region.authored = true;
+        copy(block->text, sizeof(block->text), page->text);
+        block->content_height = prose_h;
+    }
+
+    float y = solid_top + top_pad + prose_h + prose_gap;
+    float grid_left = margin + (width - (KEYPAD_COLUMNS * key_w + (KEYPAD_COLUMNS - 1) * key_gap)) / 2;
+    for (int i = 0; i < key_count; ++i) {
+        int row = i / KEYPAD_COLUMNS, column = i % KEYPAD_COLUMNS;
+        add_control(layout, frect(fvec2(grid_left + column * (key_w + key_gap), y + row * (key_h + key_gap)),
+                                  fsize2(key_w, key_h)), keys[i], false);
+    }
+    if (key_rows) y += lines;
+    for (int i = 0; i < ask_count; ++i) {
+        add_control(layout, frect(fvec2(margin, y), fsize2(width, row_h[i])), asks[i], false);
+        y += row_h[i];
+        if (i + 1 < ask_count) y += line_gap;
+    }
+    layout->rule = y + end_gap / 2;
+    add_control(layout, frect(fvec2(margin, y + end_gap), fsize2(width, end_h)), end_choice, false);
+
+    frect_t items = layout_items(layout, page, viewport, margin, true);
+    if (!fsize2_is_empty(items.size) &&
+        (frect_overlaps(items, layout->veil) || frect_overlaps(items, layout->feather)))
+        fail("camera %s inventory overlaps the questions", page->camera);
+}
+
 void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
                  struct PageLayout *layout)
 {
     memset(layout, 0, sizeof(*layout));
     scene_load(book_rooms(), page->camera);
+    if (page->talk) {
+        layout_talk(layout, page, viewport);
+        return;
+    }
     textRegionList_t regions;
     int count = scene_text_regions(image, viewport, regions);
 
@@ -124,12 +221,16 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
     }
     if (*cursor) fail("camera %s needs another reading region", page->camera);
     hotspotTargetList_t targets;
-    int target_count = 0;
+    int target_count = 0, edges[MAX_CHOICES], edge_count = 0;
     float margin = fminf(32, viewport.width * .03f);
     for (int i = 0; i < page->choice_count; ++i) {
         const struct Choice *choice = &page->choices[i];
         switch (choice->kind) {
         case CHOICE_OBJECT:
+            if (choice->edge != CHOICE_EDGE_NONE) {
+                edges[edge_count++] = i;
+                break;
+            }
             copy(targets[target_count].key, sizeof(targets[target_count].key), book_object(choice->object)->key);
             targets[target_count++].choice = i;
             break;
@@ -144,11 +245,15 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
             add_control(layout, bounds, i, false);
             break;
         }
-        case CHOICE_ITEM: break;
+        case CHOICE_ITEM:
+        case CHOICE_PDA: break;
+        case CHOICE_ASK:
+        case CHOICE_END:
+        case CHOICE_KEY: fail("camera %s lays out a talk line without a talk", page->camera);
         case CHOICE_INVALID: fail("cannot lay out an uninitialized choice");
         }
     }
-    frect_t items = layout_items(layout, page, viewport, margin);
+    frect_t items = layout_items(layout, page, viewport, margin, false);
     /* Wide iPads crop more of the image vertically. Keep the reading block
        above the fixed-size Continue control without changing its type size. */
     for (int i = 0; i < layout->prose_count; ++i) {
@@ -172,6 +277,18 @@ void page_layout(const struct BookPage *page, isize2_t image, fsize2_t viewport,
         const struct Hotspot *spot = &layout->spots[i];
         frect_t bounds = frect_center_at(frect_from_size(fsize2(HOTSPOT_DIAMETER, HOTSPOT_DIAMETER)), spot->center);
         add_control(layout, bounds, spot->choice, true);
+    }
+    /* A turn sits on the picture's edge: left and right at mid-height, back at the foot. */
+    for (int i = 0; i < edge_count; ++i) {
+        float inset = margin + HOTSPOT_DIAMETER / 2;
+        fvec2_t center = fvec2(inset, viewport.height / 2);
+        if (page->choices[edges[i]].edge == CHOICE_EDGE_RIGHT) center = fvec2(viewport.width - inset, viewport.height / 2);
+        if (page->choices[edges[i]].edge == CHOICE_EDGE_BACK)
+            center = fvec2(viewport.width / 2, viewport.height - inset - HOTSPOT_DIAMETER);
+        if (layout->spot_count >= MAX_CHOICES) fail("too many circles on camera %s", page->camera);
+        layout->spots[layout->spot_count++] = (struct Hotspot){center, center, edges[i]};
+        add_control(layout, frect_center_at(frect_from_size(fsize2(HOTSPOT_DIAMETER, HOTSPOT_DIAMETER)), center),
+                    edges[i], true);
     }
     for (int i = 0; i < layout->control_count; ++i) {
         struct PageControl *control = &layout->controls[i];

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A test book for every X-Files feature the runtime plays: typed variables, enable
+     flags, triggers on nodes, locations, views and assets, action lists, a viewpoint
+     with turns, a charview with topics and tones, evidence, travel by map, clip slices
+     and loops, and retry. tests/test_engine.py plays it on The Salt Ledger's pictures. -->
+<title name="fixture" start="arrive" fmv="true">
+  <variable id="visits" type="int">times the desk was entered</variable>
+  <variable id="mood" type="char" initial="a">a is calm, t is tense</variable>
+  <variable id="caller" type="string" initial="nobody">who answered the telephone</variable>
+  <variable id="copy" type="string">the caller, copied by an action list</variable>
+  <variable id="talked">Edith has spoken about Thomas</variable>
+  <variable id="arrivals" type="int">nodes entered</variable>
+  <variable id="left-office">the reader has left the office once</variable>
+
+  <character id="edith" name="Edith Voss">Thomas's sister.</character>
+
+  <inventory id="ledger" name="Ledger" where="office">The tide ledger.</inventory>
+  <evidence id="peg" name="Peg">A board peg cut VOSS.</evidence>
+  <idea id="hour" name="The hour" carried="true">Thomas's hour.</idea>
+  <emotion id="calm" name="Calm" carried="true">Say it calmly.</emotion>
+  <action-icon id="badge" name="Badge">Show the badge.</action-icon>
+
+  <note id="first-note" title="Berth four">Thomas kept the tide at berth four.</note>
+  <email id="mail" from="Cook" title="Background">Wong has no record.</email>
+  <photo id="snap" camera="window" title="The lamp">The man under the lamp.</photo>
+  <phone number="206-555-0182" target="phone-call" if="talked"/>
+  <interface id="organizer" title="Organizer">
+    <item label="Notes" target="desk"><enable target="first-note"/></item>
+  </interface>
+
+  <node id="first" name="The office">
+    <trigger event="enter"><set var="arrivals" add="1"/></trigger>
+    <location id="office"/>
+  </node>
+  <node id="second" name="The harbour">
+    <trigger event="enter"><set var="arrivals" add="1"/><show interface="organizer"/></trigger>
+    <location id="dock"/>
+  </node>
+</title>
